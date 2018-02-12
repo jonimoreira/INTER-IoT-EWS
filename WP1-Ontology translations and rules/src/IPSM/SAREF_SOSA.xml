@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE Alignment
+        [
+                <!ENTITY sripas "http://www.inter-iot.eu/sripas#">
+                <!ENTITY sosa "http://www.w3.org/ns/sosa/">
+                <!ENTITY sosaExt "http://www.w3.org/ns/sosa/extension/">
+                <!ENTITY geo-sf "http://www.opengis.net/def/sf/">
+                <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+                <!ENTITY saref "https://w3id.org/saref#">
+                <!ENTITY sarefInst "https://w3id.org/saref/instances/">
+                <!ENTITY time "http://www.w3.org/2006/time#">
+                ]
+        >
+<Alignment
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:sripas="http://www.inter-iot.eu/sripas#"
+        xmlns="http://www.inter-iot.eu/sripas#"
+        xmlns:sosa="http://www.w3.org/ns/sosa/"
+        xmlns:saref="https://w3id.org/saref#"
+        xmlns:time="http://www.w3.org/2006/time#"
+        name="SAREF_CO" version="1.0" creator="sripas">
+    <onto1>
+        <Ontology about="https://w3id.org/saref#">
+            <formalism>
+                <Formalism name="OWL2.0" uri="http://www.w3.org/2002/07/owl#"/>
+            </formalism>
+        </Ontology>
+    </onto1>
+    <onto2>
+        <Ontology about="http://www.w3.org/ns/sosa/">
+            <formalism>
+                <Formalism name="OWL2.0" uri="http://www.w3.org/2002/07/owl#"/>
+            </formalism>
+        </Ontology>
+    </onto2>
+    <steps>
+        <step order="1" cell="cell1"/>
+        <step order="2" cell="cell2"/>
+        <step order="3" cell="cell3"/>
+    </steps>
+    <map>
+        <Cell id="cell1">
+            <entity1>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&saref;Device"/>
+                    <saref:makesMeasurement>
+                        <sripas:node_CTB>
+                            <saref:relatesToProperty>
+                                <sripas:node_CTC/>
+                            </saref:relatesToProperty>
+                            <saref:hasValue>
+                                <sripas:node_CTV/>
+                            </saref:hasValue>
+                            <saref:hasTimestamp>
+                                <sripas:node_CTT/>
+                            </saref:hasTimestamp>
+                        </sripas:node_CTB>
+                    </saref:makesMeasurement>
+                </sripas:node_CTA>
+            </entity1>
+            <entity2>
+                <sripas:node_CTB>
+                    <rdf:type rdf:resource="&sosa;Observation"/>
+                    <sosa:madeBySensor>
+                        <sripas:node_CTA>
+                            <rdf:type rdf:resource="&sosa;Sensor"/>
+                        </sripas:node_CTA>
+                    </sosa:madeBySensor>
+                    <sosa:hasSimpleResult>
+                        <sripas:node_CTV/>
+                    </sosa:hasSimpleResult>
+                    <sosa:observedProperty>
+                        <sripas:node_CTC/>
+                    </sosa:observedProperty>
+                    <sosa:phenomenonTime>
+                        <rdf:Description>
+                            <rdf:type rdf:resource="&time;Instant"/>
+                            <time:inTimePosition>
+                                <rdf:Description>
+                                    <rdf:type rdf:resource="&time;TimePosition" />
+                                    <time:numericPosition>
+                                        <sripas:node_CTT/>
+                                    </time:numericPosition>
+                                </rdf:Description>
+                            </time:inTimePosition>
+                        </rdf:Description>
+                    </sosa:phenomenonTime>
+               </sripas:node_CTB>
+            </entity2>
+            <relation>=</relation>
+        </Cell>
+        <Cell id="cell2">
+            <entity1>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&saref;SpeedMeasurement"/>
+                </sripas:node_CTA>
+            </entity1>
+            <entity2>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&sosaExt;SpeedMeasurement"/>
+                </sripas:node_CTA>
+            </entity2>
+            <relation>=</relation>
+        </Cell>
+        <Cell id="cell3">
+            <entity1>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&saref;AccelarationMeasurement"/>
+                </sripas:node_CTA>
+            </entity1>
+            <entity2>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&sosaExt;AccelerationMeasurement"/>
+                </sripas:node_CTA>
+            </entity2>
+            <relation>=</relation>
+        </Cell>
+    </map>
+</Alignment>

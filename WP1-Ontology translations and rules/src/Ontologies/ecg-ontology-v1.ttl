@@ -1,0 +1,1986 @@
+@prefix : <http://www.menthor.net/myontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl2xml: <http://www.w3.org/2006/12/owl2-xml#> .
+@prefix myontology: <http://www.menthor.net/myontology#> .
+@base <http://www.menthor.net/myontology> .
+
+<http://www.menthor.net/myontology> rdf:type owl:Ontology .
+
+
+#################################################################
+#
+#    Annotation properties
+#
+#################################################################
+
+
+###  http://www.w3.org/2000/01/rdf-schema#subClassOf
+
+rdfs:subClassOf rdf:type owl:AnnotationProperty .
+
+
+
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://www.menthor.net/myontology#componentOf
+
+:componentOf rdf:type owl:ObjectProperty ;
+             
+             rdfs:range :FunctionalComplex ;
+             
+             rdfs:domain :FunctionalComplex ;
+             
+             rdfs:subPropertyOf :partOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfBloodInHumanBodyBloodInLeftAtrium
+
+:componentOfBloodInHumanBodyBloodInLeftAtrium rdf:type owl:ObjectProperty ;
+                                              
+                                              rdfs:range :BloodInHumanBody ;
+                                              
+                                              rdfs:domain :BloodInLeftAtrium ;
+                                              
+                                              rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfBloodInHumanBodyBloodInLeftVentricle
+
+:componentOfBloodInHumanBodyBloodInLeftVentricle rdf:type owl:ObjectProperty ;
+                                                 
+                                                 rdfs:range :BloodInHumanBody ;
+                                                 
+                                                 rdfs:domain :BloodInLeftVentricle ;
+                                                 
+                                                 rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfBloodInHumanBodyBloodInLungs
+
+:componentOfBloodInHumanBodyBloodInLungs rdf:type owl:ObjectProperty ;
+                                         
+                                         rdfs:range :BloodInHumanBody ;
+                                         
+                                         rdfs:domain :BloodInLungs ;
+                                         
+                                         rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfBloodInHumanBodyBloodInPeripherals
+
+:componentOfBloodInHumanBodyBloodInPeripherals rdf:type owl:ObjectProperty ;
+                                               
+                                               rdfs:range :BloodInHumanBody ;
+                                               
+                                               rdfs:domain :BloodInPeripherals ;
+                                               
+                                               rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfBloodInHumanBodyBloodInRightAtrium
+
+:componentOfBloodInHumanBodyBloodInRightAtrium rdf:type owl:ObjectProperty ;
+                                               
+                                               rdfs:range :BloodInHumanBody ;
+                                               
+                                               rdfs:domain :BloodInRightAtrium ;
+                                               
+                                               rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfBloodInHumanBodyBloodInRightVentricle
+
+:componentOfBloodInHumanBodyBloodInRightVentricle rdf:type owl:ObjectProperty ;
+                                                  
+                                                  rdfs:range :BloodInHumanBody ;
+                                                  
+                                                  rdfs:domain :BloodInRightVentricle ;
+                                                  
+                                                  rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartAsABloodContainerLeftAtriumAsABloodContainer
+
+:componentOfHeartAsABloodContainerLeftAtriumAsABloodContainer rdf:type owl:ObjectProperty ;
+                                                              
+                                                              rdfs:range :QuaHeartAsABloodContainer ;
+                                                              
+                                                              rdfs:domain :QuaLeftAtriumAsABloodContainer ;
+                                                              
+                                                              rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartAsABloodContainerLeftVentricleAsABloodContainer
+
+:componentOfHeartAsABloodContainerLeftVentricleAsABloodContainer rdf:type owl:ObjectProperty ;
+                                                                 
+                                                                 rdfs:range :QuaHeartAsABloodContainer ;
+                                                                 
+                                                                 rdfs:domain :QuaLeftVentricleAsABloodContainer ;
+                                                                 
+                                                                 rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartAsABloodContainerRightAtriumAsABloodContainer
+
+:componentOfHeartAsABloodContainerRightAtriumAsABloodContainer rdf:type owl:ObjectProperty ;
+                                                               
+                                                               rdfs:range :QuaHeartAsABloodContainer ;
+                                                               
+                                                               rdfs:domain :QuaRightAtriumAsABloodContainer ;
+                                                               
+                                                               rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartAsABloodContainerRightVentricleAsABloodContainer
+
+:componentOfHeartAsABloodContainerRightVentricleAsABloodContainer rdf:type owl:ObjectProperty ;
+                                                                  
+                                                                  rdfs:range :QuaHeartAsABloodContainer ;
+                                                                  
+                                                                  rdfs:domain :QuaRightVentricleAsABloodContainer ;
+                                                                  
+                                                                  rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartAsAPumpLeftAtriumAsAPump
+
+:componentOfHeartAsAPumpLeftAtriumAsAPump rdf:type owl:ObjectProperty ;
+                                          
+                                          rdfs:range :QuaHeartAsAPump ;
+                                          
+                                          rdfs:domain :QuaLeftAtriumAsAPump ;
+                                          
+                                          rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartAsAPumpLeftVentricleAsAPump
+
+:componentOfHeartAsAPumpLeftVentricleAsAPump rdf:type owl:ObjectProperty ;
+                                             
+                                             rdfs:range :QuaHeartAsAPump ;
+                                             
+                                             rdfs:domain :QuaLeftVentricleAsAPump ;
+                                             
+                                             rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartAsAPumpRightAtriumAsAPump
+
+:componentOfHeartAsAPumpRightAtriumAsAPump rdf:type owl:ObjectProperty ;
+                                           
+                                           rdfs:range :QuaHeartAsAPump ;
+                                           
+                                           rdfs:domain :QuaRightAtriumAsAPump ;
+                                           
+                                           rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartAsAPumpRightVentricleAsAPump
+
+:componentOfHeartAsAPumpRightVentricleAsAPump rdf:type owl:ObjectProperty ;
+                                              
+                                              rdfs:range :QuaHeartAsAPump ;
+                                              
+                                              rdfs:domain :QuaRightVentricleAsAPump ;
+                                              
+                                              rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartHeartCells
+
+:componentOfHeartHeartCells rdf:type owl:ObjectProperty ;
+                            
+                            rdfs:range :Heart ;
+                            
+                            rdfs:domain :HeartCells ;
+                            
+                            rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartLeftAtrium
+
+:componentOfHeartLeftAtrium rdf:type owl:ObjectProperty ;
+                            
+                            rdfs:range :Heart ;
+                            
+                            rdfs:domain :LeftAtrium ;
+                            
+                            rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartLeftVentricle
+
+:componentOfHeartLeftVentricle rdf:type owl:ObjectProperty ;
+                               
+                               rdfs:range :Heart ;
+                               
+                               rdfs:domain :LeftVentricle ;
+                               
+                               rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartRightAtrium
+
+:componentOfHeartRightAtrium rdf:type owl:ObjectProperty ;
+                             
+                             rdfs:range :Heart ;
+                             
+                             rdfs:domain :RightAtrium ;
+                             
+                             rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHeartRightVentricle
+
+:componentOfHeartRightVentricle rdf:type owl:ObjectProperty ;
+                                
+                                rdfs:range :Heart ;
+                                
+                                rdfs:domain :RightVentricle ;
+                                
+                                rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHisPurkinjeElectricalImpulseAVElectricalImpulse
+
+:componentOfHisPurkinjeElectricalImpulseAVElectricalImpulse rdf:type owl:ObjectProperty ;
+                                                            
+                                                            rdfs:domain :AVElectricalImpulse ;
+                                                            
+                                                            rdfs:range :HisPurkinjeElectricalImpulse ;
+                                                            
+                                                            rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHisPurkinjeElectricalImpulseSAElectricalImpulse
+
+:componentOfHisPurkinjeElectricalImpulseSAElectricalImpulse rdf:type owl:ObjectProperty ;
+                                                            
+                                                            rdfs:range :HisPurkinjeElectricalImpulse ;
+                                                            
+                                                            rdfs:domain :SAElectricalImpulse ;
+                                                            
+                                                            rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHumanBodyHeart
+
+:componentOfHumanBodyHeart rdf:type owl:ObjectProperty ;
+                           
+                           rdfs:domain :Heart ;
+                           
+                           rdfs:range :HumanBody ;
+                           
+                           rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHumanBodyLungs
+
+:componentOfHumanBodyLungs rdf:type owl:ObjectProperty ;
+                           
+                           rdfs:range :HumanBody ;
+                           
+                           rdfs:domain :Lungs ;
+                           
+                           rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#componentOfHumanBodyPeripherals
+
+:componentOfHumanBodyPeripherals rdf:type owl:ObjectProperty ;
+                                 
+                                 rdfs:range :HumanBody ;
+                                 
+                                 rdfs:domain :Peripherals ;
+                                 
+                                 rdfs:subPropertyOf :componentOf .
+
+
+
+###  http://www.menthor.net/myontology#essentialPartOf
+
+:essentialPartOf rdf:type owl:ObjectProperty ;
+                 
+                 rdfs:subPropertyOf :invExistentiallyDependentOf ,
+                                    :partOf .
+
+
+
+###  http://www.menthor.net/myontology#existentiallyDependentOf
+
+:existentiallyDependentOf rdf:type owl:IrreflexiveProperty ,
+                                   owl:ObjectProperty ;
+                          
+                          rdfs:domain :Individual ;
+                          
+                          rdfs:range :Individual ;
+                          
+                          owl:inverseOf :invExistentiallyDependentOf .
+
+
+
+###  http://www.menthor.net/myontology#existentiallyDependentOfQua
+
+:existentiallyDependentOfQua rdf:type owl:ObjectProperty ,
+                                      owl:SymmetricProperty ;
+                             
+                             rdfs:domain :RelationalQuaIndividual ;
+                             
+                             rdfs:range :RelationalQuaIndividual ;
+                             
+                             rdfs:subPropertyOf :existentiallyDependentOf .
+
+
+
+###  http://www.menthor.net/myontology#hasTemporalExtent
+
+:hasTemporalExtent rdf:type owl:FunctionalProperty ,
+                            owl:ObjectProperty ;
+                   
+                   rdfs:domain :Individual ;
+                   
+                   rdfs:range :TemporalExtent .
+
+
+
+###  http://www.menthor.net/myontology#inheresIn
+
+:inheresIn rdf:type owl:AsymmetricProperty ,
+                    owl:FunctionalProperty ,
+                    owl:ObjectProperty ;
+           
+           rdfs:range :Individual ;
+           
+           rdfs:domain :IntrinsicMoment ;
+           
+           rdfs:subPropertyOf :existentiallyDependentOf .
+
+
+
+###  http://www.menthor.net/myontology#inseparablePartOf
+
+:inseparablePartOf rdf:type owl:ObjectProperty ;
+                   
+                   rdfs:subPropertyOf :existentiallyDependentOf ,
+                                      :partOf .
+
+
+
+###  http://www.menthor.net/myontology#invExistentiallyDependentOf
+
+:invExistentiallyDependentOf rdf:type owl:ObjectProperty ;
+                             
+                             rdfs:domain :Individual ;
+                             
+                             rdfs:range :Individual .
+
+
+
+###  http://www.menthor.net/myontology#mediates
+
+:mediates rdf:type owl:AsymmetricProperty ,
+                   owl:ObjectProperty ;
+          
+          rdfs:range :Individual ;
+          
+          rdfs:domain :Relator ;
+          
+          rdfs:subPropertyOf :existentiallyDependentOf .
+
+
+
+###  http://www.menthor.net/myontology#memberOf
+
+:memberOf rdf:type owl:ObjectProperty ;
+          
+          rdfs:range :Collective ;
+          
+          rdfs:subPropertyOf :partOf ;
+          
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :Collective
+                                      :FunctionalComplex
+                                    )
+                      ] .
+
+
+
+###  http://www.menthor.net/myontology#nullAVNodeCellsAVElectricalImpulse
+
+:nullAVNodeCellsAVElectricalImpulse rdf:type owl:ObjectProperty ;
+                                    
+                                    rdfs:range :AVElectricalImpulse ;
+                                    
+                                    rdfs:domain :AVNodeCells .
+
+
+
+###  http://www.menthor.net/myontology#nullSANodeCellsSAElectricalImpulse
+
+:nullSANodeCellsSAElectricalImpulse rdf:type owl:ObjectProperty ;
+                                    
+                                    rdfs:range :SAElectricalImpulse ;
+                                    
+                                    rdfs:domain :SANodeCells .
+
+
+
+###  http://www.menthor.net/myontology#partOf
+
+:partOf rdf:type owl:AsymmetricProperty ,
+                 owl:IrreflexiveProperty ,
+                 owl:ObjectProperty ;
+        
+        rdfs:domain :Individual ;
+        
+        rdfs:range :Individual .
+
+
+
+###  http://www.menthor.net/myontology#partOfRelator
+
+:partOfRelator rdf:type owl:FunctionalProperty ,
+                        owl:ObjectProperty ;
+               
+               rdfs:domain :RelationalQuaIndividual ;
+               
+               rdfs:range :Relator ;
+               
+               rdfs:subPropertyOf :essentialPartOf ,
+                                  :inseparablePartOf .
+
+
+
+###  http://www.menthor.net/myontology#storingLeftAtriumAsABloodContainerBloodInLeftAtrium
+
+:storingLeftAtriumAsABloodContainerBloodInLeftAtrium rdf:type owl:ObjectProperty .
+
+
+
+###  http://www.menthor.net/myontology#storingLeftVentricleAsABloodContainerBloodInLeftVentricle
+
+:storingLeftVentricleAsABloodContainerBloodInLeftVentricle rdf:type owl:ObjectProperty .
+
+
+
+###  http://www.menthor.net/myontology#storingLungsAsABloodContainerBloodInLungs
+
+:storingLungsAsABloodContainerBloodInLungs rdf:type owl:ObjectProperty .
+
+
+
+###  http://www.menthor.net/myontology#storingPeripheralsAsABloodContainerBloodInPeripherals
+
+:storingPeripheralsAsABloodContainerBloodInPeripherals rdf:type owl:ObjectProperty .
+
+
+
+###  http://www.menthor.net/myontology#storingRightAtriumAsABloodContainerBloodInRightAtrium
+
+:storingRightAtriumAsABloodContainerBloodInRightAtrium rdf:type owl:ObjectProperty .
+
+
+
+###  http://www.menthor.net/myontology#storingRightVentricleAsABloodContainerBloodInRightVentricle
+
+:storingRightVentricleAsABloodContainerBloodInRightVentricle rdf:type owl:ObjectProperty .
+
+
+
+###  http://www.menthor.net/myontology#subCollectionOf
+
+:subCollectionOf rdf:type owl:ObjectProperty ;
+                 
+                 rdfs:domain :Collective ;
+                 
+                 rdfs:range :Collective ;
+                 
+                 rdfs:subPropertyOf :partOf .
+
+
+
+###  http://www.menthor.net/myontology#subQuantityOf
+
+:subQuantityOf rdf:type owl:ObjectProperty ;
+               
+               rdfs:domain :Quantity ;
+               
+               rdfs:range :Quantity ;
+               
+               rdfs:subPropertyOf :essentialPartOf .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://www.menthor.net/myontology#hasValue
+
+:hasValue rdf:type owl:DatatypeProperty ,
+                   owl:FunctionalProperty ;
+          
+          rdfs:domain :Quality .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://www.menthor.net/myontology#AVElectricalImpulse
+
+:AVElectricalImpulse rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :FunctionalComplex ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty [ owl:inverseOf :nullAVNodeCellsAVElectricalImpulse
+                                                      ] ;
+                                       owl:onClass :AVNodeCells ;
+                                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty :componentOfHisPurkinjeElectricalImpulseAVElectricalImpulse ;
+                                       owl:onClass :HisPurkinjeElectricalImpulse ;
+                                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                     ] ;
+                     
+                     owl:disjointWith :BloodInHumanBody ,
+                                      :BloodInLeftAtrium ,
+                                      :BloodInLeftVentricle ,
+                                      :BloodInLungs ,
+                                      :BloodInPeripherals ,
+                                      :BloodInRightAtrium ,
+                                      :BloodInRightVentricle ,
+                                      :Heart ,
+                                      :HisPurkinjeElectricalImpulse ,
+                                      :HumanBody ,
+                                      :LeftAtrium ,
+                                      :LeftVentricle ,
+                                      :Lungs ,
+                                      :Peripherals ,
+                                      :RightAtrium ,
+                                      :RightVentricle ,
+                                      :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#AVNodeCells
+
+:AVNodeCells rdf:type owl:Class ;
+             
+             rdfs:subClassOf :PacemakerCells ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :nullAVNodeCellsAVElectricalImpulse ;
+                               owl:onClass :AVElectricalImpulse ;
+                               owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                             ] .
+
+
+
+###  http://www.menthor.net/myontology#BloodInHumanBody
+
+:BloodInHumanBody rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf """
+		""" ,
+                                  :FunctionalComplex ;
+                  
+                  owl:disjointWith :BloodInLeftAtrium ,
+                                   :BloodInLeftVentricle ,
+                                   :BloodInLungs ,
+                                   :BloodInPeripherals ,
+                                   :BloodInRightAtrium ,
+                                   :BloodInRightVentricle ,
+                                   :Heart ,
+                                   :HisPurkinjeElectricalImpulse ,
+                                   :HumanBody ,
+                                   :LeftAtrium ,
+                                   :LeftVentricle ,
+                                   :Lungs ,
+                                   :Peripherals ,
+                                   :RightAtrium ,
+                                   :RightVentricle ,
+                                   :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#BloodInLeftAtrium
+
+:BloodInLeftAtrium rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf """
+		""" ,
+                                   :FunctionalComplex ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty [ owl:inverseOf :mediates
+                                                    ] ;
+                                     owl:onClass :LABloodStoring ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty [ owl:inverseOf :storingLeftAtriumAsABloodContainerBloodInLeftAtrium
+                                                    ] ;
+                                     owl:onClass :LeftAtrium ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty :componentOf ;
+                                     owl:onClass :BloodInHumanBody ;
+                                     owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty :componentOfBloodInHumanBodyBloodInLeftAtrium ;
+                                     owl:onClass :BloodInHumanBody ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ;
+                   
+                   owl:disjointWith :BloodInLeftVentricle ,
+                                    :BloodInLungs ,
+                                    :BloodInPeripherals ,
+                                    :BloodInRightAtrium ,
+                                    :BloodInRightVentricle ,
+                                    :Heart ,
+                                    :HisPurkinjeElectricalImpulse ,
+                                    :HumanBody ,
+                                    :LeftAtrium ,
+                                    :LeftVentricle ,
+                                    :Lungs ,
+                                    :Peripherals ,
+                                    :RightAtrium ,
+                                    :RightVentricle ,
+                                    :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#BloodInLeftVentricle
+
+:BloodInLeftVentricle rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf """
+		""" ,
+                                      :FunctionalComplex ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :componentOf ;
+                                        owl:onClass :BloodInHumanBody ;
+                                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :componentOfBloodInHumanBodyBloodInLeftVentricle ;
+                                        owl:onClass :BloodInHumanBody ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty [ owl:inverseOf :storingLeftVentricleAsABloodContainerBloodInLeftVentricle
+                                                       ] ;
+                                        owl:onClass :LeftVentricle ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty [ owl:inverseOf :mediates
+                                                       ] ;
+                                        owl:onClass :LVBloodStoring ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ;
+                      
+                      owl:disjointWith :BloodInLungs ,
+                                       :BloodInPeripherals ,
+                                       :BloodInRightAtrium ,
+                                       :BloodInRightVentricle ,
+                                       :Heart ,
+                                       :HisPurkinjeElectricalImpulse ,
+                                       :HumanBody ,
+                                       :LeftAtrium ,
+                                       :LeftVentricle ,
+                                       :Lungs ,
+                                       :Peripherals ,
+                                       :RightAtrium ,
+                                       :RightVentricle ,
+                                       :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#BloodInLungs
+
+:BloodInLungs rdf:type owl:Class ;
+              
+              rdfs:subClassOf """
+		""" ,
+                              :FunctionalComplex ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty [ owl:inverseOf :storingLungsAsABloodContainerBloodInLungs
+                                               ] ;
+                                owl:onClass :Lungs ;
+                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty [ owl:inverseOf :mediates
+                                               ] ;
+                                owl:onClass :LungsBloodStoring ;
+                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :componentOf ;
+                                owl:onClass :BloodInHumanBody ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :componentOfBloodInHumanBodyBloodInLungs ;
+                                owl:onClass :BloodInHumanBody ;
+                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                              ] ;
+              
+              owl:disjointWith :BloodInPeripherals ,
+                               :BloodInRightAtrium ,
+                               :BloodInRightVentricle ,
+                               :Heart ,
+                               :HisPurkinjeElectricalImpulse ,
+                               :HumanBody ,
+                               :LeftAtrium ,
+                               :LeftVentricle ,
+                               :Lungs ,
+                               :Peripherals ,
+                               :RightAtrium ,
+                               :RightVentricle ,
+                               :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#BloodInPeripherals
+
+:BloodInPeripherals rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf """
+		""" ,
+                                    :FunctionalComplex ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :componentOfBloodInHumanBodyBloodInPeripherals ;
+                                      owl:onClass :BloodInHumanBody ;
+                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty [ owl:inverseOf :mediates
+                                                     ] ;
+                                      owl:onClass :PeripheralsBloodStoring ;
+                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :componentOf ;
+                                      owl:onClass :BloodInHumanBody ;
+                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty [ owl:inverseOf :storingPeripheralsAsABloodContainerBloodInPeripherals
+                                                     ] ;
+                                      owl:onClass :Peripherals ;
+                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                    ] ;
+                    
+                    owl:disjointWith :BloodInRightAtrium ,
+                                     :BloodInRightVentricle ,
+                                     :Heart ,
+                                     :HisPurkinjeElectricalImpulse ,
+                                     :HumanBody ,
+                                     :LeftAtrium ,
+                                     :LeftVentricle ,
+                                     :Lungs ,
+                                     :Peripherals ,
+                                     :RightAtrium ,
+                                     :RightVentricle ,
+                                     :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#BloodInRightAtrium
+
+:BloodInRightAtrium rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf """
+		""" ,
+                                    :FunctionalComplex ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :componentOfBloodInHumanBodyBloodInRightAtrium ;
+                                      owl:onClass :BloodInHumanBody ;
+                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty [ owl:inverseOf :storingRightAtriumAsABloodContainerBloodInRightAtrium
+                                                     ] ;
+                                      owl:onClass :RightAtrium ;
+                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty [ owl:inverseOf :mediates
+                                                     ] ;
+                                      owl:onClass :RABloodStoring ;
+                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :componentOf ;
+                                      owl:onClass :BloodInHumanBody ;
+                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                    ] ;
+                    
+                    owl:disjointWith :BloodInRightVentricle ,
+                                     :Heart ,
+                                     :HisPurkinjeElectricalImpulse ,
+                                     :HumanBody ,
+                                     :LeftAtrium ,
+                                     :LeftVentricle ,
+                                     :Lungs ,
+                                     :Peripherals ,
+                                     :RightAtrium ,
+                                     :RightVentricle ,
+                                     :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#BloodInRightVentricle
+
+:BloodInRightVentricle rdf:type owl:Class ;
+                       
+                       rdfs:subClassOf """
+		""" ,
+                                       :FunctionalComplex ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty [ owl:inverseOf :storingRightVentricleAsABloodContainerBloodInRightVentricle
+                                                        ] ;
+                                         owl:onClass :RightVentricle ;
+                                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty :componentOf ;
+                                         owl:onClass :BloodInHumanBody ;
+                                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty :componentOfBloodInHumanBodyBloodInRightVentricle ;
+                                         owl:onClass :BloodInHumanBody ;
+                                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty [ owl:inverseOf :mediates
+                                                        ] ;
+                                         owl:onClass :RVBloodStoring ;
+                                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                       ] ;
+                       
+                       owl:disjointWith :Heart ,
+                                        :HisPurkinjeElectricalImpulse ,
+                                        :HumanBody ,
+                                        :LeftAtrium ,
+                                        :LeftVentricle ,
+                                        :Lungs ,
+                                        :Peripherals ,
+                                        :RightAtrium ,
+                                        :RightVentricle ,
+                                        :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#Chamber
+
+:Chamber rdf:type owl:Class .
+
+
+
+###  http://www.menthor.net/myontology#Collective
+
+:Collective rdf:type owl:Class ;
+            
+            owl:equivalentClass [ rdf:type owl:Class ;
+                                  owl:unionOf ( :HeartCells
+                                              )
+                                ] ;
+            
+            rdfs:subClassOf :Object ;
+            
+            owl:disjointWith :FunctionalComplex ,
+                             :Quantity .
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Collective
+              )
+] .
+
+
+
+###  http://www.menthor.net/myontology#FunctionalComplex
+
+:FunctionalComplex rdf:type owl:Class ;
+                   
+                   owl:equivalentClass [ rdf:type owl:Class ;
+                                         owl:unionOf ( :AVElectricalImpulse
+                                                       :BloodInHumanBody
+                                                       :BloodInLeftAtrium
+                                                       :BloodInLeftVentricle
+                                                       :BloodInLungs
+                                                       :BloodInPeripherals
+                                                       :BloodInRightAtrium
+                                                       :BloodInRightVentricle
+                                                       :Heart
+                                                       :HisPurkinjeElectricalImpulse
+                                                       :HumanBody
+                                                       :LeftAtrium
+                                                       :LeftVentricle
+                                                       :Lungs
+                                                       :Peripherals
+                                                       :RightAtrium
+                                                       :RightVentricle
+                                                       :SAElectricalImpulse
+                                                     )
+                                       ] ;
+                   
+                   rdfs:subClassOf :Object ;
+                   
+                   owl:disjointWith :Quantity .
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :FunctionalComplex
+              )
+] .
+
+
+
+###  http://www.menthor.net/myontology#Heart
+
+:Heart rdf:type owl:Class ;
+       
+       rdfs:subClassOf :FunctionalComplex ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :componentOfHumanBodyHeart ;
+                         owl:onClass :HumanBody ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :componentOfHeartLeftVentricle
+                                        ] ;
+                         owl:onClass :LeftVentricle ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :componentOfHeartRightVentricle
+                                        ] ;
+                         owl:onClass :RightVentricle ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :componentOfHeartHeartCells
+                                        ] ;
+                         owl:onClass :HeartCells ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :componentOfHeartRightAtrium
+                                        ] ;
+                         owl:onClass :RightAtrium ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :componentOfHeartLeftAtrium
+                                        ] ;
+                         owl:onClass :LeftAtrium ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                       ] ;
+       
+       owl:disjointWith :HisPurkinjeElectricalImpulse ,
+                        :HumanBody ,
+                        :LeftAtrium ,
+                        :LeftVentricle ,
+                        :Lungs ,
+                        :Peripherals ,
+                        :RightAtrium ,
+                        :RightVentricle ,
+                        :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#HeartCells
+
+:HeartCells rdf:type owl:Class ;
+            
+            rdfs:subClassOf :Collective ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :componentOfHeartHeartCells ;
+                              owl:onClass :Heart ;
+                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                            ] .
+
+
+
+###  http://www.menthor.net/myontology#HisPurkinjeElectricalImpulse
+
+:HisPurkinjeElectricalImpulse rdf:type owl:Class ;
+                              
+                              rdfs:subClassOf :FunctionalComplex ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty [ owl:inverseOf :componentOfHisPurkinjeElectricalImpulseAVElectricalImpulse
+                                                               ] ;
+                                                owl:onClass :AVElectricalImpulse ;
+                                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty [ owl:inverseOf :componentOfHisPurkinjeElectricalImpulseSAElectricalImpulse
+                                                               ] ;
+                                                owl:onClass :SAElectricalImpulse ;
+                                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                              ] ;
+                              
+                              owl:disjointWith :HumanBody ,
+                                               :LeftAtrium ,
+                                               :LeftVentricle ,
+                                               :Lungs ,
+                                               :Peripherals ,
+                                               :RightAtrium ,
+                                               :RightVentricle ,
+                                               :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#HumanBody
+
+:HumanBody rdf:type owl:Class ;
+           
+           rdfs:subClassOf :FunctionalComplex ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty [ owl:inverseOf :componentOfHumanBodyLungs
+                                            ] ;
+                             owl:onClass :Lungs ;
+                             owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty [ owl:inverseOf :componentOfHumanBodyPeripherals
+                                            ] ;
+                             owl:onClass :Peripherals ;
+                             owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty [ owl:inverseOf :componentOfHumanBodyHeart
+                                            ] ;
+                             owl:onClass :Heart ;
+                             owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                           ] ;
+           
+           owl:disjointWith :LeftAtrium ,
+                            :LeftVentricle ,
+                            :Lungs ,
+                            :Peripherals ,
+                            :RightAtrium ,
+                            :RightVentricle ,
+                            :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#Individual
+
+:Individual rdf:type owl:Class ;
+            
+            owl:equivalentClass [ rdf:type owl:Class ;
+                                  owl:unionOf ( :Moment
+                                                :Object
+                                              )
+                                ] ;
+            
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasTemporalExtent ;
+                              owl:someValuesFrom :TemporalExtent
+                            ] ;
+            
+            owl:disjointWith :TemporalExtent .
+
+
+
+###  http://www.menthor.net/myontology#IntrinsicMoment
+
+:IntrinsicMoment rdf:type owl:Class ;
+                 
+                 owl:equivalentClass [ rdf:type owl:Class ;
+                                       owl:unionOf ( :Mode
+                                                     :Quality
+                                                   )
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty :inheresIn ;
+                                       owl:someValuesFrom :Individual
+                                     ] ;
+                 
+                 rdfs:subClassOf :Moment ;
+                 
+                 owl:disjointWith :Relator .
+
+
+
+###  http://www.menthor.net/myontology#LABloodStoring
+
+:LABloodStoring rdf:type owl:Class ;
+                
+                rdfs:subClassOf :Relator ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :mediates ;
+                                  owl:onClass :LeftAtrium ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :mediates ;
+                                  owl:onClass :BloodInLeftAtrium ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf :partOfRelator
+                                                 ] ;
+                                  owl:onClass :QuaLeftAtriumAsABloodContainer ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] .
+
+
+
+###  http://www.menthor.net/myontology#LAContraction
+
+:LAContraction rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Relator ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty [ owl:inverseOf :partOfRelator
+                                                ] ;
+                                 owl:onClass :QuaLeftAtriumAsAPump ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :mediates ;
+                                 owl:onClass :SAElectricalImpulse ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :mediates ;
+                                 owl:onClass :LeftAtrium ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] .
+
+
+
+###  http://www.menthor.net/myontology#LVBloodStoring
+
+:LVBloodStoring rdf:type owl:Class ;
+                
+                rdfs:subClassOf :Relator ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf :partOfRelator
+                                                 ] ;
+                                  owl:onClass :QuaLeftVentricleAsABloodContainer ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :mediates ;
+                                  owl:onClass :BloodInLeftVentricle ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :mediates ;
+                                  owl:onClass :LeftVentricle ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] .
+
+
+
+###  http://www.menthor.net/myontology#LVContraction
+
+:LVContraction rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Relator ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty [ owl:inverseOf :partOfRelator
+                                                ] ;
+                                 owl:onClass :QuaLeftVentricleAsAPump ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :mediates ;
+                                 owl:onClass :HisPurkinjeElectricalImpulse ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty [ owl:inverseOf :partOfRelator
+                                                ] ;
+                                 owl:onClass :QuaPurkinjeElectricalImpulse ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :mediates ;
+                                 owl:onClass :LeftVentricle ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] .
+
+
+
+###  http://www.menthor.net/myontology#LeftAtrium
+
+:LeftAtrium rdf:type owl:Class ;
+            
+            rdfs:subClassOf :FunctionalComplex ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :componentOf ;
+                              owl:onClass :Heart ;
+                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :componentOfHeartLeftAtrium ;
+                              owl:onClass :Heart ;
+                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                            ] ;
+            
+            owl:disjointWith :LeftVentricle ,
+                             :Lungs ,
+                             :Peripherals ,
+                             :RightAtrium ,
+                             :RightVentricle ,
+                             :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#LeftVentricle
+
+:LeftVentricle rdf:type owl:Class ;
+               
+               rdfs:subClassOf :FunctionalComplex ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :componentOfHeartLeftVentricle ;
+                                 owl:onClass :Heart ;
+                                 owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :componentOf ;
+                                 owl:onClass :Heart ;
+                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ;
+               
+               owl:disjointWith :Lungs ,
+                                :Peripherals ,
+                                :RightAtrium ,
+                                :RightVentricle ,
+                                :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#Lungs
+
+:Lungs rdf:type owl:Class ;
+       
+       rdfs:subClassOf :FunctionalComplex ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :componentOfHumanBodyLungs ;
+                         owl:onClass :HumanBody ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                       ] ;
+       
+       owl:disjointWith :Peripherals ,
+                        :RightAtrium ,
+                        :RightVentricle ,
+                        :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#LungsBloodStoring
+
+:LungsBloodStoring rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :Relator ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty :mediates ;
+                                     owl:onClass :Lungs ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty [ owl:inverseOf :partOfRelator
+                                                    ] ;
+                                     owl:onClass :QuaLungsAsABloodContainer ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty :mediates ;
+                                     owl:onClass :BloodInLungs ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                   ] .
+
+
+
+###  http://www.menthor.net/myontology#Mode
+
+:Mode rdf:type owl:Class ;
+      
+      owl:equivalentClass [ rdf:type owl:Class ;
+                            owl:unionOf ( :QuaIndividual
+                                        )
+                          ] ;
+      
+      rdfs:subClassOf :IntrinsicMoment ;
+      
+      owl:disjointWith :Quality .
+
+
+
+###  http://www.menthor.net/myontology#Moment
+
+:Moment rdf:type owl:Class ;
+        
+        owl:equivalentClass [ rdf:type owl:Class ;
+                              owl:unionOf ( :IntrinsicMoment
+                                            :Relator
+                                          )
+                            ] ;
+        
+        rdfs:subClassOf :Individual ;
+        
+        owl:disjointWith :Object .
+
+
+
+###  http://www.menthor.net/myontology#Muscle
+
+:Muscle rdf:type owl:Class .
+
+
+
+###  http://www.menthor.net/myontology#NonPacemakerCells
+
+:NonPacemakerCells rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :HeartCells .
+
+
+
+###  http://www.menthor.net/myontology#Object
+
+:Object rdf:type owl:Class ;
+        
+        owl:equivalentClass [ rdf:type owl:Class ;
+                              owl:unionOf ( :Collective
+                                            :FunctionalComplex
+                                            :Quantity
+                                          )
+                            ] ;
+        
+        rdfs:subClassOf :Individual ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty [ owl:inverseOf :inheresIn
+                                         ] ;
+                          owl:someValuesFrom :Moment
+                        ] .
+
+
+
+###  http://www.menthor.net/myontology#PacemakerCells
+
+:PacemakerCells rdf:type owl:Class ;
+                
+                rdfs:subClassOf :HeartCells .
+
+
+
+###  http://www.menthor.net/myontology#Peripherals
+
+:Peripherals rdf:type owl:Class ;
+             
+             rdfs:subClassOf :FunctionalComplex ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :componentOf ;
+                               owl:onClass :HumanBody ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :componentOfHumanBodyPeripherals ;
+                               owl:onClass :HumanBody ;
+                               owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                             ] ;
+             
+             owl:disjointWith :RightAtrium ,
+                              :RightVentricle ,
+                              :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#PeripheralsBloodStoring
+
+:PeripheralsBloodStoring rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf :Relator ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty :mediates ;
+                                           owl:onClass :Peripherals ;
+                                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty :mediates ;
+                                           owl:onClass :BloodInPeripherals ;
+                                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty [ owl:inverseOf :partOfRelator
+                                                          ] ;
+                                           owl:onClass :QuaPeripheralsAsABloodContainer ;
+                                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                         ] .
+
+
+
+###  http://www.menthor.net/myontology#PhasedQuaIndividual
+
+:PhasedQuaIndividual rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :QuaIndividual ;
+                     
+                     owl:disjointWith :RelationalQuaIndividual .
+
+
+
+###  http://www.menthor.net/myontology#QuaHeartAsABloodContainer
+
+:QuaHeartAsABloodContainer rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :RelationalQuaIndividual ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty :inheresIn ;
+                                             owl:someValuesFrom :Heart
+                                           ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaHeartAsAPump
+
+:QuaHeartAsAPump rdf:type owl:Class ;
+                 
+                 rdfs:subClassOf :RelationalQuaIndividual ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :inheresIn ;
+                                   owl:someValuesFrom :Heart
+                                 ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaHisElectricalImpulse
+
+:QuaHisElectricalImpulse rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf :PhasedQuaIndividual ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty :inheresIn ;
+                                           owl:someValuesFrom :HisPurkinjeElectricalImpulse
+                                         ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaIndividual
+
+:QuaIndividual rdf:type owl:Class ;
+               
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:unionOf ( :PhasedQuaIndividual
+                                                   :RelationalQuaIndividual
+                                                 )
+                                   ] ;
+               
+               rdfs:subClassOf :Mode .
+
+
+
+###  http://www.menthor.net/myontology#QuaLeftAtriumAsABloodContainer
+
+:QuaLeftAtriumAsABloodContainer rdf:type owl:Class ;
+                                
+                                rdfs:subClassOf :RelationalQuaIndividual ,
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty :inheresIn ;
+                                                  owl:someValuesFrom :LeftAtrium
+                                                ] ,
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty :partOfRelator ;
+                                                  owl:onClass :LABloodStoring ;
+                                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                                ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaLeftAtriumAsAPump
+
+:QuaLeftAtriumAsAPump rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf :RelationalQuaIndividual ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :partOfRelator ;
+                                        owl:onClass :LAContraction ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :inheresIn ;
+                                        owl:someValuesFrom :LeftAtrium
+                                      ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaLeftVentricleAsABloodContainer
+
+:QuaLeftVentricleAsABloodContainer rdf:type owl:Class ;
+                                   
+                                   rdfs:subClassOf :RelationalQuaIndividual ,
+                                                   [ rdf:type owl:Restriction ;
+                                                     owl:onProperty :partOfRelator ;
+                                                     owl:onClass :LVBloodStoring ;
+                                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                                   ] ,
+                                                   [ rdf:type owl:Restriction ;
+                                                     owl:onProperty :inheresIn ;
+                                                     owl:someValuesFrom :LeftVentricle
+                                                   ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaLeftVentricleAsAPump
+
+:QuaLeftVentricleAsAPump rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf :RelationalQuaIndividual ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty :partOfRelator ;
+                                           owl:onClass :LVContraction ;
+                                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty :inheresIn ;
+                                           owl:someValuesFrom :LeftVentricle
+                                         ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaLungsAsABloodContainer
+
+:QuaLungsAsABloodContainer rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :RelationalQuaIndividual ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty :partOfRelator ;
+                                             owl:onClass :LungsBloodStoring ;
+                                             owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                           ] ,
+                                           [ rdf:type owl:Restriction ;
+                                             owl:onProperty :inheresIn ;
+                                             owl:someValuesFrom :Lungs
+                                           ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaPeripheralsAsABloodContainer
+
+:QuaPeripheralsAsABloodContainer rdf:type owl:Class ;
+                                 
+                                 rdfs:subClassOf :RelationalQuaIndividual ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :partOfRelator ;
+                                                   owl:onClass :PeripheralsBloodStoring ;
+                                                   owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                                 ] ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :inheresIn ;
+                                                   owl:someValuesFrom :Peripherals
+                                                 ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaPurkinjeElectricalImpulse
+
+:QuaPurkinjeElectricalImpulse rdf:type owl:Class ;
+                              
+                              rdfs:subClassOf :PhasedQuaIndividual ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty :partOfRelator ;
+                                                owl:onClass :LVContraction ;
+                                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty :inheresIn ;
+                                                owl:someValuesFrom :HisPurkinjeElectricalImpulse
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty :partOfRelator ;
+                                                owl:onClass :RVContraction ;
+                                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                              ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaRightAtriumAsABloodContainer
+
+:QuaRightAtriumAsABloodContainer rdf:type owl:Class ;
+                                 
+                                 rdfs:subClassOf :RelationalQuaIndividual ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :inheresIn ;
+                                                   owl:someValuesFrom :RightAtrium
+                                                 ] ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :partOfRelator ;
+                                                   owl:onClass :RABloodStoring ;
+                                                   owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                                 ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaRightAtriumAsAPump
+
+:QuaRightAtriumAsAPump rdf:type owl:Class ;
+                       
+                       rdfs:subClassOf :RelationalQuaIndividual ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty :partOfRelator ;
+                                         owl:onClass :RAContraction ;
+                                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty :inheresIn ;
+                                         owl:someValuesFrom :RightAtrium
+                                       ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaRightVentricleAsABloodContainer
+
+:QuaRightVentricleAsABloodContainer rdf:type owl:Class ;
+                                    
+                                    rdfs:subClassOf :RelationalQuaIndividual ,
+                                                    [ rdf:type owl:Restriction ;
+                                                      owl:onProperty :partOfRelator ;
+                                                      owl:onClass :RVBloodStoring ;
+                                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                                    ] ,
+                                                    [ rdf:type owl:Restriction ;
+                                                      owl:onProperty :inheresIn ;
+                                                      owl:someValuesFrom :RightVentricle
+                                                    ] .
+
+
+
+###  http://www.menthor.net/myontology#QuaRightVentricleAsAPump
+
+:QuaRightVentricleAsAPump rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :RelationalQuaIndividual ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty :partOfRelator ;
+                                            owl:onClass :RVContraction ;
+                                            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty :inheresIn ;
+                                            owl:someValuesFrom :RightVentricle
+                                          ] .
+
+
+
+###  http://www.menthor.net/myontology#Quality
+
+:Quality rdf:type owl:Class ;
+         
+         rdfs:subClassOf :IntrinsicMoment .
+
+
+
+###  http://www.menthor.net/myontology#Quantity
+
+:Quantity rdf:type owl:Class ;
+          
+          rdfs:subClassOf :Object .
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Quantity
+              )
+] .
+
+
+
+###  http://www.menthor.net/myontology#RABloodStoring
+
+:RABloodStoring rdf:type owl:Class ;
+                
+                rdfs:subClassOf :Relator ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf :partOfRelator
+                                                 ] ;
+                                  owl:onClass :QuaRightAtriumAsABloodContainer ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :mediates ;
+                                  owl:onClass :BloodInRightAtrium ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :mediates ;
+                                  owl:onClass :RightAtrium ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] .
+
+
+
+###  http://www.menthor.net/myontology#RAContraction
+
+:RAContraction rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Relator ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty [ owl:inverseOf :partOfRelator
+                                                ] ;
+                                 owl:onClass :QuaRightAtriumAsAPump ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :mediates ;
+                                 owl:onClass :SAElectricalImpulse ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :mediates ;
+                                 owl:onClass :RightAtrium ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] .
+
+
+
+###  http://www.menthor.net/myontology#RVBloodStoring
+
+:RVBloodStoring rdf:type owl:Class ;
+                
+                rdfs:subClassOf :Relator ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf :partOfRelator
+                                                 ] ;
+                                  owl:onClass :QuaRightVentricleAsABloodContainer ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :mediates ;
+                                  owl:onClass :RightVentricle ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :mediates ;
+                                  owl:onClass :BloodInRightVentricle ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] .
+
+
+
+###  http://www.menthor.net/myontology#RVContraction
+
+:RVContraction rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Relator ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty [ owl:inverseOf :partOfRelator
+                                                ] ;
+                                 owl:onClass :QuaPurkinjeElectricalImpulse ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :mediates ;
+                                 owl:onClass :RightVentricle ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty [ owl:inverseOf :partOfRelator
+                                                ] ;
+                                 owl:onClass :QuaRightVentricleAsAPump ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :mediates ;
+                                 owl:onClass :HisPurkinjeElectricalImpulse ;
+                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger
+                               ] .
+
+
+
+###  http://www.menthor.net/myontology#RelationalQuaIndividual
+
+:RelationalQuaIndividual rdf:type owl:Class ;
+                         
+                         owl:equivalentClass [ rdf:type owl:Restriction ;
+                                               owl:onProperty :partOfRelator ;
+                                               owl:someValuesFrom :Relator
+                                             ] ;
+                         
+                         rdfs:subClassOf :QuaIndividual .
+
+
+
+###  http://www.menthor.net/myontology#Relator
+
+:Relator rdf:type owl:Class ;
+         
+         owl:equivalentClass [ rdf:type owl:Class ;
+                               owl:unionOf ( :LABloodStoring
+                                             :LAContraction
+                                             :LVBloodStoring
+                                             :LVContraction
+                                             :LungsBloodStoring
+                                             :PeripheralsBloodStoring
+                                             :RABloodStoring
+                                             :RAContraction
+                                             :RVBloodStoring
+                                             :RVContraction
+                                           )
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :mediates ;
+                               owl:someValuesFrom :Individual
+                             ] ;
+         
+         rdfs:subClassOf :Moment ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty [ owl:inverseOf :partOfRelator
+                                          ] ;
+                           owl:onClass :RelationalQuaIndividual ;
+                           owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :mediates ;
+                           owl:onClass :Individual ;
+                           owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger
+                         ] .
+
+
+
+###  http://www.menthor.net/myontology#RightAtrium
+
+:RightAtrium rdf:type owl:Class ;
+             
+             rdfs:subClassOf :FunctionalComplex ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :componentOfHeartRightAtrium ;
+                               owl:onClass :Heart ;
+                               owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :componentOf ;
+                               owl:onClass :Heart ;
+                               owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                             ] ;
+             
+             owl:disjointWith :RightVentricle ,
+                              :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#RightVentricle
+
+:RightVentricle rdf:type owl:Class ;
+                
+                rdfs:subClassOf :FunctionalComplex ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :componentOf ;
+                                  owl:onClass :Heart ;
+                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :componentOfHeartRightVentricle ;
+                                  owl:onClass :Heart ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                ] ;
+                
+                owl:disjointWith :SAElectricalImpulse .
+
+
+
+###  http://www.menthor.net/myontology#SAElectricalImpulse
+
+:SAElectricalImpulse rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :FunctionalComplex ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty [ owl:inverseOf :nullSANodeCellsSAElectricalImpulse
+                                                      ] ;
+                                       owl:onClass :SANodeCells ;
+                                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty :componentOfHisPurkinjeElectricalImpulseSAElectricalImpulse ;
+                                       owl:onClass :HisPurkinjeElectricalImpulse ;
+                                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty [ owl:inverseOf :mediates
+                                                      ] ;
+                                       owl:onClass :LAContraction ;
+                                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty [ owl:inverseOf :mediates
+                                                      ] ;
+                                       owl:onClass :RAContraction ;
+                                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                                     ] .
+
+
+
+###  http://www.menthor.net/myontology#SANodeCells
+
+:SANodeCells rdf:type owl:Class ;
+             
+             rdfs:subClassOf :PacemakerCells ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :nullSANodeCellsSAElectricalImpulse ;
+                               owl:onClass :SAElectricalImpulse ;
+                               owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger
+                             ] .
+
+
+
+###  http://www.menthor.net/myontology#TemporalExtent
+
+:TemporalExtent rdf:type owl:Class .
+
+
+
+
+###  Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net
+

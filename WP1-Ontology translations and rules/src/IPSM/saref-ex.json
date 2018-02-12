@@ -1,0 +1,86 @@
+{
+  "@graph":[
+    {
+      "@graph":[
+        {
+          "@id":"InterIoTMsg:meta66b05c61-d687-45a3-b5fb-6864bbec3b69",
+          "@type":[
+            "InterIoTMsg:Thing_update",
+            "InterIoTMsg:meta"
+          ],
+          "InterIoTMsg:conversationID":"conv99528eba-eb2d-47e8-9ee6-9dd40d19f89a",
+          "InterIoTMsg:dateTimeStamp":"2017-05-22T22:19:30.281+02:00",
+          "InterIoTMsg:messageID":"msg7e484a2c-f959-486e-8da0-31143f457234"
+        }
+      ],
+      "@id":"InterIoTMsg:metadata"
+    },
+    {
+      "@graph": [
+        {
+          "@id": "sarefInst:exampleSmartPhoneSendingInfoTruck",
+          "@type": "saref:Device",
+          "@label": {
+            "@language": "en",
+            "@value": "Motorola Moto G5 Plus"
+          },
+          "geo:location": {
+            "@id": "sarefInst:test.1.1.LocationSmartPhone_39.431478658043424_-0.35860926434736484",
+            "@type": [
+              "owl:NamedIndividual",
+              "geo:SpatialThing"
+            ],
+            "@label": {
+              "@language": "en",
+              "@value": "Location of the smartphone, should be the same location of the truck (?)"
+            },
+            "geo:latitude": 39.431478658043424,
+            "geo:longitude": -0.35860926434736484
+          },
+          "saref:makesMeasurement": [
+            {
+              "@id": "sarefInst:SpeedMeasurement__Test.1.1_1511466006.9682777",
+              "@type": "saref:SpeedMeasurement",
+              "@label": "Example of a speed measurement observed by a mobile device",
+              "saref:hasTimestamp": 1511466006.9682777,
+              "saref:hasValue": 14,
+              "saref:isMeasuredIn": "saref:SpeedUnit_MeterPerSecond",
+              "saref:relatesToProperty": "saref:VelocityOrSpeed_Vehicle"
+            },
+            {
+              "@id": "sarefInst:AccelerationMeasurement_Test.1.1_1511466006.9682777",
+              "@type": "saref:AccelarationMeasurement",
+              "@label": "Example of accelaration measurement observed by a mobile device",
+              "saref:hasTimestamp": 1511466006.9682777,
+              "saref:hasValue": 1.4,
+              "saref:isMeasuredIn": "saref:AccelerationUnit_MeterPerSecondSquared",
+              "saref:relatesToProperty": "saref:Accelaration_Vehicle"
+            }
+          ]
+        }
+      ],
+      "@id": "InterIoTMsg:payload"
+    }]
+,
+  "@context":{
+    "InterIoTMsg":"http://inter-iot.eu/message/",
+    "InterIoT":"http://inter-iot.eu/",
+    "sarefInst" : "https://w3id.org/saref/instances/",
+    "schema":"http://schema.org/",
+    "qu":"http://purl.oclc.org/NET/ssnx/qu/qu#",
+    "owl":"http://www.w3.org/2002/07/owl#",
+    "saref":"https://w3id.org/saref#",
+    "xsd":"http://www.w3.org/2001/XMLSchema#",
+    "skos":"http://www.w3.org/2004/02/skos/core#",
+    "dim":"http://purl.oclc.org/NET/ssnx/qu/dim#",
+    "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
+    "dct":"http://purl.org/dc/terms/",
+    "rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "xml":"http://www.w3.org/XML/1998/namespace",
+    "dcterms":"http://purl.org/dc/terms/",
+    "time":"http://www.w3.org/2006/time#",
+    "foaf":"http://xmlns.com/foaf/0.1/",
+    "om":"http://www.wurvoc.org/vocabularies/om-1.8/",
+    "geo":"http://www.w3.org/2003/01/geo/wgs84_pos#"
+  }
+}

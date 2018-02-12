@@ -1,0 +1,88 @@
+//// Example of an ECG measurements series of lead I of Shimmer 3 ECG unit
+{
+  "@id" : "sarefInst:ECGLead_I_code131329",
+  "@type" : "saref4health:ECGLeadBipolarLimb",
+  "label" : "Lead I (LA-RA)",
+  "hasFrequencyMeasurement" : 
+	{
+		"@id" : "sarefInst:FrequencyOf512Hertz",
+		"@type" : "saref4envi:FrequencyMeasurement",
+		"comment" : "Example of 512Hz frequency",
+		"label" : "512Hz frequency",
+		"hasTimestamp" : "2018-02-06T22:15:30",
+		"hasValue" : "512",
+		"isMeasuredIn" : "om:hertz",
+		"relatesToProperty" : "saref4envi:Frequency"
+	}
+  "makesMeasurement" : [
+	{
+		"@id" : "sarefInst:ECGMeasurementsSeries_Example001",
+		"@type" : "saref4health:ECGMeasurementsSeries",
+		"label" : "Example 001 - ECG measurements series ",
+		"hasTimestamp" : "2017-11-22T22:15:30",
+		"hasValue" : [ 
+			2041, 2043, 2037, 2047, 2060, 2062, 2051, 2023, 2014, 2027, 2034, 2033, 2040, 2047, 2047, 2053, 2058, 2064, 2059, 2063, 2061, 2052, 2053, 2038, 1966, 1885, 1884, 2009, 2129, 2166, 2137, 2102, 2086, 2077, 2067, 2067, 2060, 2059, 2062, 2062, 2060, 2057, 2045, 2047, 2057, 2054, 2042, 2029, 2027, 2018, 2007, 1995, 2001, 2012, 2024, 2039, 2068, 2092, 2111, 2125, 2131, 2148, 2137, 2138, 2128, 2128, 2115, 2099, 2097, 2096, 2101, 2101, 2091, 2073, 2076, 2077, 2084, 2081, 2088, 2092, 2070, 2069, 2074, 2077, 2075, 2068, 2064, 2060, 2062, 2074, 2075, 2074, 2075, 2063, 2058, 2058, 2064, 2064, 2070, 2074, 2067, 2060, 2062, 2063, 2061, 2059, 2048, 2052, 2049, 2048, 2051, 2059, 2059, 2066, 2077, 2073
+		],
+		"isMeasuredIn" : "sarefInst:ElectricPotential_MilliVolts",
+		"relatesToProperty" : "sarefInst:HeartElectricalActivity_Person"
+	}
+  ],
+  "measuresProperty" : "sarefInst:HeartElectricalActivity_Person",
+  "@context" : {
+	"hasValue" : {
+      "@id" : "https://w3id.org/saref#hasValue"
+    },
+	"isMeasuredIn" : {
+      "@id" : "https://w3id.org/saref#isMeasuredIn",
+      "@type" : "@id"
+    },
+    "hasTimestamp" : {
+      "@id" : "https://w3id.org/saref#hasTimestamp",
+      "@type" : "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "relatesToProperty" : {
+      "@id" : "https://w3id.org/saref#relatesToProperty",
+      "@type" : "@id"
+    },
+    "comment" : {
+      "@id" : "http://www.w3.org/2000/01/rdf-schema#comment"
+    },
+    "label" : {
+      "@id" : "http://www.w3.org/2000/01/rdf-schema#label"
+    },
+    "makesMeasurement" : {
+      "@id" : "https://w3id.org/saref#makesMeasurement",
+      "@type" : "@id"
+    },
+    "hasFrequencyMeasurement" : {
+      "@id" : "https://w3id.org/def/saref4envi#hasFrequencyMeasurement",
+      "@type" : "@id"
+    },
+    "measuresProperty" : {
+      "@id" : "https://w3id.org/saref#measuresProperty",
+      "@type" : "@id"
+    },
+    "schema" : "http://schema.org/",
+    "qu" : "http://purl.oclc.org/NET/ssnx/qu/qu#",
+    "sarefInst" : "https://w3id.org/saref/instances#",
+    "owl" : "http://www.w3.org/2002/07/owl#",
+    "m3" : "http://purl.org/iot/vocab/m3-lite#",
+    "saref" : "https://w3id.org/saref#",
+    "xsd" : "http://www.w3.org/2001/XMLSchema#",
+    "skos" : "http://www.w3.org/2004/02/skos/core#",
+    "dim" : "http://purl.oclc.org/NET/ssnx/qu/dim#",
+    "rdfs" : "http://www.w3.org/2000/01/rdf-schema#",
+    "saref4envi" : "https://w3id.org/def/saref4envi#",
+    "saref4health" : "https://w3id.org/def/saref4health#",
+    "geo" : "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "dct" : "http://purl.org/dc/terms/",
+    "rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "xml" : "http://www.w3.org/XML/1998/namespace",
+    "dcterms" : "http://purl.org/dc/terms/",
+    "time" : "http://www.w3.org/2006/time#",
+    "vann" : "http://purl.org/vocab/vann/",
+    "foaf" : "http://xmlns.com/foaf/0.1/",
+    "om" : "http://www.wurvoc.org/vocabularies/om-1.8/",
+    "dc" : "http://purl.org/dc/elements/1.1/"
+  }
+}

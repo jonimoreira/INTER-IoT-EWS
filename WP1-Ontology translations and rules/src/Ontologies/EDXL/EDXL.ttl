@@ -1,0 +1,1248 @@
+#Core languages and types 
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . #Resource data framework
+@prefix owl: <http://www.w3.org/2002/07/owl#> .              #Owl ontology language
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .      #RDF schema 
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .           #XML standard datatypes
+
+#Standard linked data terms
+@prefix skos: <http://www.w3.org/2008/05/skos#>.   #Simple Knowledge Organization System vechicle
+@prefix cc: <http://creativecommons.org/ns#>. #Creative commons namespace
+@prefix dc: <http://purl.org/dc/terms/> .     #Dublin Core Metadata Initiative terms
+
+#Linked data documentation
+@prefix vann: <http://purl.org/vocab/vann/> .  #A vocabulary for annotating vocabulary descriptions
+@prefix voaf: <http://purl.org/vocommons/voaf#> . #A vocabulary of a friend, for describing relations between linked vocabularies
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> . #Semantic web vocabulary status ontology
+@prefix void: <https://www.w3.org/TR/void/>. #Vocabulary of interelinked datasets 
+
+@prefix : <http://w3id.org/concorde/ontology/EDXL#> .     #Concorde EDXL namespace TBD in w3id
+
+:EDXLVocabulary rdf:type voaf:Vocabulary, owl:Ontology;
+  dc:creator <http://www.vtt.fi/JarmoKalaoja> ;
+  dc:description "This vocabulary contains concepts, report types, and categorizations derived from EDXL standard."@en ;
+  dc:issued "2016-04-26"^^xsd:date ;
+  dc:modified "2016-10-11"^^xsd:date ;
+  dc:title "EDXL Vocabulary"@en ;
+  vann:preferredNamespacePrefix "edxl" ;
+  vann:preferredNamespaceUri <http://w3id.org/concorde/ontology/EDXL#> ;
+  owl:versionInfo "v0.2" .
+
+ #This vocabulary (not actually defined by EDXL) provides simple categorizations and their relations
+:Category a owl:Class;
+  rdfs:label "Category"@en ;
+  rdfs:comment "A category defined as ct:ValueKey by EDXL. The individual category instances are derived from various ct:ValueList definitions."@en.    
+:Categorizable a owl:Class;
+  rdfs:label "Categorizable"@en ;
+  rdfs:comment "Something that can be assigned categories, not used yet."@en.   
+
+:hasCategory a owl:ObjectProperty;
+  rdfs:label "hasCategory"@en ;
+  rdfs:comment """Relates an individual to its categories."""@en;
+  rdfs:domain :Categorizable;
+  rdfs:range :Category; 
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:hasCausalRelation a owl:ObjectProperty;
+  rdfs:label "hasCausalRelation"@en ;
+  rdfs:comment """Relates a category causally to another category such as earthquake can cause zunami."""@en;
+  rdfs:domain :Category;
+  rdfs:range :Category; 
+  rdfs:isDefinedBy :EDXLVocabulary.      
+
+:keyword a owl:DatatypeProperty;
+  rdfs:label "keyword"@en ;
+  rdfs:comment """Keyword(s) related to a category. Defined only informally in EDXL and can be extended."""@en;
+  rdfs:domain :Category; 
+  rdfs:range rdfs:Literal;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+  
+:hasPriority a owl:DatatypeProperty;
+  rdfs:label "hasPriority"@en ;
+  rdfs:comment """Priority related to a category. """@en;
+  rdfs:domain :Category; 
+  rdfs:range xsd:integer;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+ 
+#These provide vocabulary for main standrard reports defined by EDXL 
+:EDXLStandard a owl:Class;
+  rdfs:label "EDXLStandard"@en ;
+  rdfs:comment "An EDXL related standard"@en;
+  rdfs:isDefinedBy :EDXLVocabulary. 
+
+:Incident a owl:Class;
+  rdfs:label "Incident"@en ;
+  rdfs:comment "An incdent modelled with EDXL vocabulary."@en;
+  rdfs:subClassOf :Categorizable;  
+  rdfs:isDefinedBy :EDXLVocabulary. 
+  
+:Report a owl:Class;
+  rdfs:label "Report"@en ;
+  rdfs:comment "A report or message type defined in EDXL Standard. These are typically result of queries into incident data."@en;
+  rdfs:subClassOf :Categorizable;  
+  rdfs:isDefinedBy :EDXLVocabulary.    
+
+:ReportCategory a owl:Class;
+  rdfs:label "ReportCategory"@en ;
+  rdfs:comment "A report or message category defined in EDXL Standard."@en;
+  rdfs:subClassOf :Category; 
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:item a owl:ObjectProperty;
+  rdfs:label "item"@en ;
+  rdfs:comment """Relates a report to a sub-item that can be any categorizable entity. 
+           For example a sitrep has specific counts of resources by an organization"""@en;
+  rdfs:domain :Report;
+  rdfs:range :Categorizable; 
+  rdfs:isDefinedBy :EDXLVocabulary.      
+  
+:Count a owl:Class;
+  rdfs:label "Count"@en ;
+  rdfs:comment """A report counting ndividuals with a specific category. The category counted is given with hasCategory property. """@en;
+  rdfs:subClassOf :Report;
+  rdfs:isDefinedBy :EDXLVocabulary.      
+  
+:reports a owl:ObjectProperty;
+  rdfs:label "reports"@en ;
+  rdfs:comment """Relates the report to some categorizable entity. 
+             For example a Count reports items of specific category provided by an organization"""@en;
+  rdfs:domain :Count;
+  rdfs:range :Categorizable; 
+  rdfs:isDefinedBy :EDXLVocabulary.  
+  
+:hasReport a owl:ObjectProperty;
+  rdfs:label "hasReport"@en ;
+  rdfs:comment """Relates the entity into a report. For example an hospital to counts of its resources."""@en;
+  rdfs:domain :Categorizable;
+  rdfs:range :Count; 
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:hasValue a owl:DatatypeProperty;
+  rdfs:label "hasValue"@en ;
+  rdfs:comment """Value related to a count. """@en;
+  rdfs:domain :Count; 
+  rdfs:range xsd:integer;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+           
+:Resource a owl:Class;
+  rdfs:label "Resource"@en ;
+  rdfs:comment """A EDXL resource entity. Use category property to define the charactristics."""@en;  
+  rdfs:subClassOf :Categorizable;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:Victim a owl:Class;
+  rdfs:label "Victim"@en ;
+  rdfs:comment """A victim in incident. Use VictimCategory property to define the charactristics."""@en;  
+  rdfs:subClassOf :Categorizable;
+  rdfs:isDefinedBy :EDXLVocabulary.       
+      
+:Organization a owl:Class;
+  rdfs:label "Organization"@en ;
+  rdfs:comment """Class of EDXL Organizations, details and structure defined using org and geo ontologies. In org ontology org:OrganizationalUnit is a subclass of org:Organization."""@en;
+  rdfs:subClassOf :Categorizable;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+
+:Capability a owl:Class;
+  rdfs:label "Capability"@en ;
+  rdfs:comment """A EDXL service. Capabilities are typically either provided or not and boolean valued information in EDXL schema. Use category property to define the charactristics."""@en;  
+  rdfs:subClassOf :Categorizable;
+  rdfs:isDefinedBy :EDXLVocabulary.       
+          
+### 
+:CAP a owl:Class;
+  rdfs:label "CAP"@en ;
+  rdfs:comment """Common Alerting Protocol CAP provides the ability to exchange all-hazard emergency alerts, notifications, and public warnings, which can be disseminated simultaneously over many different warning systems (e.g., computer systems, wireless, alarms, TV, radio)"""@en;
+  rdfs:subClassOf :EDXLStandard; 
+  rdfs:isDefinedBy :EDXLVocabulary. 
+
+### SitRep #######
+:SitRep a :ReportCategory;
+  rdfs:label "SitRep"@en ;
+  rdfs:comment """Situation Reporting addresses information gathered from a variety of sources that provides a basis for incident management decision making.  It provides information on the current situation, the operational picture, and current response and resources in an actionable form."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary. 
+
+:FieldObservation a :ReportCategory;
+  rdfs:label "FieldObservation"@en ;
+  rdfs:comment """Basic report that describes an observation that is directly observed by the reporter (an emergency professional). SENDER: On-Scene Incident Command / Planning Section / Situation Unit"""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:SituationInformation a :ReportCategory;
+  rdfs:label "SituationInformation"@en ;
+  rdfs:comment """Message used to provide information on responding resources and resource needs to manage and coordinate resource decisions. SENDR: On-Scene Incident Command, Planning Section, Situation Unit"""@en;
+  rdfs:isDefinedBy :EDXLVocabulary. 
+
+:ResponseResourcesTotals a :ReportCategory;
+  rdfs:label "ResponseResourcesTotals"@en ;
+  rdfs:comment """Message used to provide information on responding resources and resource needs to manage and coordinate resources. SENDER: On-Scene Incident Command  or Logistics Section"""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+
+#Resource related categories
+  
+:ResourceCategory a owl:Class;
+  rdfs:label "ResourceCategory"@en ;
+  rdfs:comment "Resource category"@en;
+  rdfs:subClassOf :Category.   
+
+:EquipmentCategory a owl:Class;
+  rdfs:label "EquipmentCategory"@en ;
+  rdfs:comment "Equipment category"@en;
+  rdfs:subClassOf :ResourceCategory.  
+
+:SuppliesCategory a owl:Class;
+  rdfs:label "SuppliesCategory"@en ;
+  rdfs:comment "Supplies category"@en;
+  rdfs:subClassOf :ResourceCategory.   
+  
+:VechicleCategory a owl:Class;
+  rdfs:label "VechicleCategory"@en ;
+  rdfs:comment "Vechicle category"@en;
+  rdfs:subClassOf :ResourceCategory.   
+
+:EmergencyVechicleCategory a owl:Class;
+  rdfs:label "EmergencyVechicleCategory"@en; 
+  rdfs:comment "Vechicle is an emergency vechicle"@en;
+  rdfs:subClassOf :VechicleCategory.     
+          
+:workAssignment a owl:DatatypeProperty;
+  rdfs:label "workAssignment"@en ;
+  rdfs:comment """Description of the anticipated work assignments given to the resource"""@en;
+  rdfs:domain :Resource;
+  rdfs:range xsd:string;
+  rdfs:isDefinedBy :EDXLVocabulary. 
+
+:specialInstructions a owl:DatatypeProperty;
+  rdfs:label "specialInstructions"@en ;
+  rdfs:comment """Description of any special instructions to the resource regarding their assignment, reporting location or any other instructions"""@en;
+  rdfs:domain :Resource;
+  rdfs:range xsd:string;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:specialResources a owl:ObjectProperty;
+  rdfs:label "specialResources"@en ;
+  rdfs:comment """A listing of special equipment or supply resources needed"""@en;
+  rdfs:domain :Resource;
+  rdfs:range :Resource; 
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:availability a owl:DatatypeProperty;
+  rdfs:label "availability"@en ;
+  rdfs:comment """Availability provides textual information on whether or not a resource is available, and any incidental information not otherwise provided that relates to resource availability. """@en;
+  rdfs:domain :Resource;
+  rdfs:range xsd:string; 
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:CasualtyAndIllnessSummary a :ReportCategory;
+  rdfs:label "CasualtyAndIllnessSummary"@en ;
+  rdfs:comment """Message used to summarize information pertaining to the number and status of categorized casualties and victims of infectious agents associated with the incident. SENDER: Incident Command System/ Logistics Section / Services Unit / Medical Services"""@en; 
+  rdfs:isDefinedBy :EDXLVocabulary.   
+       
+:ManagementReportingSummary  a :ReportCategory;
+  rdfs:label "ManagementReportingSummary"@en ;
+  rdfs:comment """Message used to summarize information and data relevant to ongoing management of incident response, typically used within the Incident Command Chain or across such chains between jurisdictions. SENDER: Incident Command System / PIO / Logistics Section / Communications"""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+	
+### SiteRep defined categories
+:IncidentCategory a owl:Class;
+  rdfs:label "IncidentCategory"@en ;
+  rdfs:comment "Defines various categories of an incident event"@en;
+  rdfs:subClassOf :Category.   
+
+:VictimCategory a owl:Class;
+  rdfs:label "VictimCategory"@en ;
+  rdfs:comment "Defines the various categories for victims of incident."@en;
+  rdfs:subClassOf :Category.     
+
+:IncidentType a owl:Class;
+  rdfs:label "IncidentType"@en ;
+  rdfs:comment "Defines the specific EDXL type of an incident event"@en;
+  rdfs:subClassOf :IncidentCategory.   
+  
+:hasHazard a owl:ObjectProperty;
+  rdfs:label "hasHazard"@en ;
+  rdfs:comment """Relates a incident type to hazard defined by another category."""@en;
+  rdfs:subPropertyOf :hasCausalRelation;
+  rdfs:domain :IncidentType;
+  rdfs:range :IncidentType, :SignificantEventCategory; 
+  rdfs:isDefinedBy :EDXLVocabulary.  
+  
+:ComplexityCategory a owl:Class;
+  rdfs:label "ComplexityCategory"@en ;
+  rdfs:comment """Information indicating the complexity, complications, level of difficulty or cross-profession / jurisdiction / organization aspects involved in addressing or responding to the incident."""@en;
+  rdfs:subClassOf :IncidentCategory.
+  
+:SeverityCategory a owl:Class;
+  rdfs:label "SeverityCategory"@en ;
+  rdfs:comment "Defines the severity of an incident."@en;
+  rdfs:subClassOf :IncidentCategory.
+      
+:ResponseResourceCategory a owl:Class;
+  rdfs:label "ResponseResourceCategory"@en ;
+  rdfs:comment "Siterep response resource"@en;
+  rdfs:subClassOf :ResourceCategory;  
+  rdfs:isDefinedBy :EDXLVocabulary.      
+  
+:CasualtyAndIllnessCategory a owl:Class;
+  rdfs:label "CasualtyAndIllnessCategory"@en ;
+  rdfs:comment "Siterep casualty and illness"@en;
+  rdfs:subClassOf :VictimCategory;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+ 
+:TriageCategory a owl:Class;
+  rdfs:label "TriageCategory"@en ;
+  rdfs:comment "Defines the triage category"@en;
+  rdfs:subClassOf :VictimCategory.    
+  
+:DeploymentStatus a owl:Class;
+  rdfs:label "DeploymentStatus"@en ;
+  rdfs:comment "The DeploymentStatus of resource. Typically this can in EDXL be extended by the resource provider."@en;
+  rdfs:subClassOf :ResourceCategory.     
+  
+:SignificantEventCategory a owl:Class;
+  rdfs:label "SignificantEventCategory"@en ;
+  rdfs:comment """Description summarizing significant results, decisions or progress resulting from an incident such as, evacuations, incident growth, etc. during the period being reported ."""@en;
+  rdfs:subClassOf :IncidentCategory.      
+
+:LifeAndSafetyThreatCategory a owl:Class;
+  rdfs:label "LifeAndSafetyThreatCategory"@en ;
+  rdfs:comment """State of the threat by incident."""@en;
+  rdfs:subClassOf :IncidentCategory.       
+  
+:InfrastructureAffectedCategory a owl:Class;
+  rdfs:label "InfrastructureAffectedCategory"@en ;
+  rdfs:comment """Infrastructure and/or operational systems actually or most likely affected by the incident."""@en;
+  rdfs:subClassOf :IncidentCategory.       
+ 
+###  TEP  ####
+:TEP a owl:Class;
+  rdfs:label "TEP"@en ;
+  rdfs:comment """Tracking Emergency patients. Patient Tracking addresses information about patients and victims of an incident or emergency, their chief complaints, on-scene clinical information, and care and treatments to support patient care, transport and transition to patient care facilities."""@en;
+  rdfs:subClassOf :EDXLStandard; 
+  rdfs:isDefinedBy :EDXLVocabulary.  
+    
+:ContingencyMedicalSpecialtyCode a owl:Class;
+  rdfs:label "ContingencyMedicalSpecialtyCode"@en ;
+  rdfs:comment """A code utilized across jurisdictions which assists patient recipient with determination of the bed or bed type needed to support that patient at destination.."""@en;
+  rdfs:subClassOf :VictimCategory.     	
+	
+###  RM ###
+:RM a owl:Class;
+  rdfs:label "RN"@en ;
+  rdfs:comment """Resource Messaging, RM provides standard exchange of resource information (persons or things) needed to support emergency and incident preparedness, response, and recovery. """@en;
+  rdfs:subClassOf :EDXLStandard; 
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:ScheduleInformation  a :ReportCategory;
+  rdfs:label "ScheduleInformation"@en ;
+  rdfs:comment "Schedule information"@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:ScheduleCategory a owl:Class;
+  rdfs:label "ScheduleCategory"@en ;
+  rdfs:comment "Type of schedule, requestedArrival, report to,  etc..."@en;
+  rdfs:subClassOf :Category;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+
+###  HAVE ###
+:HAVE a owl:Class;
+  rdfs:label "HAVE"@en ;
+  rdfs:comment """Hospital Availability Exchange, HAVE provides standard exchange of hospital status, capacity, and resource availability between medical and health organizations and emergency information systems."""@en;
+  rdfs:subClassOf :EDXLStandard; 
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:HospitalStatus a :ReportCategory;
+  rdfs:label "HospitalStatus"@en ;
+  rdfs:comment "Reports status of any number of hospitals. "@en;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:OrganizationCategory a owl:Class;
+  rdfs:label "OrganizationCategory"@en ;
+  rdfs:comment "Category class for organizations."@en;
+  rdfs:subClassOf :Category;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:HospitalBedCategory a owl:Class;
+  rdfs:label "HospitalBedCategory"@en ;
+  rdfs:comment "Category class for hospital bed."@en;
+  rdfs:subClassOf :ResourceCategory;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:SpecialtyServiceCategory a owl:Class;
+  rdfs:label "SpecialtyServiceCategory"@en ;
+  rdfs:comment "These categories are based on EDXL ServiceCoverageStatus tahat includes both the necessary staff and facilities. Indicator of the need or availability of medical specialty services.."@en;
+  rdfs:subClassOf :ResourceCategory;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+    
+###  DE ###
+:DE a owl:Class;
+  rdfs:label "DE"@en ;
+  rdfs:comment """Distribution element. In concorde the distribution element is modelled mostly with prov-o ontology."""@en;
+  rdfs:subClassOf :EDXLStandard; 
+  rdfs:isDefinedBy :EDXLVocabulary.    
+
+#####################################################  
+#Category instances based on ct:Valuelist definitions
+#####################################################
+    
+#Incident types	
+:Geo a owl:Class ; 
+  rdfs:label "Geo"@en ;
+  rdfs:subClassOf :IncidentType;
+  :hasHazard :Env,:BridgeCollapseEvent;  
+  rdfs:comment "Geophysical (inc. landslide)."@en.   
+  
+:Landslide a :Geo ;
+  rdfs:label "landslide"@en ;
+  :keyword "landslide";
+  rdfs:comment "Subtype of Geo incident"@en.   
+
+:Earthquake a :Geo ;
+  rdfs:label "earthquake"@en ;
+  :keyword "earthquake";
+  :hasHazard :Zunami, :Landslide;
+  rdfs:comment "Subtype of Geo incident"@en. 
+  
+:Tsunami a :Geo ;
+  rdfs:label "Tsunami"@en ;
+  :keyword "tsunami";
+  :hasHazard :Flood, :NuclearHazard;  
+  rdfs:comment "Subtype of Geo incident"@en.     
+  
+:Met a owl:Class ;
+  rdfs:label "Met"@en ;
+  rdfs:subClassOf :IncidentType;
+  rdfs:comment " Meteorological (inc. flood)."@en.   
+ 
+:Storm a owl:Class ;
+  rdfs:label "Storm"@en ;
+  :keyword "storm", "thunderstrom","strong wind", "heavy rain";
+  rdfs:subClassOf :Met;
+  rdfs:comment " Meteorological (inc. flood)."@en.  
+
+:Hurricane a :Storm ;
+  rdfs:label "Hurricane"@en ;
+  :keyword "hurricane", "typhoon";
+  rdfs:comment "Subtype of Storm incident"@en. 
+
+:Tornado a :Storm ;
+  rdfs:label "Tornado"@en ;
+  :keyword "tornado", "trombi"@fi;
+  rdfs:comment "Subtype of Storm incident"@en.   
+     
+:WinterStorm a :Storm ;
+  rdfs:label "WinterStorm"@en ;
+  :keyword "winter strom";
+  rdfs:comment "Subtype of Storm incident"@en.    
+
+:Safety  a owl:Class ;
+  rdfs:label "Safety"@en ;
+  rdfs:subClassOf :IncidentType;
+  :keyword "public safety", "civil defence", "riot", "calamity";  
+  rdfs:comment "General emergency and public safety."@en.   
+    
+:Security  a owl:Class ;
+  rdfs:label "Security"@en ;
+  :keyword "law enforcement", "military", "security";
+  rdfs:subClassOf :IncidentType;
+  rdfs:comment "Law enforcement, military, homeland and local/private security "@en.     
+  
+:LawEnforcement  a :Security ;
+  rdfs:label "LawEnforcement"@en ;
+  :keyword "law enforcement", "security", "crime prevention","police";
+  rdfs:comment "Subtype of Security event."@en.      
+  
+:Military  a :Security ;
+  rdfs:label "Military"@en ;
+  :keyword "military", "armed forces", "war", "weapons", "defense of the state", "population control";
+  rdfs:comment "Subtype of Security event."@en.        
+  
+:Rescue a :IncidentType ;
+  rdfs:label "Rescue"@en ;
+  :keyword "resque", "recovery", "saving of life", "prevention of injury", "pelastaminen"@fi, "ihmisen pelastaminen"@fi,"eläimen pelastaminen"@fi,"vahingontorjunta"@fi;
+  rdfs:comment "Rescuerecovery."@en.   
+  
+:Fire a :IncidentType  ;
+  rdfs:label "Fire"@en ;
+  :keyword "fire"@en, "smoke"@en, "blaze"@en, "palohälytys"@fi,"rakennuspalo"@fi, "tulipalo muu"@fi;
+  rdfs:comment "Fire suppression and rescue."@en.     
+  
+:Health a :IncidentType ;
+  rdfs:label "Health"@en ;
+  :keyword "medical", "public health", "health";
+  rdfs:comment "Medical and public health."@en.     
+  
+:Env a :IncidentType ;
+  rdfs:label "Env"@en ;  
+  :keyword "pollution", "environmental hazard", "öljyvah./ymp.onnet. maalla"@fi;
+  rdfs:comment "Pollution and other environmental hazard."@en.      
+  
+:Transport a :IncidentType ;
+  rdfs:label "Transport"@en ;
+  :keyword "crash"@en, "transportation"@en, "tieliikenneonnettomuus"@fi, "vesiliikenneonnettomuus"@fi;
+  rdfs:comment "Public and private transportation."@en.        
+  
+:Infra a :IncidentType ;
+  rdfs:label "Infra"@en ;
+  rdfs:comment "Utility, telecommunication, other non-transport infrastructure."@en.      
+  
+:CBRNE a owl:Class ;
+  rdfs:label "CBRNE"@en ;
+  :keyword "chemical hazard", "biological hazard", "radiological hazard", "nuclear hazard", "explosive threat", "explosive attack";
+  rdfs:comment "Chemical, Biological, Radiological, Nuclear or High-Yield Explosive threat or attack."@en.      
+
+:ChemicalHazard a :CBRNE ;
+  rdfs:label "ChemicalHazard"@en ;
+  :keyword "chemical hazard"@en, "vaarallisen aineen onnettomuus"@fi;  
+  rdfs:comment "Subtype of CBRNE"@en.   
+
+:BiologicalHazard a :CBRNE ;
+  rdfs:label "BiologicalHazard"@en ;
+  :keyword "biological hazard"; 
+  rdfs:comment "Subtype of CBRNE"@en.   
+  
+:RadiologicalHazard a :CBRNE ;
+  rdfs:label "RadiologicalHazard"@en ;
+  :keyword "radiological hazard", "radioactive", "radiation"; 
+  rdfs:comment "Subtype of CBRNE"@en.   
+  
+:NuclearHazard a :CBRNE ;
+  rdfs:label "NuclearHazard"@en ;
+  :keyword "nuclear hazard"; 
+  :hasHazard :RadiologicalHazard;  
+  rdfs:comment "Subtype of CBRNE"@en.   
+  
+:ExplosiveThreat a :CBRNE ;
+  rdfs:label "ChemicalHazard"@en ;
+  :keyword "explosive threat", "bomb","explosive substance"; 
+  rdfs:comment "Subtype of CBRNE"@en.   
+  
+:ExplosiveAttack a :CBRNE ;
+  rdfs:label "ExplosiveAttacl"@en ;
+  :keyword "explosive attack", "bombing", "explosion"; 
+  rdfs:comment "Subtype of CBRNE"@en.   
+  
+:OtherIncident a :IncidentType ;
+  rdfs:label "OtherIncident"@en ;
+  :keyword "hazard", "incident", "attack", "terrorism";
+  rdfs:comment "Other events."@en.     
+
+#Incident complexity
+
+:Complex a :ComplexityCategory ;
+  rdfs:label "Complex"@en ;
+  rdfs:comment """Public or Professional preparedness is low, Coordination Complexity and involvement is high (local, regional, state and national)."""@en.    
+
+:ModerateToComplex a :ComplexityCategory  ;
+  rdfs:label "ModerateToComplex"@en ;
+  rdfs:comment """Public or Professional preparedness is moderate-high, Coordination Complexity and involvement is high (local, regional, state, possibly national)."""@en.      
+  
+:ModerateComplexity a :ComplexityCategory  ;
+  rdfs:label "Moderate"@en ;
+  rdfs:comment """Public or Professional preparedness is high, Coordination Complexity and involvement is moderate (local, regional)."""@en.        
+  
+:LowComplexity a :ComplexityCategory  ;
+  rdfs:label "Low"@en ;
+  rdfs:comment """Public or Professional preparedness is high, Coordination Complexity and involvement is low (local only)."""@en.       
+  
+#Incident severity categories, priority is given as a parameter  
+:Extreme a :SeverityCategory ; #Note this is an instance not a class
+  rdfs:label "ExtremeSeverity"@en ;
+  rdfs:hasPriority 1;
+  :keyword "extreme"@en, "äärimmäinen"@fi;
+  rdfs:comment "Extraordinary threat to life or property"@en.  
+
+:Severe a :SeverityCategory ;
+  rdfs:label "Severe"@en ;
+  rdfs:hasPriority 2;
+  :keyword "severe"@en, "suuri"@fi;
+  rdfs:comment "Significant threat to life or property"@en.    
+ 
+:ModerateSeverity a :SeverityCategory;
+  rdfs:label "ModerateSeverity"@en ;
+  rdfs:hasPriority 3;
+  :keyword "moderate"@en, "keskisuuri"@fi;
+  rdfs:comment "Possible threat to life or propert"@en.     
+  
+:MinorSeverity a :SeverityCategory;
+  rdfs:label "MinorSeverity"@en ;
+  rdfs:hasPriority 4;
+  :keyword "minor"@en,"pieni"@fi;
+  rdfs:comment "Minimal to no known threat to life or property"@en.     
+  
+:OtherSeverity a :SeverityCategory;
+  rdfs:label "OttherSeverity"@en ;
+  rdfs:hasPriority 5;
+  :keyword "other"@en,"muu tai onnettomuuden uhka"@fi;
+  rdfs:comment "Other or threat of accident"@en.  
+
+#Response resource status categories for which this resource should be count
+#Category of resoruce may change and a resource can belong to multiple categories
+#You can make an instance of resource role an then assignt to actual agent that fulfills the role
+:Personnel a :ResponseResourceCategory;
+  rdfs:label "Personnel"@en ;
+  rdfs:comment "Response resource category"@en;
+  rdfs:isDefinedBy :EDXLVocabulary. 
+  
+:Unassigned a :ResponseResourceCategory;
+  rdfs:label "Unassigned"@en ;
+  rdfs:comment "Response resource category"@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:Required a :ResponseResourceCategory;
+  rdfs:label "Required"@en ;
+  rdfs:comment "Response resource category"@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:Committed a :ResponseResourceCategory;
+  rdfs:label "Committed"@en ;
+  rdfs:comment "Response resource category"@en;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+
+:OnHand a :ResponseResourceCategory;
+  rdfs:label "OnHand"@en ;
+  rdfs:comment "Response resource category"@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+
+:StillNeeded a :ResponseResourceCategory;
+  rdfs:label "StillNeeded"@en ;
+  rdfs:comment "Response resource category"@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:Requested a :ResponseResourceCategory;
+  rdfs:label "Requested"@en ;
+  rdfs:comment "Response resource category"@en;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:OverheadPosition a :ResponseResourceCategory;
+  rdfs:label "OverheadPosition"@en ;
+  rdfs:comment """An OverheadPosition is a resource with a role or position (or a group of resources with the same role or position) that is not assigned to or associated with any previously identified Resource"""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+
+:Assisting a :ResponseResourceCategory;
+  rdfs:label "Assisting"@en ;
+  rdfs:comment """Resources of agencies and organizations that are not included in the formal ResponseResource information (who are not directly involved in the incident, but are providing support.)"""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+#Casualty and Illness categories
+:Fatality a :CasualtyAndIllnessCategory;
+  rdfs:label "Fatality"@en ;
+  rdfs:comment "Deceased"@en;
+  :keyword "fatality","death", "victim";
+  rdfs:isDefinedBy :EDXLVocabulary.  
+
+:Hospitalized a :CasualtyAndIllnessCategory;
+  rdfs:label "Hospitalized"@en ;
+  rdfs:comment "In-route or arrived at an Emergency Department or Hospital"@en;
+  :keyword "hospitalized", "in hospital", "victim";
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:InjuryOrIllness a :CasualtyAndIllnessCategory;
+  rdfs:label "InjuryOrIllness"@en ;
+  rdfs:comment """Physical or mental damage or sickness including those that may be caused through a biological event such as an epidemic or an exposure to toxic or radiological substances."""@en;
+  :keyword "injury", "illness", "victim";
+  rdfs:isDefinedBy :EDXLVocabulary.     
+
+:TrappedOrInNeedOfResque a :CasualtyAndIllnessCategory;
+  rdfs:label "TrappedOrInNeedOfResque"@en ;
+  rdfs:comment """Trapped or in need of rescue due to incident or other conditions."""@en;
+  :keyword "trapped", "need of resque", "victim";
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:Missing a :CasualtyAndIllnessCategory;
+  rdfs:label "Missing"@en ;
+  rdfs:comment """Cannot be located."""@en;
+  :keyword "missing", "victim";
+  rdfs:isDefinedBy :EDXLVocabulary.       
+
+:Evacuated a :CasualtyAndIllnessCategory;
+  rdfs:label "Evacuated"@en ;
+  rdfs:comment """Accounted for and being evacuated from the scene."""@en;
+  :keyword "accounted for", "evacuated", "victim";
+  rdfs:isDefinedBy :EDXLVocabulary.        
+  
+:ShelteringInPlace a :CasualtyAndIllnessCategory;
+  rdfs:label "ShelteringInPlace"@en ;
+  rdfs:comment """Accounted for but sheltering in their original location at time of the incident."""@en;
+  :keyword "shelter", "victim";
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:InTemporaryShelters a :CasualtyAndIllnessCategory;
+  rdfs:label "InTemporaryShelters"@en ;
+  rdfs:comment """Accounted for and have been placed in a temporary shelter."""@en;
+  :keyword "temporary shelter", "victim";
+  rdfs:isDefinedBy :EDXLVocabulary.    
+ 
+:InQuarantine a :CasualtyAndIllnessCategory;
+  rdfs:label "InQuarantine"@en ;
+  rdfs:comment """Accounted for and under quarantine by authorities."""@en;
+  :keyword "quarantined","victim";
+  rdfs:isDefinedBy :EDXLVocabulary.     
+
+#Roles for casualty and illness report
+:Responder a :ResourceCategory;
+  rdfs:label "Responder"@en ;
+  rdfs:comment """Responders are those personnel belonging to organizations and agencies officially assisting and cooperating with response efforts, and may be included as part of unified command partnerships."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+  
+:NonResponder a :ResourceCategory;
+  rdfs:label "NonResponder"@en ;
+  rdfs:comment """Non-Responders are those civilians who are affected by the incident, but who are not included as part of the authorized response effort """@en;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+#Triage categories, parameters for priority added   
+:Red a :TriageCategory;
+  rdfs:label "Red"@en ;
+  rdfs:hasPriority 1;
+  rdfs:comment "Immediate triage category"@en.    
+    
+:Yellow a :TriageCategory;
+  rdfs:label "Yellow"@en ;
+  rdfs:hasPriority 2;
+  rdfs:comment "Observation triage category"@en.     
+
+:Green a :TriageCategory;
+  rdfs:label "Green"@en ;
+  rdfs:hasPriority 4;
+  rdfs:comment "Wait triage category"@en.      
+  
+:Black a :TriageCategory;
+  rdfs:label "Black"@en ;
+  rdfs:hasPriority 5;
+  rdfs:comment "Expectant triage category"@en.     
+  
+#Deployment status default categories defined in ct:DeploymentStatusDefaultType
+:Available a :DeploymentStatus;
+  rdfs:label "Available"@en ;
+  rdfs:comment "Available"@en.  
+  
+:ConditionallyAvailable a :DeploymentStatus;
+  rdfs:label "ConditionallyAvailable"@en ;
+  rdfs:comment "ConditionallyAvailable"@en.   
+
+:Enroute a :DeploymentStatus;
+  rdfs:label "Enroute"@en ;
+  rdfs:comment "Enroute"@en.   
+  
+#Vechicle categories, a better way would be to describe here the typical capabilities of vechicle category
+ :Taxi a :VechicleCategory;
+  rdfs:label "Taxi"@en ;
+  rdfs:comment "Vechicle is a taxi"@en. 
+  
+:Ambulance a :EmergencyVechicleCategory ;
+  rdfs:label "Ambulance"@en ;
+  rdfs:comment "Vechicle is an ambulance"@en.    
+
+:FireVechicle a :EmergencyVechicleCategory ;
+  rdfs:label "FireVechicle"@en ;
+  rdfs:comment "Vechicle is an fire truck etc..."@en.    
+
+#Categories for EDXL organizatoions and organizational units, the structure of organizations is typically defined with org ontology.  
+:Hospital a :OrganizationCategory;
+  rdfs:label "Hospital"@en ;
+  rdfs:comment "Category of hospitals to be included into HospitalStatus. NOTE: Organization and location informaiton is provided by external org and geo ontologies."@en;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:OrganizationUnit a :OrganizationCategory;
+  rdfs:label "HospitalDepartement"@en ;
+  rdfs:comment "Emergency departement category."@en;
+  rdfs:isDefinedBy :EDXLVocabulary.       
+
+#Hospital Bed categories  Note: these might not be bed applied onlyt to categorize beds...
+#ICU and age group couöd be divided into separate categories. 
+:AdultICU a :HospitalBedCategory;
+  rdfs:label "AdultICUBed"@en ;
+  rdfs:comment """These can support critically ill or injured patients, including ventilator support. This category includes all major subtypes of ICU beds, including neuro, cardiac, trauma, or medical, with the exception that this category does not include burn ICU beds.."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:PediatricICUBed a :HospitalBedCategory;
+  rdfs:label "PediatricICUBed"@en ;
+  rdfs:comment """Pediatric ICU beds."""@en;
+  skos:relatedMatch :Pediatrics;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+
+:NeonatalICUBed a :HospitalBedCategory;
+  rdfs:label "NeonatalICUBed"@en ;
+  rdfs:comment """Neonatal ICU bedis similar to adult ICU beds, but for patients 17-years-old and younger."""@en;
+  skos:relatedMatch :OBGYN;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:AcuteCareBed a :HospitalBedCategory;
+  rdfs:label "AcuteCareBed"@en ;
+  rdfs:comment """Beds within the Emergency Department used for acute care. Note: renamed from EmergencyDepartement."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+
+:NurseryBed a :HospitalBedCategory;
+  rdfs:label "NeonatalICUBed"@en ;
+  rdfs:comment """Neonatal or newborn care beds including all bed types other than Neonatal ICU."""@en;
+  skos:closeMatch :OBGYN;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:MedicalSurgical a :HospitalBedCategory;
+  rdfs:label "MedicalSurgicalBed"@en ;
+  rdfs:comment """These are also thought of as ward beds. These beds may or may not include cardiac telemetry capability."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+ 
+:RehabLongTermCareBed  a :HospitalBedCategory;
+  rdfs:label "RehabLongTermCareBed"@en ;
+  rdfs:comment """Beds designated as long term care rehabilitation. These do not include floor beds."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+  
+:BurnBed  a :HospitalBedCategory;
+  rdfs:label "BurnBed"@en ;
+  rdfs:comment """These are thought of as burn ICU beds, either approved by the American Burn Association or self-designated. These beds are NOT to be included in other ICU bed counts."""@en;
+  skos:closeMatch :Burn;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+
+:PediatricsBed  a :HospitalBedCategory;
+  rdfs:label "PediatricsBed"@en ;
+  rdfs:comment """These are ward medical/surgical beds for patients 17-years-old and younger."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+  
+:AdultPsychiatricBed  a :HospitalBedCategory;
+  rdfs:label "AdultPsychiatricBed"@en ;
+  rdfs:comment """These are ward beds on a closed/locked psychiatric unit or ward beds where a patient will be attended by a sitter."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+
+:PediatricPsychiatric  a :HospitalBedCategory;
+  rdfs:label "PediatricPsychiatricBed"@en ;
+  rdfs:comment """These are ward beds on a closed/locked psychiatric unit or ward beds where a patient will be attended by a sitter."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+  
+:NegativeFlowIsolationBed  a :HospitalBedCategory;
+  rdfs:label "NegativeFlowIsolationBed"@en ;
+  rdfs:comment """These provide respiratory isolation. NOTE: The count value of thsese may represent available beds included in the counts of other types."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+
+:OtherIsolationBed  a :HospitalBedCategory;
+  rdfs:label "OtherIsolationBed"@en ;
+  rdfs:comment """These provide isolation where airflow is not a concern.  NOTE: The count value of thse may represent available beds included in the counts of other types."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+  
+:OperatingRoomBed  a :HospitalBedCategory;
+  rdfs:label "OperatingRoomBed"@en ;
+  rdfs:comment """Beds in sperating rooms which are equipped staffed and could be made available for patient care in a short period of time."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary. 
+
+#Specialty service categories based on HACVE Service Coverage status  
+
+:Burn  a :SpecialtyServiceCategory;
+  rdfs:label "Burn"@en ;
+  rdfs:comment """Burn services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary. 
+  
+:Cardiology  a owl:Class;
+  rdfs:label "Cardiology"@en ;
+  rdfs:comment """Cardiology services."""@en;
+  rdfs:subClassOf :SpecialtyServiceCategory;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+   
+:CardiologyInvasive  a :Cardiology;
+  rdfs:label "CardiologyInvasive"@en ;
+  rdfs:comment """Cardiology-invasive services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+
+:CardiologyNonInvasive  a :Cardiology;
+  rdfs:label "CardiologyyNonInvasive"@en ;
+  rdfs:comment """Cardiology-non-invasive services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:Dialysis  a :SpecialtyServiceCategory;
+  rdfs:label "Dialysis"@en ;
+  rdfs:comment """Dialysis services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+
+:EmergencyDepartement  a :SpecialtyServiceCategory;
+  rdfs:label "EmergencyDepartement"@en ;
+  rdfs:comment """Emergency departement."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:HyperbaricChamber  a :SpecialtyServiceCategory;
+  rdfs:label "HyperbaricChamber"@en ;
+  rdfs:comment """Hyperbaric Chamber."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:InfectiousDisease  a :SpecialtyServiceCategory;
+  rdfs:label "InfectiousDiseases"@en ;
+  rdfs:comment """Infectious diseases services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.       
+  
+:Neonatology  a :SpecialtyServiceCategory;
+  rdfs:label "Neonatology"@en ;
+  rdfs:comment """Neonatology services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:Neurology a owl:Class, :SpecialtyServiceCategory;
+  rdfs:label "Neurology"@en ;
+  rdfs:comment """Neurology services."""@en;
+  rdfs:subClassOf :SpecialtyServiceCategory;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:NeurologyInvasive a :Neurology;
+  rdfs:label "NeurologyInvasive"@en ;
+  rdfs:comment """Neurology invasive services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+
+:NeurologyNonInvasive a :Neurology;
+  rdfs:label "NeurologyNonInvasive"@en ;
+  rdfs:comment """Neurology non-invasive services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:OBGYN a owl:Class, :SpecialtyServiceCategory;
+  rdfs:label "OBGYN"@en ;
+  rdfs:comment """Obstetrics and gynaecology services."""@en;
+  rdfs:subClassOf :SpecialtyServiceCategory;
+  :keyword "Maternity", "Obstetrics";
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:OBGYNWithLaborDelivery a :OBGYN;
+  rdfs:label "OBGYNWithLaborDelivery"@en ;
+  rdfs:comment """Obstetrics and gynaecology services with labor delivery."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+
+:OBGYNWithoutLaborDelivery a :OBGYN;
+  rdfs:label "OBGYNWithoutLaborDelivery"@en ;
+  rdfs:comment """Obstetrics and gynaecology services without labor delivery."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.       
+  
+:Ophthalmology  a :SpecialtyServiceCategory;
+  rdfs:label "Ophthalmology"@en ;
+  rdfs:comment """Ophthalmology i.e. medical and surgical eye problem services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+	 
+:Orthopedics  a :SpecialtyServiceCategory;
+  rdfs:label "Orthopedic"@en ;
+  rdfs:comment """Orthopedic services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  
+	 
+:Pediatrics  a :SpecialtyServiceCategory;
+  rdfs:label "Pediatrics"@en ;
+  rdfs:comment """Pediatrics services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  	 
+
+:Psychiatric  a owl:Class, :SpecialtyServiceCategory;
+  rdfs:label "Psychiatric"@en ;
+  rdfs:comment """Psychiatric services."""@en;
+  rdfs:subClassOf :SpecialtyServiceCategory;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:PsychiatricAdultGeneral  a :Psychiatric;
+  rdfs:label "PsychiatricAdultGeneral"@en ;
+  rdfs:comment """Psychiatric AdultGeneral services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.  	   
+  
+:PsychiatricPediatric  a :Psychiatric;
+  rdfs:label "PsychiatricPediatric"@en ;
+  rdfs:comment """Psychiatric Pediatric services."""@en;
+  rdfs:relatedMatch :Pediatrics;
+  rdfs:isDefinedBy :EDXLVocabulary.  	  
+    
+:Surgery  a owl:Class, :SpecialtyServiceCategory;
+  rdfs:label "Surgery"@en ;
+  rdfs:comment """Surgery services."""@en;
+  rdfs:subClassOf :SpecialtyServiceCategory;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+
+:GeneralSurgery  a :Surgery;
+  rdfs:label "GeneralSurgery"@en ;
+  rdfs:comment """General Surgery services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary. 
+  
+:AdultGeneralSurgery  a :Surgery;
+  rdfs:label "AdultGeneralSurgery"@en ;
+  rdfs:comment """Adult General Surgery services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:PediatricsSurgery  a :Surgery;
+  rdfs:label "PediatricSurgery"@en ;
+  rdfs:comment """Pediatric Surgery services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:OrthopedicsSurgery  a :Surgery;
+  rdfs:label "OrthopedicsSurgery"@en ;
+  rdfs:comment """Orthopedics Surgery services."""@en;
+  rdfs:relatedMatch :Orthopedics;
+  rdfs:isDefinedBy :EDXLVocabulary.      
+  
+:Neurosurgery  a :Surgery;
+  rdfs:label "Neurosurgery"@en ;
+  rdfs:comment """Neurosurgery services."""@en;
+  skos:broaderMatch :GeneralSurgery;
+  rdfs:isDefinedBy :EDXLVocabulary.  	 
+  
+:FacialSurgery  a :Surgery;
+  rdfs:label "FacialSurgery"@en ;
+  rdfs:comment """FacialSurgery services."""@en;
+  skos:broaderMatch :GeneralSurgery;  
+  rdfs:isDefinedBy :EDXLVocabulary.  	  
+  
+:HandSurgery  a :Surgery;
+  rdfs:label "HandSurgery"@en ;
+  rdfs:comment """HandSurgery services."""@en;
+  skos:broaderMatch :GeneralSurgery;  
+  rdfs:isDefinedBy :EDXLVocabulary.   
+
+:Reimplantation  a :Surgery;
+  rdfs:label "Reimplantation"@en ;
+  rdfs:comment """Reimplantation surgical services."""@en;
+  skos:relatedMatch :PlasticSurgery;
+  skos:broaderMatch :GeneralSurgery;  
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:SpinalSurgery  a :Surgery;
+  rdfs:label "SpinalSurgery"@en ;
+  rdfs:comment """SpinalSurgery services."""@en;
+  skos:relatedMatch :NeuroSurgery;
+  skos:broaderMatch :GeneralSurgery;  
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:VascularSurgery  a :Surgery;
+  rdfs:label "VascularSurgery"@en ;
+  rdfs:comment """VascularSurgery services."""@en;
+  skos:broaderMatch :GeneralSurgery;  
+  rdfs:isDefinedBy :EDXLVocabulary.      
+  
+:Anesthesia  a :Surgery;
+  rdfs:label "Anesthesia"@en ;
+  rdfs:comment """Anesthesia services."""@en;
+  skos:relatedMatch :Surgery;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:TransportServices a owl:Class, :SpecialtyServiceCategory;
+  rdfs:label "TransportServices"@en ;
+  rdfs:comment """Transport Services."""@en;
+  rdfs:subClassOf :SpecialtyServiceCategory;
+  rdfs:isDefinedBy :EDXLVocabulary.      
+  
+:AirTransportServices  a :TransportServices;
+  rdfs:label "AirTransportServices"@en ;
+  rdfs:comment """Air Transport Services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:AmbulanceServices  a :TransportServices;
+  rdfs:label "AmbulanceServices"@en ;
+  rdfs:comment """Ambulance Services."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:TraumaCenterServices a owl:Class, :TraumaCenterServices;
+  rdfs:label "TraumaCenterServices"@en ;
+  rdfs:comment """Trauma Center Services."""@en;
+  rdfs:subClassOf :SpecialtyServiceCategory;
+  rdfs:isDefinedBy :EDXLVocabulary.      
+  
+:TraumaCenterLevel1  a :TraumaCenterServices;
+  rdfs:label "TraumaCenterLevel1"@en ;
+  rdfs:comment """Trauma Center Level 1 Services. A Level I trauma center provides the highest level of surgical care to trauma patients."""@en;
+  :hasPriority 1;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:TraumaCenterLevel2  a :TraumaCenterServices;
+  rdfs:label "TraumaCenterLevel2"@en ;
+  rdfs:comment """Trauma Center Level 2 Services. A Level II trauma center works in collaboration with a Level I center. """@en;
+  :hasPriority 2;
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:TraumaCenterLevel3  a :TraumaCenterServices;
+  rdfs:label "TraumaCenterLevel3"@en ;
+  rdfs:comment """Trauma Center Level 3 Services. A Level III trauma center does not have the full availability of specialists, but does have resources for emergency resuscitation, surgery, and intensive care of most trauma patients. """@en;
+  :hasPriority 3;  
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:TraumaCenterLevel4  a :TraumaCenterServices;
+  rdfs:label "TraumaCenterLevel4"@en ;
+  rdfs:comment """Trauma Center Level 4 Services. A Level IV trauma center exists in some states where the resources do not exist for a Level III trauma center. It provides initial evaluation, stabilization, diagnostic capabilities, and transfer to a higher level of care."""@en;
+  :hasPriority 4;  
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:TraumaCenterLevel5  a :TraumaCenterServices;
+  rdfs:label "TraumaCenterLevel5"@en ;
+  rdfs:comment """Trauma Center Level 5 Services. A Provides initial evaluation, stabilization, diagnostic capabilities, and transfer to a higher level of care."""@en;
+  :hasPriority 5;  
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+#Significant event categories  
+:RoadClosureEvent  a :SignificantEventCategory;
+  rdfs:label "RoadClosureEvent"@en ;
+  rdfs:comment """Road closure event."""@en;
+  :keyword "road closed","traffic jam";
+  rdfs:isDefinedBy :EDXLVocabulary. 
+  
+:MassNotificationEvent  a :SignificantEventCategory;
+  rdfs:label "MassNotificationEvent"@en ;
+  rdfs:comment """Notification on mass media."""@en;
+  :keyword "mass media", "public notification", "public alert";
+  rdfs:isDefinedBy :EDXLVocabulary. 
+  
+:EvacautionEvent  a :SignificantEventCategory;
+  rdfs:label "Evacaution"@en ;
+  rdfs:comment """Evacuation event"""@en;
+  rdfs:keyword "evacaution";
+  rdfs:isDefinedBy :EDXLVocabulary. 
+
+:ShelterInPlaceEvent  a :SignificantEventCategory;
+  rdfs:label "ShelterInPlaceEvent"@en ;
+  rdfs:comment """Shelter on place warning."""@en;
+  :keyword "shelter in place", "stay indoor";
+  rdfs:isDefinedBy :EDXLVocabulary. 
+  
+:PowerOutageEvent  a :SignificantEventCategory;
+  rdfs:label "PowerOutageEvent"@en ;
+  rdfs:comment """Power outage event."""@en;
+  :keyword "power outage", "blackout";
+  rdfs:isDefinedBy :EDXLVocabulary. 
+
+:TreeDownEvent  a :SignificantEventCategory;
+  rdfs:label "TreeDownEvent"@en ;
+  rdfs:comment """Tree(s) down event."""@en;
+  :keyword "tree down";
+  rdfs:isDefinedBy :EDXLVocabulary. 
+
+:StrandedVecichleEvent  a :SignificantEventCategory;
+  rdfs:label "StrandedVecichleEvent"@en ;
+  rdfs:comment """Stranded vechicle(s)"""@en;
+  :keyword "vechicle stranded";
+  rdfs:isDefinedBy :EDXLVocabulary. 
+  
+:WaterLineBreakEvent  a :SignificantEventCategory;
+  rdfs:label "WaterLineBreakEvent"@en ;
+  rdfs:comment """Water line break"""@en;
+  :keyword "waterline break";
+  rdfs:isDefinedBy :EDXLVocabulary. 
+
+:WaterShortageEvent  a :SignificantEventCategory;
+  rdfs:label "WaterShortageEvent"@en ;
+  rdfs:comment """Water shortage"""@en;
+  rdfs:keyword "water shortage";
+  rdfs:isDefinedBy :EDXLVocabulary. 
+  
+:QuarantineEvent  a :SignificantEventCategory;
+  rdfs:label "QuarantineEvent"@en ;
+  rdfs:comment """Quarantine event."""@en;
+  :keyword "quarantine", "quarantined";
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:BridgeCollapseEvent  a :SignificantEventCategory;
+  rdfs:label "BridgeCollapseEvent"@en ;
+  rdfs:comment """Bridge collapse event event."""@en;
+  :keyword "Bridge collapse";
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:BuildingCollapseEvent  a :SignificantEventCategory;
+  rdfs:label "BuildingCollapseEvent"@en ;
+  rdfs:comment """Building collapse event event."""@en;
+  :keyword "Building collapse";
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:DeathEvent  a :SignificantEventCategory;
+  rdfs:label "DeathEvent"@en ;
+  rdfs:comment """Death event."""@en;
+  :keyword "Death";
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+:InjuryEvent  a :SignificantEventCategory;
+  rdfs:label "InjuryEvent"@en ;
+  rdfs:comment """Injury event."""@en;
+  :keyword "Injury";
+  rdfs:isDefinedBy :EDXLVocabulary.    
+  
+:MassImmunizationEvent  a :SignificantEventCategory;
+  rdfs:label "MassImmunizationEvent"@en ;
+  rdfs:comment """Mass immunizations event."""@en;
+  :keyword "Injury";
+  rdfs:isDefinedBy :EDXLVocabulary.      
+  
+:CleanupCompleteEvent  a :SignificantEventCategory;
+  rdfs:label "CleanupCompleteEnvet"@en ;
+  rdfs:comment """Cleanup complete event."""@en;
+  :keyword "cleanup", "complete";
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+:ResidentRepopulationEvent  a :SignificantEventCategory;
+  rdfs:label "ResidentRepopulationEvent"@en ;
+  rdfs:comment """Resident repopulation event."""@en;
+  :keyword "repopulation";
+  rdfs:isDefinedBy :EDXLVocabulary.     
+
+:IncidentCommandTransferEvent  a :SignificantEventCategory;
+  rdfs:label "IncidentCommandTransferEvent"@en ;
+  rdfs:comment """Incident command transfer event."""@en;
+  :keyword "command transfer";
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+ :AccomplishmentEvent  a :SignificantEventCategory;
+  rdfs:label "AccomplishmentEvent"@en ;
+  rdfs:comment """Accomplishments events."""@en;
+  :keyword "accomplishment";
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+#Life and safety threat by incident, the event in progress type threats are left out
+ :NoLikelyThreat  a :LifeAndSafetyThreatCategory;
+  rdfs:label "NoLikelyThreat"@en ;
+  rdfs:comment """No likely threat to life and safety."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+ :PotentialFutureThreat  a :LifeAndSafetyThreatCategory;
+  rdfs:label "PotentialFutureThreat"@en ;
+  rdfs:comment """Potential future threat to life and safety."""@en;
+  rdfs:isDefinedBy :EDXLVocabulary.   
+
+#Categories of infrastrcture potentially affected by incident more TBD
+ :AffectsMassTransit  a :InfrastructureAffectedCategory;
+  rdfs:label "AffectsMassTransit"@en ;
+  rdfs:comment """Affects mass transit."""@en; 
+  rdfs:isDefinedBy :EDXLVocabulary.   
+
+ :AffectsRoadsAndHighways  a :InfrastructureAffectedCategory;
+  rdfs:label "AffectsRoadsAndHighways"@en ;
+  rdfs:comment """Affects roads and highways."""@en;
+  rdfs:keyword "road closed", "highway closed", "traffic jam";  
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+ :AffectsRailways  a :InfrastructureAffectedCategory;
+  rdfs:label "AffectsRailways"@en ;
+  rdfs:isDefinedBy :EDXLVocabulary.     
+
+ :AffectsPowerAndEnergy  a :InfrastructureAffectedCategory;
+  rdfs:label "AffectsPowerAndEnergy"@en ;
+  rdfs:comment """Affects power and energy"""@en; 
+  rdfs:keyword "power outage";    
+  rdfs:isDefinedBy :EDXLVocabulary.   
+
+ :AffectsDrinkingWater  a :InfrastructureAffectedCategory;
+  rdfs:label "AffectsDrinkingWater"@en ;
+  rdfs:comment """Affects drinking water"""@en; 
+  rdfs:isDefinedBy :EDXLVocabulary.   
+  
+ :AffectsTelecommunications  a :InfrastructureAffectedCategory;
+  rdfs:label "AffectsTelecommunications"@en ;
+  rdfs:comment """Affects telecommunications"""@en; 
+  rdfs:isDefinedBy :EDXLVocabulary.     
+  
+  
+#TEP related codes/categories 
+  
+:Pediatric  a :ContingencyMedicalSpecialtyCode;
+  rdfs:label "Pediatric"@en ;
+  rdfs:comment """Pediatric patient"""@en; 
+  rdfs:isDefinedBy :EDXLVocabulary.    
+
+:Burn  a :ContingencyMedicalSpecialtyCode;
+  rdfs:label "Burn"@en ;
+  rdfs:comment """Burn patient"""@en; 
+  rdfs:isDefinedBy :EDXLVocabulary.  
+
+:Psychiatric  a :ContingencyMedicalSpecialtyCode;
+  rdfs:label "Psychiatric"@en ;
+  rdfs:comment """Psychiatric patient"""@en; 
+  rdfs:isDefinedBy :EDXLVocabulary.  
+
+:MedicalSurge  a :ContingencyMedicalSpecialtyCode;
+  rdfs:label "MedicalSurge"@en ;
+  rdfs:comment """MedicalSurge patient"""@en; 
+  rdfs:isDefinedBy :EDXLVocabulary.  
+  
+:CriticalCare  a :ContingencyMedicalSpecialtyCode;
+  rdfs:label "CriticalCare"@en ;
+  rdfs:comment """CriticalCare patient"""@en; 
+  rdfs:isDefinedBy :EDXLVocabulary.  
+  
+  
+ 
+ 

@@ -1,0 +1,1056 @@
+<HTML>
+<HEAD>
+<TITLE>Glossary</TITLE>
+</HEAD>
+<BODY>
+<FONT face="Verdana, Helvetica, sans-serif">
+<P><B>Glossary</B></P>
+<TABLE>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="dul_hasComponent.html">dul:hasComponent</A>&nbsp;&nbsp;-&nbsp;&nbsp;from DUL ontology
+
+is the hasPart property, but without transitivity  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="dul_hasConstituent.html">dul:hasConstituent</A>&nbsp;&nbsp;-&nbsp;&nbsp;from DUL ontology  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="dul_hasPart.html">dul:hasPart</A>&nbsp;&nbsp;-&nbsp;&nbsp;from DUL ontology  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="dul_isComponentOf.html">dul:isComponentOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="dul_isConstituentOf.html">dul:isConstituentOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="dul_isPartOf.html">dul:isPartOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFProperty.greyed.gif" width="16" height="16">&nbsp;<A href="geo_alt.html">geo:altitude</A>&nbsp;&nbsp;-&nbsp;&nbsp;The WGS84 altitude of a SpatialThing (decimal meters 
+above the local reference ellipsoid).  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFProperty.greyed.gif" width="16" height="16">&nbsp;<A href="geo_lat_long.html">geo:lat/long</A>&nbsp;&nbsp;-&nbsp;&nbsp;A comma-separated representation of a latitude, longitude coordinate.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFProperty.greyed.gif" width="16" height="16">&nbsp;<A href="geo_lat.html">geo:latitude</A>&nbsp;&nbsp;-&nbsp;&nbsp;The WGS84 latitude of a SpatialThing (decimal degrees).  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFProperty.greyed.gif" width="16" height="16">&nbsp;<A href="geo_location.html">geo:location</A>&nbsp;&nbsp;-&nbsp;&nbsp;The relation between something and the point, 
+ or other geometrical thing in space, where it is.  For example, the realtionship between
+ a radio tower and a Point with a given lat and long.
+ Or a relationship between a park and its outline as a closed arc of points, or a road and
+ its location as a arc (a sequence of points).
+ Clearly in practice there will be limit to the accuracy of any such statement, but one would expect
+ an accuracy appropriate for the size of the object and uses such as mapping .
+   </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFProperty.greyed.gif" width="16" height="16">&nbsp;<A href="geo_long.html">geo:longitude</A>&nbsp;&nbsp;-&nbsp;&nbsp;The WGS84 longitude of a SpatialThing (decimal degrees).  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFSClass.greyed.gif" width="16" height="16">&nbsp;<A href="geo_Point.html">geo:point</A>&nbsp;&nbsp;-&nbsp;&nbsp; 
+Uniquely identified by lat/long/alt. i.e.
+
+spaciallyIntersects(P1, P2) :- lat(P1, LAT), long(P1, LONG), alt(P1, ALT),
+  lat(P2, LAT), long(P2, LONG), alt(P2, ALT).
+
+sameThing(P1, P2) :- type(P1, Point), type(P2, Point), spaciallyIntersects(P1, P2).
+    </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFSClass.greyed.gif" width="16" height="16">&nbsp;<A href="geo_SpatialThing.html">geo:SpatialThing</A>&nbsp;&nbsp;-&nbsp;&nbsp;Anything with spatial extent, i.e. size, shape, or position.
+ e.g. people, places, bowling balls, as well as abstract areas like cubes.
+  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Abstract.html">LogiCO:Abstract</A>&nbsp;&nbsp;-&nbsp;&nbsp;Any Entity that cannot be located in space-time. 
+
+Equivalent to the concept of Abstract in DOLCE UltraLite (DUL) ontology.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Activity.html">LogiCO:Activity</A>&nbsp;&nbsp;-&nbsp;&nbsp;An Activity denotes an action that is relevant for the purpose of logistics and provides value for a potential customer. 
+The Activity concept is further specialised in the LogiServ ontology with URL https://raw.githubusercontent.com/danielelm/tno/master/ontology/LogiServ.tt)
+  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Actor.html">LogiCO:Actor</A>&nbsp;&nbsp;-&nbsp;&nbsp;An actor represents a company, an authority or an individual that provides or requests activities and operates on physical resources. 
+We have identified a number of Actor types that are relevant for logistics, but the list can be further extended.
+
+Equivalent to the concept of Agent in:
+DOLCE UltraLite (DUL) ontology: 'Any agentive Object , either physical (e.g. a whale, a robot, an oak), or social (e.g. a corporation, an institution, a community)'.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_Actor_1.html">LogiCO:Actor 1</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Address.html">LogiCO:Address</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_AddressDenHaagCentralStation.html">LogiCO:Address 1</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Airplane.html">LogiCO:Airplane</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Airport.html">LogiCO:Airport</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_AirTransport.html">LogiCO:AirTransport</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Amount.html">LogiCO:Amount</A>&nbsp;&nbsp;-&nbsp;&nbsp;A quantity, independently from how it is measured, computed, etc.
+
+Equivalent to the concept of Amount in DOLCE UltraLite (DUL) ontology.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_AmountUnit.html">LogiCO:AmountUnit</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_AnnaVanBuerenPlein.html">LogiCO:Anna van bueren plein</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Bag.html">LogiCO:Bag</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Bank.html">LogiCO:Bank</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Barge.html">LogiCO:Barge</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Barrel.html">LogiCO:Barrel</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Basket.html">LogiCO:Basket</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Bottle.html">LogiCO:Bottle</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Box.html">LogiCO:Box</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Bucket.html">LogiCO:Bucket</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Building.html">LogiCO:Building</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Bulk.html">LogiCO:Bulk</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Buyer.html">LogiCO:Buyer</A>&nbsp;&nbsp;-&nbsp;&nbsp;Who is paying   </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Capacity.html">LogiCO:Capacity</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Carrier.html">LogiCO:Carrier</A>&nbsp;&nbsp;-&nbsp;&nbsp;Who is carrying the goods and is operating the transport means. That's why a synonim of carrier is Operator.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Carton.html">LogiCO:Carton</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Case.html">LogiCO:Case</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_CEL.html">LogiCO:CELSIUS</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_City.html">LogiCO:City</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_CodeIssuingAgency.html">LogiCO:CodeIssuingAgency</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Consignee.html">LogiCO:Consignee</A>&nbsp;&nbsp;-&nbsp;&nbsp;Who is receving (sometimes buyer and consignee are the same)  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Consignor.html">LogiCO:Consignor</A>&nbsp;&nbsp;-&nbsp;&nbsp;Who is shipping (sometimes is the same than the seller) - Shipper is a synonym of Consignor  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.gif" width="16" height="16">&nbsp;<A href="LogiCO_Container.html">LogiCO:Container</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_ContainerSize.html">LogiCO:ContainerSize</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.gif" width="16" height="16">&nbsp;<A href="LogiCO_ContainerSizeUnit.html">LogiCO:ContainerSizeUnit</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_contains.html">LogiCO:contains</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Country.html">LogiCO:Country</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Crane.html">LogiCO:Crane</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Crate.html">LogiCO:Crate</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.gif" width="16" height="16">&nbsp;<A href="LogiCO_Currency.html">LogiCO:Currency</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_CustomsAuthorithy.html">LogiCO:CustomsAuthorithy</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_CustomsBroker.html">LogiCO:CustomsBroker</A>&nbsp;&nbsp;-&nbsp;&nbsp;who is acting on behalf of an importer (who can be the buyer) or exporter (who can be the seller) for customs related issues  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_DenHaag.html">LogiCO:Den haag</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_DenHaagCentralStationLocation.html">LogiCO:Den haag central station location</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Document.html">LogiCO:Document</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Drum.html">LogiCO:Drum</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Electronics.html">LogiCO:Electronics</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Entity.html">LogiCO:Entity</A>&nbsp;&nbsp;-&nbsp;&nbsp;Anything of interest in a certain universe of discourse (in our case, the logistics domain)
+
+Equivalent to the concept of Entity in:
+- DOLCE UltraLite (DUL) ontology:  'Anything: real, possible, or imaginary, which some modeller wants to talk about for some purpose.'
+- PROTON ontology: 'Any sort of an entity of interest, usually something existing, happening, or purely abstract'   </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_EquipmentRequirement.html">LogiCO:EquipmentRequirement</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_EquipmentSize.html">LogiCO:EquipmentSize</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_EUR.html">LogiCO:EUR</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Event.html">LogiCO:Event</A>&nbsp;&nbsp;-&nbsp;&nbsp;An event is a trigger that can be used to synchronize two or more activities. Events and their properties are further specialized in the LogiServ ontology with URL https://raw.githubusercontent.com/danielelm/tno/master/ontology/LogiServ.tt
+
+With this definition of event in LogiCO, we specialize the concept of Event defined in a general way (on purpose) in the DOLCE UltraLite (DUL) ontology. According to the DUL definition, an event consists of any physical, social, or mental process, event, or state.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Facility.html">LogiCO:Facility</A>&nbsp;&nbsp;-&nbsp;&nbsp;Static resource (usually a building) built, installed or established to facilitate related activities in a point location. 
+
+A facility has a location of type GeoPoint (in contrast to facility structures, such as ports or airports, which have a location of type GeoArea since they denote an entire geographical area)
+
+Specialization of the concept of Physical Place in:
+- DOLCE UltraLite (DUL) ontology: 'A physical object that is inherently located; for example, a water area.'  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_FacilityStructure.html">LogiCO:FacilityStructure</A>&nbsp;&nbsp;-&nbsp;&nbsp;Static resource built, installed or established to facilitate related activities in a geographical area.
+
+A facility structure has a location of type GeoArea (in contrast to a facility, which has a location of type GeoPoint since it denotes a point location)
+
+Specialization of the concept of Physical Place in:
+- DOLCE UltraLite (DUL) ontology: 'A physical object that is inherently located; for example, a water area.'  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_feet.html">LogiCO:feet</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Flammable.html">LogiCO:Flammable</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Forwarder.html">LogiCO:Forwarder</A>&nbsp;&nbsp;-&nbsp;&nbsp;Who is handling/organizing the shipment on behalf of somebody else that owns the goods. This organization sometimes is hust about having a phone and a desk, maybe a computer, and booking resources. In other cases, for example DHL, the forwarder also executes some parts because he owns resources (airplanes, trucks), but the forwarder never own the goods himself.   </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_GBP.html">LogiCO:GBP</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_GeoArea.html">LogiCO:GeoArea</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_GeoPoint.html">LogiCO:GeoPoint</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_GrossVolume.html">LogiCO:GrossVolume</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_GrossWeight.html">LogiCO:GrossWeight</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.gif" width="16" height="16">&nbsp;<A href="LogiCO_GS1PalletCodeList.html">LogiCO:GS1Pallet code list</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasAgency.html">LogiCO:has agency</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasAmount.html">LogiCO:has amount</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasCapacity.html">LogiCO:has capacity</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasEmail.html">LogiCO:has email</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasFaxNr.html">LogiCO:has fax nr</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasHeight.html">LogiCO:has height</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasInvoiceTotalAmount.html">LogiCO:has invoice total amount</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasLenght.html">LogiCO:has lenght</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasName.html">LogiCO:has name</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasPhoneNr.html">LogiCO:has phone nr</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasVolume.html">LogiCO:has volume</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasWebsiteURI.html">LogiCO:has website URI</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasWeight.html">LogiCO:has weight</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasWidth.html">LogiCO:has width</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasActorID.html">LogiCO:hasActorID</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasAddress.html">LogiCO:hasAddress</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasAgencyCode.html">LogiCO:hasAgencyCode</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasAgencyName.html">LogiCO:hasAgencyName</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasAmountValue.html">LogiCO:hasAmountValue</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasBuilding.html">LogiCO:hasBuilding</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasBuildingName.html">LogiCO:hasBuildingName</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasBuildingNumber.html">LogiCO:hasBuildingNumber</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasCity.html">LogiCO:hasCity</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasCityName.html">LogiCO:hasCityName</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasCode.html">LogiCO:hasCode</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasContainerSize.html">LogiCO:hasContainerSize</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasCountry.html">LogiCO:hasCountry</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasCountryName.html">LogiCO:hasCountryName</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasDescription.html">LogiCO:hasDescription</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasEquipmentID.html">LogiCO:hasEquipmentID</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasEquipmentRequirement.html">LogiCO:hasEquipmentRequirement</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasEquipmentStatus.html">LogiCO:hasEquipmentStatus</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasFullEmptyIndicator.html">LogiCO:hasFullEmptyIndicator</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasHeightValue.html">LogiCO:hasHeightValue</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasID.html">LogiCO:hasID</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasLenghtValue.html">LogiCO:hasLenghtValue</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasLocation.html">LogiCO:hasLocation</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasLocationID.html">LogiCO:hasLocationID</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasPackageID.html">LogiCO:hasPackageID</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasParameterValue.html">LogiCO:hasParameterValue</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasPhysicalAttribute.html">LogiCO:hasPhysicalAttribute</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasPhysicalState.html">LogiCO:hasPhysicalState</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasPostalCode.html">LogiCO:hasPostalCode</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasPostbox.html">LogiCO:hasPostbox</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasQuantity.html">LogiCO:hasQuantity</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasRegion.html">LogiCO:hasRegion</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasRegionName.html">LogiCO:hasRegionName</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasRequirement.html">LogiCO:hasRequirement</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasSize.html">LogiCO:hasSize</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasSizeValue.html">LogiCO:hasSizeValue</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasSpecialRequirement.html">LogiCO:hasSpecialRequirement</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasStatus.html">LogiCO:hasStatus</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasStatusDescription.html">LogiCO:hasStatusDescription</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasStreet.html">LogiCO:hasStreet</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasStreetName.html">LogiCO:hasStreetName</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasStreetNumber.html">LogiCO:hasStreetNumber</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasSupplier.html">LogiCO:hasSupplier</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasTemperature.html">LogiCO:hasTemperature</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasTemperatureValue.html">LogiCO:hasTemperatureValue</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasTransportMeansID.html">LogiCO:hasTransportMeansID</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasTrigger.html">LogiCO:hasTrigger</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasVolumeValue.html">LogiCO:hasVolumeValue</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasWeightValue.html">LogiCO:hasWeightValue</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasWidthValue.html">LogiCO:hasWidthValue</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_HeavyMachinery.html">LogiCO:HeavyMachinery</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Height.html">LogiCO:Height</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.gif" width="16" height="16">&nbsp;<A href="LogiCO_HeightLenghtWidthUnit.html">LogiCO:Height lenght width unit</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hosts.html">LogiCO:hosts</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Hub.html">LogiCO:Hub</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_hasIDValue.html">LogiCO:id</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Identifier.html">LogiCO:Identifier</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_InlandTerminalOperator.html">LogiCO:InlandTerminalOperator</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_InlandWaterTransport.html">LogiCO:InlandWaterTransport</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Instant.html">LogiCO:Instant</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Insurer.html">LogiCO:Insurer</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Interval.html">LogiCO:Interval</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_InvoiceTotalAmount.html">LogiCO:Invoice total amount</A>&nbsp;&nbsp;-&nbsp;&nbsp;Amount, debited by the seller and being the total of related article item amounts in a commercial invoice.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isBuildingOf.html">LogiCO:isBuildingOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isCityOf.html">LogiCO:isCityOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isContainedIn.html">LogiCO:isContainedIn</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isCountryOf.html">LogiCO:isCountryOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isDangerous.html">LogiCO:isDangerous</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isFull.html">LogiCO:isFull</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isLocationOf.html">LogiCO:isLocationOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isMeasuredIn.html">LogiCO:isMeasuredIn</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isMovedBy.html">LogiCO:isMovedBy</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_ISO0_halfEURO.html">LogiCO:ISO0 half EURO</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_ISO1_oneEURO.html">LogiCO:ISO1 one EURO</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_ISO2.html">LogiCO:ISO2</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isOpenTop.html">LogiCO:isOpenTop</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isOversize.html">LogiCO:isOversize</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isPackagedIn.html">LogiCO:isPackagedIn</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isPacked.html">LogiCO:isPacked</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isRefeer.html">LogiCO:isRefeer</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isRegionOf.html">LogiCO:isRegionOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isStreetOf.html">LogiCO:isStreetOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isSupplierOf.html">LogiCO:isSupplierOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isTriggerOf.html">LogiCO:isTriggerOf</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_isUsedIn.html">LogiCO:isUsedIn</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_KG.html">LogiCO:KG</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Lenght.html">LogiCO:Lenght</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Location.html">LogiCO:Location</A>&nbsp;&nbsp;-&nbsp;&nbsp;It represents the relative location used to define the place(s) relevant for logistics activities.
+
+Equivalent to the concept of Place in:
+- DOLCE UltraLite (DUL) ontology:  'A location, in a very generic sense: a political geographic entity (Roma, Lesotho), a non-material location determined by the presence of other entities ('the area close to Roma'), pivot events or signs ('the area where the helicopter fell'), complements of other entities ('the area under the table'), etc. 
+In this generic sense, a Place is a relative location. For an absolute location, see the class SpaceRegion.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLAnnotationProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_mappingToEDI.html">LogiCO:mappingToEDI</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_MaxTemperature.html">LogiCO:Max temperature</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_measures.html">LogiCO:measures</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_MinTemperature.html">LogiCO:Min temperature</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Modality.html">LogiCO:Modality</A>&nbsp;&nbsp;-&nbsp;&nbsp;A modality is an abstract that denotes the specific mode in which an entity is used.
+
+For example, the mode of transport is a modality that denotes which particluar mode is used for the activity of transport, i.e., air transport, road transport, etc.   </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_MonetaryAmount.html">LogiCO:MonetaryAmount</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_MoveableEquipment.html">LogiCO:MoveableEquipment</A>&nbsp;&nbsp;-&nbsp;&nbsp;Reusable object used for containment, protection and movement of product classes with or without package. A moveable equipment cannot move on its own (unpowered vehicle), but can be pulled or contained in a transport means  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_MoveableResource.html">LogiCO:MoveableResource</A>&nbsp;&nbsp;-&nbsp;&nbsp;A Moveable Resource is a physical resource characterized by the capability of moving on its own or being contained for the purpose of transportation  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.gif" width="16" height="16">&nbsp;<A href="LogiCO_moves.html">LogiCO:moves</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_MTQ.html">LogiCO:MTQ</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_MTR.html">LogiCO:MTR</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_Netherlands.html">LogiCO:Netherlands</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_NetWeight.html">LogiCO:NetWeight</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_NormalTruck.html">LogiCO:NormalTruck</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Object.html">LogiCO:Object</A>&nbsp;&nbsp;-&nbsp;&nbsp;Any physical, social, or mental object, or a substance
+
+Equivalent to the concept of Object in DOLCE UltraLite (DUL) ontology.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_one-eighthEURO.html">LogiCO:one-eighth EURO</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_Oneway.html">LogiCO:Oneway</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_OpenTop.html">LogiCO:OpenTop</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Organic.html">LogiCO:Organic</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Package.html">LogiCO:Package</A>&nbsp;&nbsp;-&nbsp;&nbsp;Material used for containment, protection and movement of product classes  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.gif" width="16" height="16">&nbsp;<A href="LogiCO_Pallet.html">LogiCO:Pallet</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_PalletSize.html">LogiCO:Pallet size</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Parameter.html">LogiCO:Parameter</A>&nbsp;&nbsp;-&nbsp;&nbsp;A Concept that classifies an Abstract, such as, for example, a Physical Attribute, a Space Region or a Temporal Region.
+The difference between an Abstract and a Parameter is that abstracts represent sets of observable values, e.g. 'the height  of a given building', while parameters represent constraints or selections on observable values, e.g. 'VeryHigh'. 
+
+Equivalent to the concept of Parameter in DOLCE UltraLite (DUL) ontology.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Perishable.html">LogiCO:Perishable</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_PhysicalAttribute.html">LogiCO:PhysicalAttribute</A>&nbsp;&nbsp;-&nbsp;&nbsp;Physical value of a physical object, e.g. density, color, etc.
+
+Equivalent to the concept of Physical Attribute in DOLCE UltraLite (DUL) ontology.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_PhysicalAttributeUnit.html">LogiCO:PhysicalAttributeUnit</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.gif" width="16" height="16">&nbsp;<A href="LogiCO_PhysicalResource.html">LogiCO:PhysicalResource</A>&nbsp;&nbsp;-&nbsp;&nbsp;Physical objects that are used in logistics activities, such as, for example, the moveable resources used during the activity of transport, i.e., the transport means and equipment used to move items to their destination.
+A physical resource is further specialized in a Moveable Resource, which is characterized by the capability of moving on its own or being contained for the purpose of transportation, and a Static Resource, which is used to handle moveable objects in a facility prior to their transportation.
+
+Equivalent to the concept of PhysicalObject in:
+- DOLCE UltraLite (DUL) ontology: 'Any Object that has a proper space region. The prototypical physical object has also an associated mass, but the nature of its mass can greatly vary based on the epistemological status of the object (scientifically measured, subjectively possible, imaginary)'  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_PhysicalState.html">LogiCO:PhysicalState</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Port.html">LogiCO:Port</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_ProductClass.html">LogiCO:ProductClass</A>&nbsp;&nbsp;-&nbsp;&nbsp;A product class is used to select proper package, moveable equipment and transport means for several logistics activities, especially for transport. The selection is based on relevant properties of the product class, such as its physical state (solid, liquid, gas), required temperature, dangerousness, etc.   </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_quarterEURO.html">LogiCO:quarter EURO</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_TheHagueCentralStation.html">LogiCO:Railway station The Hague</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_RailwayStation.html">LogiCO:RailwayStation</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_RailwayTransport.html">LogiCO:RailwayTransport</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_RailwayWagon.html">LogiCO:RailwayWagon</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Region.html">LogiCO:Region</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Regular.html">LogiCO:Regular</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Requirement.html">LogiCO:Requirement</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_Returnable.html">LogiCO:Returnable</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_RoadTransport.html">LogiCO:RoadTransport</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_Schiphol.html">LogiCO:Schiphol</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_SchipholAirport.html">LogiCO:Schiphol airport</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_SeaTerminalOperator.html">LogiCO:SeaTerminalOperator</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_SeaTransport.html">LogiCO:SeaTransport</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Seller.html">LogiCO:Seller</A>&nbsp;&nbsp;-&nbsp;&nbsp;Who is selling (is getting paid)  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_SemiTrailer.html">LogiCO:SemiTrailer</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Shipper.html">LogiCO:Shipper</A>&nbsp;&nbsp;-&nbsp;&nbsp;Who is shipping (sometimes is the same than the seller) - Consignor is a synonym of Shipper  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Size.html">LogiCO:Size</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_SizeUnit.html">LogiCO:SizeUnit</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_SpaceRegion.html">LogiCO:SpaceRegion</A>&nbsp;&nbsp;-&nbsp;&nbsp;It represents the specific dimensional space tha defines the absolute location of an entity.
+In contrast, the class Location (which is a subclass of Object) represents the relative location of an entity.
+
+Equivalent to the concept of Space Region in:
+- DOLCE UltraLite (DUL) ontology:  'Any Region in a dimensional space that is used to localize an Entity'  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Standard.html">LogiCO:Standard</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_StaticEquipment.html">LogiCO:StaticEquipment</A>&nbsp;&nbsp;-&nbsp;&nbsp;Reusable object that is used in a facility to handle moveable resources  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_StaticResource.html">LogiCO:StaticResource</A>&nbsp;&nbsp;-&nbsp;&nbsp;A Static Resource is a Physical Resource that is used to handle moveable objects in a facility prior to their transportation.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Stevedore.html">LogiCO:Stevedore</A>&nbsp;&nbsp;-&nbsp;&nbsp;who is phisically handling the containers in a location (sea transport related)  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Street.html">LogiCO:Street</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Tank.html">LogiCO:Tank</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Temperature.html">LogiCO:Temperature</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.gif" width="16" height="16">&nbsp;<A href="LogiCO_TemperatureUnit.html">LogiCO:TemperatureUnit</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_TemporalRegion.html">LogiCO:TemporalRegion</A>&nbsp;&nbsp;-&nbsp;&nbsp;Any Region in a dimensional space that aims at representing time. We use it to represent the start time, end time or time interval associated to activities.
+
+  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Terminal.html">LogiCO:Terminal</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_TerminalOperator.html">LogiCO:TerminalOperator</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_TowedBarge.html">LogiCO:TowedBarge</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Toxic.html">LogiCO:Toxic</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Tractor.html">LogiCO:Tractor</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Trailer.html">LogiCO:Trailer</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Train.html">LogiCO:Train</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_TransportMeans.html">LogiCO:TransportMeans</A>&nbsp;&nbsp;-&nbsp;&nbsp;Reusable object that facilitates the activity of transport and moves on its own (powered vehicle)  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_TransportMode.html">LogiCO:TransportMode</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Tray.html">LogiCO:Tray</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Truck.html">LogiCO:Truck</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_UniformLoadDevice.html">LogiCO:UniformLoadDevice</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_UnitOfMeasure.html">LogiCO:UnitOfMeasure</A>&nbsp;&nbsp;-&nbsp;&nbsp;Units of measure are parameters on regions (Space Regions, Temporal Regions), which can be valued as datatype values.
+
+Equivalent to the concept of UnitOf Measure in DOLCE UltraLite (DUL) ontology.  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.gif" width="16" height="16">&nbsp;<A href="LogiCO_USD.html">LogiCO:USD</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Van.html">LogiCO:Van</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Vessel.html">LogiCO:Vessel</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Volume.html">LogiCO:Volume</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.gif" width="16" height="16">&nbsp;<A href="LogiCO_VolumeUnit.html">LogiCO:VolumeUnit</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Warehouse.html">LogiCO:Warehouse</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Weight.html">LogiCO:Weight</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.gif" width="16" height="16">&nbsp;<A href="LogiCO_WeightUnit.html">LogiCO:WeightUnit</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16">&nbsp;<A href="LogiCO_Width.html">LogiCO:Width</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_after.html">time:after</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_before.html">time:before</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.greyed.gif" width="16" height="16">&nbsp;<A href="time_DateTimeDescription.html">time:DateTimeDescription</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.greyed.gif" width="16" height="16">&nbsp;<A href="time_DateTimeInterval.html">time:DateTimeInterval</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_day.html">time:day</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_dayOfWeek_.html">time:dayOfWeek</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.greyed.gif" width="16" height="16">&nbsp;<A href="time_DayOfWeek.html">time:DayOfWeek</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_dayOfYear.html">time:dayOfYear</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_days.html">time:days</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.greyed.gif" width="16" height="16">&nbsp;<A href="time_DurationDescription.html">time:DurationDescription</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_Friday.html">time:Friday</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_hasBeginning.html">time:hasBeginning</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_hasDateTimeDescription.html">time:hasDateTimeDescription</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_hasDurationDescription.html">time:hasDurationDescription</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_hasEnd.html">time:hasEnd</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_hour.html">time:hour</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_hours.html">time:hours</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_inDateTime.html">time:inDateTime</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_inside.html">time:inside</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.greyed.gif" width="16" height="16">&nbsp;<A href="time_Instant.html">time:Instant</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.greyed.gif" width="16" height="16">&nbsp;<A href="time_Interval.html">time:Interval</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalAfter.html">time:intervalAfter</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalBefore.html">time:intervalBefore</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalContains.html">time:intervalContains</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalDuring.html">time:intervalDuring</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalEquals.html">time:intervalEquals</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalFinishedBy.html">time:intervalFinishedBy</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalFinishes.html">time:intervalFinishes</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalMeets.html">time:intervalMeets</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalMetBy.html">time:intervalMetBy</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalOverlappedBy.html">time:intervalOverlappedBy</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalOverlaps.html">time:intervalOverlaps</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalStartedBy.html">time:intervalStartedBy</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_intervalStarts.html">time:intervalStarts</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_inXSDDateTime.html">time:inXSDDateTime</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.greyed.gif" width="16" height="16">&nbsp;<A href="time_January.html">time:January</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_minute.html">time:minute</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_minutes.html">time:minutes</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_Monday.html">time:Monday</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_month.html">time:month</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_months.html">time:months</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.greyed.gif" width="16" height="16">&nbsp;<A href="time_ProperInterval.html">time:ProperInterval</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_Saturday.html">time:Saturday</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_second.html">time:second</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_seconds.html">time:seconds</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_Sunday.html">time:Sunday</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.greyed.gif" width="16" height="16">&nbsp;<A href="time_TemporalEntity.html">time:TemporalEntity</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassDefined.greyed.gif" width="16" height="16">&nbsp;<A href="time_TemporalUnit.html">time:TemporalUnit</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_Thursday.html">time:Thursday</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_timeZone.html">time:timeZone</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_Tuesday.html">time:Tuesday</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_unitDay.html">time:unitDay</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_unitHour.html">time:unitHour</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_unitMinute.html">time:unitMinute</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_unitMonth.html">time:unitMonth</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_unitSecond.html">time:unitSecond</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLObjectProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_unitType.html">time:unitType</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_unitWeek.html">time:unitWeek</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_unitYear.html">time:unitYear</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/RDFIndividual.greyed.gif" width="16" height="16">&nbsp;<A href="time_Wednesday.html">time:Wednesday</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_week.html">time:week</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_weeks.html">time:weeks</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_xsdDateTime.html">time:xsdDateTime</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_year_.html">time:year</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLNamedClassPrimitive.greyed.gif" width="16" height="16">&nbsp;<A href="time_Year.html">time:Year</A>  </TD>
+</TR>
+<TR>
+  <TD><IMG border="0" src="icons/OWLDatatypeProperty.greyed.gif" width="16" height="16">&nbsp;<A href="time_years.html">time:years</A>  </TD>
+</TR>
+</TABLE>
+</BODY>
+</HTML>

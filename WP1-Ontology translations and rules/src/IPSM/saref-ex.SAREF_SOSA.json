@@ -1,0 +1,90 @@
+{
+  "@graph" : [ {
+    "@graph" : [ {
+      "@id" : "InterIoTMsg:meta66b05c61-d687-45a3-b5fb-6864bbec3b69",
+      "@type" : [ "InterIoTMsg:meta", "InterIoTMsg:Thing_update" ],
+      "InterIoTMsg:conversationID" : "conv99528eba-eb2d-47e8-9ee6-9dd40d19f89a",
+      "InterIoTMsg:dateTimeStamp" : "2017-05-22T22:19:30.281+02:00",
+      "InterIoTMsg:messageID" : "msg7e484a2c-f959-486e-8da0-31143f457234"
+    } ],
+    "@id" : "InterIoTMsg:metadata"
+  }, {
+    "@graph" : [ {
+      "@id" : "_:b0",
+      "@type" : "time:TimePosition",
+      "time:numericPosition" : 1.5114660069682777E9
+    }, {
+      "@id" : "_:b1",
+      "@type" : "time:Instant",
+      "time:inTimePosition" : {
+        "@id" : "_:b0"
+      }
+    }, {
+      "@id" : "_:b2",
+      "@type" : "time:Instant",
+      "time:inTimePosition" : {
+        "@id" : "_:b3"
+      }
+    }, {
+      "@id" : "_:b3",
+      "@type" : "time:TimePosition",
+      "time:numericPosition" : 1.5114660069682777E9
+    }, {
+      "@id" : "sarefInst:AccelerationMeasurement_Test.1.1_1511466006.9682777",
+      "@type" : [ "http://www.w3.org/ns/sosa/extension/AccelerationMeasurement", "http://www.w3.org/ns/sosa/Observation" ],
+      "http://www.w3.org/ns/sosa/hasSimpleResult" : 1.4,
+      "http://www.w3.org/ns/sosa/madeBySensor" : {
+        "@id" : "sarefInst:exampleSmartPhoneSendingInfoTruck"
+      },
+      "http://www.w3.org/ns/sosa/observedProperty" : "saref:Accelaration_Vehicle",
+      "http://www.w3.org/ns/sosa/phenomenonTime" : {
+        "@id" : "_:b1"
+      },
+      "saref:isMeasuredIn" : "saref:AccelerationUnit_MeterPerSecondSquared"
+    }, {
+      "@id" : "sarefInst:SpeedMeasurement__Test.1.1_1511466006.9682777",
+      "@type" : [ "http://www.w3.org/ns/sosa/extension/SpeedMeasurement", "http://www.w3.org/ns/sosa/Observation" ],
+      "http://www.w3.org/ns/sosa/hasSimpleResult" : 14,
+      "http://www.w3.org/ns/sosa/madeBySensor" : {
+        "@id" : "sarefInst:exampleSmartPhoneSendingInfoTruck"
+      },
+      "http://www.w3.org/ns/sosa/observedProperty" : "saref:VelocityOrSpeed_Vehicle",
+      "http://www.w3.org/ns/sosa/phenomenonTime" : {
+        "@id" : "_:b2"
+      },
+      "saref:isMeasuredIn" : "saref:SpeedUnit_MeterPerSecond"
+    }, {
+      "@id" : "sarefInst:exampleSmartPhoneSendingInfoTruck",
+      "@type" : "http://www.w3.org/ns/sosa/Sensor",
+      "geo:location" : {
+        "@id" : "sarefInst:test.1.1.LocationSmartPhone_39.431478658043424_-0.35860926434736484"
+      }
+    }, {
+      "@id" : "sarefInst:test.1.1.LocationSmartPhone_39.431478658043424_-0.35860926434736484",
+      "@type" : [ "geo:SpatialThing", "owl:NamedIndividual" ],
+      "geo:latitude" : 39.431478658043424,
+      "geo:longitude" : -0.35860926434736484
+    } ],
+    "@id" : "InterIoTMsg:payload"
+  } ],
+  "@context" : {
+    "schema" : "http://schema.org/",
+    "sarefInst" : "https://w3id.org/saref/instances/",
+    "qu" : "http://purl.oclc.org/NET/ssnx/qu/qu#",
+    "owl" : "http://www.w3.org/2002/07/owl#",
+    "saref" : "https://w3id.org/saref#",
+    "xsd" : "http://www.w3.org/2001/XMLSchema#",
+    "skos" : "http://www.w3.org/2004/02/skos/core#",
+    "dim" : "http://purl.oclc.org/NET/ssnx/qu/dim#",
+    "rdfs" : "http://www.w3.org/2000/01/rdf-schema#",
+    "InterIoT" : "http://inter-iot.eu/",
+    "geo" : "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "dct" : "http://purl.org/dc/terms/",
+    "InterIoTMsg" : "http://inter-iot.eu/message/",
+    "rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "dcterms" : "http://purl.org/dc/terms/",
+    "time" : "http://www.w3.org/2006/time#",
+    "foaf" : "http://xmlns.com/foaf/0.1/",
+    "om" : "http://www.wurvoc.org/vocabularies/om-1.8/"
+  }
+}
