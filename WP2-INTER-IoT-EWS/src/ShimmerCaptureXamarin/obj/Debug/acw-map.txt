@@ -1,0 +1,4 @@
+ShimmerCaptureXamarin.MainActivity, ShimmerCaptureXamarin;md53c7a7d677c32c995c5ccfc3456161258.MainActivity
+ShimmerCaptureXamarin.MainActivity, ShimmerCaptureXamarin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md53c7a7d677c32c995c5ccfc3456161258.MainActivity
+ShimmerCaptureXamarin.MainActivity;md53c7a7d677c32c995c5ccfc3456161258.MainActivity
+shimmercapturexamarin.MainActivity;md53c7a7d677c32c995c5ccfc3456161258.MainActivity
