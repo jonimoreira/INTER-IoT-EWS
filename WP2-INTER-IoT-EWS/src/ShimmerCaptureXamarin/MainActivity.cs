@@ -17,6 +17,9 @@ using Newtonsoft.Json;
 using ShimmerCaptureXamarin.SAREF4health;
 using PerpetualEngine.Storage;
 using System.IO;
+using Microsoft.Azure.Devices.Client;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ShimmerCaptureXamarin
 {
@@ -31,9 +34,8 @@ namespace ShimmerCaptureXamarin
         TextView tvECG;
         protected override void OnCreate(Bundle bundle)
         {
-            //string test = FormatJSONLD(null);
-            // Formatar a mensagem na mao mesmo... 
-            //return;
+            // Testing context generation
+            //JObject test = GetContextJSON_SAREF4health();
 
             base.OnCreate(bundle);
 
@@ -72,7 +74,21 @@ namespace ShimmerCaptureXamarin
                     | (int)ShimmerBluetooth.SensorBitmapShimmer3.SENSOR_EXG1_16BIT | (int)ShimmerBluetooth.SensorBitmapShimmer3.SENSOR_EXG2_16BIT); 
                 int accelRange = 0; // ((int)ShimmerBluetooth.SENSITIVITY_MATRIX_WIDE_RANGE_ACCEL_8G_SHIMMER3);
                 int gsrRange = ((int)ShimmerBluetooth.SensorBitmapShimmer3.SENSOR_GSR);
-                double samplingRate = 256.0; // 40.0; // 512.0;
+
+                // Setup device frequency (data rate)
+                double samplingRate = 512.0;
+                switch (hasFrequencyMeasurement)
+                {
+                    case "sarefInst:FrequencyOf256Hertz":
+                        samplingRate = 256.0;
+                        break;
+                    case "sarefInst:FrequencyOf512Hertz":
+                        samplingRate = 512.0;
+                        break;
+                    default:
+                        break;
+                }
+
                 //byte[] defaultECGReg1 = new byte[10] { 0x00, 0xA0, 0x10, 0x40, 0x40, 0x2D, 0x00, 0x00, 0x02, 0x03 }; //see ShimmerBluetooth.SHIMMER3_DEFAULT_ECG_REG1
                 //byte[] defaultECGReg2 = new byte[10] { 0x00, 0xA0, 0x10, 0x40, 0x47, 0x00, 0x00, 0x00, 0x02, 0x01 }; //see ShimmerBluetooth.SHIMMER3_DEFAULT_ECG_REG2
                 byte[] defaultECGReg1 = ShimmerBluetooth.SHIMMER3_DEFAULT_TEST_REG1; //also see ShimmerBluetooth.SHIMMER3_DEFAULT_ECG_REG1
@@ -84,6 +100,7 @@ namespace ShimmerCaptureXamarin
                 //shimmer = new ShimmerLogAndStreamXamarin("ShimmerXamarin", bluetoothAddress, samplingRate, accelRange, gsrRange, enabledSensors, false, false, false, 0, 0, defaultECGReg1, defaultECGReg2, false);
                 //shimmer = new ShimmerLogAndStreamXamarin("ShimmerXamarin", "00:06:66:79:E4:54", 1, 0, 4, enabledSensors, false, false, false, 0, 0, defaultECGReg1, defaultECGReg2, false);
                 shimmer.UICallback += this.HandleEvent;
+                buttonConnectedClicked = true;
                 shimmer.StartConnectThread();
             };
 
@@ -96,8 +113,72 @@ namespace ShimmerCaptureXamarin
             };
 
             StartTimer();
+            InitializeAzureIoTHub(); // Test sending to IoTHub
         }
-        
+
+        bool buttonConnectedClicked = false;
+
+        static DeviceClient deviceClient;
+        static string iotHubUri = "MyDrivingIoTHubEWS.azure-devices.net";
+        static string deviceKey = "hI336rVjlnimW9VdaHYOSqfWq83VAf+Tkdc6VJKrhUA="; // From IoT Hub UI (IoT devices) Id: "ZY224DC54P"; // From MyDrivingDB.Device (table) => "bef8d779-a60d-4ac2-86f6-fd7be93022be";
+        static string deviceId = "ZY224DC54P";
+
+        private static async void SendToAzureIoTHub(JObject eCGDeviceJSON)
+        {
+            var messageString = eCGDeviceJSON.ToString(Formatting.Indented);//JsonConvert.SerializeObject(eCGDeviceJSON);
+            var message = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageString));
+            //message.Properties.Add("temperatureAlert", (currentTemperature > 30) ? "true" : "false");
+
+            await deviceClient.SendEventAsync(message);
+        }
+
+
+        /// <summary>
+        /// Testing IoTHub
+        /// </summary>
+        private void InitializeAzureIoTHub()
+        {
+            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey), TransportType.Http1);
+
+            /*
+            Console.WriteLine("Simulated device\n");
+            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey), TransportType.Http1);
+            //deviceClient.ProductInfo = "HappyPath_Simulated-CSharp";
+            SendDeviceToCloudMessagesAsync();
+            Console.ReadLine();
+            */
+        }
+
+        private static async void SendDeviceToCloudMessagesAsync()
+        {
+            double minTemperature = 20;
+            double minHumidity = 60;
+            int messageId = 1;
+            System.Random rand = new System.Random();
+
+            while (true)
+            {
+                double currentTemperature = minTemperature + rand.NextDouble() * 15;
+                double currentHumidity = minHumidity + rand.NextDouble() * 20;
+
+                var telemetryDataPoint = new
+                {
+                    messageId = messageId++,
+                    deviceId = deviceId,
+                    temperature = currentTemperature,
+                    humidity = currentHumidity
+                };
+                var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
+                var message = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageString));
+                message.Properties.Add("temperatureAlert", (currentTemperature > 30) ? "true" : "false");
+
+                await deviceClient.SendEventAsync(message);
+                Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
+
+                await Task.Delay(1000);
+            }
+        }
+
         public void HandleEvent(object sender, EventArgs args)
         {
             CustomEventArgs eventArgs = (CustomEventArgs)args;
@@ -111,6 +192,7 @@ namespace ShimmerCaptureXamarin
                     if (state == (int)ShimmerBluetooth.SHIMMER_STATE_CONNECTED)
                     {
                         System.Diagnostics.Debug.Write("Connected");
+                        buttonConnectedClicked = false;
                         RunOnUiThread(() => tvShimmerState.Text = "Shimmer State: Connected");
                     }
                     else if (state == (int)ShimmerBluetooth.SHIMMER_STATE_CONNECTING)
@@ -131,41 +213,22 @@ namespace ShimmerCaptureXamarin
                     break;
                 case (int)ShimmerBluetooth.ShimmerIdentifier.MSG_IDENTIFIER_DATA_PACKET:
                     ObjectCluster objectCluster = new ObjectCluster((ObjectCluster)eventArgs.getObject());
-                    List<Double> data = objectCluster.GetData();
-                    List<String> dataNames = objectCluster.GetNames();
-                    List<String> dataUnits = objectCluster.GetUnits();
-                    String result="";
-                    String resultNames = "";
-                    String resultUnits = "";
-                    foreach (Double d in data)
-                    {
-                        result += d.ToString() + "||";
-                    }
-                    foreach (String u in dataUnits)
-                    {
-                        resultUnits += u + "||";
-                    }
-                    foreach (String s in dataNames)
-                    {
-                        resultNames = s + "||" + resultNames;
-                    }
-                    //System.Console.WriteLine(resultNames);
-                    //System.Console.WriteLine(resultUnits);
-                    //System.Console.WriteLine(result);
-
+                    
                     SaveData(objectCluster);
 
                     SensorData dataAccelX = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X, "CAL");
-                    SensorData dataTimestamp = objectCluster.GetData(dataNames.IndexOf("System Timestamp"));
+                    SensorData dataTimestamp = objectCluster.GetData(objectCluster.GetNames().IndexOf("System Timestamp"));
                     SensorData dataECG_LL_RA = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_LL_RA, "CAL");
                     SensorData dataECG_LA_RA = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_LA_RA, "CAL");
                     SensorData dataECG_VX_RL = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_VX_RL, "CAL");
+
+                    SensorData batteryLevel = objectCluster.GetData(Shimmer3Configuration.SignalNames.V_SENSE_BATT, "CAL");
 
                     //data[dataNames.IndexOf("System Timestamp")]
                     //SensorData dataAccelY = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Y, "CAL");
                     //SensorData dataAccelZ = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Z, "CAL");
                     //SensorData dataECG
-                    RunOnUiThread(() => tvAccelX.Text = "AccelX: " + dataAccelX.Data); 
+                    RunOnUiThread(() => tvAccelX.Text = "AccelX: " + dataAccelX.Data + " || batteryLevel(" + batteryLevel.Unit + "):" + batteryLevel.Data); 
                     RunOnUiThread(() => tvTimestamp.Text = "Timestamp: " + dataTimestamp.Data); 
                     RunOnUiThread(() => tvECG.Text = "ECG LL_RA: " + dataECG_LL_RA.Data + " | LA_RA: " + dataECG_LA_RA.Data + " | VX_RL: " + dataECG_VX_RL.Data);
                     break;
@@ -189,6 +252,9 @@ namespace ShimmerCaptureXamarin
                     break;*/
             }
 
+            if (buttonConnectedClicked)
+                shimmer.StartConnectThread();
+
         }
 
         System.Timers.Timer timer = new System.Timers.Timer();
@@ -200,7 +266,19 @@ namespace ShimmerCaptureXamarin
             timer.Enabled = true;
             
         }
-        
+
+        private void MeasureObjectSize(JObject eCGDeviceJSON)
+        {
+            
+            int count = System.Text.ASCIIEncoding.Unicode.GetByteCount(eCGDeviceJSON.ToString(Formatting.None));
+            Console.WriteLine("Message size (KB): " + ConvertBytesToKilobytes(count));
+
+        }
+
+        static double ConvertBytesToKilobytes(long bytes)
+        {
+            return (bytes / 1024f);
+        }
 
 
         private void SaveFile(JObject eCGDeviceJSON)
@@ -224,8 +302,8 @@ namespace ShimmerCaptureXamarin
             using (var streamWriter = new StreamWriter(filenameNewFolder, true))
             {
                 //streamWriter.WriteLine(DateTime.UtcNow);
-                string result = eCGDeviceJSON.ToString(Formatting.Indented).Replace("\"geo_", "\"geo:").Replace("\"InterIoTMsg_", "\"InterIoTMsg:").Replace("\"saref_", "\"saref:");
-                result = HardCodeReplaceJSONLD(result);
+                string result = eCGDeviceJSON.ToString(Formatting.Indented);
+                //result = HardCodeReplaceJSONLDforECGDeviceLevel(result);
 
                 streamWriter.Write(result);
             }
@@ -233,10 +311,80 @@ namespace ShimmerCaptureXamarin
 
         private string HardCodeReplaceJSONLD(string input)
         {
-            string resuult = input.Replace("\"id\"", "\"@id\"").Replace("\"label\"", "\"@label\"").Replace("\"graph\"", "\"@graph\"").Replace("\"context\"", "\"@context\"").Replace("\"language\"", "\"@language\"").Replace("\"type\"", "\"@type\"").Replace("\"value\"", "\"@value\""); 
+            string resuult = input.Replace("\"id\"", "\"@id\"").Replace("\"label\"", "\"@label\"").Replace("\"graph\"", "\"@graph\"").Replace("\"context\"", "\"@context\"").Replace("\"language\"", "\"@language\"").Replace("\"type\"", "\"@type\"").Replace("\"value\"", "\"@value\"").Replace("\"geo_", "\"geo:").Replace("\"InterIoTMsg_", "\"InterIoTMsg:").Replace("\"saref_", "\"saref:").Replace("rdfs_","rdfs:"); 
             return resuult;
         }
 
+        private string HardCodeReplaceJSONLDforECGDeviceLevel(string input)
+        {
+            string resuult = input.Replace("\"id\":", "\"@id\":").Replace("\"type\":", "\"@type\":").Replace("\"context\":", "\"@context\":");
+            return resuult;
+        }
+
+        private string hasFrequencyMeasurement = "sarefInst:FrequencyOf256Hertz"; // "sarefInst:FrequencyOf512Hertz";
+        private string measuresPropertyECGdata = "sarefInst:HeartElectricalActivity_Person";
+        private string isMeasuredInECGdata = "sarefInst:ElectricPotential_MilliVolts";
+
+        private JObject FormatMessageSAREF4health()
+        {
+            // Generate Context and Graph1
+            JObject contextJSON = GetContextJSON_SAREF4health();
+            // JObject graph1JSON = GetGraph1JSON(); // For IPSM
+
+            // Generate ECGSampleSequence
+            JObject measurementSeriesLA_RA = CreateMessageAndDeleteList_SAREF4health("Lead1_ECG_LA_RA");
+            JObject measurementSeriesLL_RA = CreateMessageAndDeleteList_SAREF4health("Lead2_ECG_LL_RA");
+            JObject measurementSeriesLL_LA = CreateMessageAndDeleteList_SAREF4health("Lead3_ECG_LL_LA");
+            JObject measurementSeriesVx_RL = CreateMessageAndDeleteList_SAREF4health("UnipolarLeadVx_RL");
+
+            // Generate ECGLeadBipolarLimb (a ECGSensor)
+            JObject sensor_Lead1_ECG_LA_RA = GetSensorJSON_SAREF4health(measurementSeriesLA_RA, "https://w3id.org/def/saref4health#ECGLeadBipolarLimb", "sarefInst:ECGLead_I_code131329", "Lead I (LA-RA)", measuresPropertyECGdata);
+            JObject sensor_Lead2_ECG_LL_RA = GetSensorJSON_SAREF4health(measurementSeriesLL_RA, "https://w3id.org/def/saref4health#ECGLeadBipolarLimb", "sarefInst:ECGLead_II_code131330", "Lead II (LL-RA)", measuresPropertyECGdata);
+            JObject sensor_Lead3_ECG_LL_LA = GetSensorJSON_SAREF4health(measurementSeriesLL_LA, "https://w3id.org/def/saref4health#ECGLeadBipolarLimb", "sarefInst:ECGLead_III_code131389", "Lead III (LL-LA)", measuresPropertyECGdata);
+
+            // Generate ECGLeadUnipolar (a ECGSensor)
+            JObject sensor_LeadVx_RL = GetSensorJSON_SAREF4health(measurementSeriesVx_RL, "https://w3id.org/def/saref4health#ECGLeadUnipolar", "sarefInst:ECGLead_Vx_RL_code131389", "Lead Vx-RL", measuresPropertyECGdata);
+
+            // Generate ECGDevice message (Device composed at least of an ECGSensor ("container"))
+            List<JObject> listSensorsOfDevice = new List<JObject>();
+            listSensorsOfDevice.Add(sensor_Lead1_ECG_LA_RA);
+            listSensorsOfDevice.Add(sensor_Lead2_ECG_LL_RA);
+            listSensorsOfDevice.Add(sensor_Lead3_ECG_LL_LA);
+            listSensorsOfDevice.Add(sensor_LeadVx_RL);
+
+            // Add accelerometer sensor with last received data (cross axial energy - tri-axial based) and a measurement indicating a collision was detected during the time interval
+            lock (accelerationCrossAxialList)
+            {
+                if (accelerationCrossAxialList.Count > 0)
+                {
+                    Measurement lastCrossAxialComputed = accelerationCrossAxialList[accelerationCrossAxialList.Count - 1];
+                    
+                    // Add collisionDetected as a measurement 
+                    SensorData collisionDetectedObj = new SensorData("boolean", Convert.ToDouble(collisionDetected));
+                    if (timestampCollisionDetected == 0.0)
+                        timestampCollisionDetected = lastCrossAxialComputed.HasTimestamp;
+                    Measurement collisionDetectedMeasurement = TranslateMeasurement("collisionDetected", collisionDetectedObj, timestampCollisionDetected);
+
+                    JObject sensor_Accelerometer = GetShimmerAccelerometerSensorJSON_SAREF4health(lastCrossAxialComputed, collisionDetectedMeasurement);
+                    
+                    listSensorsOfDevice.Add(sensor_Accelerometer);
+                    
+                    ClearDetectCollisionVariables();
+                }
+            }
+
+            // Add battery consumption sensor with last received data 
+            lock (batteryLevelList)
+            {
+                Measurement lastBatteryLevel = batteryLevelList[batteryLevelList.Count - 1];
+                JObject sensor_BatteryLevel = GetSensorJSON_SAREF4health(lastBatteryLevel.JSONLDobject, "saref:Sensor", "sarefInst:Shimmer3BatteryLevelSensor_T9JRN42", "Battery level sensor of Shimmer 3  (id: T9JRN42)", "sarefInst:BatteryLevel");
+                listSensorsOfDevice.Add(sensor_BatteryLevel);
+            }
+
+            JObject eCGDeviceJSON = GetECGDeviceJSON_SAREF4health(contextJSON, listSensorsOfDevice);
+            
+            return eCGDeviceJSON;
+        }
 
         private void OnTimedEvent(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -244,223 +392,155 @@ namespace ShimmerCaptureXamarin
             //string idDevice = Android.OS.Build.Serial;
 
             // Create JSON-LD message of device measurements
-            // Generate Context and Graph1
-            JObject contextJSON = GetContextJSON();
-            JObject graph1JSON = GetGraph1JSON();
+            // Options to save data: SAREF2health, SAREF, FHIR RDF
 
-            // Generate ECGMeasurementsSeries
-            ECGMeasurementsSeries measurementSeriesLA_RA = CreateMessageAndDeleteListLead1_ECG_LA_RA();
-            ECGMeasurementsSeries measurementSeriesLL_RA = CreateMessageAndDeleteListLead2_ECG_LL_RA();
-            ECGMeasurementsSeries measurementSeriesLL_LA = CreateMessageAndDeleteListLead3_ECG_LL_LA();
-            ECGMeasurementsSeries measurementSeriesVx_RL = CreateMessageAndDeleteListUnipolarLeadVx_RL();
-
-            // Generate ECGLeadBipolarLimb (a ECGSensor)
-            JObject sensor_Lead1_ECG_LA_RA = GetECGSensorJSON(measurementSeriesLA_RA, "saref4health:ECGLeadBipolarLimb", "sarefInst:ECGLead_I_code131329", "Lead I (LA-RA)");
-            JObject sensor_Lead2_ECG_LL_RA = GetECGSensorJSON(measurementSeriesLL_RA, "saref4health:ECGLeadBipolarLimb", "sarefInst:ECGLead_II_code131330", "Lead II (LL-RA)");
-            JObject sensor_Lead3_ECG_LL_LA = GetECGSensorJSON(measurementSeriesLL_LA, "saref4health:ECGLeadBipolarLimb", "sarefInst:ECGLead_III_code131389", "Lead III (LL-LA)");
-
-            // Generate ECGLeadUnipolar (a ECGSensor)
-            JObject sensor_LeadVx_RL = GetECGSensorJSON(measurementSeriesVx_RL, "saref4health:ECGLeadUnipolar", "sarefInst:ECGLead_Vx_RL_code131389", "Lead Vx-RL");
-
-            // Generate ECGSensor "container" -> Includes the 4 ECGSensor above (leads) -> ontologically correct would be at least 3 ECGLeadBipolarLimb and 1 ECGLeadUnipolar
-            JObject sensor_container = GetECGSensorContainerJSON(sensor_Lead1_ECG_LA_RA, sensor_Lead2_ECG_LL_RA, sensor_Lead3_ECG_LL_LA, sensor_LeadVx_RL);
-
-            // Generate accelerometer measurement (last received?)
-
-            // Generate ECGDevice message (Device composed at least of an ECGSensor ("container"))
-            List<JObject> listSensorsOfDevice = new List<JObject>();
-            listSensorsOfDevice.Add(sensor_container);
-            JObject eCGDeviceJSON = GetECGDeviceJSON(listSensorsOfDevice);
-
-            System.Console.WriteLine(eCGDeviceJSON);
-
-            // Save as file
+            JObject eCGDeviceJSON = FormatMessageSAREF4health();
+            
+            string result = eCGDeviceJSON.ToString(Formatting.Indented);
+            result = HardCodeReplaceJSONLDforECGDeviceLevel(result);
+            System.Console.WriteLine(result);
+            eCGDeviceJSON = JObject.Parse(result);
 
             try
             {
-                SaveFile(eCGDeviceJSON);
+                //SaveFile(eCGDeviceJSON);
+                SendToAzureIoTHub(eCGDeviceJSON);
+                //MeasureObjectSize(eCGDeviceJSON);
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine("ERROR SAVING FILE!! " + ex.Message);
+                System.Console.WriteLine("ERROR!! " + ex.Message);
             }
-
-    /*
-    string path = @"D:\Projects\InterIOT\Workplan\WP1-Ontology translations and rules\data\SAREF4health_ShimmerCaptureXamarin\Shimmer3ECG_" + DateTime.Now.ToString("yyyyMMddTHHmmss") + ".json";
-    try
-    {
-        File.WriteAllText(path, eCGDeviceJSON.ToString(Formatting.Indented));
-        Console.WriteLine("Saved in file: " + path);
-    }
-    catch (Exception ex)
-    {
-        System.Console.WriteLine("ERROR SAVING FILE!! " + ex.Message);
-    }
-
-    /*
-    using (StreamWriter file = File.CreateText(@"D:\Projects\InterIOT\Workplan\WP1-Ontology translations and rules\src\IPSM\Shimmer3ECG_" + DateTime.Now.ToLongTimeString() + ".json"))
-    {
-        using (JsonTextWriter writer = new JsonTextWriter(file))
-        {
-            writer.Formatting = Formatting.Indented;
-            eCGDeviceJSON.WriteTo(writer);
-            writer.WriteEnd();
-            writer.WriteEndObject();
+            
         }
-    }
-
-
-    // serialize JSON directly to a file
-    using (StreamWriter file = File.CreateText(@"D:\Projects\InterIOT\Workplan\WP1-Ontology translations and rules\src\IPSM\Shimmer3ECG_" + DateTime.Now.ToLongTimeString() + ".json"))
-    {
-        JsonSerializer serializer = new JsonSerializer();
-        serializer.Serialize(file, eCGDeviceJSON);
-        //file.Close();
-    }
-    */
-
-
-    /*
-    storage = GetStorage();
-
-    lock (storage)
-    {
-        var values = storage.Get<List<KeyValuePair<double, double>>>(Shimmer3Configuration.SignalNames.ECG_LL_RA);
-        System.Console.WriteLine("values.Count=" + values.Count);
-
-        ECGMeasurementsSeries measurementSeriesLL_RA = TranslateECGMeasurementsSeries(values);
-        System.Console.WriteLine(measurementSeriesLL_RA.JSONLDobject);
-
-        // Publish in a broker (UniversAAL): create thread
-
-        // Delete values from memory (empty list)
-        storage.Delete(Shimmer3Configuration.SignalNames.ECG_LL_RA);
-    }
-    */
-
-}
 
         private void SaveData(ObjectCluster objectCluster)
         {
-            SaveMeasurementsAsJSONLD(objectCluster);
+            SaveMeasurements(objectCluster);
+        }
+        
+        private List<Measurement> batteryLevelList;
+        private List<Measurement> GetBatteryLevelList()
+        {
+            if (batteryLevelList == null)
+                batteryLevelList = new List<SAREF4health.Measurement>();
+            return batteryLevelList;
+        }
 
-            /*
-            // Format data with JSON-LD -> SAREF:Measurements
-            // TODO: GetMeasurementItem only (on save) -> (on timer) create header (graphs), idea - multiple measurements 1 header per message to the cloud (timer)
-            string data = string.Empty; // FormatJSONLD(objectCluster);
+        private List<Measurement> accelerationCrossAxialList;
+        private List<Measurement> GetAccelerationCrossAxialList()
+        {
+            if (accelerationCrossAxialList == null)
+                accelerationCrossAxialList = new List<SAREF4health.Measurement>();
+            return accelerationCrossAxialList;
+        }
+
+        private bool collisionDetected = false;
+
+        private void SaveMeasurements(ObjectCluster objectCluster)
+        {
             
-            List<JObject> sarefMakesMeasurementItemList = GetSarefMakesMeasurementItemsJSON(objectCluster);
-            foreach (JObject jObject in sarefMakesMeasurementItemList)
+            List<Double> data = objectCluster.GetData();
+            List<String> dataNames = objectCluster.GetNames();
+            List<String> dataUnits = objectCluster.GetUnits();
+
+            SensorData dataTimestamp = objectCluster.GetData(dataNames.IndexOf("System Timestamp"));
+            
+            SensorData dataECG_LL_RA = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_LL_RA, "CAL");
+            SensorData dataECG_LA_RA = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_LA_RA, "CAL");
+            SensorData dataECG_VX_RL = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_VX_RL, "CAL");
+
+            CompactECGData(dataTimestamp, dataECG_LL_RA, dataECG_LA_RA, dataECG_VX_RL);
+
+            SensorData dataAccelX = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X, "CAL");
+            SensorData dataAccelY = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Y, "CAL");
+            SensorData dataAccelZ = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Z, "CAL");
+
+            // Compute cross-axial energy
+            double crossAxialEnergy = Math.Pow(dataAccelX.Data, 2.0) + Math.Pow(dataAccelY.Data, 2.0) + Math.Pow(dataAccelZ.Data, 2.0);
+            SensorData crossAxialEnergyObj = new SensorData("cross-axial-energy", crossAxialEnergy);
+            Measurement accelerationCrossAxial = TranslateMeasurement("accelerationCrossAxial", crossAxialEnergyObj, dataTimestamp.Data);
+            accelerationCrossAxialList = GetAccelerationCrossAxialList();
+            lock (accelerationCrossAxialList)
             {
-                data += jObject.ToString() + ", /n";
+                accelerationCrossAxialList.Add(accelerationCrossAxial);
+                collisionDetected = DetectCollision(crossAxialEnergy);
+
+                if (collisionDetected)
+                {
+                    timestampCollisionDetected = dataTimestamp.Data;
+                    Console.WriteLine("Collision detected!!!");
+                }
             }
-            string idDevice = Android.OS.Build.Serial;
-            string timeStamp = string.Empty;
-            string idMeasurements = idDevice + "_" + timeStamp;
 
-            // Save data in memory (queue? cache? session?)
+            // Battery level (in mVolts)
+            SensorData batteryLevel = objectCluster.GetData(Shimmer3Configuration.SignalNames.V_SENSE_BATT, "CAL");
+            batteryLevelList = GetBatteryLevelList();
+            lock (batteryLevelList)
+            {
+                Measurement batteryLevelMeasurement = TranslateMeasurement("batteryLevel", batteryLevel, dataTimestamp.Data);
+                batteryLevelList.Add(batteryLevelMeasurement);
+            }
+        }
+        
+        private double sumCrossAxialValues = 0.0;
+        private int countCrossAxialValues = 0;
+        private const double InitialVariance = 0.0; //7.8; // 61.1
+        private double varianceCrossAxialValues = InitialVariance; // if acceleration is measured in m/s^2 => equivalent to a change of 10km/h in 1 second. 
+        private double timestampCollisionDetected = 0.0;
 
-            var listMeasurements = Application.Context.GetSharedPreferences("listMeasurements", FileCreationMode.Private);
-            var elem = listMeasurements.Edit();
-            // TODO: Unique ID: InterIoTMsg:messageID (???)
-            //   or ID device + "_" + TimeStamp?
-            //  
-            elem.PutString(idMeasurements, data);
-            elem.Commit();
+        private bool DetectCollision(double currentCrossAxialEnergy)
+        {
+            bool result = false;
+            sumCrossAxialValues += currentCrossAxialEnergy;
+            countCrossAxialValues++;
+            double meanCrossAxialValues = sumCrossAxialValues / countCrossAxialValues;
+            varianceCrossAxialValues += Math.Pow(currentCrossAxialEnergy - meanCrossAxialValues, 2);
+            double standardDeviation = 100; // Math.Sqrt(varianceCrossAxialValues);
 
-            */
+            if ((currentCrossAxialEnergy < meanCrossAxialValues - standardDeviation) 
+                || (currentCrossAxialEnergy > meanCrossAxialValues + standardDeviation))
+                result = true;
+
+            return result;
         }
 
-        private JObject GetContextJSON()
+        private void ClearDetectCollisionVariables()
         {
-            JObject contextJSON = JObject.FromObject(new
-            {
-                /*
-    --> The most correct is that the JSON-LD C# lib does that...
-                 
-    "comment" : {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#comment"
-    },
-    "label" : {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#label"
-    },
-    "seeAlso" : {
-      "@id" : "http://www.w3.org/2000/01/rdf-schema#seeAlso"
-    },
-    "consistsOf" : {
-      "@id" : "https://w3id.org/saref#consistsOf",
-      "@type" : "@id"
-    },
-    "hasManufacturer" : {
-      "@id" : "https://w3id.org/saref#hasManufacturer"
-    },
-                 */
-
-                InterIoTMsg = "http://inter-iot.eu/message/",
-                InterIoT = "http://inter-iot.eu/",
-                sarefInst = "https://w3id.org/saref/instances/",
-                schema = "http://schema.org/",
-                qu = "http://purl.oclc.org/NET/ssnx/qu/qu#",
-                owl = "http://www.w3.org/2002/07/owl#",
-                m3 = "http://purl.org/iot/vocab/m3-lite#",
-                saref = "https://w3id.org/saref#",
-                xsd = "http://www.w3.org/2001/XMLSchema#",
-                skos = "http://www.w3.org/2004/02/skos/core#",
-                dim = "http://purl.oclc.org/NET/ssnx/qu/dim#",
-                rdfs = "http://www.w3.org/2000/01/rdf-schema#",
-                saref4envi = "https://w3id.org/def/saref4envi#",
-                dct = "http://purl.org/dc/terms/",
-                rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-                xml = "http://www.w3.org/XML/1998/namespace",
-                dcterms = "http://purl.org/dc/terms/",
-                time = "http://www.w3.org/2006/time#",
-                foaf = "http://xmlns.com/foaf/0.1/",
-                om = "http://www.wurvoc.org/vocabularies/om-1.8/",
-                geo = "http://www.w3.org/2003/01/geo/wgs84_pos#", //World Geodetic System (WGS84) - GIS Geography
-                dc = "http://purl.org/dc/elements/1.1/"
-            });
-            return contextJSON;
+            sumCrossAxialValues = 0.0;
+            countCrossAxialValues = 0;
+            varianceCrossAxialValues = InitialVariance; // if acceleration is measured in m/s^2 => equivalent to a change of 10km/h in 1 second.
+            collisionDetected = false;
+            timestampCollisionDetected = 0.0;
+            lock (accelerationCrossAxialList)
+                accelerationCrossAxialList.Clear();
         }
 
-        private JObject GetGraph1JSON()
+        private string GeneratePID(Measurement msg)
         {
-            JObject graph1JSON = JObject.FromObject(new
-            {
-                @id = "InterIoTMsg:meta66b05c61-d687-45a3-b5fb-6864bbec3b69",
-                @type = new[]
-                {
-                    "InterIoTMsg:Thing_update",
-                    "InterIoTMsg:meta"
-                },
-                InterIoTMsg_conversationID = "conv99528eba-eb2d-47e8-9ee6-9dd40d19f89a",
-                InterIoTMsg_dateTimeStamp = "2017-05-22T22:19:30.281+02:00",
-                InterIoTMsg_messageID = "msg7e484a2c-f959-486e-8da0-31143f457234"
+            string result = msg.RelatesToProperty + "_Test.X.Y_" + msg.HasTimestamp; // string.Empty;
 
-            });
-            return graph1JSON;
+            //result = msg.Type + "_Test.1.1_" + msg.HasTimestamp;
+
+            return result;
         }
 
-        private JObject GetGeoLocationJSON()
+        private string GeneratePID_SAREF4health_ECGSampleSequence(string type, string timestamp)
         {
-            JObject geoLocationJSON = JObject.FromObject(new
-            {
+            string result = "sarefInst:SpeedMeasurement__Test.1.1_1511466006.9682777"; // string.Empty;
 
-                @id = "sarefInst:test.1.1.LocationSmartPhone_39.431478658043424_-0.35860926434736484",
-                @type = new[]
-                    {
-                        "owl:NamedIndividual",
-                        "geo:SpatialThing"
-                    },
-                @label = new
-                {
-                    @language = "en",
-                    @value = "Location of the smartphone, should be the same location of the truck (?)"
-                },
-                geo_latitude = 39.431478658043424,
-                geo_longitude = -0.35860926434736484
+            result = type + "_Test.1.1_" + timestamp;
 
-            });
-            return geoLocationJSON;
+            return result;
+        }
+
+        private string GeneratePID(JsonObjectAttribute msg)
+        {
+            string result = "sarefInst:Message_Test.1.1_1511466006.9682777"; 
+
+            //result = msg.Type + "_Test.1.1_" + msg.HasTimestamp;
+
+            return result;
         }
 
         private string TranslateIsMeasuredIn(SensorData sensorData)
@@ -475,6 +555,12 @@ namespace ShimmerCaptureXamarin
                 case "mVolts":
                     result = "sarefInst:ElectricPotential_MilliVolts";
                     break;
+                case "cross-axial-energy":
+                    result = "sarefInst:TriAxialAccelerationEnergy_MetrePerSecondSquare";
+                    break;
+                case "boolean":
+                    result = "sarefInst:Boolean";
+                    break;
                 default:
                     // missing: kPa||Celcius* (pressure and temperature)
                     break;
@@ -484,91 +570,37 @@ namespace ShimmerCaptureXamarin
 
             return result;
         }
-        
+
         private string TranslateRelatesToProperty(string signalName)
         {
-            string result = "saref:SpeedUnit_MeterPerSecond";
+            string result = "sarefInst:Acceleration_Vehicle";
 
-            if (signalName == Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X)
+            if (signalName == Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X
+                        || signalName == "accelerationCrossAxial")
                 result = "sarefInst:Acceleration_Vehicle";
             else if (signalName == Shimmer3Configuration.SignalNames.ECG_LL_RA
                         || signalName == Shimmer3Configuration.SignalNames.ECG_LA_RA
                         || signalName == Shimmer3Configuration.SignalNames.ECG_VX_RL)
                 result = "sarefInst:HeartElectricalActivity_Person";
-            
+            else if (signalName == "collisionDetected")
+                result = "sarefInst:VehicleCollisionDetectedFromMobileDevice";
+            else if (signalName == "batteryLevel")
+                result = "sarefInst:BatteryLevel";
+
             return result;
         }
 
-        
+
         private string TranslateMeasurementType(string signalName)
         {
-            string result = "saref:SpeedMeasurement";
+            string result = "saref:Measurement";
 
             if (signalName == Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X)
-                result = "saref:AccelerationMeasurement";
+                result = "saref:Measurement";
             else if (signalName == Shimmer3Configuration.SignalNames.ECG_LL_RA
                         || signalName == Shimmer3Configuration.SignalNames.ECG_LA_RA
                         || signalName == Shimmer3Configuration.SignalNames.ECG_VX_RL)
-                result = "saref4health:ECGMeasurement";
-
-            return result;
-        }
-
-        private List<JObject> SaveMeasurementsAsJSONLD(ObjectCluster objectCluster)
-        {
-            List<JObject> sarefMakesMeasurementItemList = new List<JObject>();
-            List<Double> data = objectCluster.GetData();
-            List<String> dataNames = objectCluster.GetNames();
-            List<String> dataUnits = objectCluster.GetUnits();
-
-            SensorData dataTimestamp = objectCluster.GetData(dataNames.IndexOf("System Timestamp"));
-            
-            SensorData dataECG_LL_RA = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_LL_RA, "CAL");
-            SensorData dataECG_LA_RA = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_LA_RA, "CAL");
-            SensorData dataECG_VX_RL = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_VX_RL, "CAL");
-
-            CompactECGData(dataTimestamp, dataECG_LL_RA, dataECG_LA_RA, dataECG_VX_RL);
-
-            SensorData dataAccelX = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X, "CAL");
-            Measurement msgAccelX = TranslateMeasurement(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X, dataAccelX, dataTimestamp.Data);
-
-
-            // TODO: Format saref4health:ECGMeasurementsSeries
-            //Measurement msgECG_LL_RA = TranslateMeasurement(Shimmer3Configuration.SignalNames.ECG_LL_RA, dataECG_LL_RA, dataTimestamp.Data);
-            //Measurement msgECG_LA_RA = TranslateMeasurement(Shimmer3Configuration.SignalNames.ECG_LA_RA, dataECG_LA_RA, dataTimestamp.Data);
-            //Measurement msgECG_VX_RL = TranslateMeasurement(Shimmer3Configuration.SignalNames.ECG_VX_RL, dataECG_VX_RL, dataTimestamp.Data);
-
-            sarefMakesMeasurementItemList.Add(msgAccelX.JSONLDobject);
-            //sarefMakesMeasurementItemList.Add(msgECG_LL_RA.JSONLDobject);
-            //sarefMakesMeasurementItemList.Add(msgECG_LA_RA.JSONLDobject);
-            //sarefMakesMeasurementItemList.Add(msgECG_VX_RL.JSONLDobject);
-            
-            return sarefMakesMeasurementItemList;
-        }
-
-        private string GeneratePID(Measurement msg)
-        {
-            string result = "sarefInst:SpeedMeasurement__Test.1.1_1511466006.9682777"; // string.Empty;
-
-            result = msg.Type + "_Test.1.1_" + msg.HasTimestamp;
-
-            return result;
-        }
-
-        private string GeneratePID(ECGMeasurementsSeries msg)
-        {
-            string result = "sarefInst:SpeedMeasurement__Test.1.1_1511466006.9682777"; // string.Empty;
-
-            result = msg.Type + "_Test.1.1_" + msg.HasTimestamp;
-
-            return result;
-        }
-
-        private string GeneratePID(JsonObjectAttribute msg)
-        {
-            string result = "sarefInst:Message_Test.1.1_1511466006.9682777"; 
-
-            //result = msg.Type + "_Test.1.1_" + msg.HasTimestamp;
+                result = "saref4health:ECGMeasurement"; // TODO: remove, does not make sense anymore
 
             return result;
         }
@@ -599,82 +631,65 @@ namespace ShimmerCaptureXamarin
 
             msg.Id = GeneratePID(msg);
 
-            JObject sarefMakesMeasurementItemJSON = JObject.FromObject(new
-            {
-                @id = msg.Id,
-                @type = msg.Type,
-                @label = msg.Label,
-                saref_hasTimestamp = msg.HasTimestamp,
-                saref_hasValue = msg.HasValue,
-                saref_isMeasuredIn = msg.IsMeasuredIn,
-                saref_relatesToProperty = msg.RelatesToProperty
-            });
+            string sarefMakesMeasurementItemJSONstr = @"
+{
+  '@id' : '" + msg.Id + @"',
+  '@type' : '" + msg.Type + @"',
+  'label' : '" + msg.Label + @"',
+  'hasTimestamp' : '" + msg.HasTimestamp + @"',
+  'hasValue' : '" + msg.HasValue + @"',
+  'isMeasuredIn' : '" + msg.IsMeasuredIn + @"',
+  'relatesToProperty' : '" + msg.RelatesToProperty + @"',
+}
+            ";
+
+            JObject sarefMakesMeasurementItemJSON = JObject.Parse(sarefMakesMeasurementItemJSONstr);
 
             msg.JSONLDobject = sarefMakesMeasurementItemJSON;
             
             return msg;
         }
         
-        private ECGMeasurementsSeries TranslateECGMeasurementsSeries(List<KeyValuePair<double, double>> values)
+        private JObject TranslateECGSampleSequence_SAREF4health(List<KeyValuePair<double, double>> values)
         {
-            //System.Console.WriteLine("[TranslateECGMeasurementsSeries] values.Count=" + values.Count);
+            //System.Console.WriteLine("[TranslateECGSampleSequence] values.Count=" + values.Count);
             if (values.Count == 0)
                 return null;
 
             double timestamp = values[0].Key;
-            ECGMeasurementsSeries msg = new ECGMeasurementsSeries();
-            msg.HasTimestamp = timestamp;
-            msg.IsMeasuredIn = "sarefInst:ElectricPotential_MilliVolts"; // TranslateIsMeasuredIn(sensorData); //"saref:SpeedUnit_MeterPerSecond";
-            msg.RelatesToProperty = "sarefInst:HeartElectricalActivity_Person"; // TranslateRelatesToProperty(signalName);
-            msg.Type = "saref4health:ECGMeasurementsSeries"; //TranslateMeasurementType(signalName); //"saref:SpeedMeasurement";
-
-            msg.Label = "ECG measurements series - Lead XPTO at " + timestamp;
-            
             List<double> seriesValues = new List<double>();
-            int i = 0;
+            string seriesValuesStr = string.Empty;
             foreach (KeyValuePair<double, double> measurement in values)
             {
                 //Needs improvement: copy array / matrix functions
-                seriesValues.Add(measurement.Value);
-                //System.Console.WriteLine(i+"[" + measurement.Key + "] " + measurement.Value);
-                //i++;
+                int currVal = FormatECGMeasurementValue(measurement.Value);
+                seriesValues.Add(currVal);
+                seriesValuesStr += "," + currVal;
             }
-            msg.HasValue = seriesValues;
-            
-            msg.Id = GeneratePID(msg);
 
-            JObject sarefMakesMeasurementItemJSON = JObject.FromObject(new
-            {
-                @id = msg.Id,
-                @type = msg.Type,
-                @label = msg.Label,
-                saref_hasTimestamp = msg.HasTimestamp,
-                saref_hasValue = msg.HasValue,
-                saref_isMeasuredIn = msg.IsMeasuredIn,
-                saref_relatesToProperty = msg.RelatesToProperty
-            });
+            seriesValuesStr = seriesValuesStr.Substring(1);
 
-            msg.JSONLDobject = sarefMakesMeasurementItemJSON;
+            string sarefMakesMeasurementItemJSONstr = @"
+{
+  '@id' : '" + GeneratePID_SAREF4health_ECGSampleSequence("saref4health:ECGSampleSequence", timestamp.ToString()) + @"',
+  '@type' : 'https://w3id.org/def/saref4health#ECGSampleSequence',
+  'label' : 'ECG measurements series from lead at " + timestamp + @"',
+  'hasFrequencyMeasurement' : '" + hasFrequencyMeasurement + @"',
+  'hasValues' : [ " + seriesValuesStr + @" ],
+  'hasTimestamp' : '" + timestamp + @"',
+  'isMeasuredIn' : '" + isMeasuredInECGdata + @"',
+  'relatesToProperty' : '" + measuresPropertyECGdata + @"'
+}
+            ";
+
+            JObject sarefMakesMeasurementItemJSON = JObject.Parse(sarefMakesMeasurementItemJSONstr);
             
-            return msg;
+            return sarefMakesMeasurementItemJSON;
         }
 
         private void CompactECGData(SensorData dataTimestamp, SensorData dataECG_LL_RA, SensorData dataECG_LA_RA, SensorData dataECG_VX_RL)
         {
-            /*
-            KeyValuePair<double, double> timeseriesECG_LL_RA = new KeyValuePair<double, double>(dataTimestamp.Data, dataECG_LL_RA.Data);
-            var storage = SimpleStorage.EditGroup("listTimeseriesECG");
-            var value = storage.Get<List<KeyValuePair<double,double>>>("ECG_LL_RA");
-            if (value == null)
-            {
-                value = new List<KeyValuePair<double, double>>();
-            }
-
-            value.Add(timeseriesECG_LL_RA);
-
-            storage.Put<List<KeyValuePair<double, double>>>("ECG_LL_RA", value);
-            */
-
+            
             StoreECGleadValue(Shimmer3Configuration.SignalNames.ECG_LA_RA, dataTimestamp.Data, dataECG_LA_RA.Data);
             StoreECGleadValue(Shimmer3Configuration.SignalNames.ECG_LL_RA, dataTimestamp.Data, dataECG_LL_RA.Data);
             
@@ -684,17 +699,7 @@ namespace ShimmerCaptureXamarin
             StoreECGleadValue(Shimmer3Configuration.SignalNames.ECG_VX_RL, dataTimestamp.Data, dataECG_VX_RL.Data);
 
         }
-
-        /*
-        private SimpleStorage storage;
-        private SimpleStorage GetStorage()
-        {
-            if (storage == null)
-                storage = SimpleStorage.EditGroup(storageGroupNameECGleads);
-            return storage;
-        }
-        */
-
+        
         private List<KeyValuePair<double, double>> valuesLead1_ECG_LA_RA;
         private List<KeyValuePair<double, double>> GetValuesLead1_ECG_LA_RA()
         {
@@ -765,89 +770,275 @@ namespace ShimmerCaptureXamarin
                     valuesUnipolarLeadVx_RL.Add(timeseriesECGlead);
                 }
             }
+                        
+        }
 
-
-            /*
-            storage = GetStorage();            
-            lock (storage)
+        private JObject CreateMessageAndDeleteList_SAREF4health(string lead)
+        {
+            JObject measurementSeries = null;
+            switch (lead)
             {
-                var value = storage.Get<List<KeyValuePair<double, double>>>(leadName);
-                if (value == null)
-                    value = new List<KeyValuePair<double, double>>();
-                System.Console.WriteLine("[StoreECGleadValue] value.Count=" + value.Count);
-                value.Add(timeseriesECGlead);
-                storage.Put<List<KeyValuePair<double, double>>>(leadName, value);
+                case "Lead1_ECG_LA_RA":
+                    valuesLead1_ECG_LA_RA = GetValuesLead1_ECG_LA_RA();
+                    measurementSeries = CreateMessageAndDeleteList_SAREF4health(valuesLead1_ECG_LA_RA);
+                    break;
+                case "Lead2_ECG_LL_RA":
+                    valuesLead2_ECG_LL_RA = GetValuesLead2_ECG_LL_RA();
+                    measurementSeries = CreateMessageAndDeleteList_SAREF4health(valuesLead2_ECG_LL_RA);
+                    break;
+                case "Lead3_ECG_LL_LA":
+                    valuesLead3_ECG_LL_LA = GetValuesLead3_ECG_LL_LA();
+                    measurementSeries = CreateMessageAndDeleteList_SAREF4health(valuesLead3_ECG_LL_LA);
+                    break;
+                case "UnipolarLeadVx_RL":
+                    valuesUnipolarLeadVx_RL = GetValuesUnipolarLeadVx_RL();
+                    measurementSeries = CreateMessageAndDeleteList_SAREF4health(valuesUnipolarLeadVx_RL);
+                    break;
+                default:
+                    break;
             }
+            return measurementSeries;
+        }
+
+        private JObject CreateMessageAndDeleteList_SAREF4health(List<KeyValuePair<double, double>> valuesLead)
+        {
+            JObject result;
+
+            lock (valuesLead)
+            {
+                result = TranslateECGSampleSequence_SAREF4health(valuesLead);
+                // Delete values from memory (empty list)
+                valuesLead.Clear();
+            }
+            return result;
+        }
+
+        private int FormatECGMeasurementValue(double originalValue)
+        {
+            int result = (int) (originalValue * 100.0);
+            return result;
+        }
+        
+        private JObject contextJSON_SAREF4health;
+
+        private JObject GetContextJSON_SAREF4health()
+        {
+            if (contextJSON_SAREF4health != null)
+                return contextJSON_SAREF4health;
+
+            string context = @"
+{  
+    'comment' : {
+      '@id' : 'http://www.w3.org/2000/01/rdf-schema#comment'
+    },
+    'label' : {
+      '@id' : 'http://www.w3.org/2000/01/rdf-schema#label'
+    },
+    'seeAlso' : {
+      '@id' : 'http://www.w3.org/2000/01/rdf-schema#seeAlso'
+    },
+    'consistsOf' : {
+      '@id' : 'https://w3id.org/saref#consistsOf',
+      '@type' : '@id'
+    },
+    'hasManufacturer' : {
+      '@id' : 'https://w3id.org/saref#hasManufacturer'
+    },
+    'hasFrequencyMeasurement' : {
+      '@id' : 'https://w3id.org/def/saref4envi#hasFrequencyMeasurement',
+      '@type' : '@id'
+    },
+    'hasTypicalConsumption' : {
+      '@id' : 'https://w3id.org/saref#hasTypicalConsumption',
+      '@type' : '@id'
+    },
+    'accomplishes' : {
+      '@id' : 'https://w3id.org/saref#accomplishes',
+      '@type' : '@id'
+    },
+    'makesMeasurement' : {
+      '@id' : 'https://w3id.org/saref#makesMeasurement',
+      '@type' : '@id'
+    },
+    'measuresProperty' : {
+      '@id' : 'https://w3id.org/saref#measuresProperty',
+      '@type' : '@id'
+    },
+    'hasValues' : {
+      '@id' : 'https://w3id.org/def/saref4health#hasValues',
+      '@type' : 'http://www.w3.org/2001/XMLSchema#float'
+    },
+    'isMeasuredIn' : {
+      '@id' : 'https://w3id.org/saref#isMeasuredIn',
+      '@type' : '@id'
+    },
+    'hasTimestamp' : {
+      '@id' : 'https://w3id.org/saref#hasTimestamp',
+      '@type' : 'http://www.w3.org/2001/XMLSchema#dateTime'
+    },
+    'relatesToProperty' : {
+      '@id' : 'https://w3id.org/saref#relatesToProperty',
+      '@type' : '@id'
+    },
+    'schema' : 'http://schema.org/',
+    'sarefInst' : 'https://w3id.org/saref/instances#',
+    'owl' : 'http://www.w3.org/2002/07/owl#',
+    'prefix' : 'http://purl.oclc.org/NET/ssnx/qu/prefix#',
+    'saref' : 'https://w3id.org/saref#',
+    'xsd' : 'http://www.w3.org/2001/XMLSchema#',
+    'dim' : 'http://purl.oclc.org/NET/ssnx/qu/dim#',
+    'skos' : 'http://www.w3.org/2004/02/skos/core#',
+    'rdfs' : 'http://www.w3.org/2000/01/rdf-schema#',
+    'saref4envi' : 'https://w3id.org/def/saref4envi#',
+    'geo' : 'http://www.w3.org/2003/01/geo/wgs84_pos#',
+    'dct' : 'http://purl.org/dc/terms/',
+    'xml' : 'http://www.w3.org/XML/1998/namespace',
+    'dcterms' : 'http://purl.org/dc/terms/',
+    'vann' : 'http://purl.org/vocab/vann/',
+    'foaf' : 'http://xmlns.com/foaf/0.1/',
+    'om' : 'http://www.wurvoc.org/vocabularies/om-1.8/',
+    'cc' : 'http://creativecommons.org/ns#',
+    'quantity' : 'http://purl.oclc.org/NET/ssnx/qu/quantity#',
+    'qu' : 'http://purl.oclc.org/NET/ssnx/qu/qu#',
+    'm3' : 'http://purl.org/iot/vocab/m3-lite#',
+    'unit' : 'http://purl.oclc.org/NET/ssnx/qu/unit#',
+    'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+    'qu-rec20' : 'http://purl.oclc.org/NET/ssnx/qu/qu-rec20#',
+    'time' : 'http://www.w3.org/2006/time#',
+    'dc' : 'http://purl.org/dc/elements/1.1/'
+  
+}
+            ";
+
+            contextJSON_SAREF4health = JObject.Parse(context);
+
+            return contextJSON_SAREF4health;
+        }
+
+
+        private JObject GetECGDeviceJSON_SAREF4health(JObject contextJSON, List<JObject> listSensorsOfDevice)
+        {
+
+            string deviceId = "sarefInst:Shimmer3ECG_unit_T9JRN42_" + Android.OS.Build.Serial; // _[ID Shimmer ECG 3]_[Mobile ID] --> can be useful for security...;
+
+/*
+            string listSensorsOfDeviceStr = string.Empty;
+            foreach (JObject json in listSensorsOfDevice)
+            {
+                listSensorsOfDeviceStr += "," + json.ToString(Formatting.Indented);
+            }
+            listSensorsOfDeviceStr = listSensorsOfDeviceStr.Substring(1);
+
+            string eCGDeviceJSONstr = @"
+{
+   '@context' : " + contextJSON.ToString(Formatting.Indented) + @",
+   '@id' : '" + deviceId + @"',
+   '@type' : 'https://w3id.org/def/saref4health#ECGDevice',
+   'comment' : 'Shimmer3 ECG unit: INTER-IoT-EWS project, composed of ECG sensors and other features (e.g. Accelerometer).',
+   'label' : 'Shimmer3 ECG unit T9J-RN42',
+   'seeAlso' : 'http://www.shimmersensing.com/products/ecg-development-kit#specifications-tab',
+   'hasFrequencyMeasurement' : '" + hasFrequencyMeasurement + @"',
+   'accomplishes' : 'sarefInst:RecordingECGSession_01',
+   'hasManufacturer' : 'Shimmer',
+   'hasTypicalConsumption : 'sarefInst:Shimmer3ECGBattery',
+   'consistsOf : [" + listSensorsOfDeviceStr + @"]
+}
+            ";
+            JObject eCGDeviceJSON = JObject.Parse(eCGDeviceJSONstr);
             */
-        }
 
-        private ECGMeasurementsSeries CreateMessageAndDeleteListLead1_ECG_LA_RA()
-        {
-            ECGMeasurementsSeries measurementSeriesLA_RA;
-            valuesLead1_ECG_LA_RA = GetValuesLead1_ECG_LA_RA();
-            lock (valuesLead1_ECG_LA_RA)
+            
+            JObject eCGDeviceJSON = JObject.FromObject(new
             {
-                System.Console.WriteLine("valuesLead1_ECG_LA_RA.Count=" + valuesLead1_ECG_LA_RA.Count);
-
-                measurementSeriesLA_RA = TranslateECGMeasurementsSeries(valuesLead1_ECG_LA_RA);
-                //System.Console.WriteLine(measurementSeriesLA_RA.JSONLDobject);
-                
-                // Delete values from memory (empty list)
-                valuesLead1_ECG_LA_RA.Clear();
-            }
-            return measurementSeriesLA_RA;
+                @context = contextJSON,
+                @id = deviceId,
+                @type = "https://w3id.org/def/saref4health#ECGDevice",
+                comment = "Shimmer3 ECG unit: INTER-IoT-EWS project, composed of ECG sensors and other features (e.g. Accelerometer).",
+                label = "Shimmer3 ECG unit T9J-RN42",
+                seeAlso = "http://www.shimmersensing.com/products/ecg-development-kit#specifications-tab",
+                hasFrequencyMeasurement = hasFrequencyMeasurement,
+                accomplishes = "sarefInst:RecordingECGSession_01",
+                hasManufacturer = "Shimmer",
+                hasTypicalConsumption = "sarefInst:Shimmer3ECGBattery",
+                consistsOf = listSensorsOfDevice
+            });
+            
+            return eCGDeviceJSON;
         }
 
-        private ECGMeasurementsSeries CreateMessageAndDeleteListLead2_ECG_LL_RA()
+        private JObject GetSensorJSON_SAREF4health(JObject measurementsSeries, string type, string id, string label, string measuresProperty)
         {
-            ECGMeasurementsSeries measurementSeriesLL_RA;
-            valuesLead2_ECG_LL_RA = GetValuesLead2_ECG_LL_RA();
-            lock (valuesLead2_ECG_LL_RA)
+            JObject eCGLeadJSON = JObject.FromObject(new
             {
-                System.Console.WriteLine("valuesLead2_ECG_LL_RA.Count=" + valuesLead2_ECG_LL_RA.Count);
-
-                measurementSeriesLL_RA = TranslateECGMeasurementsSeries(valuesLead2_ECG_LL_RA);
-                //System.Console.WriteLine(measurementSeriesLL_RA.JSONLDobject);
-                
-                // Delete values from memory (empty list)
-                valuesLead2_ECG_LL_RA.Clear();
-            }
-            return measurementSeriesLL_RA;
+                @id = id,
+                @type = type,
+                label = label,
+                measuresProperty = measuresProperty,
+                makesMeasurement = measurementsSeries
+            });
+            return eCGLeadJSON;
         }
 
-        private ECGMeasurementsSeries CreateMessageAndDeleteListLead3_ECG_LL_LA()
+        private JObject GetShimmerAccelerometerSensorJSON_SAREF4health(Measurement measurement, Measurement collisionDetectedMeasurement)
         {
-            ECGMeasurementsSeries measurementSeriesLL_LA;
-            valuesLead3_ECG_LL_LA = GetValuesLead3_ECG_LL_LA();
-            lock (valuesLead3_ECG_LL_LA)
-            {
-                System.Console.WriteLine("valuesLead3_ECG_LL_LA.Count=" + valuesLead3_ECG_LL_LA.Count);
+            List<JObject> measurements = new List<JObject>();
+            measurements.Add(measurement.JSONLDobject);
+            measurements.Add(collisionDetectedMeasurement.JSONLDobject);
 
-                measurementSeriesLL_LA = TranslateECGMeasurementsSeries(valuesLead3_ECG_LL_LA);
-                //System.Console.WriteLine(measurementSeriesLL_LA.JSONLDobject);
-                
-                // Delete values from memory (empty list)
-                valuesLead3_ECG_LL_LA.Clear();
-            }
-            return measurementSeriesLL_LA;
+            JObject accelJSON = JObject.FromObject(new
+            {
+                @id = "sarefInst:Shimmer3AccelerometerSensor_T9JRN42",
+                @type = "https://w3id.org/def/saref4health#AccelerometerSensor",
+                comment = "Shimmer3 Accelerometer sensor",
+                label = "Shimmer3 Accelerometer T9J-RN42",
+                measuresProperty = "sarefInst:Acceleration_Vehicle",
+                makesMeasurement = measurements
+            });
+            return accelJSON;
         }
 
-        private ECGMeasurementsSeries CreateMessageAndDeleteListUnipolarLeadVx_RL()
+
+        private JObject GetGraph1JSON()
         {
-            ECGMeasurementsSeries measurementSeriesVx_RL;
-            valuesUnipolarLeadVx_RL = GetValuesUnipolarLeadVx_RL();
-            lock (valuesUnipolarLeadVx_RL)
+            JObject graph1JSON = JObject.FromObject(new
             {
-                System.Console.WriteLine("valuesUnipolarLeadVx_RL.Count=" + valuesUnipolarLeadVx_RL.Count);
+                @id = "InterIoTMsg:meta66b05c61-d687-45a3-b5fb-6864bbec3b69",
+                @type = new[]
+                {
+                    "InterIoTMsg:Thing_update",
+                    "InterIoTMsg:meta"
+                },
+                InterIoTMsg_conversationID = "conv99528eba-eb2d-47e8-9ee6-9dd40d19f89a",
+                InterIoTMsg_dateTimeStamp = "2017-05-22T22:19:30.281+02:00",
+                InterIoTMsg_messageID = "msg7e484a2c-f959-486e-8da0-31143f457234"
 
-                measurementSeriesVx_RL = TranslateECGMeasurementsSeries(valuesUnipolarLeadVx_RL);
-                //System.Console.WriteLine(measurementSeriesVx_RL.JSONLDobject);
-                
-                // Delete values from memory (empty list)
-                valuesUnipolarLeadVx_RL.Clear();
-            }
-            return measurementSeriesVx_RL;
+            });
+            return graph1JSON;
         }
+
+        private JObject GetGeoLocationJSON()
+        {
+            JObject geoLocationJSON = JObject.FromObject(new
+            {
+
+                @id = "sarefInst:test.1.1.LocationSmartPhone_39.431478658043424_-0.35860926434736484",
+                @type = new[]
+                    {
+                        "owl:NamedIndividual",
+                        "geo:SpatialThing"
+                    },
+                @label = new
+                {
+                    @language = "en",
+                    @value = "Location of the smartphone, should be the same location of the truck (?)"
+                },
+                geo_latitude = 39.431478658043424,
+                geo_longitude = -0.35860926434736484
+
+            });
+            return geoLocationJSON;
+        }
+
 
         private JObject GetGraph2JSON(JObject geoLocationJSON, List<JObject> sarefMakesMeasurementItemList)
         {
@@ -887,138 +1078,7 @@ namespace ShimmerCaptureXamarin
             return graph2JSON;
         }
 
-        private JObject GetECGDeviceJSON(List<JObject> listSensorsOfDevice)
-        {
-            JObject eCGDeviceJSON = JObject.FromObject(new
-            {
-                @id = "sarefInst:Shimmer3ECG_unit_T9JRN42_" + Android.OS.Build.Serial, // _[ID Shimmer ECG 3]_[Mobile ID] --> can be useful for security...
-                @type = "saref4health:ECGDevice",
-                @label = new
-                {
-                    @language = "en",
-                    @value = "Shimmer3 ECG unit T9J-RN42 through smartphone (gateway) " + Android.OS.Build.Serial
-                },
-                rdfs_seeAlso = "http://www.shimmersensing.com/products/ecg-development-kit#specifications-tab",
-                saref_hasManufacturer = "Shimmer",
-                saref_consistsOf = listSensorsOfDevice
-            });
-            return eCGDeviceJSON;
-        }
 
-        private JObject GetECGSensorJSON(ECGMeasurementsSeries measurementSeries, string type, string id, string label)
-        {
-            JObject eCGSensorJSON = JObject.FromObject(new
-            {
-                @id = id,
-                @type = type,
-                @label = new
-                {
-                    @language = "en",
-                    @value = label
-                },
-                saref_hasFrequencyMeasurement = "sarefInst:FrequencyOf512Hertz",
-                saref_measuresProperty = "sarefInst:HeartElectricalActivity_Person",
-                saref_makesMeasurement = measurementSeries.JSONLDobject
-            });
-            return eCGSensorJSON;
-        }
-
-        // "Container" not defined in the ontology. The idea is that this container includes the 4 leads, informing common aspects, e.g. frequency
-        private JObject GetECGSensorContainerJSON(JObject sensor_Lead1_ECG_LA_RA, JObject sensor_Lead2_ECG_LL_RA, JObject sensor_Lead3_ECG_LL_LA, JObject sensor_LeadVx_RL)
-        {
-            List<JObject> leads = new List<JObject>();
-            leads.Add(sensor_Lead1_ECG_LA_RA);
-            leads.Add(sensor_Lead2_ECG_LL_RA);
-            leads.Add(sensor_Lead3_ECG_LL_LA);
-            leads.Add(sensor_LeadVx_RL);
-
-            JObject eCGSensorJSON = JObject.FromObject(new
-            {
-                @id = "sarefInst:Shimmer3ECGSensor_T9JRN42",
-                @type = "saref4health:ECGSensor",
-                @label = new
-                {
-                    @language = "en",
-                    @value = "Shimmer3 ECG sensor T9J-RN42"
-                },
-                rdfs_comment = "Shimmer3 ECG sensor : \"four-lead ECG solution\".",
-                redfs_seeAlso = "http://www.shimmersensing.com/products/ecg-development-kit#specifications-tab",
-                saref_hasFrequencyMeasurement = "sarefInst:FrequencyOf512Hertz",
-                saref_measuresProperty = "sarefInst:HeartElectricalActivity_Person",
-                saref_consistsOf = leads
-            });
-            return eCGSensorJSON;
-        }
-        /*
-        private string FormatJSONLD(ObjectCluster objectCluster)
-        {
-            JObject contextJSON = GetContextJSON();            
-            JObject graph1JSON = GetGraph1JSON();
-
-            List<JObject> sarefMakesMeasurementItemList = new List<JObject>();
-            List<JObject> sarefMakesMeasurementItemsJSON = GetSarefMakesMeasurementItemsJSON(objectCluster);
-
-            //JObject geoLocationJSON = GetGeoLocationJSON();
-            //JObject graph2JSON = GetGraph2JSON(geoLocationJSON, sarefMakesMeasurementItemList);
-            JObject graph2JSON = GetGraph2JSON(sarefMakesMeasurementItemsJSON);
-
-            string result = string.Empty;
-
-            result = JSONUtils.ToPrettyString(graph2JSON);
-
-            JObject graph1arr = JObject.FromObject(new
-            {
-                @graph = new[]
-                {
-                    graph1JSON
-                }
-            });
-
-            JObject graph2arr = JObject.FromObject(new
-            {
-                @graph = new[]
-                {
-                    graph2JSON
-                }
-            });
-
-            JObject resultJSON = JObject.FromObject(new
-            {
-                context = contextJSON,
-                @graph = new []
-                {
-                    graph1arr,
-                    graph2arr
-                }
-            });
-
-            
-            result = JSONUtils.ToPrettyString(resultJSON);
-
-            result = result.Replace("\"geo_", "\"geo:").Replace("\"InterIoTMsg_", "\"InterIoTMsg:").Replace("\"saref_", "\"saref:");
-            result = result.Replace("\"id\"", "\"@id\"").Replace("\"label\"", "\"@label\"").Replace("\"graph\"", "\"@graph\"").Replace("\"context\"", "\"@context\"").Replace("\"language\"", "\"@language\"").Replace("\"type\"", "\"@type\"").Replace("\"value\"", "\"@value\"");
-
-            return result;
-
-            /*
-            string context = JSONUtils.ToPrettyString(contextJSON);
-            string graph1 = JSONUtils.ToPrettyString(graph1JSON);
-            string graph2 = JSONUtils.ToPrettyString(graph2JSON);
-            string geoLocation = JSONUtils.ToPrettyString(geoLocationJSON);
-
-            JsonLdOptions options = new JsonLdOptions();
-            
-            try
-            {
-                JObject jsonLDmessage = JsonLdProcessor.Compact(geoLocationJSON, contextJSON, options);
-                result = JSONUtils.ToPrettyString(jsonLDmessage);
-            }
-            catch (Exception ex)
-            { }
-            */
-
-
-        //}
 
         private string FormatJSONLD01(ObjectCluster objectCluster)
         {
@@ -1105,61 +1165,10 @@ namespace ShimmerCaptureXamarin
 
             JToken result = JsonConvert.SerializeObject(dicContexts);
             return result;
-
-            /*
-
-  "@context":{
-    "InterIoTMsg":"http://inter-iot.eu/message/",
-    "InterIoT":"http://inter-iot.eu/",
-    "sarefInst" : "https://w3id.org/saref/instances/",
-    "schema":"http://schema.org/",
-    "qu":"http://purl.oclc.org/NET/ssnx/qu/qu#",
-    "owl":"http://www.w3.org/2002/07/owl#",
-    "saref":"https://w3id.org/saref#",
-    "xsd":"http://www.w3.org/2001/XMLSchema#",
-    "skos":"http://www.w3.org/2004/02/skos/core#",
-    "dim":"http://purl.oclc.org/NET/ssnx/qu/dim#",
-    "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
-    "dct":"http://purl.org/dc/terms/",
-    "rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "xml":"http://www.w3.org/XML/1998/namespace",
-    "dcterms":"http://purl.org/dc/terms/",
-    "time":"http://www.w3.org/2006/time#",
-    "foaf":"http://xmlns.com/foaf/0.1/",
-    "om":"http://www.wurvoc.org/vocabularies/om-1.8/",
-    "geo":"http://www.w3.org/2003/01/geo/wgs84_pos#"
-  }
-               
-             */
+            
 
         }
-
-        /*
-        private JToken GetJson(JToken j)
-        {
-            try
-            {
-                if (j.Type == JTokenType.Null) return null;
-                using (Stream manifestStream = File.OpenRead("W3C\\" + (string)j))
-                using (TextReader reader = new StreamReader(manifestStream))
-                using (JsonReader jreader = new Newtonsoft.Json.JsonTextReader(reader)
-                {
-                    DateParseHandling = DateParseHandling.None
-                })
-                {
-                    return JToken.ReadFrom(jreader);
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
-        */
-
-
-        // Create timer of X seconds https://developer.xamarin.com/api/type/System.Timers.Timer/
-        // https://forums.xamarin.com/discussion/22443/how-to-use-timer-in-xamarin-forms
+        
     }
 }
 
