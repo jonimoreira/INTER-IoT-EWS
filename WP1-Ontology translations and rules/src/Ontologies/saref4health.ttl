@@ -1,9 +1,11 @@
 # baseURI: https://w3id.org/def/saref4health
+# imports: http://purl.oclc.org/NET/ssnx/qu/qu-rec20
 # imports: http://www.w3.org/2006/time
 # imports: https://w3id.org/def/saref4envi
 # imports: https://w3id.org/saref
 
 @prefix : <https://w3id.org/def/saref4health#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dim: <http://purl.oclc.org/NET/ssnx/qu/dim#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -21,20 +23,17 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-dim:Angle
-  rdf:type owl:Class ;
-  rdfs:subClassOf qu:QuantityKind ;
-.
-dim:VelocityOrSpeed
-  rdf:type owl:Class ;
-  rdfs:subClassOf qu:QuantityKind ;
-.
 qu:QuantityKind
   rdf:type owl:Class ;
-  rdf:type saref:Property ;
   rdfs:comment "A QuantityKind is an abstract classifier that represents the concept of kind of quantity that is defined as aspect common to mutually comparable quantities. A QuantityKind represents the essence of a quantity without any numerical value or unit. Quantities of the same kind within a given system of quantities have the same quantity dimension. However, quantities of the same dimension are not necessarily of the same kind."@en ;
   rdfs:label "QuantityKind" ;
-  rdfs:subClassOf saref:Property ;
+  owl:equivalentClass saref:Property ;
+.
+qu:Unit
+  rdf:type owl:Class ;
+  rdfs:comment "A Unit is an abstract classifier that represents the concept of measurement unit that is defined as real scalar quantity, defined and adopted by convention, with which any other quantity of the same kind can be compared to express the ratio of the two quantities as a number."@en ;
+  rdfs:label "Unit"@en ;
+  owl:equivalentClass saref:UnitOfMeasure ;
 .
 m3:Acceleration
   rdf:type owl:Class ;
@@ -125,7 +124,6 @@ time:TemporalUnit
 .
 om:United_States_dollar
   rdf:type owl:NamedIndividual ;
-  rdf:type :Currency ;
   rdfs:label "United States dollar"@en ;
 .
 om:bar
@@ -148,7 +146,6 @@ om:degree_Fahrenheit
 .
 om:euro
   rdf:type owl:NamedIndividual ;
-  rdf:type :Currency ;
   rdfs:label "euro"@en ;
 .
 om:kelvin
@@ -164,13 +161,11 @@ om:kilowatt
 .
 om:kilowatt_hour
   rdf:type owl:NamedIndividual ;
-  rdf:type :EnergyUnit ;
   rdfs:comment "The kilowatt hour is a unit of energy equal to 1,000 watt-hours, or 3.6 megajoules." ;
   rdfs:label "kilowatt hour" ;
 .
 om:lux
   rdf:type owl:NamedIndividual ;
-  rdf:type :IlluminanceUnit ;
   rdfs:comment "The lux is a unit of illuminance defined as lumen divided by square metre = candela times steradian divided by square metre."@en ;
   rdfs:label "lux" ;
 .
@@ -182,7 +177,6 @@ om:pascal
 .
 om:pound_sterling
   rdf:type owl:NamedIndividual ;
-  rdf:type :Currency ;
   rdfs:label "Great Britain pound sterling" ;
 .
 om:watt
@@ -220,10 +214,19 @@ saref4envi:FrequencyMeasurement
   dcterms:modified "2017-05-25"^^xsd:date ;
   dcterms:publisher <https://www.tno.nl> ;
   dcterms:title "SAREF for healthcare IoT-based solutions" ;
+  owl:imports <http://purl.oclc.org/NET/ssnx/qu/qu-rec20> ;
   owl:imports <http://www.w3.org/2006/time> ;
   owl:imports <https://w3id.org/def/saref4envi> ;
   owl:imports <https://w3id.org/saref> ;
   owl:versionInfo "2.0" ;
+.
+:AccelerationCrossAxialMeasurement_Example_001
+  rdf:type saref:Measurement ;
+  rdfs:label "Measurement of Cross-Axial (x^2 + y^2 + z^2)" ;
+  saref:hasTimestamp "2017-11-22T22:15:30"^^xsd:dateTime ;
+  saref:hasValue "200"^^xsd:float ;
+  saref:isMeasuredIn sarefInst:TriAxialAccelerationEnergy_MetrePerSecondSquare ;
+  saref:relatesToProperty sarefInst:Acceleration_Vehicle ;
 .
 :AccelerationMeasurement
   rdf:type owl:Class ;
@@ -235,27 +238,6 @@ saref4envi:FrequencyMeasurement
   rdf:type owl:Class ;
   rdfs:label "It is the unit of acceleration. "@en ;
   rdfs:subClassOf saref:UnitOfMeasure ;
-.
-:AccelerometerSensor
-  rdf:type owl:Class ;
-  rdfs:comment "An accelerometer is a device that measures proper acceleration. Proper acceleration, being the acceleration of a body in its own instantaneous rest frame, is not the same as coordinate acceleration, being the acceleration in a fixed coordinate system.  (Wikipedia)" ;
-  rdfs:label "Accelerometer sensor" ;
-  rdfs:subClassOf saref:Sensor ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:allValuesFrom m3:Acceleration ;
-      owl:onProperty saref:measuresProperty ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:allValuesFrom saref4envi:FrequencyMeasurement ;
-      owl:onProperty saref4envi:hasFrequencyMeasurement ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:allValuesFrom :AccelerationMeasurement ;
-      owl:onProperty saref:makesMeasurement ;
-    ] ;
 .
 :BatteryLevelMeasurement
   rdf:type owl:Class ;
@@ -282,12 +264,6 @@ saref4envi:FrequencyMeasurement
   rdfs:comment "A type of task for which a device is designed" ;
   rdfs:label "Comfort" ;
 .
-:Currency
-  rdf:type owl:Class ;
-  rdfs:comment "The unit of measure for price" ;
-  rdfs:label "Currency" ;
-  rdfs:subClassOf saref:UnitOfMeasure ;
-.
 :DirectionUnit
   rdf:type owl:Class ;
   rdfs:comment "The unit of measure for direction" ;
@@ -301,32 +277,76 @@ saref4envi:FrequencyMeasurement
 .
 :ECGDevice
   rdf:type owl:Class ;
-  rdfs:comment "A device that has at least an ECG sensor. Usually it includes other sensors, e.g. Accelerometer" ;
+  rdfs:comment "Device used to record ECG sessions from a living person. Also called electrocardiograph and usually referred as an ECG unit, it plays the role of a recorder which accomplishes the task of recording ECG sessions. The ECG device registers the heart electrical activity with support of electrodes attached onto different places of the body Usually an ECG device can include other sensors, e.g. Accelerometer" ;
   rdfs:label "ECG device" ;
   rdfs:subClassOf saref:Device ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
-      owl:allValuesFrom xsd:string ;
-      owl:onProperty saref:hasManufacturer ;
+      owl:allValuesFrom saref4envi:FrequencyMeasurement ;
+      owl:onProperty saref4envi:hasFrequencyMeasurement ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom :ECGRecordingSession ;
+      owl:onProperty saref:accomplishes ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass :ECGLeadBipolarLimb ;
+      owl:onProperty saref:consistsOf ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass :ECGLeadUnipolar ;
+      owl:onProperty saref:consistsOf ;
+    ] ;
+.
+:ECGLead
+  rdf:type owl:Class ;
+  rdfs:comment "Electrocardiogram Sensor (ECG or EKG) allows you to asses the electrical and muscular functions of the heart. " ;
+  rdfs:label "Electrocardiogram Sensor (ECG or EKG)" ;
+  rdfs:subClassOf saref:Sensor ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom :ECGSampleSequence ;
+      owl:onProperty saref:makesMeasurement ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom :HeartElectricalActivity ;
+      owl:onProperty saref:measuresProperty ;
     ] ;
 .
 :ECGLeadBipolarLimb
   rdf:type owl:Class ;
   rdfs:comment "Bipolar limb lead (or only \"limb lead\")" ;
   rdfs:label "Limb lead" ;
-  rdfs:subClassOf :ECGSensor ;
+  rdfs:subClassOf :ECGLead ;
 .
 :ECGLeadUnipolar
   rdf:type owl:Class ;
   rdfs:comment "Unipolar (precordial) lead: The precordial leads lie in the transverse (horizontal) plane, perpendicular to the other six leads. The six precordial electrodes act as the positive poles for the six corresponding precordial leads: (V1, V2, V3, V4, V5 and V6). Wilson's central terminal is used as the negative pole." ;
   rdfs:label "Unipolar (precordial) lead" ;
-  rdfs:subClassOf :ECGSensor ;
+  rdfs:subClassOf :ECGLead ;
 .
-:ECGMeasurementsSeries
+:ECGRecordingSession
+  rdf:type owl:Class ;
+  rdfs:comment "ecgOnto:086 (complex event): Medical service in which the Patient is subject of ECG recording by some Recording device. The Recording session (event) can be said to temporally coincide, albeit in a different level of abstraction, with the Observation series (event). In other words, these two events have the same time boundaries" ;
+  rdfs:label "ECG recording session" ;
+  rdfs:subClassOf saref:Task ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom :LivingPerson ;
+      owl:onProperty dc:author ;
+    ] ;
+.
+:ECGSampleSequence
   rdf:type owl:Class ;
   rdfs:comment "Based on fhir:SampledData: \"A series of measurements taken by a device, with upper and lower limits. There may be more than one dimension in the data.\"" ;
   rdfs:label "Measurements Series" ;
-  rdfs:subClassOf saref:Measurement ;
+  rdfs:subClassOf :TimeSeriesMeasurements ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
       owl:allValuesFrom :ElectricPotential ;
@@ -336,27 +356,6 @@ saref4envi:FrequencyMeasurement
       rdf:type owl:Restriction ;
       owl:allValuesFrom :HeartElectricalActivity ;
       owl:onProperty saref:relatesToProperty ;
-    ] ;
-.
-:ECGSensor
-  rdf:type owl:Class ;
-  rdfs:comment "Electrocardiogram Sensor (ECG or EKG) allows you to asses the electrical and muscular functions of the heart. " ;
-  rdfs:label "Electrocardiogram Sensor (ECG or EKG)" ;
-  rdfs:subClassOf saref:Sensor ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:allValuesFrom saref4envi:FrequencyMeasurement ;
-      owl:onProperty saref4envi:hasFrequencyMeasurement ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:allValuesFrom :ECGMeasurementsSeries ;
-      owl:onProperty saref:makesMeasurement ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:allValuesFrom :HeartElectricalActivity ;
-      owl:onProperty saref:measuresProperty ;
     ] ;
 .
 :ElectricPotential
@@ -369,12 +368,6 @@ saref4envi:FrequencyMeasurement
   rdf:type owl:NamedIndividual ;
   rdfs:comment "A type of task for which a device is designed" ;
   rdfs:label "EnergyEfficiency" ;
-.
-:EnergyUnit
-  rdf:type owl:Class ;
-  rdfs:comment "The unit of measure for energy" ;
-  rdfs:label "Energy unit" ;
-  rdfs:subClassOf saref:UnitOfMeasure ;
 .
 :Entertainment
   rdf:type owl:NamedIndividual ;
@@ -410,6 +403,7 @@ saref4envi:FrequencyMeasurement
   rdfs:comment "Electrical activity of the heart over a period of time (from Electrocardiography definition: https://en.wikipedia.org/wiki/Electrocardiography (ECG))" ;
   rdfs:label "Electrical activity of the heart" ;
   rdfs:subClassOf qu:QuantityKind ;
+  rdfs:subClassOf saref:Property ;
 .
 :HeartRateMeasurement
   rdf:type owl:Class ;
@@ -423,16 +417,36 @@ saref4envi:FrequencyMeasurement
   rdfs:label "Number of contractions of the heart per time unit (usualy BPM)" ;
   rdfs:subClassOf saref:UnitOfMeasure ;
 .
-:IlluminanceUnit
-  rdf:type owl:Class ;
-  rdfs:comment "The unit of measure for light" ;
-  rdfs:label "Illuminance unit" ;
-  rdfs:subClassOf saref:UnitOfMeasure ;
-.
 :Lighting
   rdf:type owl:NamedIndividual ;
   rdfs:comment "A type of task for which a device is designed" ;
   rdfs:label "Lighting" ;
+.
+:LivingPerson
+  rdf:type owl:Class ;
+  rdfs:comment "A biological person that is alive - from UFO research." ;
+  rdfs:label "Living Person" ;
+  rdfs:subClassOf owl:Thing ;
+.
+:LivingPerson_TruckDriver_01
+  rdf:type :LivingPerson ;
+  rdfs:label "Truck Driver 01" ;
+.
+:Measurement_AccelerationY_001
+  rdf:type saref:Measurement ;
+  rdfs:label "Acceleration Y axis" ;
+  saref:hasTimestamp "2018-04-22T22:15:30"^^xsd:dateTime ;
+  saref:hasValue "98"^^xsd:float ;
+  saref:isMeasuredIn <http://purl.oclc.org/NET/ssnx/qu/unit#metrePerSecondSquared> ;
+  saref:relatesToProperty <http://purl.oclc.org/NET/ssnx/qu/quantity#acceleration> ;
+.
+:Measurement_AccelerationZ_001
+  rdf:type saref:Measurement ;
+  rdfs:label "Acceleration Z axis" ;
+  saref:hasTimestamp "2018-04-22T22:15:30"^^xsd:dateTime ;
+  saref:hasValue "102"^^xsd:float ;
+  saref:isMeasuredIn <http://purl.oclc.org/NET/ssnx/qu/unit#metrePerSecondSquared> ;
+  saref:relatesToProperty <http://purl.oclc.org/NET/ssnx/qu/quantity#acceleration> ;
 .
 :MeterReading
   rdf:type owl:NamedIndividual ;
@@ -497,11 +511,6 @@ saref4envi:FrequencyMeasurement
   rdfs:subClassOf saref:Measurement ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
-      owl:hasValue dim:VelocityOrSpeed ;
-      owl:onProperty saref:relatesToProperty ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
       owl:onClass :SpeedUnit ;
       owl:onProperty saref:isMeasuredIn ;
       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
@@ -539,6 +548,22 @@ saref4envi:FrequencyMeasurement
   rdfs:label "Temperature unit" ;
   rdfs:subClassOf saref:UnitOfMeasure ;
 .
+:TimeSeriesMeasurements
+  rdf:type owl:Class ;
+  rdfs:comment "A sequence of data in a successive equally spaced points in time. The O&M ontology (ISO 19156) defines Time Series Observation  as an “observation whose result is a time-series”, while both Hl7 aECG and DICOM standards define the Series element as a sequence of data sharing a common frame of reference. In SAREF4health we termed this concept as Time Series Measurements since this sequence of data refers to time series measured by a device.  Notice that in this term we avoided prefixing with ECG because this concept can be applied to other types of data." ;
+  rdfs:label "Time series measurements" ;
+  rdfs:subClassOf saref:Measurement ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom xsd:float ;
+      owl:onProperty :hasValues ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom saref4envi:FrequencyMeasurement ;
+      owl:onProperty saref4envi:hasFrequencyMeasurement ;
+    ] ;
+.
 :Toggle
   rdf:type owl:NamedIndividual ;
   rdfs:comment "The value TOGGLE. It is used to instantiate the the ToggleCommand class" ;
@@ -554,146 +579,23 @@ saref4envi:FrequencyMeasurement
   rdfs:comment "A type of task for which a device is designed" ;
   rdfs:label "WellBeing" ;
 .
-:accomplishes
+:hasEnd
   rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship between a certain entity (e.g., a device) and the task it accomplishes" ;
-  rdfs:label "accomplishes" ;
-  owl:inverseOf :isAccomplishedBy ;
+  rdfs:label "End time of an event" ;
+  rdfs:subPropertyOf saref:hasTimestamp ;
 .
-:actsUpon
+:hasStart
   rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship between a command and a state" ;
-  rdfs:label "acts upon" ;
+  rdfs:label "Start time of an event" ;
+  rdfs:subPropertyOf saref:hasTimestamp ;
 .
-:controlsProperty
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship specifying the Property that can be controlled by a certain Device"@en ;
-  rdfs:label "controls property"@en ;
-.
-:hasCommand
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship between an entity (such as a function) and a command" ;
-  rdfs:label "has command" ;
-  owl:inverseOf :isCommandOf ;
-.
-:hasDescription
-  rdf:type owl:DatatypeProperty ;
-  rdfs:comment "A relationship providing a description of an entity (e.g., device)" ;
-  rdfs:label "has description" ;
-  rdfs:range xsd:string ;
-.
-:hasFunction
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship identifying the type of function of a device" ;
-  rdfs:label "has function" ;
-.
-:hasManufacturer
-  rdf:type owl:DatatypeProperty ;
-  rdfs:comment "A relationship identifying the manufacturer of an entity (e.g., device)" ;
-  rdfs:label "has manufacturer" ;
-  rdfs:range xsd:string ;
-.
-:hasMeterReadingType
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship identifying the reading type of a measurement (e.g., Water, Gas, Pressure , Energy , Power, etc.)" ;
-  rdfs:label "has meter reading type" ;
-.
-:hasModel
-  rdf:type owl:DatatypeProperty ;
-  rdfs:comment "A relationship identifying the model of an entity (e.g., device)" ;
-  rdfs:label "has model" ;
-  rdfs:range xsd:string ;
-.
-:hasName
-  rdf:type owl:DatatypeProperty ;
-  rdfs:comment "A relationship providing the name of an entity (e.g., device)" ;
-  rdfs:label "has name" ;
-  rdfs:range xsd:string ;
-.
-:hasPrice
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationships indentifying the price associated to an entity" ;
-  rdfs:label "has price" ;
-.
-:hasProfile
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship associating a profile to a certain entity (e.g., a device)" ;
-  rdfs:label "has profile" ;
-.
-:hasSensingRange
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship between a sensing function and a measurement identifying the range of a sensor detection" ;
-  rdfs:label "has sensing range " ;
-.
-:hasSensorType
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship identifying the sensing type of a sensor detection (i.e., Temperature, Occupancy, Humidity, Motion , Smoke, Pressure, etc.) " ;
-  rdfs:label "has sensor type" ;
-.
-:hasState
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship identifying the type of state of a device" ;
-  rdfs:label "has state" ;
-.
-:hasThresholdMeasurement
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship associated with an event function to notify that a certain threshold measurement has been exceeded" ;
-  rdfs:label "has threshold measurement" ;
-.
-:hasTime
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship to associate time information to an entity" ;
-  rdfs:label "has time" ;
-.
-:hasTypicalConsumption
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship identifying the typical (energy or power) consumption of a device" ;
-  rdfs:label "has typical consumption" ;
-.
-:isAbout
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship identifying what an entity, such as a Profile, is about"@en ;
-  rdfs:label "isAbout"@en ;
-.
-:isAccomplishedBy
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship indentifying the task accomplished by a certain entity (e.g., a device)" ;
-  rdfs:label "is accomplished by" ;
-.
-:isCommandOf
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship between a command and a function." ;
-  rdfs:label "is command of" ;
-.
-:isControlledByDevice
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship specifying the devices that can control a certain property"@en ;
-  rdfs:label "is controlled by device" ;
-.
-:isMeasuredByDevice
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship specifying the devices that can measure a certain property"@en ;
-  rdfs:label "is measured by device" ;
-.
-:isOfferedBy
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship between a service and a device that offers the service" ;
-  rdfs:label "is offered by" ;
-  owl:inverseOf :offers ;
-.
-:isUsedFor
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship specifying the purpose for which a device is used for (e.g., controlling a Commodity)" ;
-  rdfs:label "is used for" ;
-.
-:offers
-  rdf:type owl:ObjectProperty ;
-  rdfs:comment "A relationship between a device and a service" ;
-  rdfs:label "offers" ;
+:hasValues
+  rdf:type rdf:Property ;
+  rdfs:comment "A relationship defining the set of values (an array) of a certain property, e.g., energy or power" ;
+  rdfs:label "has values" ;
 .
 :watt_hour
   rdf:type owl:NamedIndividual ;
-  rdf:type :EnergyUnit ;
   rdfs:comment "The Watt Hor is a unit of energy equivalent to one watt (1 W) of power expended for one hour (1 h) of time. An energy expenditure of 1 Wh represents 3600 joules " ;
   rdfs:label "watt hour" ;
 .
@@ -724,31 +626,184 @@ saref:Measurement
       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
     ] ;
 .
+saref:Property
+  owl:equivalentClass qu:QuantityKind ;
+.
+saref:Task
+  rdf:type owl:Class ;
+  rdfs:comment "The goal for which a device is designed (from a user perspective). For example, a washing machine is designed for the task of washing. We propose here a list of tasks that are relevant for the purpose of SAREF, but this list can be extended." ;
+  rdfs:label "Task" ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass xsd:dateTime ;
+      owl:onProperty :hasEnd ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass xsd:dateTime ;
+      owl:onProperty :hasStart ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+.
 saref:UnitOfMeasure
   rdf:type owl:Class ;
   rdfs:comment "The unit of measure is a standard for measurement of a quantity, such as a Property. For example,  Power is a property and Watt is a unit of power that represents a definite predetermined power: when we say 10 Watt, we actually mean 10 times the definite predetermined power called \"watt\". Our definition is based on the definition of unit of measure in the Ontology of units of Measure (OM). We propose here a list of some units of measure that are relevant for the purpose of the Smart Appliances ontology, but this list can be extended."@en ;
   rdfs:isDefinedBy saref: ;
   rdfs:label "Unit of measure"@en ;
+  owl:equivalentClass qu:Unit ;
+.
+saref:accomplishes
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a certain entity (e.g., a device) and the task it accomplishes" ;
+  rdfs:label "accomplishes" ;
+  owl:inverseOf saref:isAccomplishedBy ;
+.
+saref:actsUpon
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a command and a state" ;
+  rdfs:label "acts upon" ;
 .
 saref:consistsOf
   rdf:type owl:ObjectProperty ;
   rdfs:comment "A relationship indicating a composite entity that consists of other entities (e.g., a temperature/humidity sensor that consists of a temperature sensor and a humidity sensor)" ;
   rdfs:label "consists of" ;
 .
+saref:controlsProperty
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship specifying the Property that can be controlled by a certain Device"@en ;
+  rdfs:label "controls property"@en ;
+.
+saref:hasCommand
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between an entity (such as a function) and a command" ;
+  rdfs:label "has command" ;
+  owl:inverseOf saref:isCommandOf ;
+.
+saref:hasDescription
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "A relationship providing a description of an entity (e.g., device)" ;
+  rdfs:label "has description" ;
+  rdfs:range xsd:string ;
+.
+saref:hasFunction
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship identifying the type of function of a device" ;
+  rdfs:label "has function" ;
+.
+saref:hasManufacturer
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "A relationship identifying the manufacturer of an entity (e.g., device)" ;
+  rdfs:label "has manufacturer" ;
+  rdfs:range xsd:string ;
+.
+saref:hasMeterReadingType
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship identifying the reading type of a measurement (e.g., Water, Gas, Pressure , Energy , Power, etc.)" ;
+  rdfs:label "has meter reading type" ;
+.
+saref:hasModel
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "A relationship identifying the model of an entity (e.g., device)" ;
+  rdfs:label "has model" ;
+  rdfs:range xsd:string ;
+.
+saref:hasName
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "A relationship providing the name of an entity (e.g., device)" ;
+  rdfs:label "has name" ;
+  rdfs:range xsd:string ;
+.
+saref:hasPrice
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationships indentifying the price associated to an entity" ;
+  rdfs:label "has price" ;
+.
+saref:hasProfile
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship associating a profile to a certain entity (e.g., a device)" ;
+  rdfs:label "has profile" ;
+.
+saref:hasSensingRange
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a sensing function and a measurement identifying the range of a sensor detection" ;
+  rdfs:label "has sensing range " ;
+.
+saref:hasSensorType
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship identifying the sensing type of a sensor detection (i.e., Temperature, Occupancy, Humidity, Motion , Smoke, Pressure, etc.) " ;
+  rdfs:label "has sensor type" ;
+.
+saref:hasState
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship identifying the type of state of a device" ;
+  rdfs:label "has state" ;
+.
+saref:hasThresholdMeasurement
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship associated with an event function to notify that a certain threshold measurement has been exceeded" ;
+  rdfs:label "has threshold measurement" ;
+.
+saref:hasTime
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship to associate time information to an entity" ;
+  rdfs:label "has time" ;
+.
 saref:hasTimestamp
   rdf:type owl:DatatypeProperty ;
   rdfs:comment "A relationship stating the timestamp of an entity (e.g. a measurement)."@en ;
   rdfs:label "has timestamp"@en ;
+.
+saref:hasTypicalConsumption
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship identifying the typical (energy or power) consumption of a device" ;
+  rdfs:label "has typical consumption" ;
 .
 saref:hasValue
   rdf:type owl:DatatypeProperty ;
   rdfs:comment "A relationship defining the value of a certain property, e.g., energy or power" ;
   rdfs:label "has value" ;
 .
+saref:isAbout
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship identifying what an entity, such as a Profile, is about"@en ;
+  rdfs:label "isAbout"@en ;
+.
+saref:isAccomplishedBy
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship indentifying the task accomplished by a certain entity (e.g., a device)" ;
+  rdfs:label "is accomplished by" ;
+.
+saref:isCommandOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a command and a function." ;
+  rdfs:label "is command of" ;
+.
+saref:isControlledByDevice
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship specifying the devices that can control a certain property"@en ;
+  rdfs:label "is controlled by device" ;
+.
+saref:isMeasuredByDevice
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship specifying the devices that can measure a certain property"@en ;
+  rdfs:label "is measured by device" ;
+.
 saref:isMeasuredIn
   rdf:type owl:ObjectProperty ;
   rdfs:comment "A relationship identifying the unit of measure used for a certain entity." ;
   rdfs:label "is measured in" ;
+.
+saref:isOfferedBy
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a service and a device that offers the service" ;
+  rdfs:label "is offered by" ;
+  owl:inverseOf saref:offers ;
+.
+saref:isUsedFor
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship specifying the purpose for which a device is used for (e.g., controlling a Commodity)" ;
+  rdfs:label "is used for" ;
 .
 saref:makesMeasurement
   rdf:type owl:ObjectProperty ;
@@ -759,6 +814,11 @@ saref:measuresProperty
   rdf:type owl:ObjectProperty ;
   rdfs:comment "A relationship specifying the Property that can be measured by a certain Device"@en ;
   rdfs:label "measures property"@en ;
+.
+saref:offers
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a device and a service" ;
+  rdfs:label "offers" ;
 .
 saref:relatesToMeasurement
   rdf:type owl:ObjectProperty ;
@@ -787,6 +847,28 @@ sarefInst:Acceleration_Vehicle
   rdf:type m3:Acceleration ;
   rdfs:label "Acceleration of a vehicle " ;
 .
+sarefInst:AcceleroemeterX_ECGDevice
+  rdf:type saref:Sensor ;
+  rdfs:label "Accelerometer X axis" ;
+  saref:makesMeasurement sarefInst:Measurement_AccelerationX_001 ;
+  saref:measuresProperty dim:Acceleration ;
+.
+sarefInst:AcceleroemeterY_ECGDevice
+  rdf:type saref:Sensor ;
+  rdfs:label "Accelerometer Y axis" ;
+  saref:makesMeasurement :Measurement_AccelerationY_001 ;
+  saref:measuresProperty dim:Acceleration ;
+.
+sarefInst:AcceleroemeterZ_ECGDevice
+  rdf:type saref:Sensor ;
+  rdfs:label "Accelerometer Z axis" ;
+  saref:makesMeasurement :Measurement_AccelerationZ_001 ;
+  saref:measuresProperty dim:Acceleration ;
+.
+sarefInst:BatteryLevel
+  rdf:type saref:Property ;
+  rdfs:label "Level of the battery of a device" ;
+.
 sarefInst:BatteryLevelMeasurement__UniqueId_DeviceIdTimestamp
   rdf:type :BatteryLevelMeasurement ;
   rdfs:label "Example of batery level of a smartphone" ;
@@ -807,7 +889,6 @@ sarefInst:ECGLead_II_code131330
 sarefInst:ECGLead_I_code131329
   rdf:type :ECGLeadBipolarLimb ;
   rdfs:label "Lead I (LA-RA)" ;
-  saref4envi:hasFrequencyMeasurement sarefInst:FrequencyOf512Hertz ;
   saref:makesMeasurement sarefInst:ECGMeasurementsSeries_Example001 ;
   saref:measuresProperty sarefInst:HeartElectricalActivity_Person ;
 .
@@ -816,15 +897,16 @@ sarefInst:ECGLead_Vx_RL_code131389
   rdfs:label "Lead Vx-RL" ;
 .
 sarefInst:ECGMeasurementsSeries_Example001
-  rdf:type :ECGMeasurementsSeries ;
+  rdf:type :ECGSampleSequence ;
   rdfs:label "Example 001 - ECG measurements series " ;
-  saref:hasTimestamp "2017-11-22T22:15:30"^^xsd:dateTime ;
-  saref:hasValue "2037" ;
-  saref:hasValue "2041" ;
-  saref:hasValue "2043" ;
-  saref:hasValue "2047" ;
-  saref:hasValue "2060" ;
-  saref:hasValue "2062" ;
+  saref4envi:hasFrequencyMeasurement sarefInst:FrequencyOf256Hertz ;
+  :hasValues "2037"^^xsd:float ;
+  :hasValues "2041"^^xsd:float ;
+  :hasValues "2043"^^xsd:float ;
+  :hasValues "2047"^^xsd:float ;
+  :hasValues "2060"^^xsd:float ;
+  :hasValues "2062"^^xsd:float ;
+  saref:hasTimestamp "2018-04-22T22:15:30"^^xsd:dateTime ;
   saref:isMeasuredIn sarefInst:ElectricPotential_MilliVolts ;
   saref:relatesToProperty sarefInst:HeartElectricalActivity_Person ;
 .
@@ -836,6 +918,13 @@ sarefInst:ElectricPotential_Volts
   rdf:type :ElectricPotential ;
   rdfs:comment "Based on <https://en.wikipedia.org/wiki/Volt> and <http://purl.org/iot/vocab/m3-lite#Volt>. Difference in electric potential between two points of a conducting wire when an electric current of one ampere dissipates one watt of power between those points." ;
   rdfs:label "Volts" ;
+.
+sarefInst:FrequencyOf256Hertz
+  rdf:type saref4envi:FrequencyMeasurement ;
+  rdfs:label "256Hz frequency" ;
+  saref:hasValue "256"^^xsd:float ;
+  saref:isMeasuredIn om:hertz ;
+  saref:relatesToProperty saref4envi:Frequency ;
 .
 sarefInst:FrequencyOf512Hertz
   rdf:type saref4envi:FrequencyMeasurement ;
@@ -875,44 +964,68 @@ sarefInst:MeasurementWithMultipleValuesTest01
   saref:isMeasuredIn sarefInst:ElectricPotential_Volts ;
   saref:relatesToProperty sarefInst:HeartElectricalActivity_Person ;
 .
+sarefInst:Measurement_AccelerationX_001
+  rdf:type saref:Measurement ;
+  rdfs:label "Acceleration X axis" ;
+  saref:hasTimestamp "2018-04-22T22:15:30"^^xsd:dateTime ;
+  saref:hasValue "100"^^xsd:float ;
+  saref:isMeasuredIn <http://purl.oclc.org/NET/ssnx/qu/unit#metrePerSecondSquared> ;
+  saref:relatesToProperty <http://purl.oclc.org/NET/ssnx/qu/quantity#acceleration> ;
+.
 sarefInst:Percentage
   rdf:type saref:UnitOfMeasure ;
   rdfs:comment "Unit of percentage (%): https://en.wikipedia.org/wiki/Percentage" ;
   rdfs:label "Percentage" ;
+.
+sarefInst:RecordingECGSession_01
+  rdf:type :ECGRecordingSession ;
+  dc:author :LivingPerson_TruckDriver_01 ;
+  rdfs:comment "An ECG recording session taken during a trip (truck driver)." ;
+  rdfs:label "Recording ECG session" ;
+  :hasEnd "2018-04-22T22:15:30"^^xsd:dateTime ;
+  :hasStart "2018-04-22T18:00:00"^^xsd:dateTime ;
 .
 sarefInst:SequenceOfMiliVoltsWithIntervalOf256Hz
   rdf:type :ElectricPotential ;
   rdfs:comment "Inspired on UFO-ECG: p.d.Seq((mV})" ;
   rdfs:label "Sequence of numbers measured in Volts." ;
 .
-sarefInst:Shimmer3AccelerometerSensor
-  rdf:type :AccelerometerSensor ;
+sarefInst:Shimmer3AccelerometerCrossAxialFunctionSensor_T9JRN42
+  rdf:type saref:Sensor ;
   rdfs:comment "Shimmer3 Accelerometer sensor" ;
   rdfs:label "Shimmer3 Accelerometer T9J-RN42" ;
-  saref4envi:hasFrequencyMeasurement sarefInst:FrequencyOf512Hertz ;
+  saref:makesMeasurement :AccelerationCrossAxialMeasurement_Example_001 ;
   saref:measuresProperty sarefInst:Acceleration_Vehicle ;
 .
-sarefInst:Shimmer3ECGSensor_T9JRN42
-  rdf:type :ECGSensor ;
-  rdfs:comment "Shimmer3 ECG sensor : \"four-lead ECG solution\"." ;
-  rdfs:label "Shimmer3 ECG sensor T9J-RN42" ;
-  rdfs:seeAlso "http://www.shimmersensing.com/products/ecg-development-kit#specifications-tab" ;
-  saref4envi:hasFrequencyMeasurement sarefInst:FrequencyOf512Hertz ;
-  saref:consistsOf sarefInst:ECGLead_III_code131389 ;
-  saref:consistsOf sarefInst:ECGLead_II_code131330 ;
-  saref:consistsOf sarefInst:ECGLead_I_code131329 ;
-  saref:consistsOf sarefInst:ECGLead_Vx_RL_code131389 ;
-  saref:makesMeasurement sarefInst:ECGMeasurementsSeries_Example001 ;
-  saref:measuresProperty sarefInst:HeartElectricalActivity_Person ;
+sarefInst:Shimmer3BatteryLevelSensor_T9JRN42
+  rdf:type saref:Sensor ;
+  rdfs:label "Battery level sensor of Shimmer 3  (id: T9JRN42)" ;
+  saref:measuresProperty sarefInst:BatteryLevel ;
+.
+sarefInst:Shimmer3ECGBattery
+  rdf:type owl:Thing ;
+  rdfs:comment """Like many personal electronic devices, Shimmer is powered by a rechargeable Lithium Polymer battery. The Shimmer battery is 3.7V, 450 mAh and contains a safety circuit board with over-current protection, which can trigger if a component short is created by a faulty peripheral or if components are bridged while the enclosure is open. The battery will return to normal operating condition after the short is removed and the unit is placed back in a Dock. The Shimmer operating life when using these batteries depends on a number of factors including which, if any, radio is in use, which sensors are enabled and the rate at which data is being sampled and transferred. Battery life estimation information for a number of different configurations is provided in section 6.2.3 and also contains further details on voltage measurement.
+Some Shimmer applications feature a low-battery message using an LED indicator (located near the reset button). There is also hardware low-battery protection which will prevent damage to the battery or Shimmer device. If your application fails to start or terminates abruptly after initiating streaming data over a radio or writing to flash, it could be a symptom of a battery in need of recharging. For details on battery re-charging please refer to Section 3.2.3 of this User Manual. If you suspect a fault with your Shimmer battery, please refer to the troubleshooting section of this manual.""" ;
+  rdfs:label "Rechargeable Lithium Polymer battery" ;
 .
 sarefInst:Shimmer3ECG_unit_T9JRN42
   rdf:type :ECGDevice ;
   rdfs:comment "Shimmer3 EXG unit: device bought for INTER-IoT-EWS project, composed of ECG sensors and other features (e.g. Accelerometer). " ;
   rdfs:label "Shimmer3 ECG unit T9J-RN42" ;
   rdfs:seeAlso "http://www.shimmersensing.com/products/ecg-development-kit#specifications-tab" ;
-  saref:consistsOf sarefInst:Shimmer3AccelerometerSensor ;
-  saref:consistsOf sarefInst:Shimmer3ECGSensor_T9JRN42 ;
+  saref4envi:hasFrequencyMeasurement sarefInst:FrequencyOf256Hertz ;
+  saref:accomplishes sarefInst:RecordingECGSession_01 ;
+  saref:consistsOf sarefInst:AcceleroemeterX_ECGDevice ;
+  saref:consistsOf sarefInst:AcceleroemeterY_ECGDevice ;
+  saref:consistsOf sarefInst:AcceleroemeterZ_ECGDevice ;
+  saref:consistsOf sarefInst:ECGLead_III_code131389 ;
+  saref:consistsOf sarefInst:ECGLead_II_code131330 ;
+  saref:consistsOf sarefInst:ECGLead_I_code131329 ;
+  saref:consistsOf sarefInst:ECGLead_Vx_RL_code131389 ;
+  saref:consistsOf sarefInst:Shimmer3AccelerometerCrossAxialFunctionSensor_T9JRN42 ;
+  saref:consistsOf sarefInst:Shimmer3BatteryLevelSensor_T9JRN42 ;
   saref:hasManufacturer "Shimmer" ;
+  saref:hasTypicalConsumption sarefInst:Shimmer3ECGBattery ;
 .
 sarefInst:SpeedMeasurement_UniqueId_DeviceIdTimestamp
   rdf:type :SpeedMeasurement ;
@@ -929,11 +1042,7 @@ sarefInst:SpeedUnit_MeterPerSecond
 sarefInst:Speed_Vehicle
   rdf:type m3:Speed ;
 .
-<https://w3id.org/saref/meteo/WM30#WindDirection>
-  rdf:type owl:Class ;
-  rdfs:subClassOf dim:Angle ;
-.
-<https://w3id.org/saref/meteo/WM30#WindSpeed>
-  rdf:type owl:Class ;
-  rdfs:subClassOf dim:VelocityOrSpeed ;
+sarefInst:TriAxialAccelerationEnergy_MetrePerSecondSquare
+  rdf:type saref:UnitOfMeasure ;
+  rdfs:label "Cross axial energy computed as (x^2, y^2, z^2), where x,y,z are m/s^2" ;
 .
