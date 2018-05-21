@@ -1,0 +1,135 @@
+{
+	"@graph": [
+		{
+			"@graph": [
+				{
+					"@id": "InterIoTMsg:meta66b05c61-d687-45a3-b5fb-6864bbec3b69",
+					"@type": [
+						"InterIoTMsg:Platform_register",
+						"InterIoTMsg:meta"
+					],
+					"InterIoTMsg:conversationID": "conv99528eba-eb2d-47e8-9ee6-9dd40d19f89a",
+					"InterIoTMsg:dateTimeStamp": "2017-05-22T22:19:30.281+02:00",
+					"InterIoTMsg:messageID": "msg7e484a2c-f959-486e-8da0-31143f457234"
+				}
+			],
+			"@id": "InterIoTMsg:metadata"
+		},
+		{
+			"@graph": [
+				{
+					"@id": "sarefInst:Shimmer3ECG_unit_T9JRN42_ZY224DC54P",
+					"@type": "saref:Device",
+					"comment": "Shimmer3 ECG unit (T9J-RN42): INTER-IoT-EWS project",
+					"label": "Shimmer3 ECG unit T9J-RN42",
+					"seeAlso": "http://www.shimmersensing.com/products/ecg-development-kit#specifications-tab",
+					"hasFrequencyMeasurement": "sarefInst:FrequencyOf256Hertz",
+					"accomplishes": "sarefInst:RecordingECGSession_01",
+					"hasManufacturer": "Shimmer",
+					"hasTypicalConsumption": "sarefInst:Shimmer3ECGBattery",
+					"saref:consistsOf": [
+						{
+							"@id": "sarefInst:Shimmer3BatteryLevelSensor_T9JRN42",
+							"@type": "saref:Sensor",
+							"label": "Battery level sensor of Shimmer 3  (id: T9JRN42)",
+							"saref:measuresProperty": "sarefInst:BatteryLevel",
+							"saref:makesMeasurement": {
+								"@id": "sarefInst:BatteryLevel_Test.X.Y_1525772568870.58",
+								"@type": "saref:Measurement",
+								"label": "Measurement of Shimmer 3 ECG [batteryLevel]_1525772568870.58",
+								"saref:hasTimestamp": "1525772568870.58",
+								"saref:hasValue": "3862.4",
+								"saref:isMeasuredIn": "sarefInst:ElectricPotential_MilliVolts",
+								"saref:relatesToProperty": "sarefInst:BatteryLevel"
+							}
+						}
+					]
+				}
+			],
+			"@id": "InterIoTMsg:payload"
+		}
+	],
+	"@context": {
+		"InterIoTMsg": "http://inter-iot.eu/message/",
+		"InterIoT": "http://inter-iot.eu/",
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"comment": {
+			"@id": "http://www.w3.org/2000/01/rdf-schema#comment"
+		},
+		"label": {
+			"@id": "http://www.w3.org/2000/01/rdf-schema#label"
+		},
+		"seeAlso": {
+			"@id": "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+		},
+		"consistsOf": {
+			"@id": "https://w3id.org/saref#consistsOf",
+			"@type": "@id"
+		},
+		"hasManufacturer": {
+			"@id": "https://w3id.org/saref#hasManufacturer"
+		},
+		"hasFrequencyMeasurement": {
+			"@id": "https://w3id.org/def/saref4envi#hasFrequencyMeasurement",
+			"@type": "@id"
+		},
+		"hasTypicalConsumption": {
+			"@id": "https://w3id.org/saref#hasTypicalConsumption",
+			"@type": "@id"
+		},
+		"accomplishes": {
+			"@id": "https://w3id.org/saref#accomplishes",
+			"@type": "@id"
+		},
+		"makesMeasurement": {
+			"@id": "https://w3id.org/saref#makesMeasurement",
+			"@type": "@id"
+		},
+		"measuresProperty": {
+			"@id": "https://w3id.org/saref#measuresProperty",
+			"@type": "@id"
+		},
+		"hasValues": {
+			"@id": "https://w3id.org/def/saref4health#hasValues",
+			"@type": "http://www.w3.org/2001/XMLSchema#float"
+		},
+		"isMeasuredIn": {
+			"@id": "https://w3id.org/saref#isMeasuredIn",
+			"@type": "@id"
+		},
+		"hasTimestamp": {
+			"@id": "https://w3id.org/saref#hasTimestamp",
+			"@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+		},
+		"relatesToProperty": {
+			"@id": "https://w3id.org/saref#relatesToProperty",
+			"@type": "@id"
+		},
+		"schema": "http://schema.org/",
+		"sarefInst": "https://w3id.org/saref/instances#",
+		"owl": "http://www.w3.org/2002/07/owl#",
+		"prefix": "http://purl.oclc.org/NET/ssnx/qu/prefix#",
+		"saref": "https://w3id.org/saref#",
+		"dim": "http://purl.oclc.org/NET/ssnx/qu/dim#",
+		"skos": "http://www.w3.org/2004/02/skos/core#",
+		"saref4envi": "https://w3id.org/def/saref4envi#",
+		"saref4health": "https://w3id.org/def/saref4health#",
+		"geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+		"dct": "http://purl.org/dc/terms/",
+		"xml": "http://www.w3.org/XML/1998/namespace",
+		"dcterms": "http://purl.org/dc/terms/",
+		"vann": "http://purl.org/vocab/vann/",
+		"foaf": "http://xmlns.com/foaf/0.1/",
+		"om": "http://www.wurvoc.org/vocabularies/om-1.8/",
+		"cc": "http://creativecommons.org/ns#",
+		"quantity": "http://purl.oclc.org/NET/ssnx/qu/quantity#",
+		"qu": "http://purl.oclc.org/NET/ssnx/qu/qu#",
+		"m3": "http://purl.org/iot/vocab/m3-lite#",
+		"unit": "http://purl.oclc.org/NET/ssnx/qu/unit#",
+		"qu-rec20": "http://purl.oclc.org/NET/ssnx/qu/qu-rec20#",
+		"time": "http://www.w3.org/2006/time#",
+		"dc": "http://purl.org/dc/elements/1.1/"
+	}
+}
