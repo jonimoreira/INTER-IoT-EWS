@@ -1,0 +1,63 @@
+﻿<Page x:ConnectionId='1'
+    x:Class="MyDriving.UWP.Views.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:ConnectionId='2' Name="LoginGrid" >
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="{StaticResource Background}" />
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <Image x:ConnectionId='3' x:Name="ProfileImage" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="70" Height="70"  Grid.Row ="0" Visibility="Collapsed"/>
+        <TextBlock x:ConnectionId='4' x:Name="WelcomeText" HorizontalAlignment="Center"  VerticalAlignment="Top" Visibility="Collapsed"  Grid.Row="1"  Margin="0,10,0,10" />
+      
+       <Image x:ConnectionId='5' x:Name="AppLogo" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Source="{StaticResource ApplicationLogo}" Stretch="Uniform" Margin="80,0,80,0" MaxWidth="300"/>
+     <!-- textblock is overlapped on the image -->
+        <TextBlock x:ConnectionId='6' x:Name="LogoText" HorizontalAlignment="Center"  VerticalAlignment="Bottom"   Text="MyDriving" Foreground="White" FontFamily="Assets/Fonts/CorbertRegular/Corbert-regular.otf#Corbert" FontSize="24" />
+        <StackPanel x:ConnectionId='7' x:Name="LoginButtons" VerticalAlignment="Center" Grid.Row="1" Visibility="Visible" Margin="50,0,50,0">
+
+            <Button x:ConnectionId='9' x:Name="FaceBookButtonLogin"                                                                  Style="{StaticResource LoginButtonStyle}" 
+                    Background="{StaticResource FacebookLoginButtonColor}"  Height="40" MaxWidth="300">
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0,0,0">
+                    <Image Source="{StaticResource FacebookLogo}" HorizontalAlignment="Left" Height="24" Width="24"/>
+                    <TextBlock Text="Login with Facebook"  Style="{StaticResource LoginButtonTextStyle}" />
+                </StackPanel>
+            </Button>
+
+            <Button x:ConnectionId='10' x:Name="TwitterButtonLogin" Style="{StaticResource LoginButtonStyle}"                                                               
+                    Background="{StaticResource TwitterLoginButtonColor}"  >
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0,0,0">
+                    <Image Source="{StaticResource TwitterLogo}" HorizontalAlignment="Left" Height="24" Width="24"/>
+                    <TextBlock Text="Login with Twitter"  Style="{StaticResource LoginButtonTextStyle}" />
+                </StackPanel>           
+            </Button>
+
+            <Button x:ConnectionId='11' x:Name="MSAButtonLogin"   Style="{StaticResource LoginButtonStyle}"                                                                 
+                    Background="{StaticResource MSALoginButtonColor}"  >
+               
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0,0,0">
+                    <Image x:ConnectionId='12' Name="MSAImage"  Source="{StaticResource MicrosoftLogo}" HorizontalAlignment="Left" Height="24" Width="24"/>
+                    <TextBlock Text="Login with Microsoft"  Style="{StaticResource LoginButtonTextStyle}" />
+                </StackPanel>
+
+            </Button>
+        </StackPanel>
+
+        <Button x:ConnectionId='8' x:Name="ContinueButton" HorizontalAlignment="Center" Margin="0,10,0,0"  Content="Continue"                         Grid.Row="2" VerticalAlignment="Top" Visibility="Collapsed" />
+
+    </Grid>
+
+  
+</Page>
+

@@ -1,0 +1,10 @@
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\OBDLibrary\ObdLibiOS\bin\Release\ObdLibiOS.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\OBDLibrary\ObdLibiOS\bin\Release\ObdLibiOS.pdb
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\OBDLibrary\ObdLibiOS\bin\Release\ObdShare.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\OBDLibrary\ObdLibiOS\bin\Release\ObdShare.pdb
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\OBDLibrary\ObdLibiOS\obj\Release\optimized\
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\OBDLibrary\ObdLibiOS\obj\Release\ObdLibiOS.csprojResolveAssemblyReference.cache
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\OBDLibrary\ObdLibiOS\obj\Release\ObdLibiOS.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\OBDLibrary\ObdLibiOS\obj\Release\ObdLibiOS.pdb
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\OBDLibrary\ObdLibiOS\obj\Release\ObdLibiOS.dll.mdb
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\OBDLibrary\ObdLibiOS\bin\Release\ObdLibiOS.dll.mdb

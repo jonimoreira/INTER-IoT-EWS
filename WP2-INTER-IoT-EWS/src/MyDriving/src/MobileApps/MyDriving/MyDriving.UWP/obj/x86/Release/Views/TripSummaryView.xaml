@@ -1,0 +1,47 @@
+﻿<Page x:ConnectionId='1'
+    x:Class="MyDriving.UWP.Views.TripSummaryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:MyDriving.UWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Name="SUMMARY">
+
+    <Grid Background="{StaticResource MainBackgroundColor2}">
+
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <StackPanel>
+                <Button x:ConnectionId='2' x:Name="Close" VerticalAlignment="Top" HorizontalAlignment="Right" Height="40" Width="40"                               Background="Transparent">
+                    <Image Source="{StaticResource Close}"  Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+                <StackPanel Margin="24,4,24,4">
+
+                <StackPanel>
+                    <TextBlock Text="You completed your trip!" HorizontalAlignment="Center" Margin="0,0,0,5" FontFamily="SegoeUI-Light" FontSize="21" Foreground="{StaticResource SummaryTextColor}" />
+                    <TextBlock Text="Trip Summary" HorizontalAlignment="Center" Margin="0,5,0,15" FontFamily="SegoeUI-Semibold" FontSize="16" Foreground="White" FontWeight="Bold" />
+                </StackPanel>
+
+                    <controls:ProfileViewTabControl x:ConnectionId='3' x:Name="TotalDistanceTab"                                                                                                            />
+
+                    <controls:ProfileViewTabControl x:ConnectionId='4' x:Name="TotalTimeTab"                                                                                                                                       />
+
+                    <controls:ProfileViewTabControl x:ConnectionId='5' x:Name="MaxSpeedTab"                                                               />
+
+                    <controls:ProfileViewTabControl x:ConnectionId='6' x:Name="FuelConsumptionTab"                                                           />
+
+                    <controls:ProfileViewTabControl x:ConnectionId='7' x:Name="HardBreaksTab"                                                                                                                                             />
+
+                    <controls:ProfileViewTabControl x:ConnectionId='8' x:Name="HardAccelerationsTab"                                                                                                                                                     />
+
+                </StackPanel>
+                
+   
+            </StackPanel>
+        </ScrollViewer>
+
+     
+
+    </Grid>
+</Page>
+

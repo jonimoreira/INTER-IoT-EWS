@@ -1,0 +1,10 @@
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\bin\Debug\ReadDeviceToCloudMessages.exe.config
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\bin\Debug\ReadDeviceToCloudMessages.exe
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\bin\Debug\ReadDeviceToCloudMessages.pdb
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\bin\Debug\Microsoft.ServiceBus.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\bin\Debug\Microsoft.ServiceBus.xml
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\obj\Debug\ReadDeviceToCloudMessages.csprojResolveAssemblyReference.cache
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\obj\Debug\ReadDeviceToCloudMessages.exe
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\obj\Debug\ReadDeviceToCloudMessages.pdb
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\ReadDeviceToCloudMessages\bin\Debug\Newtonsoft.Json.xml
