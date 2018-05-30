@@ -72,12 +72,6 @@ namespace ShimmerCaptureXamarin
 			// aapt resource value: 0x7f050003
 			public const int buttonStop = 2131034115;
 			
-			// aapt resource value: 0x7f050007
-			public const int textECG = 2131034119;
-			
-			// aapt resource value: 0x7f050006
-			public const int textTimestap = 2131034118;
-			
 			// aapt resource value: 0x7f050005
 			public const int textViewAccelX = 2131034117;
 			

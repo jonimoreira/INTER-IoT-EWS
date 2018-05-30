@@ -134,9 +134,9 @@ namespace ShimmerCaptureXamarin.SAREF4health
         }
     }
 
-    public class ECGSampleSequence
+    public class ECGMeasurementsSeries
     {
-        public ECGSampleSequence()
+        public ECGMeasurementsSeries()
         {
         }
 
@@ -148,7 +148,7 @@ namespace ShimmerCaptureXamarin.SAREF4health
         private string id;
         private string label;
         private double hasTimestamp;
-        private List<double> hasValues;
+        private List<double> hasValue;
         private JObject jSONLDobject;
 
         public string IsMeasuredIn
@@ -229,16 +229,16 @@ namespace ShimmerCaptureXamarin.SAREF4health
             }
         }
 
-        public List<double> HasValues
+        public List<double> HasValue
         {
             get
             {
-                return hasValues;
+                return hasValue;
             }
 
             set
             {
-                hasValues = value;
+                hasValue = value;
             }
         }
 
