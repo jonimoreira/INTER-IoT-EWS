@@ -18,10 +18,45 @@ namespace ContextManagerREST.Domain
 
         public List<Sensor> ExecuteMappings()
         {
+            // Check if the message is related to e-Health (from Shimmer3 app: @context contains SAREF4health (FHIR? UFO ECG?)) or logistics (from MyDriving app: @context contains LogiCO)
+            JToken context = inputData["@context"];
+            if (context == null)
+                throw new Exception("@context not provided");
+
+            bool isEHealthMessage = false;
+            bool isLogisticsMessage = false;
+
+            foreach (JToken token in context.Children().Values())
+            {
+                if (token.ToString() == "https://w3id.org/def/saref4health#")
+                    isEHealthMessage = true;
+                if (token.ToString() == "http://ontology.tno.nl/logico#")
+                    isLogisticsMessage = true;
+            }
+
             List<Sensor> result = new List<Domain.Sensor>();
 
+            if (isEHealthMessage)
+                result.AddRange(ExecuteMappingsEhealth());
+
+            if (isLogisticsMessage)
+                result.AddRange(ExecuteMappingsLogistics());
+
+            return null;
+        }
+
+        private List<Sensor> ExecuteMappingsLogistics()
+        {
+            List<Sensor> result = new List<Domain.Sensor>();
+
+            return result;
+        }
+
+        private List<Sensor> ExecuteMappingsEhealth()
+        {
+            List<Sensor> result = new List<Domain.Sensor>();
             // Load Accelerometer
-            JToken ecgDeviceConsistsOf = inputData["consistsOf"];
+            JToken ecgDeviceConsistsOf = inputData["saref:consistsOf"];
             if (ecgDeviceConsistsOf != null)
             {
                 foreach (JToken sensor in ecgDeviceConsistsOf.Children())
@@ -52,7 +87,7 @@ namespace ContextManagerREST.Domain
                                             break;
                                         default:
                                             break;
-                                    }                                    
+                                    }
                                 }
 
                                 AccelerometerSensor accelSensor = new AccelerometerSensor(sensorId, 0, 0, 0, triAxialAccel, collisionDetected);
@@ -64,9 +99,7 @@ namespace ContextManagerREST.Domain
                     }
                 }
             }
-
             return result;
         }
-
     }
 }

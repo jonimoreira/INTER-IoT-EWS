@@ -45,6 +45,32 @@
           "lib/net40/Common.Logging.Core.dll": {}
         }
       },
+      "DnsClient/1.0.7": {
+        "type": "package",
+        "dependencies": {
+          "System.Buffers": "4.3.0"
+        },
+        "compile": {
+          "lib/net45/DnsClient.dll": {}
+        },
+        "runtime": {
+          "lib/net45/DnsClient.dll": {}
+        }
+      },
+      "EntityFramework/6.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.ComponentModel.DataAnnotations"
+        ],
+        "compile": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        }
+      },
       "Libuv/1.9.0": {
         "type": "package",
         "dependencies": {
@@ -1232,6 +1258,42 @@
           "lib/netstandard1.0/_._": {}
         }
       },
+      "MongoDB.Bson/2.6.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/MongoDB.Bson.dll": {}
+        },
+        "runtime": {
+          "lib/net45/MongoDB.Bson.dll": {}
+        }
+      },
+      "MongoDB.Driver/2.6.1": {
+        "type": "package",
+        "dependencies": {
+          "MongoDB.Bson": "2.6.1",
+          "MongoDB.Driver.Core": "2.6.1"
+        },
+        "compile": {
+          "lib/net45/MongoDB.Driver.dll": {}
+        },
+        "runtime": {
+          "lib/net45/MongoDB.Driver.dll": {}
+        }
+      },
+      "MongoDB.Driver.Core/2.6.1": {
+        "type": "package",
+        "dependencies": {
+          "DnsClient": "1.0.7",
+          "MongoDB.Bson": "2.6.1",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.0.0"
+        },
+        "compile": {
+          "lib/net45/MongoDB.Driver.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net45/MongoDB.Driver.Core.dll": {}
+        }
+      },
       "Mono.Security/3.2.3": {
         "type": "package",
         "compile": {
@@ -1303,7 +1365,7 @@
           "lib/Sharpen.dll": {}
         }
       },
-      "System.Buffers/4.0.0": {
+      "System.Buffers/4.3.0": {
         "type": "package",
         "compile": {
           "lib/netstandard1.1/System.Buffers.dll": {}
@@ -1668,6 +1730,20 @@
           "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
+      "WindowsAzure.ServiceBus/4.1.10": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Runtime.Serialization",
+          "System.ServiceModel",
+          "System.Xml"
+        ],
+        "compile": {
+          "lib/net45/Microsoft.ServiceBus.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.ServiceBus.dll": {}
+        }
+      },
       "XLR8.CGLib/1.0.2": {
         "type": "package",
         "compile": {
@@ -1676,6 +1752,9 @@
         "runtime": {
           "lib/net40/XLR8.CGLib.dll": {}
         }
+      },
+      "ContextManager.DataObjects/1.0.0": {
+        "type": "project"
       }
     }
   },
@@ -1741,6 +1820,46 @@
         "lib/portable-win+net40+sl40+wp7+wpa81/Common.Logging.Core.XML",
         "lib/portable-win+net40+sl40+wp7+wpa81/Common.Logging.Core.dll",
         "lib/portable-win+net40+sl40+wp7+wpa81/Common.Logging.Core.pdb"
+      ]
+    },
+    "DnsClient/1.0.7": {
+      "sha512": "f3k5ufhUSL658fy/ac1mReqRIr0jGMyOJFvBqJ+7cASq01NIysYbrrRDjboYKAGrd0Y2mc1A749uQvT8vAA91A==",
+      "type": "package",
+      "path": "DnsClient/1.0.7",
+      "files": [
+        "DnsClient.1.0.7.nupkg.sha512",
+        "DnsClient.nuspec",
+        "lib/net45/DnsClient.dll",
+        "lib/net45/DnsClient.xml",
+        "lib/netstandard1.3/DnsClient.dll",
+        "lib/netstandard1.3/DnsClient.xml"
+      ]
+    },
+    "EntityFramework/6.2.0": {
+      "sha512": "ptGyXOf26qLrtn+2doAmylIlCxOnBJANwlyyLrXDmqIk9O18IzLWHyxDwwAyhgXkxmbiaA0WNpRy67WRReInBw==",
+      "type": "package",
+      "path": "EntityFramework/6.2.0",
+      "files": [
+        "EntityFramework.6.2.0.nupkg.sha512",
+        "EntityFramework.nuspec",
+        "content/net40/App.config.transform",
+        "content/net40/Web.config.transform",
+        "lib/net40/EntityFramework.SqlServer.dll",
+        "lib/net40/EntityFramework.SqlServer.xml",
+        "lib/net40/EntityFramework.dll",
+        "lib/net40/EntityFramework.xml",
+        "lib/net45/EntityFramework.SqlServer.dll",
+        "lib/net45/EntityFramework.SqlServer.xml",
+        "lib/net45/EntityFramework.dll",
+        "lib/net45/EntityFramework.xml",
+        "tools/EntityFramework.PowerShell.Utility.dll",
+        "tools/EntityFramework.PowerShell.dll",
+        "tools/EntityFramework.psd1",
+        "tools/EntityFramework.psm1",
+        "tools/about_EntityFramework.help.txt",
+        "tools/init.ps1",
+        "tools/install.ps1",
+        "tools/migrate.exe"
       ]
     },
     "Libuv/1.9.0": {
@@ -2816,6 +2935,48 @@
         "runtime.json"
       ]
     },
+    "MongoDB.Bson/2.6.1": {
+      "sha512": "pKSE9nG9OZX2uPjSI/AGWLGtOVINNiUbLpJYtFN/0oxWams0KbXOW6tFXAoL1iXuWUR3RxSz8u4DIhueCSm/Jg==",
+      "type": "package",
+      "path": "MongoDB.Bson/2.6.1",
+      "files": [
+        "License.rtf",
+        "MongoDB.Bson.2.6.1.nupkg.sha512",
+        "MongoDB.Bson.nuspec",
+        "lib/net45/MongoDB.Bson.dll",
+        "lib/net45/MongoDB.Bson.xml",
+        "lib/netstandard1.5/MongoDB.Bson.dll",
+        "lib/netstandard1.5/MongoDB.Bson.xml"
+      ]
+    },
+    "MongoDB.Driver/2.6.1": {
+      "sha512": "GwEKCHKjmgcsinLiLs7q54YoS4n03e+Ax/21j4PvppTYQAIpPusX/qdaU/gvZbpH97k/LmSGBN/5cdxN6mvFGw==",
+      "type": "package",
+      "path": "MongoDB.Driver/2.6.1",
+      "files": [
+        "License.rtf",
+        "MongoDB.Driver.2.6.1.nupkg.sha512",
+        "MongoDB.Driver.nuspec",
+        "lib/net45/MongoDB.Driver.dll",
+        "lib/net45/MongoDB.Driver.xml",
+        "lib/netstandard1.5/MongoDB.Driver.dll",
+        "lib/netstandard1.5/MongoDB.Driver.xml"
+      ]
+    },
+    "MongoDB.Driver.Core/2.6.1": {
+      "sha512": "lBjITp66o0OX5PHp5INxYTOz7RZa2GCPpKXUYZMo+1Cxy8TtIDiba6PmP6XB5KO+Zw/8AeofSh4ofj1uHxXuqQ==",
+      "type": "package",
+      "path": "MongoDB.Driver.Core/2.6.1",
+      "files": [
+        "License.rtf",
+        "MongoDB.Driver.Core.2.6.1.nupkg.sha512",
+        "MongoDB.Driver.Core.nuspec",
+        "lib/net45/MongoDB.Driver.Core.dll",
+        "lib/net45/MongoDB.Driver.Core.xml",
+        "lib/netstandard1.5/MongoDB.Driver.Core.dll",
+        "lib/netstandard1.5/MongoDB.Driver.Core.xml"
+      ]
+    },
     "Mono.Security/3.2.3": {
       "sha512": "v0a1XmfXbooEGIQcH9GbzyDivIc15en65cMK6e3YbWDiFhjgFSTkQxAc+8W099pwYjHp+FQbNvQx/RebgxaJTw==",
       "type": "package",
@@ -2916,12 +3077,12 @@
         "lib/Sharpen.pdb"
       ]
     },
-    "System.Buffers/4.0.0": {
-      "sha512": "msXumHfjjURSkvxUjYuq4N2ghHoRi2VpXcKMA7gK6ujQfU3vGpl+B6ld0ATRg+FZFpRyA6PgEPA+VlIkTeNf2w==",
+    "System.Buffers/4.3.0": {
+      "sha512": "ratu44uTIHgeBeI0dE8DWvmXVBSo4u7ozRZZHOMmK/JPpYyo0dAfgSiHlpiObMQ5lEtEyIXA40sKRYg5J6A8uQ==",
       "type": "package",
-      "path": "System.Buffers/4.0.0",
+      "path": "System.Buffers/4.3.0",
       "files": [
-        "System.Buffers.4.0.0.nupkg.sha512",
+        "System.Buffers.4.3.0.nupkg.sha512",
         "System.Buffers.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -4625,6 +4786,20 @@
         "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.xml"
       ]
     },
+    "WindowsAzure.ServiceBus/4.1.10": {
+      "sha512": "zRzHQI1bRSEyWxdUEwkY4EfbN7oxNYsnHzClF4r959XXiVqz5JDuLGGabPT3UFokFYLbJkbWpVc+2esr946oUg==",
+      "type": "package",
+      "path": "WindowsAzure.ServiceBus/4.1.10",
+      "files": [
+        ".signature.p7s",
+        "WindowsAzure.ServiceBus.4.1.10.nupkg.sha512",
+        "WindowsAzure.ServiceBus.nuspec",
+        "content/app.config.install.xdt",
+        "content/web.config.install.xdt",
+        "lib/net45/Microsoft.ServiceBus.dll",
+        "lib/net45/Microsoft.ServiceBus.xml"
+      ]
+    },
     "XLR8.CGLib/1.0.2": {
       "sha512": "nrqLC9WAsp4wrmLBR/RALrq/u9u9/nzAyvfAQHdUf09hPENhdt/nYzTZOlRE3GgmjaThCNA65vWD1YXNvyr/CQ==",
       "type": "package",
@@ -4635,10 +4810,15 @@
         "lib/net40/XLR8.CGLib.dll",
         "lib/net40/XLR8.CGLib.xml"
       ]
+    },
+    "ContextManager.DataObjects/1.0.0": {
+      "type": "project",
+      "msbuildProject": "../../ContextManager.DataObjects/ContextManager.DataObjects.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
+      "EntityFramework >= 6.2.0",
       "Microsoft.ApplicationInsights.AspNetCore >= 1.0.0",
       "Microsoft.AspNetCore.Mvc >= 1.0.1",
       "Microsoft.AspNetCore.Routing >= 1.0.1",
@@ -4652,9 +4832,14 @@
       "Microsoft.Extensions.Logging.Console >= 1.0.0",
       "Microsoft.Extensions.Logging.Debug >= 1.0.0",
       "Microsoft.Extensions.Options.ConfigurationExtensions >= 1.0.0",
-      "NEsper >= 6.0.1.1005"
+      "MongoDB.Driver >= 2.6.1",
+      "NEsper >= 6.0.1.1005",
+      "WindowsAzure.ServiceBus >= 4.1.10"
     ],
     ".NETFramework,Version=v4.5.2": [
+      "ContextManager.DataObjects",
+      "System.Data >= 4.0.0",
+      "System.Data.DataSetExtensions >= 4.0.0",
       "System.Net.Http >= 4.0.0",
       "System.Runtime.Serialization >= 4.0.0"
     ]

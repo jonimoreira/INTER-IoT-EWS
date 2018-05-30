@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using com.espertech.esper.client;
-using ContextManagerREST.CEP;
+using ContextManagerREST.SituationIdentification.CEP;
 
 namespace ContextManagerREST
 {

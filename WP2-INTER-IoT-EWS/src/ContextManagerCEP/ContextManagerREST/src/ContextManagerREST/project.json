@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "EntityFramework": "6.2.0",
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
     "Microsoft.AspNetCore.Routing": "1.0.1",
@@ -13,7 +14,9 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
-    "NEsper": "6.0.1.1005"
+    "MongoDB.Driver": "2.6.1",
+    "NEsper": "6.0.1.1005",
+    "WindowsAzure.ServiceBus": "4.1.10"
   },
 
   "tools": {
@@ -22,7 +25,14 @@
 
   "frameworks": {
     "net452": {
+      "dependencies": {
+        "ContextManager.DataObjects": {
+          "target": "project"
+        }
+      },
       "frameworkAssemblies": {
+        "System.Data": "4.0.0.0",
+        "System.Data.DataSetExtensions": "4.0.0.0",
         "System.Net.Http": "4.0.0.0",
         "System.Runtime.Serialization": "4.0.0.0"
       }

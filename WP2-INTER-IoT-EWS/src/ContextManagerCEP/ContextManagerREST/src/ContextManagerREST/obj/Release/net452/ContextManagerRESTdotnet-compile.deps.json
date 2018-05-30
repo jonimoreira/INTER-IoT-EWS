@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETFramework,Version=v4.5.2/",
-    "signature": "73156557463536b1a76cae2b4b1cd5cac203f62e"
+    "signature": "9915925e74102b391ec8e77c8096735525bbe5f5"
   },
   "compilationOptions": {
     "defines": [
@@ -17,7 +17,12 @@
     ".NETFramework,Version=v4.5.2": {
       "ContextManagerREST/1.0.0": {
         "dependencies": {
+          "ContextManager.DataObjects": "1.0.0",
+          "System.Data": "4.0.0.0",
+          "System.Data.DataSetExtensions": "4.0.0.0",
           "System.Net.Http": "4.0.0.0",
+          "System.Runtime.Serialization": "4.0.0.0",
+          "EntityFramework": "6.2.0",
           "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
           "Microsoft.AspNetCore.Mvc": "1.0.1",
           "Microsoft.AspNetCore.Routing": "1.0.1",
@@ -30,10 +35,56 @@
           "Microsoft.Extensions.Logging": "1.0.0",
           "Microsoft.Extensions.Logging.Console": "1.0.0",
           "Microsoft.Extensions.Logging.Debug": "1.0.0",
-          "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0"
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
+          "MongoDB.Driver": "2.6.1",
+          "NEsper": "6.0.1.1005",
+          "WindowsAzure.ServiceBus": "4.1.10"
         },
         "compile": {
           "ContextManagerREST.exe": {}
+        }
+      },
+      "Antlr4.Runtime.Standard/4.6.0": {
+        "compile": {
+          "lib/net35/Antlr4.Runtime.Standard.dll": {}
+        }
+      },
+      "Castle.Core/4.1.1": {
+        "compile": {
+          "lib/net45/Castle.Core.dll": {}
+        }
+      },
+      "Common.Logging/3.4.1": {
+        "dependencies": {
+          "Common.Logging.Core": "3.4.1"
+        },
+        "compile": {
+          "lib/net40/Common.Logging.dll": {}
+        }
+      },
+      "Common.Logging.Core/3.4.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.0.0"
+        },
+        "compile": {
+          "lib/net40/Common.Logging.Core.dll": {}
+        }
+      },
+      "DnsClient/1.0.7": {
+        "dependencies": {
+          "System.Buffers": "4.3.0"
+        },
+        "compile": {
+          "lib/net45/DnsClient.dll": {}
+        }
+      },
+      "EntityFramework/6.2.0": {
+        "dependencies": {
+          "System.ComponentModel.DataAnnotations": "4.0.0.0"
+        },
+        "compile": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
         }
       },
       "Libuv/1.9.0": {
@@ -218,7 +269,7 @@
           "Microsoft.Extensions.ObjectPool": "1.0.0",
           "Microsoft.Extensions.Options": "1.0.0",
           "Microsoft.Net.Http.Headers": "1.0.0",
-          "System.Buffers": "4.0.0"
+          "System.Buffers": "4.3.0"
         },
         "compile": {
           "lib/net451/Microsoft.AspNetCore.Http.dll": {}
@@ -238,7 +289,7 @@
           "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
           "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0",
           "Microsoft.Net.Http.Headers": "1.0.0",
-          "System.Buffers": "4.0.0"
+          "System.Buffers": "4.3.0"
         },
         "compile": {
           "lib/net451/Microsoft.AspNetCore.Http.Extensions.dll": {}
@@ -337,7 +388,7 @@
           "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
           "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
-          "System.Buffers": "4.0.0",
+          "System.Buffers": "4.3.0",
           "System.Diagnostics.DiagnosticSource": "4.0.0"
         },
         "compile": {
@@ -425,7 +476,7 @@
           "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.1",
           "Microsoft.Extensions.WebEncoders": "1.0.0",
           "Newtonsoft.Json": "9.0.1",
-          "System.Buffers": "4.0.0"
+          "System.Buffers": "4.3.0"
         },
         "compile": {
           "lib/net451/Microsoft.AspNetCore.Mvc.ViewFeatures.dll": {}
@@ -485,7 +536,7 @@
           "Libuv": "1.9.0",
           "Microsoft.AspNetCore.Hosting": "1.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
-          "System.Buffers": "4.0.0",
+          "System.Buffers": "4.3.0",
           "System.Numerics.Vectors": "4.1.1",
           "System.Runtime.InteropServices.RuntimeInformation": "4.0.0",
           "System.Threading.Tasks.Extensions": "4.0.0"
@@ -497,7 +548,7 @@
       "Microsoft.AspNetCore.WebUtilities/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "1.0.0",
-          "System.Buffers": "4.0.0",
+          "System.Buffers": "4.3.0",
           "System.Text.Encodings.Web": "4.0.0"
         },
         "compile": {
@@ -844,7 +895,7 @@
       },
       "Microsoft.Net.Http.Headers/1.0.0": {
         "dependencies": {
-          "System.Buffers": "4.0.0",
+          "System.Buffers": "4.3.0",
           "System.Collections": "4.0.0.0",
           "System.Diagnostics.Contracts": "4.0.0.0",
           "System.Globalization": "4.0.0.0",
@@ -858,14 +909,59 @@
         }
       },
       "Microsoft.NETCore.Platforms/1.0.1": {},
+      "MongoDB.Bson/2.6.1": {
+        "compile": {
+          "lib/net45/MongoDB.Bson.dll": {}
+        }
+      },
+      "MongoDB.Driver/2.6.1": {
+        "dependencies": {
+          "MongoDB.Bson": "2.6.1",
+          "MongoDB.Driver.Core": "2.6.1"
+        },
+        "compile": {
+          "lib/net45/MongoDB.Driver.dll": {}
+        }
+      },
+      "MongoDB.Driver.Core/2.6.1": {
+        "dependencies": {
+          "DnsClient": "1.0.7",
+          "MongoDB.Bson": "2.6.1",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.0.0"
+        },
+        "compile": {
+          "lib/net45/MongoDB.Driver.Core.dll": {}
+        }
+      },
       "Mono.Security/3.2.3": {
         "compile": {
           "lib/net45/Mono.Security.dll": {}
         }
       },
+      "NEsper/6.0.1.1005": {
+        "dependencies": {
+          "Antlr4.Runtime.Standard": "4.6.0",
+          "Castle.Core": "4.1.1",
+          "Common.Logging": "3.4.1",
+          "Common.Logging.Core": "3.4.1",
+          "Nito.KitchenSink.CRC": "1.1.0",
+          "Sharpen": "1.0.0.3",
+          "XLR8.CGLib": "1.0.2"
+        },
+        "compile": {
+          "lib/net45/NEsper.Avro.dll": {},
+          "lib/net45/NEsper.IO.dll": {},
+          "lib/net45/NEsper.dll": {}
+        }
+      },
       "Newtonsoft.Json/9.0.1": {
         "compile": {
           "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Nito.KitchenSink.CRC/1.1.0": {
+        "compile": {
+          "lib/net40-Client/Nito.KitchenSink.CRC.dll": {}
         }
       },
       "PCLCrypto/1.0.86": {
@@ -877,7 +973,12 @@
           "lib/net40-Client/PCLCrypto.dll": {}
         }
       },
-      "System.Buffers/4.0.0": {
+      "Sharpen/1.0.0.3": {
+        "compile": {
+          "lib/Sharpen.dll": {}
+        }
+      },
+      "System.Buffers/4.3.0": {
         "compile": {
           "lib/netstandard1.1/System.Buffers.dll": {}
         }
@@ -1054,9 +1155,44 @@
           "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
+      "WindowsAzure.ServiceBus/4.1.10": {
+        "dependencies": {
+          "System.Runtime.Serialization": "4.0.0.0",
+          "System.ServiceModel": "4.0.0.0",
+          "System.Xml": "4.0.0.0"
+        },
+        "compile": {
+          "lib/net45/Microsoft.ServiceBus.dll": {}
+        }
+      },
+      "XLR8.CGLib/1.0.2": {
+        "compile": {
+          "lib/net40/XLR8.CGLib.dll": {}
+        }
+      },
+      "ContextManager.DataObjects/1.0.0": {
+        "compile": {
+          "bin/Release/ContextManager.DataObjects.dll": {}
+        }
+      },
+      "System.Data/4.0.0.0": {
+        "compile": {
+          ".NETFramework/v4.5.2/System.Data.dll": {}
+        }
+      },
+      "System.Data.DataSetExtensions/4.0.0.0": {
+        "compile": {
+          ".NETFramework/v4.5.2/System.Data.DataSetExtensions.dll": {}
+        }
+      },
       "System.Net.Http/4.0.0.0": {
         "compile": {
           ".NETFramework/v4.5.2/System.Net.Http.dll": {}
+        }
+      },
+      "System.Runtime.Serialization/4.0.0.0": {
+        "compile": {
+          ".NETFramework/v4.5.2/System.Runtime.Serialization.dll": {}
         }
       },
       "mscorlib/4.0.0.0": {
@@ -1074,6 +1210,11 @@
           ".NETFramework/v4.5.2/System.Core.dll": {}
         }
       },
+      "System.ComponentModel.DataAnnotations/4.0.0.0": {
+        "compile": {
+          ".NETFramework/v4.5.2/System.ComponentModel.DataAnnotations.dll": {}
+        }
+      },
       "System.Security/4.0.0.0": {
         "compile": {
           ".NETFramework/v4.5.2/System.Security.dll": {}
@@ -1087,11 +1228,6 @@
       "System.Xml.Linq/4.0.0.0": {
         "compile": {
           ".NETFramework/v4.5.2/System.Xml.Linq.dll": {}
-        }
-      },
-      "System.ComponentModel.DataAnnotations/4.0.0.0": {
-        "compile": {
-          ".NETFramework/v4.5.2/System.ComponentModel.DataAnnotations.dll": {}
         }
       },
       "System.Text.RegularExpressions/4.0.0.0": {
@@ -1128,12 +1264,22 @@
         "compile": {
           ".NETFramework/v4.5.2/Facades/System.Reflection.Primitives.dll": {}
         }
+      },
+      "System.ServiceModel/4.0.0.0": {
+        "compile": {
+          ".NETFramework/v4.5.2/System.ServiceModel.dll": {}
+        }
       }
     },
     ".NETFramework,Version=v4.5.2/": {
       "ContextManagerREST/1.0.0": {
         "dependencies": {
+          "ContextManager.DataObjects": "1.0.0",
+          "System.Data": "4.0.0.0",
+          "System.Data.DataSetExtensions": "4.0.0.0",
           "System.Net.Http": "4.0.0.0",
+          "System.Runtime.Serialization": "4.0.0.0",
+          "EntityFramework": "6.2.0",
           "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
           "Microsoft.AspNetCore.Mvc": "1.0.1",
           "Microsoft.AspNetCore.Routing": "1.0.1",
@@ -1146,10 +1292,56 @@
           "Microsoft.Extensions.Logging": "1.0.0",
           "Microsoft.Extensions.Logging.Console": "1.0.0",
           "Microsoft.Extensions.Logging.Debug": "1.0.0",
-          "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0"
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
+          "MongoDB.Driver": "2.6.1",
+          "NEsper": "6.0.1.1005",
+          "WindowsAzure.ServiceBus": "4.1.10"
         },
         "runtime": {
           "ContextManagerREST.exe": {}
+        }
+      },
+      "Antlr4.Runtime.Standard/4.6.0": {
+        "runtime": {
+          "lib/net35/Antlr4.Runtime.Standard.dll": {}
+        }
+      },
+      "Castle.Core/4.1.1": {
+        "runtime": {
+          "lib/net45/Castle.Core.dll": {}
+        }
+      },
+      "Common.Logging/3.4.1": {
+        "dependencies": {
+          "Common.Logging.Core": "3.4.1"
+        },
+        "runtime": {
+          "lib/net40/Common.Logging.dll": {}
+        }
+      },
+      "Common.Logging.Core/3.4.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.0.0"
+        },
+        "runtime": {
+          "lib/net40/Common.Logging.Core.dll": {}
+        }
+      },
+      "DnsClient/1.0.7": {
+        "dependencies": {
+          "System.Buffers": "4.3.0"
+        },
+        "runtime": {
+          "lib/net45/DnsClient.dll": {}
+        }
+      },
+      "EntityFramework/6.2.0": {
+        "dependencies": {
+          "System.ComponentModel.DataAnnotations": "4.0.0.0"
+        },
+        "runtime": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
         }
       },
       "Libuv/1.9.0": {
@@ -1334,7 +1526,7 @@
           "Microsoft.Extensions.ObjectPool": "1.0.0",
           "Microsoft.Extensions.Options": "1.0.0",
           "Microsoft.Net.Http.Headers": "1.0.0",
-          "System.Buffers": "4.0.0"
+          "System.Buffers": "4.3.0"
         },
         "runtime": {
           "lib/net451/Microsoft.AspNetCore.Http.dll": {}
@@ -1354,7 +1546,7 @@
           "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
           "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0",
           "Microsoft.Net.Http.Headers": "1.0.0",
-          "System.Buffers": "4.0.0"
+          "System.Buffers": "4.3.0"
         },
         "runtime": {
           "lib/net451/Microsoft.AspNetCore.Http.Extensions.dll": {}
@@ -1453,7 +1645,7 @@
           "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
           "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
-          "System.Buffers": "4.0.0",
+          "System.Buffers": "4.3.0",
           "System.Diagnostics.DiagnosticSource": "4.0.0"
         },
         "runtime": {
@@ -1541,7 +1733,7 @@
           "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.1",
           "Microsoft.Extensions.WebEncoders": "1.0.0",
           "Newtonsoft.Json": "9.0.1",
-          "System.Buffers": "4.0.0"
+          "System.Buffers": "4.3.0"
         },
         "runtime": {
           "lib/net451/Microsoft.AspNetCore.Mvc.ViewFeatures.dll": {}
@@ -1601,7 +1793,7 @@
           "Libuv": "1.9.0",
           "Microsoft.AspNetCore.Hosting": "1.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
-          "System.Buffers": "4.0.0",
+          "System.Buffers": "4.3.0",
           "System.Numerics.Vectors": "4.1.1",
           "System.Runtime.InteropServices.RuntimeInformation": "4.0.0",
           "System.Threading.Tasks.Extensions": "4.0.0"
@@ -1613,7 +1805,7 @@
       "Microsoft.AspNetCore.WebUtilities/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "1.0.0",
-          "System.Buffers": "4.0.0",
+          "System.Buffers": "4.3.0",
           "System.Text.Encodings.Web": "4.0.0"
         },
         "runtime": {
@@ -1956,7 +2148,7 @@
       },
       "Microsoft.Net.Http.Headers/1.0.0": {
         "dependencies": {
-          "System.Buffers": "4.0.0",
+          "System.Buffers": "4.3.0",
           "System.Collections": "4.0.0.0",
           "System.Diagnostics.Contracts": "4.0.0.0",
           "System.Globalization": "4.0.0.0",
@@ -1970,14 +2162,59 @@
         }
       },
       "Microsoft.NETCore.Platforms/1.0.1": {},
+      "MongoDB.Bson/2.6.1": {
+        "runtime": {
+          "lib/net45/MongoDB.Bson.dll": {}
+        }
+      },
+      "MongoDB.Driver/2.6.1": {
+        "dependencies": {
+          "MongoDB.Bson": "2.6.1",
+          "MongoDB.Driver.Core": "2.6.1"
+        },
+        "runtime": {
+          "lib/net45/MongoDB.Driver.dll": {}
+        }
+      },
+      "MongoDB.Driver.Core/2.6.1": {
+        "dependencies": {
+          "DnsClient": "1.0.7",
+          "MongoDB.Bson": "2.6.1",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.0.0"
+        },
+        "runtime": {
+          "lib/net45/MongoDB.Driver.Core.dll": {}
+        }
+      },
       "Mono.Security/3.2.3": {
         "runtime": {
           "lib/net45/Mono.Security.dll": {}
         }
       },
+      "NEsper/6.0.1.1005": {
+        "dependencies": {
+          "Antlr4.Runtime.Standard": "4.6.0",
+          "Castle.Core": "4.1.1",
+          "Common.Logging": "3.4.1",
+          "Common.Logging.Core": "3.4.1",
+          "Nito.KitchenSink.CRC": "1.1.0",
+          "Sharpen": "1.0.0.3",
+          "XLR8.CGLib": "1.0.2"
+        },
+        "runtime": {
+          "lib/net45/NEsper.Avro.dll": {},
+          "lib/net45/NEsper.IO.dll": {},
+          "lib/net45/NEsper.dll": {}
+        }
+      },
       "Newtonsoft.Json/9.0.1": {
         "runtime": {
           "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Nito.KitchenSink.CRC/1.1.0": {
+        "runtime": {
+          "lib/net40-Client/Nito.KitchenSink.CRC.dll": {}
         }
       },
       "PCLCrypto/1.0.86": {
@@ -1989,7 +2226,12 @@
           "lib/net40-Client/PCLCrypto.dll": {}
         }
       },
-      "System.Buffers/4.0.0": {
+      "Sharpen/1.0.0.3": {
+        "runtime": {
+          "lib/Sharpen.dll": {}
+        }
+      },
+      "System.Buffers/4.3.0": {
         "runtime": {
           "lib/netstandard1.1/System.Buffers.dll": {}
         }
@@ -2078,21 +2320,47 @@
           "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
+      "WindowsAzure.ServiceBus/4.1.10": {
+        "dependencies": {
+          "System.Runtime.Serialization": "4.0.0.0",
+          "System.ServiceModel": "4.0.0.0",
+          "System.Xml": "4.0.0.0"
+        },
+        "runtime": {
+          "lib/net45/Microsoft.ServiceBus.dll": {}
+        }
+      },
+      "XLR8.CGLib/1.0.2": {
+        "runtime": {
+          "lib/net40/XLR8.CGLib.dll": {}
+        }
+      },
+      "ContextManager.DataObjects/1.0.0": {
+        "runtime": {
+          "../packages/EntityFramework.6.2.0/lib/net45/EntityFramework.SqlServer.dll": {},
+          "../packages/EntityFramework.6.2.0/lib/net45/EntityFramework.dll": {},
+          "bin/Release/ContextManager.DataObjects.dll": {}
+        }
+      },
+      "System.Data/4.0.0.0": {},
+      "System.Data.DataSetExtensions/4.0.0.0": {},
       "System.Net.Http/4.0.0.0": {},
+      "System.Runtime.Serialization/4.0.0.0": {},
       "mscorlib/4.0.0.0": {},
       "System/4.0.0.0": {},
       "System.Core/4.0.0.0": {},
+      "System.ComponentModel.DataAnnotations/4.0.0.0": {},
       "System.Security/4.0.0.0": {},
       "System.Xml/4.0.0.0": {},
       "System.Xml.Linq/4.0.0.0": {},
-      "System.ComponentModel.DataAnnotations/4.0.0.0": {},
       "System.Text.RegularExpressions/4.0.0.0": {},
       "System.Runtime.InteropServices.WindowsRuntime/4.0.0.0": {},
       "System.Net.Primitives/4.0.0.0": {},
       "System.Net.Requests/4.0.0.0": {},
       "System.ObjectModel/4.0.0.0": {},
       "System.Diagnostics.Tracing/4.0.10.0": {},
-      "System.Reflection.Primitives/4.0.0.0": {}
+      "System.Reflection.Primitives/4.0.0.0": {},
+      "System.ServiceModel/4.0.0.0": {}
     }
   },
   "libraries": {
@@ -2100,6 +2368,36 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Antlr4.Runtime.Standard/4.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hfXO8Tcb1c/iXJP+e27/vdLngL4CN33MUuGuVKCKjQvwXdV9ADUKRZuuYD3uXm3fOim4m8+mAAWM3E8XBWLhDw=="
+    },
+    "Castle.Core/4.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-O+88tWlRvtYLTn4dgAENyOgaLcExeox73ledI92d72z4U9IGSiiO8n/gnTnWgEMpBuXIdcyzrXHdGtn0c5Dz/A=="
+    },
+    "Common.Logging/3.4.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5eZ/vgEOqzLg4PypZqnJ+wMhhgHyckicbZY4iDxqQ4FtOz0CpdYZ0xQ78aszMzeAJZiLLb5VdR9tPfunVQLz6g=="
+    },
+    "Common.Logging.Core/3.4.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wLHldZHvxsSD6Ahonfj00/SkfHfKqO+YT6jsUwVm8Rch1REL9IArHAcSLXxYxYfu5/4ydGtmXvOtaH3AkVPu0A=="
+    },
+    "DnsClient/1.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-f3k5ufhUSL658fy/ac1mReqRIr0jGMyOJFvBqJ+7cASq01NIysYbrrRDjboYKAGrd0Y2mc1A749uQvT8vAA91A=="
+    },
+    "EntityFramework/6.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ptGyXOf26qLrtn+2doAmylIlCxOnBJANwlyyLrXDmqIk9O18IzLWHyxDwwAyhgXkxmbiaA0WNpRy67WRReInBw=="
     },
     "Libuv/1.9.0": {
       "type": "package",
@@ -2506,25 +2804,55 @@
       "serviceable": true,
       "sha512": "sha512-2G6OjjJzwBfNOO8myRV/nFrbTw5iA+DEm0N+qUqhrOmaVtn4pC77h38I1jsXGw5VH55+dPfQsqHD0We9sCl9FQ=="
     },
+    "MongoDB.Bson/2.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pKSE9nG9OZX2uPjSI/AGWLGtOVINNiUbLpJYtFN/0oxWams0KbXOW6tFXAoL1iXuWUR3RxSz8u4DIhueCSm/Jg=="
+    },
+    "MongoDB.Driver/2.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GwEKCHKjmgcsinLiLs7q54YoS4n03e+Ax/21j4PvppTYQAIpPusX/qdaU/gvZbpH97k/LmSGBN/5cdxN6mvFGw=="
+    },
+    "MongoDB.Driver.Core/2.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lBjITp66o0OX5PHp5INxYTOz7RZa2GCPpKXUYZMo+1Cxy8TtIDiba6PmP6XB5KO+Zw/8AeofSh4ofj1uHxXuqQ=="
+    },
     "Mono.Security/3.2.3": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-v0a1XmfXbooEGIQcH9GbzyDivIc15en65cMK6e3YbWDiFhjgFSTkQxAc+8W099pwYjHp+FQbNvQx/RebgxaJTw=="
+    },
+    "NEsper/6.0.1.1005": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ATYmR719b/w2AVTdXG0sGD4tcW6WwQw8U+PTtUMdkw8TvA/kMbFbNclCWUbsHZu+5kEdKWu0VdqYkObK6RNdWg=="
     },
     "Newtonsoft.Json/9.0.1": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw=="
     },
+    "Nito.KitchenSink.CRC/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kjDJVpGzZzJ3NTHQ4kwrxZxkwOES1EektSybr9AdPtIKtT6ODGfNbv1K8qnRPVCI7mSKqiqDbokdszJ57b6kCg=="
+    },
     "PCLCrypto/1.0.86": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-rcmxw9Bb5GuEW1ubVBegCCbR7YU8Ptr8tGfmyVHBnK+UQlk29TuBryHXmsTglt64ZNDXpi8rWl8x5l55JylpOw=="
     },
-    "System.Buffers/4.0.0": {
+    "Sharpen/1.0.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-msXumHfjjURSkvxUjYuq4N2ghHoRi2VpXcKMA7gK6ujQfU3vGpl+B6ld0ATRg+FZFpRyA6PgEPA+VlIkTeNf2w=="
+      "sha512": "sha512-a5+BcBhW1XxjaLafNOaCfWK3X90P3VeEYRdXtlQyh4oY1PKyzbLVIqqQNo0MEjzOqZTW6NOq/p+ekgs9hHBL1w=="
+    },
+    "System.Buffers/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ratu44uTIHgeBeI0dE8DWvmXVBSo4u7ozRZZHOMmK/JPpYyo0dAfgSiHlpiObMQ5lEtEyIXA40sKRYg5J6A8uQ=="
     },
     "System.Collections/4.0.0.0": {
       "type": "referenceassembly",
@@ -2686,7 +3014,37 @@
       "serviceable": true,
       "sha512": "sha512-8vgCOG9mPeOd3xwyL20OT9RyOKq9PmJb0Iltzwj6eay38Cq2v6ojvpSDbc+sc6YXit+iAVyyvHTS29rBvDpdDQ=="
     },
+    "WindowsAzure.ServiceBus/4.1.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zRzHQI1bRSEyWxdUEwkY4EfbN7oxNYsnHzClF4r959XXiVqz5JDuLGGabPT3UFokFYLbJkbWpVc+2esr946oUg=="
+    },
+    "XLR8.CGLib/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nrqLC9WAsp4wrmLBR/RALrq/u9u9/nzAyvfAQHdUf09hPENhdt/nYzTZOlRE3GgmjaThCNA65vWD1YXNvyr/CQ=="
+    },
+    "ContextManager.DataObjects/1.0.0": {
+      "type": "msbuildproject",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Data/4.0.0.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Data.DataSetExtensions/4.0.0.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
     "System.Net.Http/4.0.0.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Runtime.Serialization/4.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -2706,6 +3064,11 @@
       "serviceable": false,
       "sha512": ""
     },
+    "System.ComponentModel.DataAnnotations/4.0.0.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
     "System.Security/4.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -2717,11 +3080,6 @@
       "sha512": ""
     },
     "System.Xml.Linq/4.0.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.ComponentModel.DataAnnotations/4.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -2757,6 +3115,11 @@
       "sha512": ""
     },
     "System.Reflection.Primitives/4.0.0.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.ServiceModel/4.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

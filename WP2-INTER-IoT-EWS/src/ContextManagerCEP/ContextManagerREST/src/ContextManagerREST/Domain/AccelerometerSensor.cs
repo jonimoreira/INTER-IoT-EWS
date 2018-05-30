@@ -1,4 +1,5 @@
 ﻿using ContextManagerREST.CEP;
+using ContextManagerREST.SituationIdentification.CEP;
 using System;
 using System.Collections.Generic;
 using System.Linq;

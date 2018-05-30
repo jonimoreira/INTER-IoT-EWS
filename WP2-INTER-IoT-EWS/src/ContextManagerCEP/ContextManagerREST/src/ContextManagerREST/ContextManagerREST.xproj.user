@@ -2,6 +2,6 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ActiveDebugProfile>IIS Express</ActiveDebugProfile>
-    <NameOfLastUsedPublishProfile>INTER-IoT-EWS-ContextManagerREST-v0</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>INTER-IoT-EWS-ContextManager-v1 - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "exports": {
+    "ContextManager.DataObjects/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.2",
+      "compile": {
+        "bin/Release/ContextManager.DataObjects.dll": {}
+      },
+      "runtime": {
+        "../packages/EntityFramework.6.2.0/lib/net45/EntityFramework.SqlServer.dll": {},
+        "../packages/EntityFramework.6.2.0/lib/net45/EntityFramework.dll": {},
+        "bin/Release/ContextManager.DataObjects.dll": {}
+      },
+      "contentFiles": {
+        "bin/Release/ContextManager.DataObjects.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    }
+  }
+}

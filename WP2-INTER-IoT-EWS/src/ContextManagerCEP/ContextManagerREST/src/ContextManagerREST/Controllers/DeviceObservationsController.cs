@@ -12,14 +12,20 @@ using System.Text;
 using Microsoft.Azure.Devices.Client;
 using com.espertech.esper.client;
 using ContextManagerREST.Domain;
+using ContextManagerREST.Models;
+using ContextManagerREST.Util;
 
 namespace ContextManagerREST.Controllers
 {
     [Route("api/[controller]")]
     public class DeviceObservationsController : Controller
     {
+        // Context Database
+        private EWSContext db = new EWSContext(); // SQL Server (relational): changed for MongoDB
+        private MongoDBContext mongoDB = new MongoDBContext();
+        
         // CEP server
-        EPServiceProvider epService = EPServiceProviderManager.GetDefaultProvider();
+        private EPServiceProvider epService = EPServiceProviderManager.GetDefaultProvider();
 
         // GET api/deviceobservations
         [HttpGet]
@@ -32,7 +38,9 @@ namespace ContextManagerREST.Controllers
         [HttpGet("{deviceId}")]
         public string Get(string deviceId)
         {
-            return "Device: " + deviceId;
+            new Task(() => { AzureIoT.ReceiveMessagesFromIoTHub(); }).Start();
+            
+            return "ReceiveMessagesFromIoTHub started! DeviceId: " + deviceId;
         }
 
         // POST api/deviceobservations
@@ -45,22 +53,71 @@ namespace ContextManagerREST.Controllers
         [HttpPut("{deviceId}")]
         public HttpResponseMessage Put(string deviceId, [FromBody]JToken value)
         {
-            //SaveFile(deviceId, value);
-            //SendToAzureIoTHub(value);
+            new Task(() => { ExecuteContextManager(value); }).Start();
 
-            // Send data to CEP
-            //AccelerometerSensor accelSensor = new AccelerometerSensor(deviceId);
-            //accelSensor.Acceleration = 25;
-            //SendEventToCEP(accelSensor);
+            //new Task(() => { ExecuteSituationIdentificationManager(value); }).Start();
 
+            return new HttpResponseMessage(HttpStatusCode.Created);
+        }
+
+        
+        private void ExecuteContextManager(JToken value)
+        {
+            mongoDB.SaveDocument(value);
+            mongoDB.TestQueries();
+
+            /*
+            ContextManager.DataObjects.SAREF.DeviceObservation mobileDevice = new ContextManager.DataObjects.SAREF.DeviceObservation();
+
+            // Get mobile device information
+            mobileDevice.DeviceIdURI = value["@id"].ToString();
+
+            db.DeviceObservations.Add(mobileDevice);
+            db.SaveChanges();
+            
+
+            MemoryStream ms = new MemoryStream();
+            using (Newtonsoft.Json.Bson.BsonWriter writer = new Newtonsoft.Json.Bson.BsonWriter(ms))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(writer, value);                
+            }
+            
+
+            var docBson = BsonDocument.Create(ms);
+
+            
+            var collection = database.GetCollection<BsonDocument>("bar");
+
+            /*
+            var document = new BsonDocument
+{
+    { "name", "MongoDB" },
+    { "type", "Database" },
+    { "count", 1 },
+    { "info", new BsonDocument
+        {
+            { "x", 203 },
+            { "y", 102 }
+        }}
+};
+
+            collection.InsertOne(document);
+            // await collection.InsertOneAsync(document);
+            */
+
+        }
+        
+
+
+        private void ExecuteSituationIdentificationManager(JToken value)
+        {
             MapperJSONLDtoDomain mapper = new MapperJSONLDtoDomain(value);
             List<Sensor> sensors = mapper.ExecuteMappings();
             foreach (Sensor sensor in sensors)
             {
                 SendEventToCEP(sensor);
             }
-
-            return new HttpResponseMessage(HttpStatusCode.Created);
         }
 
 
