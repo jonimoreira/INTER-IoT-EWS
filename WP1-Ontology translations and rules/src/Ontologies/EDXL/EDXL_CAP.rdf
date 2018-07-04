@@ -1,1433 +1,995 @@
 <?xml version="1.0"?>
-
-
-<!DOCTYPE rdf:RDF [
-    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
-    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
-    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
-    <!ENTITY edxl_cap "http://fpc.ufba.br/ontologies/edxl_cap#" >
-    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
-]>
-
-
-<rdf:RDF xmlns="http://fpc.ufba.br/ontologies/edxl_cap#"
-     xml:base="http://fpc.ufba.br/ontologies/edxl_cap"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:edxl_cap="http://fpc.ufba.br/ontologies/edxl_cap#"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <owl:Ontology rdf:about="http://fpc.ufba.br/ontologies/edxl_cap">
-        <rights xml:lang="en">(c) The RESCUER project - http://www.rescuer-project.org/</rights>
-        <status xml:lang="en">An ongoing ontology for communication interoperability between systems in the context of the RESCUER Project. This propose is based on EDXL documentation (https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=emergency).</status>
-        <contributor xml:lang="en">Lais Salvador (UFBA)</contributor>
-        <contributor xml:lang="en">Rebeca Barros (UFBA)</contributor>
-        <contributor xml:lang="en">Reinaldo Almeida (UFBA)</contributor>
-    </owl:Ontology>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Annotation properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#contributor -->
-
-    <owl:AnnotationProperty rdf:about="&edxl_cap;contributor"/>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#rights -->
-
-    <owl:AnnotationProperty rdf:about="&edxl_cap;rights"/>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#status -->
-
-    <owl:AnnotationProperty rdf:about="&edxl_cap;status"/>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Object Properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasArea -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasArea">
-        <rdfs:range rdf:resource="&edxl_cap;Area"/>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <owl:inverseOf rdf:resource="&edxl_cap;isAreaOf"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasCategory -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasCategory">
-        <rdfs:range rdf:resource="&edxl_cap;Category"/>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasCertainty -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasCertainty">
-        <rdfs:range rdf:resource="&edxl_cap;Certainty"/>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasIncidentRelated -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasIncidentRelated">
-        <rdfs:domain rdf:resource="&edxl_cap;AlertMessage"/>
-        <rdfs:range rdf:resource="&edxl_cap;Incident"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasInfo -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasInfo">
-        <rdfs:domain rdf:resource="&edxl_cap;AlertMessage"/>
-        <rdfs:range rdf:resource="&edxl_cap;Info"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasMsgType -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasMsgType">
-        <rdfs:domain rdf:resource="&edxl_cap;AlertMessage"/>
-        <rdfs:range rdf:resource="&edxl_cap;MsgType"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasReferences -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasReferences">
-        <rdfs:comment xml:lang="en">identifying earlier message(s) referenced by the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;AlertMessage"/>
-        <rdfs:range rdf:resource="&edxl_cap;AlertMessage"/>
-        <owl:inverseOf rdf:resource="&edxl_cap;isReferencedBy"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasResource -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasResource">
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&edxl_cap;Resource"/>
-        <owl:inverseOf rdf:resource="&edxl_cap;isResourceOf"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasResponseType -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasResponseType">
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&edxl_cap;ResponseType"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasScope -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasScope">
-        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="&edxl_cap;AlertMessage"/>
-        <rdfs:range rdf:resource="&edxl_cap;Scope"/>
-        <owl:inverseOf rdf:resource="&edxl_cap;isScopeOf"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasSender -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasSender">
-        <rdfs:range rdf:resource="&edxl_cap;Sender"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasSeverity -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasSeverity">
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&edxl_cap;Severity"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasStatus -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasStatus">
-        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
-        <rdfs:domain rdf:resource="&edxl_cap;AlertMessage"/>
-        <rdfs:range rdf:resource="&edxl_cap;Status"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#hasUrgency -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;hasUrgency">
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&edxl_cap;Urgency"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isAreaOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isAreaOf"/>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isCategoryOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isCategoryOf">
-        <owl:inverseOf rdf:resource="&edxl_cap;hasCategory"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isCertaintyOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isCertaintyOf">
-        <owl:inverseOf rdf:resource="&edxl_cap;hasCertainty"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isIncidentRelatedTo -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isIncidentRelatedTo">
-        <owl:inverseOf rdf:resource="&edxl_cap;hasIncidentRelated"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isInfoOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isInfoOf">
-        <owl:inverseOf rdf:resource="&edxl_cap;hasInfo"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isMsgTypeOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isMsgTypeOf">
-        <owl:inverseOf rdf:resource="&edxl_cap;hasMsgType"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isReferencedBy -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isReferencedBy"/>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isResourceOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isResourceOf"/>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isResponseTypeOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isResponseTypeOf">
-        <owl:inverseOf rdf:resource="&edxl_cap;hasResponseType"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isScopeOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isScopeOf">
-        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isSenderOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isSenderOf">
-        <owl:inverseOf rdf:resource="&edxl_cap;hasSender"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isSeverityOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isSeverityOf">
-        <owl:inverseOf rdf:resource="&edxl_cap;hasSeverity"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isStatusOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isStatusOf">
-        <owl:inverseOf rdf:resource="&edxl_cap;hasStatus"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#isUrgencyOf -->
-
-    <owl:ObjectProperty rdf:about="&edxl_cap;isUrgencyOf">
-        <owl:inverseOf rdf:resource="&edxl_cap;hasUrgency"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Data properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#addresses -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;addresses">
-        <rdfs:comment xml:lang="en">The group listing of intended recipients of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Scope"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#areaAltitude -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;areaAltitude">
-        <rdfs:comment xml:lang="en">The specific or minimum altitude of the affected area of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Area"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#areaCeiling -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;areaCeiling">
-        <rdfs:comment xml:lang="en">The maximum altitude of the affected area of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Area"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#areaDesc -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;areaDesc">
-        <rdfs:comment xml:lang="en">The text describing the affected area of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Area"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#areaGeoCode -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;areaGeoCode">
-        <rdfs:comment xml:lang="en">The geographic code delineating the affected area of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Area"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#audience -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;audience">
-        <rdfs:comment xml:lang="en">The text describing the intended audience of the alert message.</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#certainty -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;certainty">
-        <rdfs:comment xml:lang="en">The code denoting the certainty of the subject event of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#code -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;code">
-        <rdfs:comment xml:lang="en">The code denoting the special handling of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;AlertMessage"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#contact -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;contact">
-        <rdfs:comment xml:lang="en">The text describing the contact for follow-up and confirmation of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#dateTime -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;dateTime">
-        <rdfs:range rdf:resource="&xsd;dateTime"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#derefUri -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;derefUri">
-        <rdfs:comment xml:lang="en">The base-64 encoded data content of the resource file</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Resource"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#description -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;description">
-        <rdfs:comment xml:lang="en">The text describing the subject event of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#digest -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;digest">
-        <rdfs:comment xml:lang="en">The code representing the digital digest (“hash”) computed from the resource file</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Resource"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#effective -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;effective">
-        <rdfs:comment xml:lang="en">The effective time of the information of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:subPropertyOf rdf:resource="&edxl_cap;dateTime"/>
-        <rdfs:range rdf:resource="&xsd;dateTime"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#event -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;event">
-        <rdfs:comment xml:lang="en">The text denoting the type of the subject event of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#eventCode -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;eventCode">
-        <rdfs:comment xml:lang="en">A system- specific code identifying the event type of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#expires -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;expires">
-        <rdfs:comment xml:lang="en">The expiry time of the information of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:subPropertyOf rdf:resource="&edxl_cap;dateTime"/>
-        <rdfs:range rdf:resource="&xsd;dateTime"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#headline -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;headline">
-        <rdfs:comment xml:lang="en">A brief human-readable headline. Note that some displays (for example, short messaging service devices) may only present this headline; it SHOULD be made as direct and actionable as possible while remaining short.</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#identifier -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;identifier">
-        <rdfs:comment xml:lang="en">The identifier of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;AlertMessage"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#instruction -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;instruction">
-        <rdfs:comment xml:lang="en">The text describing the recommended action to be taken by recipients of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#language -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;language">
-        <rdfs:comment xml:lang="en">The code denoting the language of the info sub- element of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&xsd;language"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#mimeType -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;mimeType">
-        <rdfs:comment xml:lang="en">The identifier of the MIME content type and sub-type describing the resource file</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Resource"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#note -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;note">
-        <rdfs:comment xml:lang="en">The text describing the purpose or significance of the alert message</rdfs:comment>
-        <rdfs:domain>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&edxl_cap;ErrorType"/>
-                    <rdf:Description rdf:about="&edxl_cap;Exercise"/>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:domain>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#onset -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;onset">
-        <rdfs:comment xml:lang="en">The expected time of the beginning of the subject event of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:subPropertyOf rdf:resource="&edxl_cap;dateTime"/>
-        <rdfs:range rdf:resource="&xsd;dateTime"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#parameter -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;parameter">
-        <rdfs:comment xml:lang="en">A system- specific additional parameter associated with the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#resourceDesc -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;resourceDesc">
-        <rdfs:comment xml:lang="en">The text describing the type and content of the resource file</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Resource"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#resourceSize -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;resourceSize">
-        <rdfs:comment xml:lang="en">The integer indicating the size of the resource file</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Resource"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#resourceURI -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;resourceURI">
-        <rdfs:comment xml:lang="en">The identifier of the hyperlink for the resource file</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Resource"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#restriction -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;restriction">
-        <rdfs:comment xml:lang="en">The text describing the rule for limiting distribution of the restricted alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Restricted"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#senderName -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;senderName">
-        <rdfs:domain rdf:resource="&edxl_cap;Sender"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#sentTime -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;sentTime">
-        <rdfs:comment xml:lang="en">The time and date of the origination of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;AlertMessage"/>
-        <rdfs:subPropertyOf rdf:resource="&edxl_cap;dateTime"/>
-        <rdfs:range rdf:resource="&xsd;dateTime"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#source -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;source">
-        <rdfs:comment xml:lang="en">The text identifying the source of the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;AlertMessage"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#webInfo -->
-
-    <owl:DatatypeProperty rdf:about="&edxl_cap;webInfo">
-        <rdfs:comment xml:lang="en">The identifier of the hyperlink associating additional information with the alert message</rdfs:comment>
-        <rdfs:domain rdf:resource="&edxl_cap;Info"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Classes
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#AckType -->
-
-    <owl:Class rdf:about="&edxl_cap;AckType">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;MsgType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;AlertType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;CancelType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;ErrorType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;UpdateType"/>
-        <rdfs:comment xml:lang="en">Acknowledges receipt and acceptance of the message(s) identified in &lt;references&gt;.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Reconhece a recepção e aceitação da mensagem identificada previamente.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Actual -->
-
-    <owl:Class rdf:about="&edxl_cap;Actual">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Status"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Draft"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Exercise"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;System"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Test"/>
-        <rdfs:comment xml:lang="en">Actionable by all targeted recipients</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Acionável por todos os recipientes-alvo.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#AlertMessage -->
-
-    <owl:Class rdf:about="&edxl_cap;AlertMessage">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&edxl_cap;hasIncidentRelated"/>
-                        <owl:someValuesFrom rdf:resource="&edxl_cap;Incident"/>
-                    </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&edxl_cap;hasScope"/>
-                        <owl:onClass rdf:resource="&edxl_cap;Scope"/>
-                        <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                    </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&edxl_cap;hasStatus"/>
-                        <owl:onClass rdf:resource="&edxl_cap;Status"/>
-                        <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:comment xml:lang="en">Refers to all component parts of the alert message.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Refere-se todos os componentes da uma mensagem de alerta.  </rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#AlertType -->
-
-    <owl:Class rdf:about="&edxl_cap;AlertType">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;MsgType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;CancelType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;ErrorType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;UpdateType"/>
-        <rdfs:comment xml:lang="en">Initial information requiring attention by targeted recipients.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Informação inicial requerendo atenção para os recipientes alvo.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#AllClear -->
-
-    <owl:Class rdf:about="&edxl_cap;AllClear">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;ResponseType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Assess"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Avoid"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Evacuate"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Execute"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Monitor"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;None"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Prepare"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Shelter"/>
-        <rdfs:comment xml:lang="en">The subject event no longer poses a threat or concern and any follow on action is described in &lt;instruction&gt;</rdfs:comment>
-        <rdfs:comment xml:lang="pt">O evento não consiste mais em uma ameaça ou preocupação e qualquer ação a se tomar é descrita através de instruções.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Area -->
-
-    <owl:Class rdf:about="&edxl_cap;Area">
-        <rdfs:comment xml:lang="en">Refers to all component parts of the area subelement of the info subelement of the 
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:edxl_cap="http://fpc.ufba.br/ontologies/edxl_cap#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:edxl_cap_inst="http://fpc.ufba.br/ontologies/edxl_cap/instances#"
+  xml:base="http://fpc.ufba.br/ontologies/edxl_cap">
+  <owl:Ontology rdf:about="">
+    <edxl_cap:contributor xml:lang="en">Reinaldo Almeida (UFBA)</edxl_cap:contributor>
+    <edxl_cap:contributor xml:lang="en">Rebeca Barros (UFBA)</edxl_cap:contributor>
+    <edxl_cap:contributor xml:lang="en">Lais Salvador (UFBA)</edxl_cap:contributor>
+    <edxl_cap:status xml:lang="en">An ongoing ontology for communication interoperability between systems in the context of the RESCUER Project. This propose is based on EDXL documentation (https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=emergency).</edxl_cap:status>
+    <edxl_cap:rights xml:lang="en">(c) The RESCUER project - http://www.rescuer-project.org/</edxl_cap:rights>
+  </owl:Ontology>
+  <owl:Class rdf:ID="Info">
+    <rdfs:comment xml:lang="pt">Refere-se a todos os componentes de informações sobre a mensagem de alerta.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Refers to all component parts of the info sub-element of the alert message.
+
+</rdfs:comment>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:ID="Area"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="hasArea"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:ID="Resource"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="hasResource"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Severity">
+    <rdfs:comment xml:lang="en">The severity of the subject incident or event.
+</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="UrgencyUnknown">
+    <rdfs:comment xml:lang="pt">Urgência desconhecida</rdfs:comment>
+    <rdfs:comment xml:lang="en">Urgency not known</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Urgency"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="AlertType">
+    <rdfs:comment xml:lang="pt">Informação inicial requerendo atenção para os recipientes alvo.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Initial information requiring attention by targeted recipients.</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="UpdateType"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="ErrorType"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="CancelType"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="MsgType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Status">
+    <rdfs:comment xml:lang="pt">Refere-se ao modo apropriado para lidar com o tipo de mensagem de alerta.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Refers to the appropriate handling of the alert message. </rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Test">
+    <rdfs:comment xml:lang="pt">Testes técnicos, todos os recipientes não são levados em consideração.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Technical testing only, all recipients disregard.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Status"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Actual">
+    <rdfs:comment xml:lang="pt">Acionável por todos os recipientes-alvo.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Actionable by all targeted recipients</rdfs:comment>
+    <owl:disjointWith rdf:resource="#Test"/>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="System"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Exercise"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Draft"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#Status"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Rescue">
+    <rdfs:comment xml:lang="pt">Resgate e recuperação</rdfs:comment>
+    <rdfs:comment xml:lang="en">Rescue and recovery</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Category"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Sender">
+    <rdfs:comment xml:lang="en">The originator of an alert. Guaranteed by assigner to be unique globally; e.g., may be based on an Internet domain name.</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#Exercise">
+    <rdfs:comment xml:lang="pt">Acionável apenas por participantes designados ao exercício. Um identificador do exercício deve ser incluído.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Actionable only by designated exercise participants; exercise identifier SHOULD appear in &lt;note&gt;</rdfs:comment>
+    <owl:disjointWith rdf:resource="#Test"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#System"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#Status"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Prepare">
+    <rdfs:comment xml:lang="pt">Fazer preparações baseadas em instruções</rdfs:comment>
+    <rdfs:comment xml:lang="en">Make preparations per the &lt;instruction&gt;</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Shelter"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="ResponseType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Restricted">
+    <rdfs:comment xml:lang="pt">Para disseminação somente para usuários com requerimento operacional conhecido.</rdfs:comment>
+    <rdfs:comment xml:lang="en">For dissemination only to users with a known operational requirement. </rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Scope"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Area">
+    <rdfs:comment xml:lang="pt">Refere-se a todos os componentes de area do sub-elemento Info do elemento Alerta.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Refers to all component parts of the area subelement of the info subelement of the 
 alert message.
 
 </rdfs:comment>
-        <rdfs:comment xml:lang="pt">Refere-se a todos os componentes de area do sub-elemento Info do elemento Alerta.</rdfs:comment>
-    </owl:Class>
-    
+  </owl:Class>
+  <owl:Class rdf:ID="Certainty">
+    <rdfs:comment xml:lang="en">The certainty of the subject event of the alert message</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Monitor">
+    <rdfs:comment xml:lang="pt">Preocupar-se com fontes de informações como descritas em instruções
+</rdfs:comment>
+    <rdfs:comment xml:lang="en">Attend to information sources as described in &lt;instruction&gt;</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Shelter"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Prepare"/>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="None"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ResponseType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Minor">
+    <rdfs:comment xml:lang="pt">Ameaça mínima a vida ou propriedade.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Minimal threat to life or property</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="SeverityUnknown"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Severe"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Moderate"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#Severity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Avoid">
+    <rdfs:comment xml:lang="en">Avoid the subject event as per the &lt;instruction&gt;</rdfs:comment>
+    <rdfs:comment xml:lang="pt">Evitar o assunto de um evento de acordo a instruções</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Evacuate"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#None"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ResponseType"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#Monitor"/>
+    <owl:disjointWith rdf:resource="#Prepare"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Shelter"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Execute"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:about="#None">
+    <rdfs:comment xml:lang="pt">Nenhuma ação recomendada</rdfs:comment>
+    <rdfs:comment xml:lang="en">No action recommended</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Shelter"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Prepare"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ResponseType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Draft">
+    <rdfs:comment xml:lang="pt">Um rascunho preliminar, não acionável em sua forma atual.</rdfs:comment>
+    <rdfs:comment xml:lang="en">A preliminary template or draft, not actionable in its current form.</rdfs:comment>
+    <owl:disjointWith rdf:resource="#Test"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#System"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Exercise"/>
+    <rdfs:subClassOf rdf:resource="#Status"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Private">
+    <rdfs:comment xml:lang="pt">Para disseminação apenas para endereços especificados.</rdfs:comment>
+    <rdfs:comment xml:lang="en">For dissemination only to specified addresses.</rdfs:comment>
+    <owl:disjointWith rdf:resource="#Restricted"/>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Public"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Scope"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Polygon">
+    <rdfs:comment xml:lang="en">The paired values of points defining a polygon that delineates the affected area of the alert message</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Area"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Geo">
+    <rdfs:comment xml:lang="pt">Geofísica (ex: deslizamento)</rdfs:comment>
+    <rdfs:comment xml:lang="en">Geophysical (inc. landslide)
 
+</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Category"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Security">
+    <rdfs:comment xml:lang="pt">Aplicações da lei, militares, segurança nacional e local/privada</rdfs:comment>
+    <rdfs:comment xml:lang="en">Law enforcement, military, homeland and local/private security</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Category"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Fire">
+    <rdfs:comment xml:lang="pt">Extinção de incêndio e resgate.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Fire suppression and rescue</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Category"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Unlikely">
+    <rdfs:comment xml:lang="en">Not expected to occur (p ~ 0)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Certainty"/>
+  </owl:Class>
+  <owl:Class rdf:about="#UpdateType">
+    <rdfs:comment xml:lang="pt">Atualiza ou sobrepõe mensagens anteriores identificadas por uma referência.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Updates and supercedes the earlier message(s) identified in &lt;references&gt;</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MsgType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Health">
+    <rdfs:comment xml:lang="pt">Saúde pública</rdfs:comment>
+    <rdfs:comment xml:lang="en">Medical and public health</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Category"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Public">
+    <rdfs:comment xml:lang="pt">Para a divulgação para o público em geral sem restrições</rdfs:comment>
+    <rdfs:comment xml:lang="en">For general dissemination to unrestricted audiences.</rdfs:comment>
+    <owl:disjointWith rdf:resource="#Restricted"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Scope"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Immediate">
+    <rdfs:comment xml:lang="pt">Ações de resposta devem ser realizadas imediatamente.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Responsive action SHOULD be taken immediately.</rdfs:comment>
+    <owl:disjointWith rdf:resource="#UrgencyUnknown"/>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Past"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Urgency"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="AllClear">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Assess"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Evacuate"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#None"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Shelter"/>
+    </owl:disjointWith>
+    <rdfs:comment xml:lang="en">The subject event no longer poses a threat or concern and any follow on action is described in &lt;instruction&gt;</rdfs:comment>
+    <rdfs:comment xml:lang="pt">O evento não consiste mais em uma ameaça ou preocupação e qualquer ação a se tomar é descrita através de instruções.</rdfs:comment>
+    <owl:disjointWith rdf:resource="#Avoid"/>
+    <owl:disjointWith rdf:resource="#Monitor"/>
+    <owl:disjointWith rdf:resource="#Prepare"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Execute"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ResponseType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="CertaintyUnknown">
+    <rdfs:comment xml:lang="en">Certainty unknown</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Certainty"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Transport">
+    <rdfs:comment xml:lang="pt">Transporte público e privado.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Public and private transportation</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Category"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Observed">
+    <rdfs:comment xml:lang="en">Determined to have occurred or to be ongoing</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Certainty"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Moderate">
+    <rdfs:comment xml:lang="pt">Possível ameaça a vida ou propriedade.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Possible threat to life or property</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#SeverityUnknown"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Severe"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#Severity"/>
+  </owl:Class>
+  <owl:Class rdf:about="#System">
+    <rdfs:comment xml:lang="pt">Para mensagens que apoiam funções internas da rede de alerta.</rdfs:comment>
+    <rdfs:comment xml:lang="en">For messages that support alert network internal functions.</rdfs:comment>
+    <owl:disjointWith rdf:resource="#Test"/>
+    <rdfs:subClassOf rdf:resource="#Status"/>
+  </owl:Class>
+  <owl:Class rdf:about="#CancelType">
+    <rdfs:comment xml:lang="pt">Cancela as mensagens anteriores identificadas por uma referência.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Cancels the earlier message(s) identified in &lt;references&gt;
 
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Assess -->
-
-    <owl:Class rdf:about="&edxl_cap;Assess">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;ResponseType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Avoid"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Evacuate"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Execute"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Monitor"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;None"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Prepare"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Shelter"/>
-        <rdfs:comment xml:lang="en">Evaluate the information in this message</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Avaliar a informação na mensagem.
+</rdfs:comment>
+    <owl:disjointWith rdf:resource="#UpdateType"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#ErrorType"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MsgType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Possible">
+    <rdfs:comment xml:lang="en">Possible but not likely (p &lt;= ~50%)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Certainty"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Past">
+    <rdfs:comment xml:lang="pt">Ações de resposta não são mais necessárias.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Responsive action is no longer required</rdfs:comment>
+    <owl:disjointWith rdf:resource="#UrgencyUnknown"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Urgency"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Env">
+    <rdfs:comment xml:lang="pt">Poluição e outros alerta ambientais</rdfs:comment>
+    <rdfs:comment xml:lang="en">Pollution and other environmental</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Category"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Resource">
+    <rdfs:comment xml:lang="en">Refers to an additional file with supplemental information related to this &lt;info&gt; element; e.g., an image or audio file</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Future">
+    <rdfs:comment xml:lang="pt">Ações de resposta devem ser tomadas em um futuro próximo.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Responsive action SHOULD be taken in the near future</rdfs:comment>
+    <owl:disjointWith rdf:resource="#UrgencyUnknown"/>
+    <owl:disjointWith rdf:resource="#Past"/>
+    <owl:disjointWith rdf:resource="#Immediate"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Urgency"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Assess">
+    <owl:disjointWith rdf:resource="#None"/>
+    <owl:disjointWith rdf:resource="#Monitor"/>
+    <rdfs:comment xml:lang="pt">Avaliar a informação na mensagem.
 
 
 </rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Avoid -->
-
-    <owl:Class rdf:about="&edxl_cap;Avoid">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;ResponseType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Evacuate"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Execute"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Monitor"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;None"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Prepare"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Shelter"/>
-        <rdfs:comment xml:lang="en">Avoid the subject event as per the &lt;instruction&gt;</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Evitar o assunto de um evento de acordo a instruções</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#CBRNE -->
-
-    <owl:Class rdf:about="&edxl_cap;CBRNE">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Chemical, Biological, Radiological, Nuclear or High-Yield Explosive threat or attack</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Ataques e ameaças químicas, biologicas, radiológicas, nucleares ou de explosivos.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#CancelType -->
-
-    <owl:Class rdf:about="&edxl_cap;CancelType">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;MsgType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;ErrorType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;UpdateType"/>
-        <rdfs:comment xml:lang="en">Cancels the earlier message(s) identified in &lt;references&gt;
+    <rdfs:comment xml:lang="en">Evaluate the information in this message</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Evacuate"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Shelter"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Execute"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ResponseType"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#Prepare"/>
+    <owl:disjointWith rdf:resource="#Avoid"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Scope">
+    <rdfs:comment xml:lang="pt">Refere-se a intenção da distribuição da mensagem de alerta.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Refers to the intended distribution of the alert message.
 
 </rdfs:comment>
-        <rdfs:comment xml:lang="pt">Cancela as mensagens anteriores identificadas por uma referência.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Category -->
-
-    <owl:Class rdf:about="&edxl_cap;Category">
-        <rdfs:comment xml:lang="en">Refers to the category of the subject event of the alert message.
+  </owl:Class>
+  <owl:Class rdf:ID="Safety">
+    <rdfs:comment xml:lang="pt">Emergência geral e segurança pública
 
 </rdfs:comment>
-        <rdfs:comment xml:lang="pt">Refere-se a categoria do assunto do evento do alerta de mensagem.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Certainty -->
-
-    <owl:Class rdf:about="&edxl_cap;Certainty">
-        <rdfs:comment xml:lang="en">The certainty of the subject event of the alert message</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#CertaintyUnknown -->
-
-    <owl:Class rdf:about="&edxl_cap;CertaintyUnknown">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Certainty"/>
-        <rdfs:comment xml:lang="en">Certainty unknown</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Circle -->
-
-    <owl:Class rdf:about="&edxl_cap;Circle">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Area"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Polygon"/>
-        <rdfs:comment xml:lang="en">The paired values of a point and radius delineating the affected area of the alert message.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Os valores emparelhados de um ponto e o raio que delineam a área afetada da mensagem de alerta.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Draft -->
-
-    <owl:Class rdf:about="&edxl_cap;Draft">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Status"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Exercise"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;System"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Test"/>
-        <rdfs:comment xml:lang="en">A preliminary template or draft, not actionable in its current form.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Um rascunho preliminar, não acionável em sua forma atual.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Env -->
-
-    <owl:Class rdf:about="&edxl_cap;Env">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Pollution and other environmental</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Poluição e outros alerta ambientais</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#ErrorType -->
-
-    <owl:Class rdf:about="&edxl_cap;ErrorType">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;MsgType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;UpdateType"/>
-        <rdfs:comment xml:lang="en">Indicates rejection of the message(s) identified in &lt;references&gt;; explanation SHOULD appear in &lt;note&gt;</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Indica rejeição a um mensagem identificada por uma referência.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Evacuate -->
-
-    <owl:Class rdf:about="&edxl_cap;Evacuate">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;ResponseType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Execute"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Monitor"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;None"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Prepare"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Shelter"/>
-        <rdfs:comment xml:lang="en">Relocate as instructed in the &lt;instruction&gt;</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Realocação de acordo a instruções
-</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Execute -->
-
-    <owl:Class rdf:about="&edxl_cap;Execute">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;ResponseType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Monitor"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;None"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Prepare"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Shelter"/>
-        <rdfs:comment xml:lang="en">Execute a pre-planned activity identified in &lt;instruction&gt;</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Executar uma atividade pré-planejada identificada em instruções</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Exercise -->
-
-    <owl:Class rdf:about="&edxl_cap;Exercise">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Status"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;System"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Test"/>
-        <rdfs:comment xml:lang="en">Actionable only by designated exercise participants; exercise identifier SHOULD appear in &lt;note&gt;</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Acionável apenas por participantes designados ao exercício. Um identificador do exercício deve ser incluído.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Expected -->
-
-    <owl:Class rdf:about="&edxl_cap;Expected">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Urgency"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Future"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Immediate"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Past"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;UrgencyUnknown"/>
-        <rdfs:comment xml:lang="en">Responsive action SHOULD be taken soon (within next hour)</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Ações de resposta devem ser realizadas logo (dentro da próxima hora).</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Extreme -->
-
-    <owl:Class rdf:about="&edxl_cap;Extreme">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Severity"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Minor"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Moderate"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Severe"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;SeverityUnknown"/>
-        <rdfs:comment xml:lang="en">Extraordinary threat to life or property</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Extrema ameaça a vida ou propriedade.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Fire -->
-
-    <owl:Class rdf:about="&edxl_cap;Fire">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Fire suppression and rescue</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Extinção de incêndio e resgate.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Future -->
-
-    <owl:Class rdf:about="&edxl_cap;Future">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Urgency"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Immediate"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Past"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;UrgencyUnknown"/>
-        <rdfs:comment xml:lang="en">Responsive action SHOULD be taken in the near future</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Ações de resposta devem ser tomadas em um futuro próximo.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Geo -->
-
-    <owl:Class rdf:about="&edxl_cap;Geo">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Geophysical (inc. landslide)
+    <rdfs:comment xml:lang="en">General emergency and public safety</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Category"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Category">
+    <rdfs:comment xml:lang="pt">Refere-se a categoria do assunto do evento do alerta de mensagem.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Refers to the category of the subject event of the alert message.
 
 </rdfs:comment>
-        <rdfs:comment xml:lang="pt">Geofísica (ex: deslizamento)</rdfs:comment>
-    </owl:Class>
-    
+  </owl:Class>
+  <owl:Class rdf:about="#Urgency">
+    <rdfs:comment xml:lang="en">The urgency of the subject event of the alert message</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="OtherCategory">
+    <rdfs:comment xml:lang="pt">Outros eventos</rdfs:comment>
+    <rdfs:comment xml:lang="en">Others events</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Category"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Likely">
+    <rdfs:comment xml:lang="en">Likely (p &gt; ~50%)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Certainty"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Evacuate">
+    <rdfs:comment xml:lang="pt">Realocação de acordo a instruções
+</rdfs:comment>
+    <rdfs:comment xml:lang="en">Relocate as instructed in the &lt;instruction&gt;</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Shelter"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Prepare"/>
+    <owl:disjointWith rdf:resource="#None"/>
+    <owl:disjointWith rdf:resource="#Monitor"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Execute"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ResponseType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Severe">
+    <rdfs:comment xml:lang="pt">Significante ameaça a vida ou propriedade.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Significant threat to life or property</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#SeverityUnknown"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#Severity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="AckType">
+    <rdfs:comment xml:lang="pt">Reconhece a recepção e aceitação da mensagem identificada previamente.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Acknowledges receipt and acceptance of the message(s) identified in &lt;references&gt;.</rdfs:comment>
+    <owl:disjointWith rdf:resource="#UpdateType"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#ErrorType"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#CancelType"/>
+    <owl:disjointWith rdf:resource="#AlertType"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MsgType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Infra">
+    <rdfs:comment xml:lang="pt">Utilidades, telecomunicações, outras infraestruturadas não transportadas</rdfs:comment>
+    <rdfs:comment xml:lang="en">Utility, telecommunication, other non-transport infrastructure</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Category"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Met">
+    <rdfs:comment xml:lang="pt">Metereológica (ex:enchente)
 
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Health -->
-
-    <owl:Class rdf:about="&edxl_cap;Health">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Medical and public health</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Saúde pública</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Immediate -->
-
-    <owl:Class rdf:about="&edxl_cap;Immediate">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Urgency"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Past"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;UrgencyUnknown"/>
-        <rdfs:comment xml:lang="en">Responsive action SHOULD be taken immediately.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Ações de resposta devem ser realizadas imediatamente.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Incident -->
-
-    <owl:Class rdf:about="&edxl_cap;Incident">
-        <rdfs:comment xml:lang="en">Term referring to occurrences of any scale that may require some form of Emergency Response and Management, and that requires tracking and information exchange. 
+</rdfs:comment>
+    <rdfs:comment xml:lang="en">Meteorological (inc. flood)</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Category"/>
+  </owl:Class>
+  <owl:Class rdf:ID="CBRNE">
+    <rdfs:comment xml:lang="pt">Ataques e ameaças químicas, biologicas, radiológicas, nucleares ou de explosivos.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Chemical, Biological, Radiological, Nuclear or High-Yield Explosive threat or attack</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Category"/>
+  </owl:Class>
+  <owl:Class rdf:ID="AlertMessage">
+    <rdfs:comment xml:lang="pt">Refere-se todos os componentes da uma mensagem de alerta.  </rdfs:comment>
+    <rdfs:comment xml:lang="en">Refers to all component parts of the alert message.</rdfs:comment>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:ID="Incident"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="hasIncidentRelated"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"
+            >1</owl:maxQualifiedCardinality>
+            <owl:onClass rdf:resource="#Scope"/>
+            <owl:onProperty>
+              <owl:FunctionalProperty rdf:ID="hasScope"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"
+            >1</owl:maxQualifiedCardinality>
+            <owl:onClass rdf:resource="#Status"/>
+            <owl:onProperty>
+              <owl:FunctionalProperty rdf:ID="hasStatus"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Circle">
+    <rdfs:comment xml:lang="pt">Os valores emparelhados de um ponto e o raio que delineam a área afetada da mensagem de alerta.</rdfs:comment>
+    <rdfs:comment xml:lang="en">The paired values of a point and radius delineating the affected area of the alert message.</rdfs:comment>
+    <owl:disjointWith rdf:resource="#Polygon"/>
+    <rdfs:subClassOf rdf:resource="#Area"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Extreme">
+    <rdfs:comment xml:lang="pt">Extrema ameaça a vida ou propriedade.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Extraordinary threat to life or property</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#SeverityUnknown"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Severe"/>
+    <owl:disjointWith rdf:resource="#Moderate"/>
+    <owl:disjointWith rdf:resource="#Minor"/>
+    <rdfs:subClassOf rdf:resource="#Severity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Expected">
+    <rdfs:comment xml:lang="pt">Ações de resposta devem ser realizadas logo (dentro da próxima hora).</rdfs:comment>
+    <rdfs:comment xml:lang="en">Responsive action SHOULD be taken soon (within next hour)</rdfs:comment>
+    <owl:disjointWith rdf:resource="#UrgencyUnknown"/>
+    <owl:disjointWith rdf:resource="#Past"/>
+    <owl:disjointWith rdf:resource="#Immediate"/>
+    <owl:disjointWith rdf:resource="#Future"/>
+    <rdfs:subClassOf rdf:resource="#Urgency"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Incident">
+    <rdfs:comment xml:lang="pt">Termo que se refere a ocorrências de qualquer escala que pode exigir alguma forma de gerenciamento e resposta à emergência, e que requer acompanhamento e troca de informação. No Sistema Nacional de Gerenciamento de Emergência americano (NIMS), "Incidente" é visto como uma declaração formal ou informal de emergência ou desastre por uma organização de nível local, estadual, federal ou por uma jurisdição.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Term referring to occurrences of any scale that may require some form of Emergency Response and Management, and that requires tracking and information exchange. 
 “Incident” is viewed from the NIMS Emergency Management perspective as a formal or informal declaration of emergency or disaster by an organization at the state, local, federal level or by a jurisdiction.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Termo que se refere a ocorrências de qualquer escala que pode exigir alguma forma de gerenciamento e resposta à emergência, e que requer acompanhamento e troca de informação. No Sistema Nacional de Gerenciamento de Emergência americano (NIMS), &quot;Incidente&quot; é visto como uma declaração formal ou informal de emergência ou desastre por uma organização de nível local, estadual, federal ou por uma jurisdição.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Info -->
-
-    <owl:Class rdf:about="&edxl_cap;Info">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&edxl_cap;hasArea"/>
-                        <owl:someValuesFrom rdf:resource="&edxl_cap;Area"/>
-                    </owl:Restriction>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&edxl_cap;hasResource"/>
-                        <owl:someValuesFrom rdf:resource="&edxl_cap;Resource"/>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:comment xml:lang="en">Refers to all component parts of the info sub-element of the alert message.
+  </owl:Class>
+  <owl:Class rdf:about="#MsgType">
+    <rdfs:comment xml:lang="pt">Refere-se a natureza da mensagem de alerta.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Refers to the nature of the alert message.
 
 </rdfs:comment>
-        <rdfs:comment xml:lang="pt">Refere-se a todos os componentes de informações sobre a mensagem de alerta.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Infra -->
-
-    <owl:Class rdf:about="&edxl_cap;Infra">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Utility, telecommunication, other non-transport infrastructure</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Utilidades, telecomunicações, outras infraestruturadas não transportadas</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Likely -->
-
-    <owl:Class rdf:about="&edxl_cap;Likely">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Certainty"/>
-        <rdfs:comment xml:lang="en">Likely (p &gt; ~50%)</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Met -->
-
-    <owl:Class rdf:about="&edxl_cap;Met">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Meteorological (inc. flood)</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Metereológica (ex:enchente)
-
+  </owl:Class>
+  <owl:Class rdf:about="#Execute">
+    <rdfs:comment xml:lang="pt">Executar uma atividade pré-planejada identificada em instruções</rdfs:comment>
+    <rdfs:comment xml:lang="en">Execute a pre-planned activity identified in &lt;instruction&gt;</rdfs:comment>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Shelter"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Prepare"/>
+    <owl:disjointWith rdf:resource="#None"/>
+    <owl:disjointWith rdf:resource="#Monitor"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ResponseType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#SeverityUnknown">
+    <rdfs:comment xml:lang="en">Severity unknown</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#Severity"/>
+  </owl:Class>
+  <owl:Class rdf:about="#ResponseType">
+    <rdfs:comment xml:lang="pt">O tipo de ação recomendada para a audiência alvo da mensagem de alerta.</rdfs:comment>
+    <rdfs:comment xml:lang="en">The code denoting the type of action recommended for the target audience</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#Shelter">
+    <rdfs:comment xml:lang="pt">Se abrigar num local ou por instrução
 </rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Minor -->
-
-    <owl:Class rdf:about="&edxl_cap;Minor">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Severity"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Moderate"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Severe"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;SeverityUnknown"/>
-        <rdfs:comment xml:lang="en">Minimal threat to life or property</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Ameaça mínima a vida ou propriedade.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Moderate -->
-
-    <owl:Class rdf:about="&edxl_cap;Moderate">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Severity"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Severe"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;SeverityUnknown"/>
-        <rdfs:comment xml:lang="en">Possible threat to life or property</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Possível ameaça a vida ou propriedade.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Monitor -->
-
-    <owl:Class rdf:about="&edxl_cap;Monitor">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;ResponseType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;None"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Prepare"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Shelter"/>
-        <rdfs:comment xml:lang="en">Attend to information sources as described in &lt;instruction&gt;</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Preocupar-se com fontes de informações como descritas em instruções
+    <rdfs:comment xml:lang="en">Take shelter in place or per &lt;instruction&gt;
 </rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#MsgType -->
-
-    <owl:Class rdf:about="&edxl_cap;MsgType">
-        <rdfs:comment xml:lang="en">Refers to the nature of the alert message.
-
-</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Refere-se a natureza da mensagem de alerta.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#None -->
-
-    <owl:Class rdf:about="&edxl_cap;None">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;ResponseType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Prepare"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Shelter"/>
-        <rdfs:comment xml:lang="en">No action recommended</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Nenhuma ação recomendada</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Observed -->
-
-    <owl:Class rdf:about="&edxl_cap;Observed">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Certainty"/>
-        <rdfs:comment xml:lang="en">Determined to have occurred or to be ongoing</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#OtherCategory -->
-
-    <owl:Class rdf:about="&edxl_cap;OtherCategory">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Others events</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Outros eventos</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Past -->
-
-    <owl:Class rdf:about="&edxl_cap;Past">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Urgency"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;UrgencyUnknown"/>
-        <rdfs:comment xml:lang="en">Responsive action is no longer required</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Ações de resposta não são mais necessárias.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Polygon -->
-
-    <owl:Class rdf:about="&edxl_cap;Polygon">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Area"/>
-        <rdfs:comment xml:lang="en">The paired values of points defining a polygon that delineates the affected area of the alert message</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Possible -->
-
-    <owl:Class rdf:about="&edxl_cap;Possible">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Certainty"/>
-        <rdfs:comment xml:lang="en">Possible but not likely (p &lt;= ~50%)</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Prepare -->
-
-    <owl:Class rdf:about="&edxl_cap;Prepare">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;ResponseType"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Shelter"/>
-        <rdfs:comment xml:lang="en">Make preparations per the &lt;instruction&gt;</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Fazer preparações baseadas em instruções</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Private -->
-
-    <owl:Class rdf:about="&edxl_cap;Private">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Scope"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Public"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Restricted"/>
-        <rdfs:comment xml:lang="en">For dissemination only to specified addresses.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Para disseminação apenas para endereços especificados.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Public -->
-
-    <owl:Class rdf:about="&edxl_cap;Public">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Scope"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Restricted"/>
-        <rdfs:comment xml:lang="en">For general dissemination to unrestricted audiences.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Para a divulgação para o público em geral sem restrições</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Rescue -->
-
-    <owl:Class rdf:about="&edxl_cap;Rescue">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Rescue and recovery</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Resgate e recuperação</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Resource -->
-
-    <owl:Class rdf:about="&edxl_cap;Resource">
-        <rdfs:comment xml:lang="en">Refers to an additional file with supplemental information related to this &lt;info&gt; element; e.g., an image or audio file</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#ResponseType -->
-
-    <owl:Class rdf:about="&edxl_cap;ResponseType">
-        <rdfs:comment xml:lang="en">The code denoting the type of action recommended for the target audience</rdfs:comment>
-        <rdfs:comment xml:lang="pt">O tipo de ação recomendada para a audiência alvo da mensagem de alerta.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Restricted -->
-
-    <owl:Class rdf:about="&edxl_cap;Restricted">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Scope"/>
-        <rdfs:comment xml:lang="en">For dissemination only to users with a known operational requirement. </rdfs:comment>
-        <rdfs:comment xml:lang="pt">Para disseminação somente para usuários com requerimento operacional conhecido.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Safety -->
-
-    <owl:Class rdf:about="&edxl_cap;Safety">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">General emergency and public safety</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Emergência geral e segurança pública
-
-</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Scope -->
-
-    <owl:Class rdf:about="&edxl_cap;Scope">
-        <rdfs:comment xml:lang="en">Refers to the intended distribution of the alert message.
-
-</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Refere-se a intenção da distribuição da mensagem de alerta.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Security -->
-
-    <owl:Class rdf:about="&edxl_cap;Security">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Law enforcement, military, homeland and local/private security</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Aplicações da lei, militares, segurança nacional e local/privada</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Sender -->
-
-    <owl:Class rdf:about="&edxl_cap;Sender">
-        <rdfs:comment xml:lang="en">The originator of an alert. Guaranteed by assigner to be unique globally; e.g., may be based on an Internet domain name.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Severe -->
-
-    <owl:Class rdf:about="&edxl_cap;Severe">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Severity"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;SeverityUnknown"/>
-        <rdfs:comment xml:lang="en">Significant threat to life or property</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Significante ameaça a vida ou propriedade.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Severity -->
-
-    <owl:Class rdf:about="&edxl_cap;Severity">
-        <rdfs:comment xml:lang="en">The severity of the subject incident or event.
-</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#SeverityUnknown -->
-
-    <owl:Class rdf:about="&edxl_cap;SeverityUnknown">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Severity"/>
-        <rdfs:comment xml:lang="en">Severity unknown</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Shelter -->
-
-    <owl:Class rdf:about="&edxl_cap;Shelter">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;ResponseType"/>
-        <rdfs:comment xml:lang="en">Take shelter in place or per &lt;instruction&gt;
-</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Se abrigar num local ou por instrução
-</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Status -->
-
-    <owl:Class rdf:about="&edxl_cap;Status">
-        <rdfs:comment xml:lang="en">Refers to the appropriate handling of the alert message. </rdfs:comment>
-        <rdfs:comment xml:lang="pt">Refere-se ao modo apropriado para lidar com o tipo de mensagem de alerta.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#System -->
-
-    <owl:Class rdf:about="&edxl_cap;System">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Status"/>
-        <owl:disjointWith rdf:resource="&edxl_cap;Test"/>
-        <rdfs:comment xml:lang="en">For messages that support alert network internal functions.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Para mensagens que apoiam funções internas da rede de alerta.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Test -->
-
-    <owl:Class rdf:about="&edxl_cap;Test">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Status"/>
-        <rdfs:comment xml:lang="en">Technical testing only, all recipients disregard.</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Testes técnicos, todos os recipientes não são levados em consideração.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Transport -->
-
-    <owl:Class rdf:about="&edxl_cap;Transport">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Category"/>
-        <rdfs:comment xml:lang="en">Public and private transportation</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Transporte público e privado.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Unlikely -->
-
-    <owl:Class rdf:about="&edxl_cap;Unlikely">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Certainty"/>
-        <rdfs:comment xml:lang="en">Not expected to occur (p ~ 0)</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#UpdateType -->
-
-    <owl:Class rdf:about="&edxl_cap;UpdateType">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;MsgType"/>
-        <rdfs:comment xml:lang="en">Updates and supercedes the earlier message(s) identified in &lt;references&gt;</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Atualiza ou sobrepõe mensagens anteriores identificadas por uma referência.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Urgency -->
-
-    <owl:Class rdf:about="&edxl_cap;Urgency">
-        <rdfs:comment xml:lang="en">The urgency of the subject event of the alert message</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://fpc.ufba.br/ontologies/edxl_cap#UrgencyUnknown -->
-
-    <owl:Class rdf:about="&edxl_cap;UrgencyUnknown">
-        <rdfs:subClassOf rdf:resource="&edxl_cap;Urgency"/>
-        <rdfs:comment xml:lang="en">Urgency not known</rdfs:comment>
-        <rdfs:comment xml:lang="pt">Urgência desconhecida</rdfs:comment>
-    </owl:Class>
+    <rdfs:subClassOf rdf:resource="#ResponseType"/>
+  </owl:Class>
+  <owl:Class rdf:about="#ErrorType">
+    <rdfs:comment xml:lang="pt">Indica rejeição a um mensagem identificada por uma referência.</rdfs:comment>
+    <rdfs:comment xml:lang="en">Indicates rejection of the message(s) identified in &lt;references&gt;; explanation SHOULD appear in &lt;note&gt;</rdfs:comment>
+    <owl:disjointWith rdf:resource="#UpdateType"/>
+    <rdfs:subClassOf rdf:resource="#MsgType"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="isStatusOf">
+    <owl:inverseOf>
+      <owl:FunctionalProperty rdf:about="#hasStatus"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasSeverity">
+    <rdfs:range rdf:resource="#Severity"/>
+    <rdfs:domain rdf:resource="#Info"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasCertainty">
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:range rdf:resource="#Certainty"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isSeverityOf">
+    <owl:inverseOf rdf:resource="#hasSeverity"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasArea">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="isAreaOf"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:range rdf:resource="#Area"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasResource">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="isResourceOf"/>
+    </owl:inverseOf>
+    <rdfs:range rdf:resource="#Resource"/>
+    <rdfs:domain rdf:resource="#Info"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isIncidentRelatedTo">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#hasIncidentRelated"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasSender">
+    <rdfs:range rdf:resource="#Sender"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasUrgency">
+    <rdfs:range rdf:resource="#Urgency"/>
+    <rdfs:domain rdf:resource="#Info"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasInfo">
+    <rdfs:range rdf:resource="#Info"/>
+    <rdfs:domain rdf:resource="#AlertMessage"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isInfoOf">
+    <owl:inverseOf rdf:resource="#hasInfo"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isResponseTypeOf">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="hasResponseType"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isCategoryOf">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="hasCategory"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isUrgencyOf">
+    <owl:inverseOf rdf:resource="#hasUrgency"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasResponseType">
+    <rdfs:range rdf:resource="#ResponseType"/>
+    <rdfs:domain rdf:resource="#Info"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isCertaintyOf">
+    <owl:inverseOf rdf:resource="#hasCertainty"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasReferences">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="isReferencedBy"/>
+    </owl:inverseOf>
+    <rdfs:range rdf:resource="#AlertMessage"/>
+    <rdfs:domain rdf:resource="#AlertMessage"/>
+    <rdfs:comment xml:lang="en">identifying earlier message(s) referenced by the alert message</rdfs:comment>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasMsgType">
+    <rdfs:range rdf:resource="#MsgType"/>
+    <rdfs:domain rdf:resource="#AlertMessage"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasCategory">
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:range rdf:resource="#Category"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasIncidentRelated">
+    <rdfs:range rdf:resource="#Incident"/>
+    <rdfs:domain rdf:resource="#AlertMessage"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isMsgTypeOf">
+    <owl:inverseOf rdf:resource="#hasMsgType"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isSenderOf">
+    <owl:inverseOf rdf:resource="#hasSender"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="digest">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Resource"/>
+    <rdfs:comment xml:lang="en">The code representing the digital digest (“hash”) computed from the resource file</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="source">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#AlertMessage"/>
+    <rdfs:comment xml:lang="en">The text identifying the source of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="sentTime">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:subPropertyOf>
+      <owl:DatatypeProperty rdf:ID="dateTime"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#AlertMessage"/>
+    <rdfs:comment xml:lang="en">The time and date of the origination of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="addresses">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Scope"/>
+    <rdfs:comment xml:lang="en">The group listing of intended recipients of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="areaGeoCode">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Area"/>
+    <rdfs:comment xml:lang="en">The geographic code delineating the affected area of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="areaCeiling">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Area"/>
+    <rdfs:comment xml:lang="en">The maximum altitude of the affected area of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="restriction">
+    <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Restricted"/>
+    <rdfs:comment xml:lang="en">The text describing the rule for limiting distribution of the restricted alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#dateTime">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="description">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The text describing the subject event of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="headline">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">A brief human-readable headline. Note that some displays (for example, short messaging service devices) may only present this headline; it SHOULD be made as direct and actionable as possible while remaining short.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="eventCode">
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">A system- specific code identifying the event type of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="resourceDesc">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Resource"/>
+    <rdfs:comment xml:lang="en">The text describing the type and content of the resource file</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="contact">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The text describing the contact for follow-up and confirmation of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="derefUri">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Resource"/>
+    <rdfs:comment xml:lang="en">The base-64 encoded data content of the resource file</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="senderName">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Sender"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="language">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#language"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The code denoting the language of the info sub- element of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="identifier">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#AlertMessage"/>
+    <rdfs:comment xml:lang="en">The identifier of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="mimeType">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Resource"/>
+    <rdfs:comment xml:lang="en">The identifier of the MIME content type and sub-type describing the resource file</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="areaAltitude">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Area"/>
+    <rdfs:comment xml:lang="en">The specific or minimum altitude of the affected area of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="code">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#AlertMessage"/>
+    <rdfs:comment xml:lang="en">The code denoting the special handling of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="onset">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:subPropertyOf rdf:resource="#dateTime"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The expected time of the beginning of the subject event of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="event">
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The text denoting the type of the subject event of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="parameter">
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">A system- specific additional parameter associated with the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="webInfo">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The identifier of the hyperlink associating additional information with the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="instruction">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The text describing the recommended action to be taken by recipients of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="effective">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:subPropertyOf rdf:resource="#dateTime"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The effective time of the information of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="resourceURI">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Resource"/>
+    <rdfs:comment xml:lang="en">The identifier of the hyperlink for the resource file</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="areaDesc">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Area"/>
+    <rdfs:comment xml:lang="en">The text describing the affected area of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="expires">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:subPropertyOf rdf:resource="#dateTime"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The expiry time of the information of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="audience">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The text describing the intended audience of the alert message.</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="certainty">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Info"/>
+    <rdfs:comment xml:lang="en">The code denoting the certainty of the subject event of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="note">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#ErrorType"/>
+          <owl:Class rdf:about="#Exercise"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:comment xml:lang="en">The text describing the purpose or significance of the alert message</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="resourceSize">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Resource"/>
+    <rdfs:comment xml:lang="en">The integer indicating the size of the resource file</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:FunctionalProperty rdf:about="#hasScope">
+    <owl:inverseOf>
+      <owl:InverseFunctionalProperty rdf:ID="isScopeOf"/>
+    </owl:inverseOf>
+    <rdfs:range rdf:resource="#Scope"/>
+    <rdfs:domain rdf:resource="#AlertMessage"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:about="#hasStatus">
+    <rdfs:range rdf:resource="#Status"/>
+    <rdfs:domain rdf:resource="#AlertMessage"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:FunctionalProperty>
+  <owl:InverseFunctionalProperty rdf:about="#isScopeOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:InverseFunctionalProperty>
+  <owl:AnnotationProperty rdf:ID="contributor"/>
+  <owl:AnnotationProperty rdf:ID="rights"/>
+  <owl:AnnotationProperty rdf:ID="status"/>
+  <edxl_cap:AlertMessage rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#AlertMessage_Example_001">
+    <edxl_cap:identifier>edxl_cap_inst:AlertMessage_Example_001</edxl_cap:identifier>
+    <edxl_cap:hasScope>
+      <edxl_cap:Restricted rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#Restricted_1">
+        <rdfs:label>ScopeType.Restricted</rdfs:label>
+      </edxl_cap:Restricted>
+    </edxl_cap:hasScope>
+    <edxl_cap:hasInfo>
+      <edxl_cap:Info rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#Info_ForAlertMessage_Example_001">
+        <edxl_cap:instruction>Reaction processes</edxl_cap:instruction>
+        <edxl_cap:senderName>INTER-IoT-EWS (semiotics-iot.eu)</edxl_cap:senderName>
+        <rdfs:label>Information object of the alert</rdfs:label>
+        <edxl_cap:hasSeverity>
+          <edxl_cap:Extreme rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#Extreme_1">
+            <rdfs:label>SeverityType.Extreme</rdfs:label>
+          </edxl_cap:Extreme>
+        </edxl_cap:hasSeverity>
+        <edxl_cap:expires rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2018-06-24T22:15:30</edxl_cap:expires>
+        <edxl_cap:hasCategory>
+          <edxl_cap:Transport rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#TransportCategory_1">
+            <rdfs:label>CategoryType.Transport</rdfs:label>
+          </edxl_cap:Transport>
+        </edxl_cap:hasCategory>
+        <edxl_cap:description>Message automatically generated from situation identified: UC01_VehicleCollisionDetected_ST02</edxl_cap:description>
+        <edxl_cap:hasCategory>
+          <edxl_cap:Health rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#HealthCategory_1">
+            <rdfs:label>CategoryType.Health</rdfs:label>
+          </edxl_cap:Health>
+        </edxl_cap:hasCategory>
+        <edxl_cap:hasResponseType>
+          <edxl_cap:Monitor rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#Monitor_1">
+            <rdfs:label>ResponseType.Monitor</rdfs:label>
+          </edxl_cap:Monitor>
+        </edxl_cap:hasResponseType>
+        <edxl_cap:hasResponseType>
+          <edxl_cap:Evacuate rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#Evacuate_1">
+            <rdfs:label>ResponseType.Evacuate</rdfs:label>
+          </edxl_cap:Evacuate>
+        </edxl_cap:hasResponseType>
+        <edxl_cap:eventCode>Should be changed for an array of keypair valiues (name, description of each code) &gt; SAME classification: https://en.wikipedia.org/wiki/Specific_Area_Message_Encoding</edxl_cap:eventCode>
+        <edxl_cap:hasCertainty>
+          <edxl_cap:Observed rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#Observed_1">
+            <rdfs:label>CertaintyType.Observed</rdfs:label>
+          </edxl_cap:Observed>
+        </edxl_cap:hasCertainty>
+        <edxl_cap:effective rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2018-06-22T22:15:30</edxl_cap:effective>
+        <edxl_cap:event>UC01. Vehicle collision - ST01 activation event (acceleration above threshold)</edxl_cap:event>
+        <edxl_cap:audience>TargetXX</edxl_cap:audience>
+        <edxl_cap:onset rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+        >2018-06-24T22:15:10</edxl_cap:onset>
+        <edxl_cap:hasUrgency>
+          <edxl_cap:Immediate rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#Immediate_1">
+            <rdfs:label>UrgencyType.Immediate</rdfs:label>
+          </edxl_cap:Immediate>
+        </edxl_cap:hasUrgency>
+        <edxl_cap:hasResource>
+          <edxl_cap:Resource rdf:ID="Resource_DataCollectedDuringTrip_0001">
+            <edxl_cap:derefUri>https://inter-iot-ews-contextmanagerrest-v0.azurewebsites.net/api/deviceobservations/deviceId/tripId</edxl_cap:derefUri>
+            <edxl_cap:mimeType>application/ld+json</edxl_cap:mimeType>
+            <edxl_cap:resourceDesc>Data collected during the trip</edxl_cap:resourceDesc>
+            <rdfs:label>Data collected during the trip</rdfs:label>
+          </edxl_cap:Resource>
+        </edxl_cap:hasResource>
+        <edxl_cap:contact>Joao Moreira (j.luizrebelomoreira@utwente.nl)</edxl_cap:contact>
+        <edxl_cap:hasArea>
+          <edxl_cap:Area rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#Area_1">
+            <edxl_cap:areaDesc>Point(52.2390 6.8573)</edxl_cap:areaDesc>
+            <rdfs:label>Point(52.2390 6.8573)</rdfs:label>
+          </edxl_cap:Area>
+        </edxl_cap:hasArea>
+        <edxl_cap:hasCategory>
+          <edxl_cap:Safety rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#SafetyCategory_1">
+            <rdfs:label>CategoryType.Safety</rdfs:label>
+          </edxl_cap:Safety>
+        </edxl_cap:hasCategory>
+        <edxl_cap:webInfo>http://semiotics-iot.eu/</edxl_cap:webInfo>
+        <edxl_cap:headline>Hard vehicle collision detected</edxl_cap:headline>
+      </edxl_cap:Info>
+    </edxl_cap:hasInfo>
+    <edxl_cap:hasSender>
+      <edxl_cap:Sender rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#Sender_1">
+        <rdfs:label>INTER-IoT-EWS</rdfs:label>
+      </edxl_cap:Sender>
+    </edxl_cap:hasSender>
+    <edxl_cap:source>INTER-IoT-EWS (semiotics-iot.eu)</edxl_cap:source>
+    <edxl_cap:sentTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2018-06-22T22:15:30</edxl_cap:sentTime>
+    <rdfs:label>Message generated by INTER-IoT-EWS</rdfs:label>
+    <edxl_cap:hasStatus>
+      <edxl_cap:Exercise rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#Exercise_1">
+        <rdfs:label>StatusType.Exercise</rdfs:label>
+      </edxl_cap:Exercise>
+    </edxl_cap:hasStatus>
+    <edxl_cap:hasMsgType>
+      <edxl_cap:AlertType rdf:about="http://fpc.ufba.br/ontologies/edxl_cap/instances#AlertType_1">
+        <rdfs:label>MsgType.Alert</rdfs:label>
+      </edxl_cap:AlertType>
+    </edxl_cap:hasMsgType>
+    <edxl_cap:addresses>Target01, Target02, Target03</edxl_cap:addresses>
+    <edxl_cap:note>Exercise</edxl_cap:note>
+  </edxl_cap:AlertMessage>
 </rdf:RDF>
 
-
-
-<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
-
+<!-- Created with TopBraid -->
