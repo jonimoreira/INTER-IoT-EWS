@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE Alignment
+        [
+                <!ENTITY sripas "http://www.inter-iot.eu/sripas#">
+                <!ENTITY sosa "http://www.w3.org/ns/sosa/">
+                <!ENTITY sosaExt "http://www.w3.org/ns/sosa/extension/">
+                <!ENTITY geo-sf "http://www.opengis.net/def/sf/">
+                <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+                <!ENTITY saref "https://w3id.org/saref#">
+                <!ENTITY sarefInst "https://w3id.org/saref/instances/">
+                <!ENTITY time "http://www.w3.org/2006/time#">
+				<!ENTITY iiot "http://inter-iot.eu/goiotp#">
+				<!ENTITY iiotex "http://inter-iot.eu/goiotpex#">
+				<!ENTITY geo "http://www.w3.org/2003/01/geo/wgs84_pos#">
+				<!ENTITY geosparql "http://www.opengis.net/ont/geosparql#">
+                ]
+        >
+<Alignment
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:sripas="http://www.inter-iot.eu/sripas#"
+        xmlns="http://www.inter-iot.eu/sripas#"
+        xmlns:sosa="http://www.w3.org/ns/sosa/"
+        xmlns:saref="https://w3id.org/saref#"
+        xmlns:time="http://www.w3.org/2006/time#"
+		xmlns:iiot="http://inter-iot.eu/goiotp#"
+		xmlns:iiotex="http://inter-iot.eu/goiotpex#"
+		xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+		xmlns:geosparql="http://www.opengis.net/ont/geosparql#"	
+        name="SAREF_CO" version="0.45" creator="Joao Moreira (U.Twente)" description="ETSI SAREF to GOIoTP (W3C SSN/SOSA)">
+    <onto1>
+        <Ontology about="https://w3id.org/saref#">
+            <formalism>
+                <Formalism name="OWL2.0" uri="http://www.w3.org/2002/07/owl#"/>
+            </formalism>
+        </Ontology>
+    </onto1>
+    <onto2>
+        <Ontology about="http://inter-iot.eu/goiotpex#">
+            <formalism>
+                <Formalism name="OWL2.0" uri="http://www.w3.org/2002/07/owl#"/>
+            </formalism>
+        </Ontology>
+    </onto2>
+    <steps>
+        <step order="1" cell="cell1"/>
+        <step order="2" cell="cell2"/>
+        <step order="3" cell="cell3"/>
+		<step order="4" cell="cell4"/>
+		<step order="5" cell="cell5"/> 
+<!--		<step order="6" cell="cell6"/> -->
+    </steps>
+    <map>
+        <Cell id="cell1">
+            <entity1>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&saref;Sensor"/>
+					
+					<saref:measuresProperty>
+						<sripas:node_CTD/>
+					</saref:measuresProperty>
+					
+                    <saref:makesMeasurement>
+                        <sripas:node_CTB>
+                            <saref:hasValue>
+                                <sripas:node_CTV/>
+                            </saref:hasValue>
+                            <saref:hasTimestamp>
+                                <sripas:node_CTT/>
+                            </saref:hasTimestamp>
+							<saref:relatesToProperty>
+								<sripas:node_CTC/>
+							</saref:relatesToProperty>
+							<saref:isMeasuredIn>
+								<sripas:node_CTU/>
+							</saref:isMeasuredIn>
+                        </sripas:node_CTB>
+                    </saref:makesMeasurement>
+                </sripas:node_CTA>
+            </entity1>
+            <entity2>
+                <sripas:node_CTB>
+                    <rdf:type rdf:resource="&sosa;Observation"/>
+                    <sosa:madeBySensor>
+                        <sripas:node_CTA>
+                            <rdf:type rdf:resource="&sosa;Sensor"/>
+                        </sripas:node_CTA>
+                    </sosa:madeBySensor>
+					
+						<sosa:hasResult>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="&sosa;Result" />
+                                <iiot:hasValue>
+                                    <sripas:node_CTV/>
+                                </iiot:hasValue>
+								
+                                <iiot:hasUnit>
+                                    <sripas:node_CTU/>
+                                </iiot:hasUnit>
+								
+                            </rdf:Description>
+                        </sosa:hasResult>
+						
+                    <sosa:observedProperty>
+                        <sripas:node_CTC/>
+                    </sosa:observedProperty>
+                    <sosa:phenomenonTime>
+                        <rdf:Description>
+                            <rdf:type rdf:resource="&time;Instant"/>
+                            <time:inTimePosition>
+                                <rdf:Description>
+                                    <rdf:type rdf:resource="&time;TimePosition" />
+                                    <time:numericPosition>
+                                        <sripas:node_CTT/>
+                                    </time:numericPosition>
+                                </rdf:Description>
+                            </time:inTimePosition>
+                        </rdf:Description>
+                    </sosa:phenomenonTime>
+               </sripas:node_CTB>
+            </entity2>
+            <relation>=</relation>
+        </Cell>
+		
+		<Cell id="cell2"> <!-- translation of geo data -->
+			<entity1>
+				<sripas:node_CTX>
+					<geo:lat>
+						<sripas:node_x/>
+					</geo:lat>
+					<geo:long>
+						<sripas:node_y/>
+					</geo:long>
+
+				</sripas:node_CTX>
+			</entity1>
+			<entity2>
+				<sripas:node_CTX>
+					<geosparql:asWKT>
+						<sripas:node_z/>
+					</geosparql:asWKT>
+				</sripas:node_CTX>
+			</entity2>
+			<relation>=</relation>
+
+			<transformation>
+				<function about="str">
+					<param order="1" about="&sripas;node_x"/>
+					<return about="&sripas;node_sx"/>
+				</function>
+				<function about="str">
+					<param order="1" about="&sripas;node_y"/>
+					<return about="&sripas;node_sy"/>
+				</function>
+				<function about="concat">
+					<param order="1" val="Point("/>
+					<param order="2" about="&sripas;node_sx"/>
+					<param order="3" val=" "/>
+					<param order="4" about="&sripas;node_sy"/>
+					<param order="5" val=")"/>
+					<return about="&sripas;node_z"/>
+				</function>
+			</transformation>
+			<filters>
+
+				<filter about="&sripas;node_sx" datatype="&xsd;string"/>
+				<filter about="&sripas;node_sy" datatype="&xsd;string"/>
+			</filters>
+			<typings>
+				<typing about="&sripas;node_z" datatype="&geo-sf;wktLiteral"/>
+			</typings>
+
+		</Cell>
+			
+		<Cell id="cell3">
+            <entity1>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&saref;Device"/>
+                    <saref:consistsOf>
+                        <sripas:node_CTB>
+                            <saref:measuresProperty>
+                                <sripas:node_CTC/>
+                            </saref:measuresProperty>
+                        </sripas:node_CTB>
+                    </saref:consistsOf>
+                </sripas:node_CTA>
+            </entity1>
+            <entity2>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&sosa;Platform"/>
+					<sosa:hosts>
+						<sripas:node_CTB>
+							<sosa:observes>
+								<sripas:node_CTC/>
+							</sosa:observes>
+						</sripas:node_CTB>
+                    </sosa:hosts>
+               </sripas:node_CTA>
+            </entity2>
+            <relation>=</relation>
+        </Cell>
+		
+		<Cell id="cell4">
+				<entity1>
+					<sripas:node_CTA>
+						<sosa:observedProperty>
+							<rdf:Description rdf:about="https://w3id.org/saref/instances#BatteryLevel"/>
+						</sosa:observedProperty>
+					</sripas:node_CTA>
+				</entity1>
+				<entity2>
+					<sripas:node_CTA>
+						<sosa:observedProperty>
+							<rdf:Description rdf:about="https://w3id.org/saref/instances#BatteryLevelTranslated"/>
+						</sosa:observedProperty>
+					</sripas:node_CTA>
+				</entity2>
+				<relation>=</relation>
+		</Cell>
+		
+		<Cell id="cell5">
+				<entity1>
+					<sripas:node_CTA>
+						<iiot:hasUnit>
+							<rdf:Description rdf:about="https://w3id.org/saref/instances#ElectricPotential_MilliVolts"/>
+						</iiot:hasUnit>
+					</sripas:node_CTA>
+				</entity1>
+				<entity2>
+					<sripas:node_CTA>
+						<iiot:hasUnit>
+							<rdf:type rdf:resource="&iiotex;ElectricPotentialDifference"/>
+							<rdf:Description rdf:about="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#volt"/>							
+						</iiot:hasUnit>
+					</sripas:node_CTA>
+				</entity2>
+				<relation>=</relation>
+        </Cell>
+		
+		<!--
+        <Cell id="cell4">
+            <entity1>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&saref;SpeedMeasurement"/>
+                </sripas:node_CTA>
+            </entity1>
+            <entity2>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&sosaExt;SpeedMeasurement"/>
+                </sripas:node_CTA>
+            </entity2>
+            <relation>=</relation>
+        </Cell>
+        <Cell id="cell5">
+            <entity1>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&saref;AccelarationMeasurement"/>
+                </sripas:node_CTA>
+            </entity1>
+            <entity2>
+                <sripas:node_CTA>
+                    <rdf:type rdf:resource="&sosaExt;AccelerationMeasurement"/>
+                </sripas:node_CTA>
+            </entity2>
+            <relation>=</relation>
+        </Cell>
+		
+		
+		
+		-->
+		
+		
+    </map>
+</Alignment>

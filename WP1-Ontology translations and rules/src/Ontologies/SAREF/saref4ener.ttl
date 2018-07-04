@@ -1,0 +1,1546 @@
+# baseURI: https://w3id.org/saref4ener
+# imports: https://w3id.org/saref
+
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s4ener: <https://w3id.org/saref4ener#> .
+@prefix saref: <https://w3id.org/saref#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.w3.org/2006/time#DurationDescription>
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:xsdDuration ;
+    ] ;
+.
+<https://w3id.org/saref4ener>
+  rdf:type owl:Ontology ;
+  dcterms:created "2015-09-04"^^xsd:date ;
+  dcterms:creator "<https://www.linkedin.com/in/lauradaniele>"^^xsd:string ;
+  dcterms:description "SAREF4ENER is an extension of SAREF for the Energy domain that was created in collaboration with Energy@Home (http://www.energy-home.it) and EEBus (http://www.eebus.org/en), the major Italy- and Germany-based industry associations, to enable the interconnection of their (different) data models. SAREF4ENER focuses on demand response scenarios, in which customers can offer flexibility to the Smart Grid to manage their smart home devices by means of a Customer Energy Manager (CEM). The CEM is a logical function for optimizing energy consumption and/or production that can reside either in the home gateway or in the cloud. SAREF4ENER is published as an ETSI tecnical specificatoion (ETSI TS 103 410-1)."^^xsd:string ;
+  dcterms:license "<http://creativecommons.org/licenses/by/3.0/>"^^xsd:string ;
+  dcterms:modified "2016-12-13"^^xsd:date ;
+  dcterms:publisher "<https://www.tno.nl/nl/>"^^xsd:string ;
+  dcterms:title "SAREF4ENER: an extension of SAREF for the energy domain created in collaboration with Energy@Home and EEBus associations"^^xsd:string ;
+  owl:imports <https://w3id.org/saref> ;
+  owl:versionInfo "1.0"^^xsd:string ;
+.
+s4ener:ActivationDelay
+  rdf:type owl:Class ;
+  rdfs:comment "The scheduled activation delay for a slot."^^xsd:string ;
+  rdfs:label "Activation delay"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:ActivationDelayDurationDescription
+  rdf:type owl:Class ;
+  rdfs:comment "The duration description for the activation delay duration temporal entity"^^xsd:string ;
+  rdfs:label "Activation delay duration description"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#DurationDescription> ;
+.
+s4ener:ActiveDurationDescription
+  rdf:type owl:Class ;
+  rdfs:comment "The duration description for the active duration (min and max, sum max and sum min) temporal entities"^^xsd:string ;
+  rdfs:label "Active duration description"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#DurationDescription> ;
+.
+s4ener:ActiveDurationMax
+  rdf:type owl:Class ;
+  rdfs:comment "The active maximum duration a power sequence can run without interruption."^^xsd:string ;
+  rdfs:label "Active duration max"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:ActiveDurationMin
+  rdf:type owl:Class ;
+  rdfs:comment "The active mininum duration a power sequence can run without interruption."^^xsd:string ;
+  rdfs:label "Active duration min"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:ActiveDurationSumMax
+  rdf:type owl:Class ;
+  rdfs:comment "The active maximum duration a power sequence can run in total (summation of all active times)."^^xsd:string ;
+  rdfs:label "Active duration sum max"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:ActiveDurationSumMin
+  rdf:type owl:Class ;
+  rdfs:comment "The active minimum duration a power sequence must run in total (summation of all active times)."^^xsd:string ;
+  rdfs:label "Active duration sum min"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:ActuatorLevel
+  rdf:type owl:Class ;
+  rdfs:comment "Independent from the ActuatorSwitch class, the ActuatorLevel class enables a user or application to model LEVEL commands (start, up, percentageAbsolute, relative, etc.). This can be used to dim a light, set the speed of an electric motor, etc."^^xsd:string ;
+  rdfs:label "Actuator level"^^xsd:string ;
+  rdfs:subClassOf saref:Actuator ;
+.
+s4ener:ActuatorSwitch
+  rdf:type owl:Class ;
+  rdfs:comment "Basic on/off operations on a simple actuator can be modelled with the ActuatorSwitch class. Whether the function turns a device itself ON or OFF, or whether it switches a specific feature, depends on the implementation. For example, one could model the super freeze program of a freezer using ActuatorSwitch class. An ON command would then activate the super freeze program and an OFF command would deactivate it. This example shall just give an idea how ActuatorSwitch can be used for more purposes than only turning devices on and off."^^xsd:string ;
+  rdfs:label "Actuator switch"^^xsd:string ;
+  rdfs:subClassOf saref:Actuator ;
+.
+s4ener:AlternativesGroup
+  rdf:type owl:Class ;
+  rdfs:comment "A collection of power sequences for a certain profile"^^xsd:string ;
+  rdfs:label "Alternatives group"^^xsd:string ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:PowerProfile ;
+      owl:onProperty s4ener:belongsTo ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:PowerSequence ;
+      owl:onProperty saref:consistsOf ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:PowerSequence ;
+      owl:onProperty saref:consistsOf ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass s4ener:PowerProfile ;
+      owl:onProperty s4ener:belongsTo ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onDataRange xsd:unsignedInt ;
+      owl:onProperty s4ener:alternativesGroupID ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+.
+s4ener:AnticipationDurationDescription
+  rdf:type owl:Class ;
+  rdfs:comment "The duration description for the anticipation duration temporal entities"^^xsd:string ;
+  rdfs:label "Anticipation duration description"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#DurationDescription> ;
+.
+s4ener:DefaultDuration
+  rdf:type owl:Class ;
+  rdfs:comment "The duration of a slot (SHALL be present in case of 'determined slot'). If a slot has a configurable lenght, this element SHALL reflect the currently configured lenght"^^xsd:string ;
+  rdfs:label "Default duration"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:DefaultDurationDescription
+  rdf:type owl:Class ;
+  rdfs:comment "The duration description for the default duration temporal entity"^^xsd:string ;
+  rdfs:label "Default duration description"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#DurationDescription> ;
+.
+s4ener:Device
+  rdf:type owl:Class ;
+  rdfs:comment "A specialization of a saref:Device that exposes a power profile with power sequences to the CEM (note that a s4ee:Device can also be called 'power sequence server'). Most of the existing devices can expose at most 1 power profile, but there are special cases in which more than one power profiles can be exposed by the same device. For example, consider the case of a combined fridge-freezer in which there are 2 logical devices (fridge and freezer) combined in 1 physical device. This combined device can expose 2 power profiles, one for the fridge and one for the freezer. A s4ee:Device (e.g. a household appliance or a smart meter) can also receive events about overload warning severity level and related load control commands (LoadControlEventData)"^^xsd:string ;
+  rdfs:label "Device"^^xsd:string ;
+  rdfs:subClassOf saref:Device ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:LoadControlEventData ;
+      owl:onProperty s4ener:receives ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:PowerProfile ;
+      owl:onProperty s4ener:exposes ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:brandName ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:deviceCode ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:deviceName ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:hardwareRevision ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:manufacturerDescription ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:manufacturerLabel ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:manufacturerNodeIdentification ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:serialNumber ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:softwareRevision ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:vendorCode ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:vendorName ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:powerSource ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:LoadControlEventData ;
+      owl:onProperty s4ener:receives ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:PowerProfile ;
+      owl:onProperty s4ener:exposes ;
+    ] ;
+.
+s4ener:DurationUncertainty
+  rdf:type owl:Class ;
+  rdfs:comment "The uncertainty of the duration "^^xsd:string ;
+  rdfs:label "Duration uncertainty"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:DurationUncertaintyDescription
+  rdf:type owl:Class ;
+  rdfs:comment "The duration description for the duration uncertainty temporal entity"^^xsd:string ;
+  rdfs:label "Duration uncertainty description"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#DurationDescription> ;
+.
+s4ener:EarliestStartTime
+  rdf:type owl:Class ;
+  rdfs:comment """The earliest possible start time for a power sequence or a slot. Only 'xs:duration' value types SHALL be used to denote a relative time which relates to 'now' as time 0.
+Note: This element applies to the first repetition of the slot number only."""^^xsd:string ;
+  rdfs:label "Earliest start time"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:ElapsedSlotTime
+  rdf:type owl:Class ;
+  rdfs:comment "If state is set to 'running' or 'paused' AND the slot is determined, this element CAN contain the time the slot has already been in 'running' state (this also means the value remains constant during a 'paused' state). Otherwise it SHALL be omitted."^^xsd:string ;
+  rdfs:label "Elapsed slot time"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:EndTime
+  rdf:type owl:Class ;
+  rdfs:comment """The endTime of a power sequence. If the value is available, it SHALL be denoted here. Otherwise the element SHALL be omitted.
+The end time of a slot MAY be stated in this element. The following equation SHALL apply: endTime - startTime = defaultDuration."""^^xsd:string ;
+  rdfs:label "End time"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:EndTimeDurationDescription
+  rdf:type owl:Class ;
+  rdfs:comment "The duration description for the end time duration temporal entities"^^xsd:string ;
+  rdfs:label "End time duration Description"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#DurationDescription> ;
+.
+s4ener:Energy
+  rdf:type owl:Class ;
+  rdfs:comment "Energy type and value in a slot (i.e., Energy, EnergyMin, EnergyMax, EnergyExpected, EnergyStandardDeviation, EnergySkewness); or the ResumeEnergyEstimated in a power sequence, i.e., the additional energy the device will consume before resuming its normal operation (after a pause)"^^xsd:string ;
+  rdfs:label "Energy"^^xsd:string ;
+  rdfs:subClassOf saref:Energy ;
+.
+s4ener:EnergyExpected
+  rdf:type owl:Class ;
+  rdfs:comment "A possible type of energy in a slot that represents the expected energy consumption and its value"^^xsd:string ;
+  rdfs:label "Energy expected"^^xsd:string ;
+  rdfs:subClassOf s4ener:Energy ;
+.
+s4ener:EnergyMax
+  rdf:type owl:Class ;
+  rdfs:comment "A possible type of energy in a slot that represents the maximum energy consumption and its value"^^xsd:string ;
+  rdfs:label "Energy max"^^xsd:string ;
+  rdfs:subClassOf s4ener:Energy ;
+.
+s4ener:EnergyMin
+  rdf:type owl:Class ;
+  rdfs:comment "A possible type of energy in a slot that represents the minimum energy consumption and its value"^^xsd:string ;
+  rdfs:label "Energy min"^^xsd:string ;
+  rdfs:subClassOf s4ener:Energy ;
+.
+s4ener:EnergySkewness
+  rdf:type owl:Class ;
+  rdfs:comment "A possible type of energy in a slot that represents the energy skewness and its value"^^xsd:string ;
+  rdfs:label "Energy skewness"^^xsd:string ;
+  rdfs:subClassOf s4ener:Energy ;
+.
+s4ener:EnergyStandardDeviation
+  rdf:type owl:Class ;
+  rdfs:comment "A possible type of energy in a slot  that represents the energy standard deviation and its value"^^xsd:string ;
+  rdfs:label "Energy Standard Deviation"^^xsd:string ;
+  rdfs:subClassOf s4ener:Energy ;
+.
+s4ener:EventActionConsume
+  rdf:type owl:Class ;
+  rdfs:label "Event action consume"^^xsd:string ;
+  rdfs:subClassOf s4ener:LoadControlEventAction ;
+  owl:oneOf (
+      "s4ener:pause"^^xsd:string
+      "s4ener:resume"^^xsd:string
+      "s4ener:reduce"^^xsd:string
+      "s4ener:increase"^^xsd:string
+      "s4ener:emergency"^^xsd:string
+      "s4ener:normal"^^xsd:string
+    ) ;
+.
+s4ener:EventActionProduce
+  rdf:type owl:Class ;
+  rdfs:label "Event action produce"^^xsd:string ;
+  rdfs:subClassOf s4ener:LoadControlEventAction ;
+  owl:oneOf (
+      "s4ener:pause"^^xsd:string
+      "s4ener:resume"^^xsd:string
+      "s4ener:reduce"^^xsd:string
+      "s4ener:increase"^^xsd:string
+      "s4ener:emergency"^^xsd:string
+      "s4ener:normal"^^xsd:string
+    ) ;
+.
+s4ener:EventStateConsume
+  rdf:type owl:Class ;
+  rdfs:label "Event state consume"^^xsd:string ;
+  rdfs:subClassOf s4ener:LoadControlEventState ;
+  owl:oneOf (
+      "s4ener:eventAccepted"^^xsd:string
+      "s4ener:eventStarted"^^xsd:string
+      "s4ener:eventStopped"^^xsd:string
+      "s4ener:eventRejected"^^xsd:string
+      "s4ener:eventCancelled"^^xsd:string
+      "s4ener:eventError"^^xsd:string
+    ) ;
+.
+s4ener:EventStateProduce
+  rdf:type owl:Class ;
+  rdfs:label "Event state produce"^^xsd:string ;
+  rdfs:subClassOf s4ener:LoadControlEventState ;
+  owl:oneOf (
+      "s4ener:eventAccepted"^^xsd:string
+      "s4ener:eventStarted"^^xsd:string
+      "s4ener:eventStopped"^^xsd:string
+      "s4ener:eventRejected"^^xsd:string
+      "s4ener:eventCancelled"^^xsd:string
+      "s4ener:eventError"^^xsd:string
+    ) ;
+.
+s4ener:LatestEndTime
+  rdf:type owl:Class ;
+  rdfs:comment """The latest possible end time for a power sequence or a slot. Only 'xs:duration' value types SHALL be used to denote a relative time which relates to 'now' as time 0.
+Note: This element applies to the first repetition of the slot number only."""^^xsd:string ;
+  rdfs:label "Latest end time"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:LoadControlEventAction
+  rdf:type owl:Class ;
+  rdfs:comment "An action type used to express the action to be performed as a consequence of an event used to send overload warning severity level and related load control commands to a device (e.g. a household appliance or a smart meter)."^^xsd:string ;
+  rdfs:label "Load Control event action"^^xsd:string ;
+.
+s4ener:LoadControlEventData
+  rdf:type owl:Class ;
+  rdfs:comment "An event used to send overload warning severity level and related load control commands to a device (e.g. a household appliance or a smart meter)."^^xsd:string ;
+  rdfs:label "Load control event data"^^xsd:string ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom xsd:dateTime ;
+      owl:onProperty saref:hasTimestamp ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:Device ;
+      owl:onProperty s4ener:hasDevice ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:EventActionConsume ;
+      owl:onProperty s4ener:triggersEventActionConsume ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:EventActionProduce ;
+      owl:onProperty s4ener:triggersEventActionProduce ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:TimePeriod ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:eventID ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:EventActionConsume ;
+      owl:onProperty s4ener:triggersEventActionConsume ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:EventActionProduce ;
+      owl:onProperty s4ener:triggersEventActionProduce ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:Device ;
+      owl:onProperty s4ener:hasDevice ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:TimePeriod ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onDataRange xsd:dateTime ;
+      owl:onProperty saref:hasTimestamp ;
+    ] ;
+.
+s4ener:LoadControlEventState
+  rdf:type owl:Class ;
+  rdfs:comment "In the load control, it expresses the possible states of an event used to send overload warning severity level and related load control commands to a device (e.g. a household appliance or a smart meter)."^^xsd:string ;
+  rdfs:label "Load control event state "^^xsd:string ;
+  rdfs:subClassOf s4ener:State ;
+.
+s4ener:LoadControlStateData
+  rdf:type owl:Class ;
+  rdfs:comment "The representation of the state of an event used to send overload warning severity level and related load control commands to a device (e.g. a household appliance or a smart meter)."^^xsd:string ;
+  rdfs:label "Load control state data"^^xsd:string ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom xsd:dateTime ;
+      owl:onProperty saref:hasTimestamp ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:EventActionConsume ;
+      owl:onProperty s4ener:hasAppliedEventActionConsume ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:EventActionProduce ;
+      owl:onProperty s4ener:hasAppliedEventActionProduce ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:EventStateConsume ;
+      owl:onProperty s4ener:hasEventStateConsume ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:EventStateProduce ;
+      owl:onProperty s4ener:hasEventStateProduce ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:EventActionConsume ;
+      owl:onProperty s4ener:hasAppliedEventActionConsume ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:EventActionProduce ;
+      owl:onProperty s4ener:hasAppliedEventActionProduce ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:EventStateConsume ;
+      owl:onProperty s4ener:hasEventStateConsume ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:EventStateProduce ;
+      owl:onProperty s4ener:hasEventStateProduce ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onDataRange xsd:unsignedInt ;
+      owl:onProperty s4ener:eventID ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onDataRange xsd:dateTime ;
+      owl:onProperty saref:hasTimestamp ;
+    ] ;
+.
+s4ener:MaxActivationDelay
+  rdf:type owl:Class ;
+  rdfs:comment "Maximum delay time between the end of the previous slot and the beginning of the current slot."^^xsd:string ;
+  rdfs:label "Max activation delay"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:MaxAnticipation
+  rdf:type owl:Class ;
+  rdfs:comment "This field allows the anticipation of the phase if (and only if) the previous phase has the energy set to 0 Wh, each unit is a minute."^^xsd:string ;
+  rdfs:label "Max anticipation"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:MaxDuration
+  rdf:type owl:Class ;
+  rdfs:comment "If a slot has a configurable duration, it SHALL be present and denote the maximum supported configuration. Note: This element applies to the first repetition of the slot number only"^^xsd:string ;
+  rdfs:label "Max duration"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:MinDuration
+  rdf:type owl:Class ;
+  rdfs:comment "If a slot has a configurable duration, it SHALL be present and denote the minimum supported configuration. Note: This element applies to the first repetition of the slot number only."^^xsd:string ;
+  rdfs:label "Min duration"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:PauseDurationDescription
+  rdf:type owl:Class ;
+  rdfs:comment "The duration description for the pause duration (max and min) temporal entities"^^xsd:string ;
+  rdfs:label "Pause duration description"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#DurationDescription> ;
+.
+s4ener:PauseDurationMax
+  rdf:type owl:Class ;
+  rdfs:comment "The maximum duration a power sequence can pause after the end of an activity."^^xsd:string ;
+  rdfs:label "Pause duration max"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:PauseDurationMin
+  rdf:type owl:Class ;
+  rdfs:comment "The minimum duration a power sequence can pause after the end of an activity."^^xsd:string ;
+  rdfs:label "Pause duration min"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:PauseTime
+  rdf:type owl:Class ;
+  rdfs:comment "The pause time of a power sequence or a slot"^^xsd:string ;
+  rdfs:label "Pause time"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:Power
+  rdf:type owl:Class ;
+  rdfs:comment "Power type and value in a slot (i.e. power, powerMin, powerMax, powerExpectedValue, powerStandardDeviation, powerSkewness)"^^xsd:string ;
+  rdfs:label "Power"^^xsd:string ;
+  rdfs:subClassOf saref:Power ;
+.
+s4ener:PowerExpected
+  rdf:type owl:Class ;
+  rdfs:comment "A possible type of power in a slot that represents the expected power consumption and its value"^^xsd:string ;
+  rdfs:label "Power expected "^^xsd:string ;
+  rdfs:subClassOf s4ener:Power ;
+.
+s4ener:PowerMax
+  rdf:type owl:Class ;
+  rdfs:comment "A possible type of power in a slot that represents the maximum power consumption and its value"^^xsd:string ;
+  rdfs:label "Power max"^^xsd:string ;
+  rdfs:subClassOf s4ener:Power ;
+.
+s4ener:PowerMin
+  rdf:type owl:Class ;
+  rdfs:comment "A possible type of power in a slot that represents the minimum power consumption and its value"^^xsd:string ;
+  rdfs:label "Power min"^^xsd:string ;
+  rdfs:subClassOf s4ener:Power ;
+.
+s4ener:PowerProfile
+  rdf:type owl:Class ;
+  rdfs:comment "A way to model curves of power and energy over time, which also provides definitions for the modelling of power scheduling including alternative plans. With a PowerProfile, a device (or power sequences server) exposes the power sequences that are potentially relevant for the CEM (or power sequences client). "^^xsd:string ;
+  rdfs:label "Power profile"^^xsd:string ;
+  rdfs:subClassOf saref:Profile ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:AlternativesGroup ;
+      owl:onProperty saref:consistsOf ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:Device ;
+      owl:onProperty s4ener:belongsTo ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:alternativesCount ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:nodeRemoteControllable ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:supportsReselection ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:supportsSingleSlotSchedulingOnly ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:totalSequencesCountMax ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:AlternativesGroup ;
+      owl:onProperty saref:consistsOf ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass s4ener:Device ;
+      owl:onProperty s4ener:belongsTo ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+.
+s4ener:PowerSequence
+  rdf:type owl:Class ;
+  rdfs:comment "The specification of a task, such as wash or tumble dry, according to user preferences and/or manufacturer's settings for a certain device.  It is the most 'coarse' view, a power sequence can represent all single steps of a whole task,where the single steps are represented by slots. If the power sequence is pausable by the bound power sequences client, the property 'saref:isInterruptionPossible' SHALL be present and set to true. Otherwise it SHALL be omitted. If the power sequence is stoppable by the bound power sequences client, the property 'saref:isFlexible' SHALL be present and set to true. Otherwise it SHALL be omitted."^^xsd:string ;
+  rdfs:label "Power sequence"^^xsd:string ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:AlternativesGroup ;
+      owl:onProperty s4ener:belongsTo ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:PowerSequenceState ;
+      owl:onProperty saref:hasState ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:ResumeCostEstimated ;
+      owl:onProperty saref:hasPrice ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:ResumeEnergyEstimated ;
+      owl:onProperty s4ener:hasEnergy ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:Slot ;
+      owl:onProperty saref:consistsOf ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:sequenceID ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:sequenceRemoteControllable ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty saref:hasDescription ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:activeRepetitionNumber ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:activeSlotNumber ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:cheapest ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:greenest ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:isPausable ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:isStoppable ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:maxCyclesPerDay ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:repetitionsTotal ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:ActiveDurationMax ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:ActiveDurationMin ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:ActiveDurationSumMax ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:ActiveDurationSumMin ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:EarliestStartTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:ElapsedSlotTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:EndTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:LatestEndTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:PauseDurationMax ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:PauseDurationMin ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:RemainingSlotTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:ResumeCostEstimated ;
+      owl:onProperty saref:hasPrice ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:ResumeEnergyEstimated ;
+      owl:onProperty s4ener:hasEnergy ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:taskIdentifier ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:valueSource ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:PowerSequenceState ;
+      owl:onProperty saref:hasState ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:Slot ;
+      owl:onProperty saref:consistsOf ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:StartTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass s4ener:AlternativesGroup ;
+      owl:onProperty s4ener:belongsTo ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+.
+s4ener:PowerSequenceState
+  rdf:type owl:Class ;
+  rdfs:comment "The current state of the power sequence. It can assume one of the values 'running', 'paused', 'scheduled', 'scheduled paused', 'pending', 'inactive', 'completed',  or 'invalid'."^^xsd:string ;
+  rdfs:label "Power sequence state"^^xsd:string ;
+  rdfs:subClassOf s4ener:State ;
+  owl:oneOf (
+      "s4ener:running"^^xsd:string
+      "s4ener:paused"^^xsd:string
+      "s4ener:scheduled"^^xsd:string
+      "s4ener:scheduledPaused"^^xsd:string
+      "s4ener:pending"^^xsd:string
+      "s4ener:inactive"^^xsd:string
+      "s4ener:completed"^^xsd:string
+      "s4ener:invalid"^^xsd:string
+    ) ;
+.
+s4ener:PowerSkewness
+  rdf:type owl:Class ;
+  rdfs:comment "A possible type of power in a slot that represents the power skewness and its value"^^xsd:string ;
+  rdfs:label "Power skewness"^^xsd:string ;
+  rdfs:subClassOf s4ener:Power ;
+.
+s4ener:PowerStandardDeviation
+  rdf:type owl:Class ;
+  rdfs:comment "A possible type of power in a slot that represents the power standard deviation and its value"^^xsd:string ;
+  rdfs:label "Power standard deviation"^^xsd:string ;
+  rdfs:subClassOf s4ener:Power ;
+.
+s4ener:RemainingPauseTime
+  rdf:type owl:Class ;
+  rdfs:comment "The duration that the current slot (s4ee:activeSlotNumber) permits being paused. This element SHALL ONLY be present if the power sequence is interruptible. Otherwise, it SHALL be omitted. In case the power sequence is interruptible the following rules apply: If the element is absent this means there is no explicit pause duration restriction for the current slot; a value of 0s denoted the slot does not permit being paused."^^xsd:string ;
+  rdfs:label "Remaining pause time"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:RemainingSlotTime
+  rdf:type owl:Class ;
+  rdfs:comment "If state is set to 'running' or 'paused' AND the slot is determined, this element SHALL contain the time the slot still needs to be in 'running' state (this also means the value remains constant during a 'paused' state). Otherwise it SHALL be omitted."^^xsd:string ;
+  rdfs:label "Remaining slot time"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:ResumeCostEstimated
+  rdf:type owl:Class ;
+  rdfs:comment "In a power sequence the additional costs for the resumption of a device to its normal operation (after a pause)."^^xsd:string ;
+  rdfs:label "Resume cost estimated"^^xsd:string ;
+  rdfs:subClassOf saref:Price ;
+.
+s4ener:ResumeEnergyEstimated
+  rdf:type owl:Class ;
+  rdfs:comment "In a power sequence, the additional energy the device will consume before resuming its normal operation (after a pause). This is only an estimated value which will not be added to the value stated in any slot value information."^^xsd:string ;
+  rdfs:label "Resume energy estimated"^^xsd:string ;
+  rdfs:subClassOf s4ener:Energy ;
+.
+s4ener:Slot
+  rdf:type owl:Class ;
+  rdfs:comment "The single steps of a power sequence are represented by slots. A slot is associated with a slot number (while a power sequence is associated with a power sequence identifier). The slot numbers of two power sequences should be considered independent from each other, i.e., slot number 7 of sequence 1 describes a different slot than slot number 7 of sequence 2. Therefore a slot is only uniquely identified in combination with a sequence ID. "^^xsd:string ;
+  rdfs:label "Slot"^^xsd:string ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom saref:Time ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:Energy ;
+      owl:onProperty s4ener:hasEnergyValueType ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:Power ;
+      owl:onProperty s4ener:hasPowerValueType ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom s4ener:PowerSequence ;
+      owl:onProperty s4ener:belongsTo ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:slotNumber ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty saref:hasDescription ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:optionalSlot ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty s4ener:slotActivated ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:DefaultDuration ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:DurationUncertainty ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:EarliestStartTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:EndTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:LatestEndTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:MaxDuration ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:MinDuration ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:RemainingPauseTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass s4ener:StartTime ;
+      owl:onProperty saref:hasTime ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass [
+          rdf:type owl:Class ;
+          owl:unionOf (
+              s4ener:Energy
+              s4ener:Power
+            ) ;
+        ] ;
+      owl:onProperty s4ener:hasValueType ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:onClass s4ener:PowerSequence ;
+      owl:onProperty s4ener:belongsTo ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    ] ;
+.
+s4ener:SlotTimeDurationDescription
+  rdf:type owl:Class ;
+  rdfs:comment "The duration description for the slot time duration temporal entities"^^xsd:string ;
+  rdfs:label "Slot time duration description"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#DurationDescription> ;
+.
+s4ener:StartTime
+  rdf:type owl:Class ;
+  rdfs:comment "The startTime of a power sequence or slot. SHALL be present"^^xsd:string ;
+  rdfs:label "Start time"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:StartTimeDurationDescription
+  rdf:type owl:Class ;
+  rdfs:comment "The duration description for the start time duration temporal entities"^^xsd:string ;
+  rdfs:label "Start time duration description"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#DurationDescription> ;
+.
+s4ener:State
+  rdf:type owl:Class ;
+  rdfs:comment "An entity that represents the possible states in SAREF4EE"^^xsd:string ;
+  rdfs:label "State"^^xsd:string ;
+  rdfs:subClassOf saref:State ;
+.
+s4ener:TimePeriod
+  rdf:type owl:Class ;
+  rdfs:comment "The time period associated with load control event data"^^xsd:string ;
+  rdfs:label "Time period"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#TemporalEntity> ;
+.
+s4ener:TimePeriodDurationDescription
+  rdf:type owl:Class ;
+  rdfs:comment "The duration description for the time period duration temporal entities"^^xsd:string ;
+  rdfs:label "Time period duration description"^^xsd:string ;
+  rdfs:subClassOf <http://www.w3.org/2006/time#DurationDescription> ;
+.
+s4ener:activateSlot
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates whether a slot is used (activateSlot = true) or not (activateSlot = false). SHALL be present if a slot is optional (i.e., the property s4ee:optionalSlot is TRUE), otherwise SHALL be absent (i.e. in case the slot is mandatory)."^^xsd:string ;
+  rdfs:label "activate slot"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:activeRepetitionNumber
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates the current repetition of the sequence of slots. SHALL be present if a power sequence can repeat its sequence of slots (i.e., if s4ee:repetitionTotal is present and has a value > 1). Otherwise, it SHALL be absent. "^^xsd:string ;
+  rdfs:label "active repetition number"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:activeSlotNumber
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates the currently active slot number, if the power sequence state is set to 'running' or 'paused'. Otherwise it SHALL be omitted."^^xsd:string ;
+  rdfs:label "active slot number"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:alternativesCount
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates the number of alternatives groups provided by a power profile"^^xsd:string ;
+  rdfs:label "alternatives count"^^xsd:string ;
+  rdfs:range xsd:integer ;
+.
+s4ener:alternativesGroupID
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "The endpoint-wide unique identifier for the alternatives group instances provided by a power profile"^^xsd:string ;
+  rdfs:label "alternatives group ID"^^xsd:string ;
+  rdfs:range xsd:integer ;
+.
+s4ener:belongsTo
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship identifying the ownership of an entity. In particular, a slot belongs to a power sequence, a power sequence belongs to an alternative, an alternative  belongs to a power profile, a power profile belongs to a device.  "^^xsd:string ;
+  rdfs:label "belongs to"^^xsd:string ;
+.
+s4ener:brandName
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Provides the name of the brand of a device. Useful where the name of the brand and the vendor differs."^^xsd:string ;
+  rdfs:label "brand name"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:cheapest
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates whether a power sequence applies a configuration that minimises the user’s energy bill (if set to TRUE). MAY be present. Absence of this element is equal to the presence with value FALSE. "^^xsd:string ;
+  rdfs:label "cheapest"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:completed
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:PowerSequenceState ;
+  rdfs:comment "Power sequence state with value 'completed'"^^xsd:string ;
+  rdfs:label "completed"^^xsd:string ;
+.
+s4ener:deviceCode
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Provides a device code for the device as defined by the manufacturer."^^xsd:string ;
+  rdfs:label "device code"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:deviceName
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Provides the name of the device as defined by the manufacturer."^^xsd:string ;
+  rdfs:label "device name"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:emergency
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventActionConsume ;
+  rdf:type s4ener:EventActionProduce ;
+  rdfs:comment "Load control event action with value 'emergency'"^^xsd:string ;
+  rdfs:label "emergency"^^xsd:string ;
+.
+s4ener:eventAccepted
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventStateConsume ;
+  rdf:type s4ener:EventStateProduce ;
+  rdfs:comment "Load control state with value 'event accepted'"^^xsd:string ;
+  rdfs:label "event accepted"^^xsd:string ;
+.
+s4ener:eventCancelled
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventStateConsume ;
+  rdf:type s4ener:EventStateProduce ;
+  rdfs:comment "Load control state with value 'event cancelled'"^^xsd:string ;
+  rdfs:label "event cancelled"^^xsd:string ;
+.
+s4ener:eventError
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventStateConsume ;
+  rdf:type s4ener:EventStateProduce ;
+  rdfs:comment "Load control state with value 'event error'"^^xsd:string ;
+  rdfs:label "event error"^^xsd:string ;
+.
+s4ener:eventID
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Used in the Demand Response use case to identify an event"^^xsd:string ;
+  rdfs:label "event ID"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:eventRejected
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventStateConsume ;
+  rdf:type s4ener:EventStateProduce ;
+  rdfs:comment "Load control state with value 'event rejected'"^^xsd:string ;
+  rdfs:label "event rejected"^^xsd:string ;
+.
+s4ener:eventStarted
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventStateConsume ;
+  rdf:type s4ener:EventStateProduce ;
+  rdfs:comment "Load control state with value 'event started'"^^xsd:string ;
+  rdfs:label "event started"^^xsd:string ;
+.
+s4ener:eventStopped
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventStateConsume ;
+  rdf:type s4ener:EventStateProduce ;
+  rdfs:comment "Load control state with value 'event stopped'"^^xsd:string ;
+  rdfs:label "event stopped"^^xsd:string ;
+.
+s4ener:exposes
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a device and its power profile"^^xsd:string ;
+  rdfs:label "exposes"^^xsd:string ;
+.
+s4ener:greenest
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates whether a power sequence optimises the configuration towards the maximum availability of renewable energy (if set to TRUE). MAY be present. Absence of this element is equal to the presence with value FALSE. "^^xsd:string ;
+  rdfs:label "greenest"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:hardwareRevision
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates the hardware revision of the device as defined by the manufacturer."^^xsd:string ;
+  rdfs:label "hardware revision "^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:hasAppliedEventActionConsume
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between the state of a load control event consume and the action to be performed as a consequence of this event."^^xsd:string ;
+  rdfs:label "has applied event action consume"^^xsd:string ;
+.
+s4ener:hasAppliedEventActionProduce
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between the state of a load control event produce and the action to be performed as a consequence of this event."^^xsd:string ;
+  rdfs:label "has applied event action produce"^^xsd:string ;
+.
+s4ener:hasConnection
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "In the Remote Network Management (RemoteNWM) use case, a relationship between a node in a network (i.e., a s4ee:Device) and its connections (i.e., a s4ee:DeviceConnections). The same s4ee:Device (or node) can have multiple device connections as it can be connected to several networks at the same time."^^xsd:string ;
+  rdfs:label "has connection"^^xsd:string ;
+.
+s4ener:hasDevice
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a load control event (used to send overload warning severity level and related load control commands) and the device interested by this event."^^xsd:string ;
+  rdfs:label "has device"^^xsd:string ;
+.
+s4ener:hasEnergy
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a power sequence and its energy (in terms of value and unit of measure)"^^xsd:string ;
+  rdfs:label "has energy"^^xsd:string ;
+  rdfs:range s4ener:Energy ;
+.
+s4ener:hasEnergyValueType
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship representing an energy value type"^^xsd:string ;
+  rdfs:label "has energy value type"^^xsd:string ;
+  rdfs:subPropertyOf s4ener:hasValueType ;
+.
+s4ener:hasEventStateConsume
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between the specification of the state of a load control event consume and the value that this state can assume."^^xsd:string ;
+  rdfs:label "has event state consume"^^xsd:string ;
+  rdfs:subPropertyOf saref:hasState ;
+.
+s4ener:hasEventStateProduce
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between the specification of the state of a load control event produce and the value that this state can assume."^^xsd:string ;
+  rdfs:label "has event state produce"^^xsd:string ;
+  rdfs:subPropertyOf saref:hasState ;
+.
+s4ener:hasExpression
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between an appliance parameter compatibility action and the associated expressions"^^xsd:string ;
+  rdfs:label "has expression"^^xsd:string ;
+.
+s4ener:hasFunction
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship identifying the functions performed by an actuator level and an actuator switch"^^xsd:string ;
+  rdfs:label "has function"^^xsd:string ;
+.
+s4ener:hasPowerValueType
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship representing a power value type"^^xsd:string ;
+  rdfs:label "has power value type"^^xsd:string ;
+  rdfs:subPropertyOf s4ener:hasValueType ;
+.
+s4ener:hasValueType
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relation representing the value type of an entity"^^xsd:string ;
+  rdfs:label "has value type"^^xsd:string ;
+.
+s4ener:inactive
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:PowerSequenceState ;
+  rdfs:comment "Power sequence state with value 'inactive'"^^xsd:string ;
+  rdfs:label "inactive"^^xsd:string ;
+.
+s4ener:increase
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventActionConsume ;
+  rdf:type s4ener:EventActionProduce ;
+  rdfs:comment "Load control event action with value 'increase'"^^xsd:string ;
+  rdfs:label "increase"^^xsd:string ;
+.
+s4ener:invalid
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:PowerSequenceState ;
+  rdfs:comment "Power sequence state with value 'invalid'"^^xsd:string ;
+  rdfs:label "invalid"^^xsd:string ;
+.
+s4ener:isPausable
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "is pausable"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:isStoppable
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "is stoppable"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:manufacturerDescription
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "A description for the device as defined by the manufacturer."^^xsd:string ;
+  rdfs:label "manufacturer description"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:manufacturerLabel
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "A short label of the device as defined by the manufacturer. "^^xsd:string ;
+  rdfs:label "manufacturer label"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:manufacturerNodeIdentification
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates a node identification for the device as defined by the manufacturer. This could be used for the identification of a device, even if it was removed from the network and rejoined later with changed node address."^^xsd:string ;
+  rdfs:label "manufacturer node identification"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:maxCyclesPerDay
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "States the maximum amount of starts a power sequence (of a device) allows per day."^^xsd:string ;
+  rdfs:label "max cycles per day"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:measurementID
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Enables the identification of different sensors on one EEBus address."^^xsd:string ;
+  rdfs:label "measurement id"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:messagingNumber
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "An identifier for one specific message. If a message is marked as obsolete, this number can be used to identify the original message."^^xsd:string ;
+  rdfs:label "messaging number"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:messagingType
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment """Indicates the type of the message. Possible values are:
+-	logging (used for messages, that shall be stored in a log file)
+-	information (messages, that shall be presented to the customer on a display; lower priority)
+-	warning (messages, that shall be presented to the customer on a display; medium priority)
+-	alarm (messages, that shall be presented to the customer on a display; high priority; if there is an alarm device in the household, it shall generate an alarm)
+-	emergency (messages, that shall be presented to the customer on a display; very high priority; if there is an alarm device in the household, it shall generate an alarm; additionally, if possible and configured, an emergency call shall be done)
+-	obsolete (previously sent messages, that shall be marked as obsolete)"""^^xsd:string ;
+  rdfs:label "messaging type"^^xsd:string ;
+  rdfs:range [
+      rdf:type rdfs:Datatype ;
+      owl:oneOf (
+          "logging"^^xsd:string
+          "information"^^xsd:string
+          "warning"^^xsd:string
+          "alarm"^^xsd:string
+          "emergency"^^xsd:string
+          "obsolete"^^xsd:string
+        ) ;
+    ] ;
+.
+s4ener:nodeRemoteControllable
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates whether the power profile of a device is configured for remote control (e.g., by an energy management system).This refers to the selection chosen by the user on the remote control feature of the device. If nodeRemoteControllable is equal to FALSE, all the supported power sequences shall set the sequenceRemoteControllable property to FALSE. If nodeRemoteControllable is equal to TRUE, at least one power sequence shall be remotely controllable by setting the sequenceRemoteControllable property to TRUE."^^xsd:string ;
+  rdfs:label "node remote controllable"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:normal
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventActionConsume ;
+  rdf:type s4ener:EventActionProduce ;
+  rdfs:comment "The value NORMAL used to instantiate the Load Control Event Action class and MeasurandState class"^^xsd:string ;
+  rdfs:label "normal"^^xsd:string ;
+.
+s4ener:optionalSlot
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates whether a slot is optional (if set to TRUE). Otherwise, if a slot is mandatory, SHALL be omitted or set to FALSE. Note: This element applies to every repetition of the slot number."^^xsd:string ;
+  rdfs:label "optional slot"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:pause
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventActionConsume ;
+  rdf:type s4ener:EventActionProduce ;
+  rdfs:comment "Load control event action with value 'pause'"^^xsd:string ;
+  rdfs:label "pause"^^xsd:string ;
+.
+s4ener:paused
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:PowerSequenceState ;
+  rdfs:comment "Power sequence state or sensor state with value 'paused'"^^xsd:string ;
+  rdfs:label "paused"^^xsd:string ;
+.
+s4ener:pending
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:PowerSequenceState ;
+  rdfs:comment "Power sequence state with value 'pending'"^^xsd:string ;
+  rdfs:label "pending"^^xsd:string ;
+.
+s4ener:powerSource
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates the power source of a device. Possible values are e.g. mainsSinglePhase or battery "^^xsd:string ;
+  rdfs:label "power source"^^xsd:string ;
+  rdfs:range [
+      rdf:type rdfs:Datatype ;
+      owl:oneOf (
+          "unknown"^^xsd:string
+          "mainsSinglePhase"^^xsd:string
+          "mains3Phase"^^xsd:string
+          "battery"^^xsd:string
+          "dc"^^xsd:string
+        ) ;
+    ] ;
+.
+s4ener:receives
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a device (e.g., an appliance or a smart meter) and a load control event"^^xsd:string ;
+  rdfs:label "receives"^^xsd:string ;
+.
+s4ener:reduce
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventActionConsume ;
+  rdf:type s4ener:EventActionProduce ;
+  rdfs:comment "Load control event action with value 'reduce'"^^xsd:string ;
+  rdfs:label "reduce"^^xsd:string ;
+.
+s4ener:repetitionsTotal
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Contains the total number of repetitions, if a power sequence repeats its sequence of slots. Absence of the element is equal to a presence with a value of 0 (zero). SHALL be absent if the value is 1. "^^xsd:string ;
+  rdfs:label "repetition total"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:resume
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:EventActionConsume ;
+  rdf:type s4ener:EventActionProduce ;
+  rdfs:comment "Load control event action with value 'resume'"^^xsd:string ;
+  rdfs:label "resume"^^xsd:string ;
+.
+s4ener:running
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:PowerSequenceState ;
+  rdfs:comment "Power sequence state with value 'running'"^^xsd:string ;
+  rdfs:label "running"^^xsd:string ;
+.
+s4ener:scheduled
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:PowerSequenceState ;
+  rdfs:comment "Power sequence state with value 'scheduled'"^^xsd:string ;
+  rdfs:label "scheduled"^^xsd:string ;
+.
+s4ener:scheduledPaused
+  rdf:type owl:NamedIndividual ;
+  rdf:type s4ener:PowerSequenceState ;
+  rdfs:comment "Power sequence state with value 'scheduled paused'"^^xsd:string ;
+  rdfs:label "scheduled paused"^^xsd:string ;
+.
+s4ener:sequenceID
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Provides a unique power sequence identifier for a certain device"^^xsd:string ;
+  rdfs:label "sequence ID"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:sequenceRemoteControllable
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Denotes whether a power sequence is modifiable (if value is TRUE) or not (if value is FALSE). Modifiability is required to configure power sequences and slots. It is also required to change a power sequence state."^^xsd:string ;
+  rdfs:label "sequence remote controllable"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:serialNumber
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates the serial number of a device as defined by the manufacturer. Usually the same as printed on the case."^^xsd:string ;
+  rdfs:label "serial number"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:slotActivated
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "If a slot is optional, represents the current status of the slot (true = the slot will be executed, false = the slot will not be executed). If the slot is not optional, this element SHALL be absent."^^xsd:string ;
+  rdfs:label "slot activated"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:slotNumber
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Provides a unique slot identifier for a certain power sequence"^^xsd:string ;
+  rdfs:label "slot number"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:softwareRevision
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates the software revision of a device as defined by the manufacturer."^^xsd:string ;
+  rdfs:label "software revision"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:supportsReselection
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "If set toTRUE, the power profile of a device does not restrict the number of power sequence re-selections by the CEM, i.e. within a given alternative the CEM may first choose one power sequence, alter the selection by configuring another sequence later on, then alter the selection again, etc. (provided the process rules and data still permit configuration). If supportsReselection is set to FALSE, the device permits the CEM to select a power sequence of an alternative only once."^^xsd:string ;
+  rdfs:label "supports reselection"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:supportsSingleSlotSchedulingOnly
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "If set toTRUE, the power profile of a device does NOT permit the modification of more than one slot per configuration command."^^xsd:string ;
+  rdfs:label "supports single slot scheduling only"^^xsd:string ;
+  rdfs:range xsd:boolean ;
+.
+s4ener:taskIdentifier
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "task identifier"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:totalSequencesCountMax
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Represents the total number of power sequences supported by the power profile of a device"^^xsd:string ;
+  rdfs:label "total sequences count max"^^xsd:string ;
+  rdfs:range xsd:unsignedInt ;
+.
+s4ener:triggersEventActionConsume
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a load control event and the consume action triggered by this event"^^xsd:string ;
+  rdfs:label "triggers event action consume"^^xsd:string ;
+.
+s4ener:triggersEventActionProduce
+  rdf:type owl:ObjectProperty ;
+  rdfs:comment "A relationship between a load control event and the produce action triggered by this event"^^xsd:string ;
+  rdfs:label "triggers event action produce"^^xsd:string ;
+.
+s4ener:valueSource
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates the source (origin/foundation) of the measurement forecasted values for a power sequence. If absent, the source is undefined. Remark: This element shall express the reliability of the forecast."^^xsd:string ;
+  rdfs:label "value source"^^xsd:string ;
+  rdfs:range [
+      rdf:type rdfs:Datatype ;
+      owl:oneOf (
+          "measuredValue"^^xsd:string
+          "calculatedValue"^^xsd:string
+          "empiricalValue"^^xsd:string
+        ) ;
+    ] ;
+.
+s4ener:valueTendency
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Indicates whether the tendency of a measurement is rising, stable or falling."^^xsd:string ;
+  rdfs:label "value tendency"^^xsd:string ;
+  rdfs:range [
+      rdf:type rdfs:Datatype ;
+      owl:oneOf (
+          "rising"^^xsd:string
+          "stable"^^xsd:string
+          "falling"^^xsd:string
+        ) ;
+    ] ;
+.
+s4ener:vendorCode
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Provides a code for the vendor of the device as defined by the manufacturer."^^xsd:string ;
+  rdfs:label "vendor code"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:vendorName
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "Provides the name of the vendor of the device as defined by the manufacturer."^^xsd:string ;
+  rdfs:label "vendor name"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+s4ener:xsdDuration
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment """This property is added to the  time:DurationDescription class to allow to express time duration also as xsd:duration. This is necessary because in the EEBus/E@h model time is always expressed as xsd:duration. We use this property to express the following time information in the EEBus/E@h model:
+- the startTime of the power sequence (in the PowerSequence class). SHALL be present
+- the endTime of the power sequence (in the PowerSequence class). If the value is available, it SHALL be denoted here. Otherwise the element SHALL be omitted.
+- the startTime of measurement as absolute or relative value (in the Measurement class).
+- the endTime of measurement as absolute or relative value (in the Measurement class)."""^^xsd:string ;
+  rdfs:label "duration in xsd "^^xsd:string ;
+  rdfs:range xsd:duration ;
+.
+[
+  rdf:type owl:Class ;
+  owl:unionOf (
+      xsd:int
+      xsd:double
+    ) ;
+].
+[
+  rdf:type owl:Class ;
+  owl:unionOf (
+      xsd:int
+      xsd:double
+    ) ;
+].

@@ -1,0 +1,140 @@
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ns: <http://ontology.universAAL.org/Context.owl#> .
+@prefix ns1: <http://ontology.universAAL.org/ContextHistory.owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://www.w3.org/2002/07/owl#> .
+<http://ontology.universAAL.org/ContextHistory.owl> rdfs:comment "The ontology defining the CHE concepts and services"^^xsd:string ;
+  a :Ontology ;
+  :imports <http://ontology.universAAL.org/DataRepresentation.owl> ;
+  rdfs:label "CHE"^^xsd:string .
+ns1:ContextHistoryService rdfs:comment "The class of services managing Context Events in CHE"^^xsd:string ;
+  a :Class ;
+  rdfs:label "Context History Services"^^xsd:string ;
+  rdfs:subClassOf <http://www.daml.org/services/owl-s/1.1/Service.owl#Service> ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns:ContextEventCHE2 ;
+      :onProperty ns1:manages
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty ns1:processes
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:long ;
+      :onProperty ns1:timestampFrom
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:long ;
+      :onProperty ns1:timestampTo
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:duration ;
+      :onProperty ns1:durationFrom
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:duration ;
+      :onProperty ns1:durationTo
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty ns1:returns
+    ] .
+ns1:manages rdfs:domain ns1:ContextHistoryService ;
+  a :ObjectProperty .
+ns1:durationFrom rdfs:domain ns1:ContextHistoryService ;
+  a :DatatypeProperty .
+ns1:durationTo rdfs:domain ns1:ContextHistoryService ;
+  a :DatatypeProperty .
+ns1:timestampTo rdfs:domain ns1:ContextHistoryService ;
+  a :DatatypeProperty .
+ns1:returns rdfs:domain ns1:ContextHistoryService ;
+  a :DatatypeProperty .
+ns1:timestampFrom rdfs:domain ns1:ContextHistoryService ;
+  a :DatatypeProperty .
+ns1:processes rdfs:domain ns1:ContextHistoryService ;
+  a :DatatypeProperty .
+ns:ContextEventCHE2 rdfs:comment "Replicates ContextEvent as a ManagedIndividual"^^xsd:string ;
+  a :Class ;
+  rdfs:label "Context Event (CHE)"^^xsd:string ;
+  rdfs:subClassOf <http://ontology.universAAL.org/uAAL.owl#ManagedIndividual> ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns:hasTimestampCHE2
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:long ;
+      :onProperty ns:hasTimestampCHE2
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns:hasExpirationTimeCHE2
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:long ;
+      :onProperty ns:hasExpirationTimeCHE2
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns:hasConfidenceCHE2
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom [
+        a :Class ;
+        :withRestrictions (
+          [
+            xsd:minInclusive "0"^^xsd:long
+          ]
+          [
+            xsd:maxInclusive "100"^^xsd:long
+          ]
+        ) ;
+        :onDatatype xsd:long
+      ] ;
+      :onProperty ns:hasConfidenceCHE2
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns:hasProviderCHE2
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns:ContextProvider ;
+      :onProperty ns:hasProviderCHE2
+    ] .
+rdf:objectCHE2 rdfs:domain ns:ContextEventCHE2 ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+rdf:predicateCHE2 rdfs:domain ns:ContextEventCHE2 ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns:hasConfidenceCHE2 rdfs:domain ns:ContextEventCHE2 ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns:hasTimestampCHE2 rdfs:domain ns:ContextEventCHE2 ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+rdf:subjectCHE2 rdfs:domain ns:ContextEventCHE2 ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns:hasProviderCHE2 rdfs:domain ns:ContextEventCHE2 ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns:hasExpirationTimeCHE2 rdfs:domain ns:ContextEventCHE2 ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .

@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<TITLE>geo:point</TITLE>
+</HEAD>
+<BODY>
+<FONT face="Verdana, Helvetica, sans-serif">
+<H2>
+<FONT SIZE="-1">http://www.w3.org/2003/01/geo/wgs84_pos#Point</FONT><BR>
+Class geo:point</H2>
+<CENTER><IMG border="0" src="diagrams/geo_Point.jpg"></CENTER><P>
+<HR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdf:type</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/RDFSClass.greyed.gif" width="16" height="16"></TD><TD><FONT size="-1">
+rdfs:Class</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:comment</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/XSDLiteral.gif" width="16" height="16"></TD><TD><FONT size="-1">
+ 
+Uniquely identified by lat/long/alt. i.e.
+
+spaciallyIntersects(P1, P2) :- lat(P1, LAT), long(P1, LONG), alt(P1, ALT),
+  lat(P2, LAT), long(P2, LONG), alt(P2, ALT).
+
+sameThing(P1, P2) :- type(P1, Point), type(P2, Point), spaciallyIntersects(P1, P2).
+  
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/XSDLiteral.gif" width="16" height="16"></TD><TD><FONT size="-1">
+A point, typically described using a coordinate system relative to Earth, such as WGS84.
+  
+</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:label</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/XSDLiteral.gif" width="16" height="16"></TD><TD><FONT size="-1">
+point
+</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:subClassOf</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/RDFSClass.greyed.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="geo_SpatialThing.html">geo:SpatialThing</A></FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+1">
+<B>References</B></FONT></TH>
+</TR>
+<TR><TD><FONT size="-1"><UL>
+<LI>as rdfs:subClassOf (<A href="LogiCO_GeoPoint.html">LogiCO:GeoPoint</A>)</LI></UL></FONT></TABLE><P>
+</FONT>
+<P align="right"><FONT size="-1" face="Verdana, Helvetica, sans-serif">Generated with <A href="http://www.topbraidcomposer.org" target="_top">TopBraid Composer</A>
+ by <A href="http://www.topquadrant.com" target="_top">TopQuadrant, Inc.</A></P>
+</BODY>
+</HTML>

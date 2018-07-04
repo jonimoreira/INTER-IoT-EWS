@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<TITLE>LogiCO:Package</TITLE>
+</HEAD>
+<BODY>
+<FONT face="Verdana, Helvetica, sans-serif">
+<H2>
+<FONT SIZE="-1">http://ontology.tno.nl/logico#Package</FONT><BR>
+Class LogiCO:Package</H2>
+<CENTER><IMG border="0" src="diagrams/LogiCO_Package.jpg"></CENTER><P>
+<HR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1"><A href="LogiCO_mappingToEDI.html">LogiCO:mappingToEDI</A></FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/XSDLiteral.gif" width="16" height="16"></TD><TD><FONT size="-1">
+UN/EDIFACT D.12B Composite Data Element C213 NUMBER AND TYPE OF PACKAGES     
+Desc: Number and type of individual parts of a shipment.
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/RDFResource.greyed.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="http://www.unece.org/fileadmin/DAM/trade/untdid/d12b/trcd/trcdc213.htm" target="_top">http://www.unece.org/fileadmin/DAM/trade/untdid/d12b/trcd/trcdc213.htm</A>
+</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdf:type</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/RDFSClass.greyed.gif" width="16" height="16"></TD><TD><FONT size="-1">
+owl:Class</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:comment</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/XSDLiteral.gif" width="16" height="16"></TD><TD><FONT size="-1">
+Material used for containment, protection and movement of product classes
+</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:subClassOf</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMinCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiCO_hasQuantity.html">LogiCO:hasQuantity</A> min 0 xsd:integer
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMinCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiCO_isMovedBy.html">LogiCO:isMovedBy</A> min 0 <A href="LogiCO_TransportMeans.html">LogiCO:TransportMeans</A>
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMinCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiCO_isContainedIn.html">LogiCO:isContainedIn</A> min 0 <A href="LogiCO_MoveableEquipment.html">LogiCO:MoveableEquipment</A>
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiCO_MoveableResource.html">LogiCO:MoveableResource</A></FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+1">
+<B>References</B></FONT></TH>
+</TR>
+<TR><TD><FONT size="-1"><UL>
+<LI>as rdfs:domain (<A href="LogiCO_hasSupplier.html">LogiCO:hasSupplier</A>,&nbsp;<A href="LogiCO_hasPackageID.html">LogiCO:hasPackageID</A>,&nbsp;<A href="LogiCO_hasFullEmptyIndicator.html">LogiCO:hasFullEmptyIndicator</A>,&nbsp;<A href="LogiCO_hasEquipmentRequirement.html">LogiCO:hasEquipmentRequirement</A>,&nbsp;<A href="LogiCO_hasSupplier.html">LogiCO:hasSupplier</A>)</LI><LI>as rdfs:range (<A href="LogiCO_isPackagedIn.html">LogiCO:isPackagedIn</A>,&nbsp;<A href="LogiCO_isSupplierOf.html">LogiCO:isSupplierOf</A>)</LI><LI>as rdfs:subClassOf (<A href="LogiCO_Case.html">LogiCO:Case</A>,&nbsp;<A href="LogiCO_Pallet.html">LogiCO:Pallet</A>,&nbsp;<A href="LogiCO_Barrel.html">LogiCO:Barrel</A>,&nbsp;<A href="LogiCO_Bucket.html">LogiCO:Bucket</A>,&nbsp;<A href="LogiCO_Tank.html">LogiCO:Tank</A>,&nbsp;<A href="LogiCO_Container.html">LogiCO:Container</A>,&nbsp;<A href="LogiCO_Bottle.html">LogiCO:Bottle</A>,&nbsp;<A href="LogiCO_Crate.html">LogiCO:Crate</A>,&nbsp;<A href="LogiCO_ProductClass.html">LogiCO:ProductClass</A>,&nbsp;<A href="LogiCO_Tray.html">LogiCO:Tray</A>,&nbsp;<A href="LogiCO_Box.html">LogiCO:Box</A>,&nbsp;<A href="LogiCO_Basket.html">LogiCO:Basket</A>,&nbsp;<A href="LogiCO_Bag.html">LogiCO:Bag</A>,&nbsp;<A href="LogiCO_Carton.html">LogiCO:Carton</A>,&nbsp;<A href="LogiCO_Drum.html">LogiCO:Drum</A>)</LI></UL></FONT></TABLE><P>
+</FONT>
+<P align="right"><FONT size="-1" face="Verdana, Helvetica, sans-serif">Generated with <A href="http://www.topbraidcomposer.org" target="_top">TopBraid Composer</A>
+ by <A href="http://www.topquadrant.com" target="_top">TopQuadrant, Inc.</A></P>
+</BODY>
+</HTML>

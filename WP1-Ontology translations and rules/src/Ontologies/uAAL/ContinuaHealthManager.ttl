@@ -1,0 +1,60 @@
+
+@prefix pvn: <http://ontology.universAAL.org/uAAL.owl#> .
+@prefix ns: <http://ontology.universAAL.org/ContinuaHealthManager.owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://www.w3.org/2002/07/owl#> .
+<http://ontology.universAAL.org/ContinuaHealthManager.owl> rdfs:comment "Ontology for Continua Health Manager"^^xsd:string ;
+  a :Ontology ;
+  :imports <http://ontology.universAAL.org/DataRepresentation.owl> ;
+  rdfs:label "Personal Health Manager based on Continua HDP"^^xsd:string .
+ns:Fact rdfs:comment "Continua Health Device created from a MAC value and a data type"^^xsd:string ;
+  a :Class ;
+  rdfs:label "Continua Health Device"^^xsd:string ;
+  rdfs:subClassOf pvn:ManagedIndividual ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns:hasMAC
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty ns:hasMAC
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns:hasDataType
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty ns:hasDataType
+    ] .
+ns:hasDataType rdfs:domain ns:Fact ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns:hasMAC rdfs:domain ns:Fact ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns:ContinuaHealthManagerService rdfs:comment "A key-value pair (MAC, DataType) which describes a Continua Health Device"^^xsd:string ;
+  a :Class ;
+  rdfs:label "Continua Health Manager"^^xsd:string ;
+  rdfs:subClassOf pvn:ManagedIndividual ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns:Fact ;
+      :onProperty ns:hasContinuaDevice
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns:Fact ;
+      :onProperty ns:hasNotContinuaDevice
+    ] .
+ns:hasContinuaDevice rdfs:domain ns:ContinuaHealthManagerService ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns:hasNotContinuaDevice rdfs:domain ns:ContinuaHealthManagerService ;
+  a :ObjectProperty ,
+    :FunctionalProperty .

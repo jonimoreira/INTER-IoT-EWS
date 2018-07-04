@@ -1,0 +1,442 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XPlat.Core</name>
+    </assembly>
+    <members>
+        <member name="T:XPlat.Exceptions.AppPermissionInvalidException">
+            <summary>
+            Defines an exception that is thrown when an application permission is not set.
+            </summary>
+        </member>
+        <member name="M:XPlat.Exceptions.AppPermissionInvalidException.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:XPlat.Exceptions.AppPermissionInvalidException"/> class.
+            </summary>
+            <param name="permission">
+            The permission which could not be found.
+            </param>
+            <param name="message">
+            The message to store.
+            </param>
+        </member>
+        <member name="M:XPlat.Exceptions.AppPermissionInvalidException.#ctor(System.String,System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:XPlat.Exceptions.AppPermissionInvalidException"/> class.
+            </summary>
+            <param name="permission">
+            The permission which could not be found.
+            </param>
+            <param name="message">
+            The message to store.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+        </member>
+        <member name="P:XPlat.Exceptions.AppPermissionInvalidException.PermissionCode">
+            <summary>
+            Gets the permission which could not be found.
+            </summary>
+        </member>
+        <member name="T:XPlat.Extensions">
+            <summary>
+            Defines a collection of extensions for collections.
+            </summary>
+        </member>
+        <member name="M:XPlat.Extensions.Take``1(System.Collections.Generic.List{``0},System.Int32,System.Int32)">
+            <summary>
+            Takes a number of elements from the specified collection from the specified starting index.
+            </summary>
+            <param name="list">
+            The <see cref="T:System.Collections.Generic.List`1"/> to take items from.
+            </param>
+            <param name="startingIndex">
+            The index to start at in the <see cref="T:System.Collections.Generic.List`1"/>.
+            </param>
+            <param name="takeCount">
+            The number of items to take from the starting index of the <see cref="T:System.Collections.Generic.List`1"/>.
+            </param>
+            <typeparam name="T">
+            The type of elements in the collection.
+            </typeparam>
+            <returns>
+            Returns a collection of <see cref="!:T"/> items.
+            </returns>
+        </member>
+        <member name="M:XPlat.Extensions.Take``1(System.Collections.Generic.IReadOnlyList{``0},System.Int32,System.Int32)">
+            <summary>
+            Takes a number of elements from the specified collection from the specified starting index.
+            </summary>
+            <param name="list">
+            The <see cref="T:System.Collections.Generic.List`1"/> to take items from.
+            </param>
+            <param name="startingIndex">
+            The index to start at in the <see cref="T:System.Collections.Generic.List`1"/>.
+            </param>
+            <param name="takeCount">
+            The number of items to take from the starting index of the <see cref="T:System.Collections.Generic.List`1"/>.
+            </param>
+            <typeparam name="T">
+            The type of elements in the collection.
+            </typeparam>
+            <returns>
+            Returns a collection of <see cref="!:T"/> items.
+            </returns>
+        </member>
+        <member name="M:XPlat.Extensions.GetRange``1(System.Collections.Generic.IReadOnlyList{``0},System.Int32,System.Int32)">
+            <summary>
+            Creates a copy of a range of elements in a <see cref="T:System.Collections.Generic.IReadOnlyList`1"/>.
+            </summary>
+            <param name="list">
+            The list to get a range from.
+            </param>
+            <param name="index">
+            The index to start at.
+            </param>
+            <param name="count">
+            The number of items to get in the range.
+            </param>
+            <typeparam name="T">
+            The type of item in the list.
+            </typeparam>
+            <returns>
+            The range as a collection.
+            </returns>
+        </member>
+        <member name="M:XPlat.Extensions.IsValid(System.DateTime,System.TimeSpan)">
+            <summary>
+            Checks whether a DateTime object is valid by checking it is within the maximum age to the current DateTime.
+            </summary>
+            <param name="date">
+            The date to check.
+            </param>
+            <param name="maximumAge">
+            The maximum valid age.
+            </param>
+            <returns>
+            When this method completes, returns true if valid; else false.
+            </returns>
+        </member>
+        <member name="M:XPlat.Extensions.IsValid(System.DateTimeOffset,System.TimeSpan)">
+            <summary>
+            Checks whether a DateTimeOffset object is valid by checking it is within the maximum age to the current DateTime.
+            </summary>
+            <param name="date">
+            The date to check.
+            </param>
+            <param name="maximumAge">
+            The maximum valid age.
+            </param>
+            <returns>
+            When this method completes, returns true if valid; else false.
+            </returns>
+        </member>
+        <member name="M:XPlat.Extensions.Contains(System.String,System.String,System.Globalization.CompareOptions)">
+            <summary>
+            Checks whether the specified text contains another phrase.
+            </summary>
+            <param name="text">
+            The text to check.
+            </param>
+            <param name="containedString">
+            The string to check exists within the text.
+            </param>
+            <param name="compareOption">
+            The compare option.
+            </param>
+            <returns>
+            Returns true if the contained string exists in the text; else false.
+            </returns>
+        </member>
+        <member name="T:XPlat.Foundation.Collections.CollectionChange">
+            <summary>
+            Describes the action that causes a change to a collection.
+            </summary>
+        </member>
+        <member name="T:XPlat.Foundation.Collections.IMapChangedEventArgs`1">
+            <summary>Provides data for the changed event of a map collection.</summary>
+            <typeparam name="K">The type of the keys in the map.</typeparam>
+        </member>
+        <member name="P:XPlat.Foundation.Collections.IMapChangedEventArgs`1.CollectionChange">
+            <summary>Gets the type of change that occurred in the map.</summary>
+            <returns>The type of change in the map.</returns>
+        </member>
+        <member name="P:XPlat.Foundation.Collections.IMapChangedEventArgs`1.Key">
+            <summary>Gets the key of the item that changed.</summary>
+            <returns>The key of the item that changed.</returns>
+        </member>
+        <member name="T:XPlat.Foundation.Collections.IObservableMap`2">
+            <summary>
+            Notifies listeners of dynamic changes to a map, such as when items are added or removed.
+            </summary>
+            <typeparam name="TKey">
+            The type of the keys in the map.
+            </typeparam>
+            <typeparam name="TValue">
+            The type of the values in the map.
+            </typeparam>
+        </member>
+        <member name="E:XPlat.Foundation.Collections.IObservableMap`2.MapChanged">
+            <summary>
+            Occurs when the map changes.
+            </summary>
+        </member>
+        <member name="T:XPlat.Foundation.Collections.IPropertySet">
+            <summary>
+            Represents a collection of key-value pairs, correlating several other collection interfaces.
+            </summary>
+        </member>
+        <member name="M:XPlat.Foundation.Collections.IPropertySet.Get``1(System.String)">
+            <summary>
+            Gets a value from the set for the specified key as the specified type.
+            </summary>
+            <param name="key">
+            The key to retrieve.
+            </param>
+            <typeparam name="T">
+            The type of object expected.
+            </typeparam>
+            <returns>
+            When complete, the method will return the value for the specified key as the specified type.
+            </returns>
+        </member>
+        <member name="T:XPlat.Foundation.Collections.MapChangedEventHandler`2">
+            <summary>
+            Represents the method that handles the changed event of an observable map.
+            </summary>
+            <typeparam name="K">
+            The type of the keys in the map.
+            </typeparam>
+            <typeparam name="V">
+            The type of the values in the map.
+            </typeparam>
+            <param name="sender">
+            The observable map that changed.
+            </param>
+            <param name="event">
+            The description of the change that occurred in the map.
+            </param>
+        </member>
+        <member name="T:XPlat.Foundation.TypedEventHandler`2">
+            <summary>
+            Defines a method that handles general events.
+            </summary>
+            <param name="sender">
+            The event source.
+            </param>
+            <param name="args">
+            The event data. If there is no event data, this parameter will be null.
+            </param>
+            <typeparam name="TSender">
+            The type of sender object.
+            </typeparam>
+            <typeparam name="TResult">
+            The type of event data generated by the event.
+            </typeparam>
+        </member>
+        <member name="T:XPlat.Helpers.ParseHelper">
+            <summary>
+            Defines a collection of helper methods for parsing.
+            </summary>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseBool(System.Object)">
+            <summary>
+            Safely parses an object to a boolean.
+            </summary>
+            <param name="boolean">
+            The boolean object.
+            </param>
+            <returns>
+            Returns object parameter as a boolean.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseInt(System.Object)">
+            <summary>
+            Safely parses an object to an integer.
+            </summary>
+            <param name="integer">
+            The integer object.
+            </param>
+            <returns>
+            Returns object parameter as an integer.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseUInt(System.Object)">
+            <summary>
+            Safely parses an object to an unsigned integer.
+            </summary>
+            <param name="integer">
+            The unsigned integer object.
+            </param>
+            <returns>
+            Returns object parameter as an unsigned integer.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseInt64(System.Object)">
+            <summary>
+            Safely parse an object to an Int64 object.
+            </summary>
+            <param name="integer">
+            The integer.
+            </param>
+            <returns>
+            The <see cref="T:System.Int64"/>.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseGuid(System.Object)">
+            <summary>
+            Safely parse an object to a Guid object.
+            </summary>
+            <param name="guid">
+            The guid.
+            </param>
+            <returns>
+            The <see cref="T:System.Guid"/>.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseDouble(System.Object)">
+            <summary>
+            Safely parses an object to a double.
+            </summary>
+            <param name="dbl">
+            The double object.
+            </param>
+            <returns>
+            Returns object parameter as a double.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseDecimal(System.Object)">
+            <summary>
+            Safely parses an object to a decimal.
+            </summary>
+            <param name="dcml">
+            The decimal object.
+            </param>
+            <returns>
+            Returns object parameter as a decimal.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseString(System.Object)">
+            <summary>
+            Safely parses an object to a string.
+            </summary>
+            <param name="str">
+            The string object.
+            </param>
+            <returns>
+            Returns object parameter as a string.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseFloat(System.Object)">
+            <summary>
+            Safely parses an object to a float.
+            </summary>
+            <param name="flt">
+            The float object.
+            </param>
+            <returns>
+            The <see cref="T:System.Single"/>.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseEnum``1(System.Object)">
+            <summary>
+            Safely parses an object to an enum value.
+            </summary>
+            <param name="enumValue">
+            The enum object.
+            </param>
+            <typeparam name="TEnum">
+            The type of Enum.
+            </typeparam>
+            <returns>
+            Returns object parameter as an enum value.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseDateTime(System.Object)">
+            <summary>
+            Safely parses an object to a <see cref="T:System.DateTime"/> value.
+            </summary>
+            <param name="dateTime">
+            The date time object.
+            </param>
+            <returns>
+            Returns object parameter as a DateTime.
+            </returns>
+        </member>
+        <member name="M:XPlat.Helpers.ParseHelper.SafeParseDateTimeOffset(System.Object)">
+            <summary>
+            Safely parses an object to a <see cref="T:System.DateTimeOffset"/> value.
+            </summary>
+            <param name="dateTimeOffset">
+            The date time offset object.
+            </param>
+            <returns>
+            Returns object parameter as a DateTimeOffset.
+            </returns>
+        </member>
+        <member name="M:XPlat.Threading.Tasks.TaskSchedulerAwaiter.#ctor(System.Threading.Tasks.TaskScheduler)">
+            <summary>
+            Initializes a new instance of the <see cref="T:XPlat.Threading.Tasks.TaskSchedulerAwaiter"/> struct.
+            </summary>
+            <param name="taskScheduler">
+            The task scheduler.
+            </param>
+        </member>
+        <member name="M:XPlat.Threading.Tasks.TaskSchedulerAwaiter.GetAwaiter">
+            <summary>
+            Gets the <see cref="T:XPlat.Threading.Tasks.TaskSchedulerAwaiter"/>.
+            </summary>
+            <returns>
+            Returns this instance.
+            </returns>
+        </member>
+        <member name="P:XPlat.Threading.Tasks.TaskSchedulerAwaiter.IsCompleted">
+            <summary>
+            Gets a value indicating whether the awaiter is completed.
+            </summary>
+        </member>
+        <member name="M:XPlat.Threading.Tasks.TaskSchedulerAwaiter.NewTaskSchedulerAwaiter">
+            <summary>
+            Gets a new instance of a <see cref="T:XPlat.Threading.Tasks.TaskSchedulerAwaiter"/>.
+            </summary>
+            <returns>
+            Returns an instance of <see cref="T:XPlat.Threading.Tasks.TaskSchedulerAwaiter"/>.
+            </returns>
+        </member>
+        <member name="M:XPlat.Threading.Tasks.TaskSchedulerAwaiter.OnCompleted(System.Action)">
+            <summary>
+            Schedules the continuation action that's invoked when the instance completes.
+            </summary>
+            <param name="completedAction">
+            The action to invoke when the operation completes.
+            </param>
+        </member>
+        <member name="M:XPlat.Threading.Tasks.TaskSchedulerAwaiter.GetResult">
+            <summary>
+            Gets the result.
+            </summary>
+        </member>
+        <member name="T:XPlat.Threading.Tasks.TimeoutTask">
+            <summary>
+            Defines a task that is actioned when the timeout occurs unless cancelled.
+            </summary>
+        </member>
+        <member name="M:XPlat.Threading.Tasks.TimeoutTask.#ctor(System.TimeSpan,System.Action)">
+            <summary>
+            Initializes a new instance of the <see cref="T:XPlat.Threading.Tasks.TimeoutTask"/> class.
+            </summary>
+            <param name="timeout">
+            The timeout perioud.
+            </param>
+            <param name="timeoutAction">
+            The action to perform when the timeout occurs.
+            </param>
+        </member>
+        <member name="M:XPlat.Threading.Tasks.TimeoutTask.Cancel">
+            <summary>
+            Cancels the timeout task to prevent the timeout action from occurring.
+            </summary>
+        </member>
+    </members>
+</doc>

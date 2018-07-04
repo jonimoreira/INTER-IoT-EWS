@@ -26,6 +26,10 @@ namespace ShimmerCaptureXamarin
 		
 		public static void UpdateIdValues()
 		{
+			global::Microsoft.Azure.Amqp.Resource.String.ApplicationName = global::ShimmerCaptureXamarin.Resource.String.ApplicationName;
+			global::PCLCrypto.Resource.String.ApplicationName = global::ShimmerCaptureXamarin.Resource.String.ApplicationName;
+			global::PCLCrypto.Resource.String.Hello = global::ShimmerCaptureXamarin.Resource.String.Hello;
+			global::Droid.Resource.String.library_name = global::ShimmerCaptureXamarin.Resource.String.library_name;
 		}
 		
 		public partial class Attribute
@@ -75,8 +79,14 @@ namespace ShimmerCaptureXamarin
 			// aapt resource value: 0x7f050005
 			public const int textViewAccelX = 2131034117;
 			
+			// aapt resource value: 0x7f050007
+			public const int textViewECG = 2131034119;
+			
 			// aapt resource value: 0x7f050004
 			public const int textViewShimmerState = 2131034116;
+			
+			// aapt resource value: 0x7f050006
+			public const int textViewTimestamp = 2131034118;
 			
 			static Id()
 			{
@@ -107,23 +117,26 @@ namespace ShimmerCaptureXamarin
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f040005
-			public const int ApplicationName = 2130968581;
-			
-			// aapt resource value: 0x7f040001
-			public const int Connect = 2130968577;
-			
 			// aapt resource value: 0x7f040002
-			public const int Disconnect = 2130968578;
-			
-			// aapt resource value: 0x7f040000
-			public const int Hello = 2130968576;
+			public const int ApplicationName = 2130968578;
 			
 			// aapt resource value: 0x7f040003
-			public const int Start = 2130968579;
+			public const int Connect = 2130968579;
 			
 			// aapt resource value: 0x7f040004
-			public const int Stop = 2130968580;
+			public const int Disconnect = 2130968580;
+			
+			// aapt resource value: 0x7f040001
+			public const int Hello = 2130968577;
+			
+			// aapt resource value: 0x7f040005
+			public const int Start = 2130968581;
+			
+			// aapt resource value: 0x7f040006
+			public const int Stop = 2130968582;
+			
+			// aapt resource value: 0x7f040000
+			public const int library_name = 2130968576;
 			
 			static String()
 			{

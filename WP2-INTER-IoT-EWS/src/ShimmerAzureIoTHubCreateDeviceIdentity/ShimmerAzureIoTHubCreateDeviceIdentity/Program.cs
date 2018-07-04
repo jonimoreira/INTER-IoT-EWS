@@ -12,7 +12,7 @@ namespace ShimmerAzureIoTHubCreateDeviceIdentity
     class Program
     {
         static RegistryManager registryManager;
-        static string connectionString = "HostName=MyDrivingIoTHubEWS.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=tCI9KK86Dpkd2c22WbsRFzTQX0uMjrxnKzu1bpsM1ZI=";
+        static string connectionString = "XXXXXXXXXXXX";
 
         static void Main(string[] args)
         {
@@ -23,7 +23,7 @@ namespace ShimmerAzureIoTHubCreateDeviceIdentity
 
         private static async Task AddDeviceAsync()
         {
-            string deviceId = "ZY224DC54P";
+            string deviceId = "XXXXXXXXXXXXX";
             Device device;
             try
             {

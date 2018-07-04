@@ -1,0 +1,1322 @@
+@prefix : <http://purl.oclc.org/NET/ssnx/meteo/WM30#> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix qu: <http://purl.oclc.org/NET/ssnx/qu/qu#> .
+@prefix DUL: <http://www.loa-cnr.it/ontologies/DUL.owl#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dim: <http://purl.oclc.org/NET/ssnx/qu/dim#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ssn: <http://purl.oclc.org/NET/ssnx/ssn#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix WM30: <http://purl.oclc.org/NET/ssnx/meteo/WM30#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix unit: <http://purl.oclc.org/NET/ssnx/qu/unit#> .
+@prefix quantity: <http://purl.oclc.org/NET/ssnx/qu/quantity#> .
+@base <http://purl.oclc.org/NET/ssnx/meteo/WM30> .
+
+<http://purl.oclc.org/NET/ssnx/meteo/WM30> rdf:type owl:Ontology ;
+                                           
+                                           dc:creator "W3C Semantic Sensor Network Incubator Group"^^xsd:string ;
+                                           
+                                           dc:rights "Copyright 2010 - 2011 W3C." ;
+                                           
+                                           dc:title "SSN Ontology example: Wind Sensor" ;
+                                           
+                                           rdfs:comment """An example of the SSN-XG sensor ontology (http://www.w3.org/2005/Incubator/ssn/) used to describe a sensing device - the Vaisala WM30.
+
+The Vaisala WM30 measures wind speed and wind direction.
+
+The device data sheet is available at
+http://www.vaisala.com/en/products/windsensors/Pages/WM30.aspx
+
+The specification here follows the data sheet closely and describes all the measurement capabilites, power supply and operating and survial properties.
+
+This example shows how to use and build on the definitions in the SSN-XG's ontology as well as how to import and use other ontologies (in this example units) and how to extend the definitions.
+
+
+There are things about a sensor that one may wish to describe that aren't covered by this example (or the SSN-XG ontology).  For example, data about the company that made the device, the url of documentation, the size and weight of the device, etc.  These aren't sensor specific issues and so aren't covered, one needs to import other approapriate ontologies to describe those aspects.
+
+Also, this example doesn't provide any instance specifications - it describes what a WM30 is, not any particular WM30 devices.  Generally an ontology like this one would describe the TBox specification and the ABox instances provided by a separate ontology; hence the instances are in an acompaning example.""" ;
+                                           
+                                           dct:created "2010-10-08" ;
+                                           
+                                           dct:modified "2011-06-20" ;
+                                           
+                                           owl:imports <http://purl.oclc.org/NET/ssnx/ssn> ,
+                                                       <http://purl.oclc.org/NET/ssnx/qu/qu> ,
+                                                       <http://purl.oclc.org/NET/ssnx/qu/qu-rec20> ,
+                                                       <http://www.loa-cnr.it/ontologies/DUL.owl> ;
+                                           
+                                           cc:license <http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231.html> .
+
+
+#################################################################
+#
+#    Annotation properties
+#
+#################################################################
+
+
+###  http://creativecommons.org/ns#license
+
+cc:license rdf:type owl:AnnotationProperty .
+
+
+
+###  http://purl.org/dc/elements/1.1/author
+
+dc:author rdf:type owl:AnnotationProperty .
+
+
+
+###  http://purl.org/dc/elements/1.1/creator
+
+dc:creator rdf:type owl:AnnotationProperty .
+
+
+
+###  http://purl.org/dc/elements/1.1/description
+
+dc:description rdf:type owl:AnnotationProperty .
+
+
+
+###  http://purl.org/dc/elements/1.1/identifier
+
+dc:identifier rdf:type owl:AnnotationProperty .
+
+
+
+###  http://purl.org/dc/elements/1.1/rights
+
+dc:rights rdf:type owl:AnnotationProperty .
+
+
+
+###  http://purl.org/dc/elements/1.1/source
+
+dc:source rdf:type owl:AnnotationProperty .
+
+
+
+###  http://purl.org/dc/elements/1.1/title
+
+dc:title rdf:type owl:AnnotationProperty .
+
+
+
+###  http://purl.org/dc/terms/created
+
+dct:created rdf:type owl:AnnotationProperty .
+
+
+
+###  http://purl.org/dc/terms/modified
+
+dct:modified rdf:type owl:AnnotationProperty .
+
+
+
+###  http://www.w3.org/2000/01/rdf-schema#comment
+
+rdfs:comment rdf:type owl:AnnotationProperty .
+
+
+
+###  http://www.w3.org/2000/01/rdf-schema#isDefinedBy
+
+rdfs:isDefinedBy rdf:type owl:AnnotationProperty .
+
+
+
+###  http://www.w3.org/2000/01/rdf-schema#label
+
+rdfs:label rdf:type owl:AnnotationProperty .
+
+
+
+###  http://www.w3.org/2000/01/rdf-schema#seeAlso
+
+rdfs:seeAlso rdf:type owl:AnnotationProperty .
+
+
+
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#unitOfMeasure
+
+:unitOfMeasure rdf:type owl:ObjectProperty ;
+               
+               rdfs:subPropertyOf DUL:isParametrizedBy .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#unitOfMeasureFor
+
+:unitOfMeasureFor rdf:type owl:ObjectProperty ;
+                  
+                  owl:inverseOf :unitOfMeasure ;
+                  
+                  rdfs:subPropertyOf DUL:parametrizes .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/qu#quantityKind
+
+qu:quantityKind rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#forProperty
+
+ssn:forProperty rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#hasMeasurementCapability
+
+ssn:hasMeasurementCapability rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#hasMeasurementProperty
+
+ssn:hasMeasurementProperty rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#hasOperatingProperty
+
+ssn:hasOperatingProperty rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#hasProperty
+
+ssn:hasProperty rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#hasSubSystem
+
+ssn:hasSubSystem rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#hasValue
+
+ssn:hasValue rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#implements
+
+ssn:implements rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#inCondition
+
+ssn:inCondition rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#isPropertyOf
+
+ssn:isPropertyOf rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#observes
+
+ssn:observes rdf:type owl:ObjectProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#ofFeature
+
+ssn:ofFeature rdf:type owl:ObjectProperty .
+
+
+
+###  http://www.loa-cnr.it/ontologies/DUL.owl#isParametrizedBy
+
+DUL:isParametrizedBy rdf:type owl:ObjectProperty .
+
+
+
+###  http://www.loa-cnr.it/ontologies/DUL.owl#parametrizes
+
+DUL:parametrizes rdf:type owl:ObjectProperty .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#hasRangeMaxValue
+
+:hasRangeMaxValue rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:subPropertyOf DUL:hasRegionDataValue .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#hasRangeMaxValueExclusive
+
+:hasRangeMaxValueExclusive rdf:type owl:DatatypeProperty ;
+                           
+                           rdfs:subPropertyOf :hasRangeMaxValue .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#hasRangeMaxValueInclusive
+
+:hasRangeMaxValueInclusive rdf:type owl:DatatypeProperty ;
+                           
+                           rdfs:subPropertyOf :hasRangeMaxValue .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#hasRangeMinValue
+
+:hasRangeMinValue rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:subPropertyOf DUL:hasRegionDataValue .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#hasRangeMinValueExclusive
+
+:hasRangeMinValueExclusive rdf:type owl:DatatypeProperty ;
+                           
+                           rdfs:subPropertyOf :hasRangeMinValue .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#hasRangeMinValueInclusive
+
+:hasRangeMinValueInclusive rdf:type owl:DatatypeProperty ;
+                           
+                           rdfs:subPropertyOf :hasRangeMinValue .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#sensingDescription
+
+:sensingDescription rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain ssn:Sensing ;
+                    
+                    rdfs:range xsd:string .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/qu#symbol
+
+qu:symbol rdf:type owl:DatatypeProperty .
+
+
+
+###  http://www.loa-cnr.it/ontologies/DUL.owl#hasRegionDataValue
+
+DUL:hasRegionDataValue rdf:type owl:DatatypeProperty .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#DampingRatio
+
+:DampingRatio rdf:type owl:Class ;
+              
+              rdfs:subClassOf ssn:MeasurementProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#DelayDistance
+
+:DelayDistance rdf:type owl:Class ;
+               
+               rdfs:subClassOf ssn:MeasurementProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#DistanceConstant
+
+:DistanceConstant rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf ssn:MeasurementProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#OverShootRatio
+
+:OverShootRatio rdf:type owl:Class ;
+                
+                rdfs:subClassOf ssn:MeasurementProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#StartingThreshold
+
+:StartingThreshold rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf ssn:MeasurementProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#TransducerOutput
+
+:TransducerOutput rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf ssn:MeasurementProperty .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#Vaisala_WM30
+
+:Vaisala_WM30 rdf:type owl:Class ;
+              
+              rdfs:subClassOf ssn:SensingDevice ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty ssn:hasSubSystem ;
+                                owl:someValuesFrom :WM30_WindDirection
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty ssn:hasSubSystem ;
+                                owl:someValuesFrom :WM30_WindSpeed
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty ssn:observes ;
+                                owl:someValuesFrom :WindSpeed
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty ssn:observes ;
+                                owl:someValuesFrom :WindDirection
+                              ] ;
+              
+              rdfs:comment """The WM30 is a device (a piece of hardware and embedded software 260x300mm) that measures both wind speed and wind direction.
+
+For the purposes of the example, we are underspecifying  the two main parts of the WM30.  The specification isn't concerned if the wind speed and direction sensors are devices or not.  If they were separable from the WM30 and usable separately they should probably be modelled as devices.  As it stands the WM30 is a device with two sensing capabilities that aren't separable from the device; hence the are just modelled as sensors that implement sensing (the use of hasSubSystem means they must be Systems, which is fair enough as they are pieces of technology).""" .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#ValueRange
+
+:ValueRange rdf:type owl:Class ;
+            
+            rdfs:subClassOf DUL:Region .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_CharacteristicTransferFunction
+
+:WM30_CharacteristicTransferFunction rdf:type owl:Class ;
+                                     
+                                     owl:equivalentClass [ rdf:type owl:Class ;
+                                                           owl:oneOf ( :wm30_CharacteristicTransferFunction
+                                                                     )
+                                                         ] ;
+                                     
+                                     rdfs:subClassOf ssn:Sensing ;
+                                     
+                                     rdfs:comment """The WM30's characteristic transfer function is the formula used by the device to relate the turning of the cups to windspeed: i.e. it's really the method of measurement used.  That's why it specified here as a sensing method.  The actual transducer in the device outputs hertz and the WM30 converts this to WindSpeed via the function.  Thus another modelling option would be to model the whole chain (subdivide the WM30 into further component and show how the output of the transducer is the input of the characteristic transfer function, etc) indicating more closely how the device actually makes the measurement.  For this example that's not really necessary.
+
+There are any number of ways to specify the characteristic transfer function.  DUL's information objects and realisations could be used provide some other concrete description.  If we had an application that needed to read in the function, perhaps if the specification was of an abstract sensor that needed to be realised at runtime, then some systematic standard or format should be used - technically though anything could be attached: formated text, a reference to a scientific paper describing the measurement process, MathML, an algorithm specification in a formal language, program code or an executable.""" .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_OperatingRange
+
+:WM30_OperatingRange rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf ssn:OperatingRange ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty ssn:inCondition ;
+                                       owl:someValuesFrom [ rdf:type owl:Class ;
+                                                            owl:intersectionOf ( dim:Temperature
+                                                                                 [ rdf:type owl:Restriction ;
+                                                                                   owl:onProperty ssn:hasValue ;
+                                                                                   owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                        owl:intersectionOf ( :ValueRange
+                                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                                               owl:onProperty :unitOfMeasure ;
+                                                                                                                               owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                    owl:oneOf ( unit:degreeCelsius
+                                                                                                                                                              )
+                                                                                                                                                  ]
+                                                                                                                             ]
+                                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                                               owl:onProperty :hasRangeMaxValueInclusive ;
+                                                                                                                               owl:hasValue "55.0"^^xsd:float
+                                                                                                                             ]
+                                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                                               owl:onProperty :hasRangeMinValueInclusive ;
+                                                                                                                               owl:hasValue "-40.0"^^xsd:float
+                                                                                                                             ]
+                                                                                                                           )
+                                                                                                      ]
+                                                                                 ]
+                                                                               )
+                                                          ]
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty ssn:hasOperatingProperty ;
+                                       owl:someValuesFrom [ rdf:type owl:Class ;
+                                                            owl:intersectionOf ( ssn:OperatingPowerRange
+                                                                                 [ rdf:type owl:Restriction ;
+                                                                                   owl:onProperty ssn:hasValue ;
+                                                                                   owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                        owl:intersectionOf ( :ValueRange
+                                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                                               owl:onProperty :unitOfMeasure ;
+                                                                                                                               owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                    owl:oneOf ( unit:volt
+                                                                                                                                                              )
+                                                                                                                                                  ]
+                                                                                                                             ]
+                                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                                               owl:onProperty :hasRangeMaxValueInclusive ;
+                                                                                                                               owl:hasValue "15.0"^^xsd:float
+                                                                                                                             ]
+                                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                                               owl:onProperty :hasRangeMinValueInclusive ;
+                                                                                                                               owl:hasValue "3.0"^^xsd:float
+                                                                                                                             ]
+                                                                                                                           )
+                                                                                                      ]
+                                                                                 ]
+                                                                               )
+                                                          ]
+                                     ] .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_SurvivalRange
+
+:WM30_SurvivalRange rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf ssn:SurvivalRange ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty ssn:inCondition ;
+                                      owl:someValuesFrom [ rdf:type owl:Class ;
+                                                           owl:intersectionOf ( dim:Temperature
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty ssn:hasValue ;
+                                                                                  owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                       owl:intersectionOf ( :ValueRange
+                                                                                                                            [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty :unitOfMeasure ;
+                                                                                                                              owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                   owl:oneOf ( unit:degreeCelsius
+                                                                                                                                                             )
+                                                                                                                                                 ]
+                                                                                                                            ]
+                                                                                                                            [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty :hasRangeMaxValueInclusive ;
+                                                                                                                              owl:hasValue "65.0"^^xsd:float
+                                                                                                                            ]
+                                                                                                                            [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty :hasRangeMinValueInclusive ;
+                                                                                                                              owl:hasValue "-60.0"^^xsd:float
+                                                                                                                            ]
+                                                                                                                          )
+                                                                                                     ]
+                                                                                ]
+                                                                              )
+                                                         ]
+                                    ] ;
+                    
+                    rdfs:comment """This is called 'Storage temperature' on the WM30 data sheet.  The intention is likely to be the same as SurvivalRange: i.e. if the device is stored outside this temperature range it no longer works as specified.  
+
+In any case, for the purposes of the example it shows the use of SurvivalRange.""" .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_WindDirection
+
+:WM30_WindDirection rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf ssn:Sensor ,
+                                    [ rdf:type owl:Class ;
+                                      owl:unionOf ( :WMS301
+                                                    :WMS302
+                                                  )
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty ssn:observes ;
+                                      owl:someValuesFrom :WindDirection
+                                    ] ;
+                    
+                    rdfs:comment "The WM30 can be purchased with one of two options for its wind direction sensor.  The WMS301 has one wiper, while the WMS302 has two, and thus a greater measurement range." .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_WindDirection_MeasurementCapability
+
+:WM30_WindDirection_MeasurementCapability rdf:type owl:Class ;
+                                          
+                                          rdfs:subClassOf ssn:MeasurementCapability ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty ssn:hasMeasurementProperty ;
+                                                            owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                 owl:intersectionOf ( :DampingRatio
+                                                                                                      [ rdf:type owl:Restriction ;
+                                                                                                        owl:onProperty ssn:hasValue ;
+                                                                                                        owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                             owl:intersectionOf ( DUL:Amount
+                                                                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                                                                    owl:onProperty DUL:hasRegionDataValue ;
+                                                                                                                                                    owl:hasValue "0.3"^^xsd:double
+                                                                                                                                                  ]
+                                                                                                                                                )
+                                                                                                                           ]
+                                                                                                      ]
+                                                                                                    )
+                                                                               ]
+                                                          ] ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty ssn:ofFeature ;
+                                                            owl:allValuesFrom :WindFeature
+                                                          ] ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty ssn:forProperty ;
+                                                            owl:allValuesFrom :WindDirection
+                                                          ] ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty ssn:hasMeasurementProperty ;
+                                                            owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                 owl:intersectionOf ( :OverShootRatio
+                                                                                                      [ rdf:type owl:Restriction ;
+                                                                                                        owl:onProperty ssn:hasValue ;
+                                                                                                        owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                             owl:intersectionOf ( DUL:Amount
+                                                                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                                                                    owl:onProperty DUL:hasRegionDataValue ;
+                                                                                                                                                    owl:hasValue "0.4"^^xsd:double
+                                                                                                                                                  ]
+                                                                                                                                                )
+                                                                                                                           ]
+                                                                                                      ]
+                                                                                                    )
+                                                                               ]
+                                                          ] ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty ssn:hasMeasurementProperty ;
+                                                            owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                 owl:intersectionOf ( ssn:Accuracy
+                                                                                                      [ rdf:type owl:Restriction ;
+                                                                                                        owl:onProperty ssn:hasValue ;
+                                                                                                        owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                             owl:intersectionOf ( :ValueRange
+                                                                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                                                                    owl:onProperty :unitOfMeasure ;
+                                                                                                                                                    owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                         owl:oneOf ( unit:degreeUnitOfAngle
+                                                                                                                                                                                   )
+                                                                                                                                                                       ]
+                                                                                                                                                  ]
+                                                                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                                                                    owl:onProperty :hasRangeMaxValueExclusive ;
+                                                                                                                                                    owl:hasValue "3.0"^^xsd:float
+                                                                                                                                                  ]
+                                                                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                                                                    owl:onProperty :hasRangeMinValueExclusive ;
+                                                                                                                                                    owl:hasValue "-3.0"^^xsd:float
+                                                                                                                                                  ]
+                                                                                                                                                )
+                                                                                                                           ]
+                                                                                                      ]
+                                                                                                    )
+                                                                               ]
+                                                          ] ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty ssn:hasMeasurementProperty ;
+                                                            owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                 owl:intersectionOf ( :DelayDistance
+                                                                                                      [ rdf:type owl:Restriction ;
+                                                                                                        owl:onProperty ssn:hasValue ;
+                                                                                                        owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                             owl:intersectionOf ( DUL:Amount
+                                                                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                                                                    owl:onProperty :unitOfMeasure ;
+                                                                                                                                                    owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                         owl:oneOf ( unit:metre
+                                                                                                                                                                                   )
+                                                                                                                                                                       ]
+                                                                                                                                                  ]
+                                                                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                                                                    owl:onProperty DUL:hasRegionDataValue ;
+                                                                                                                                                    owl:hasValue "0.6"^^xsd:double
+                                                                                                                                                  ]
+                                                                                                                                                )
+                                                                                                                           ]
+                                                                                                      ]
+                                                                                                    )
+                                                                               ]
+                                                          ] ,
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty ssn:hasMeasurementProperty ;
+                                                            owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                 owl:intersectionOf ( :StartingThreshold
+                                                                                                      [ rdf:type owl:Restriction ;
+                                                                                                        owl:onProperty ssn:hasValue ;
+                                                                                                        owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                             owl:intersectionOf ( :ValueRange
+                                                                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                                                                    owl:onProperty :unitOfMeasure ;
+                                                                                                                                                    owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                         owl:oneOf ( unit:metrePerSecond
+                                                                                                                                                                                   )
+                                                                                                                                                                       ]
+                                                                                                                                                  ]
+                                                                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                                                                    owl:onProperty :hasRangeMaxValueExclusive ;
+                                                                                                                                                    owl:hasValue "1.0"^^xsd:double
+                                                                                                                                                  ]
+                                                                                                                                                )
+                                                                                                                           ]
+                                                                                                      ]
+                                                                                                    )
+                                                                               ]
+                                                          ] ;
+                                          
+                                          rdfs:comment "Similarly to the wind speed capabilities, the definitions approapriate to both the WMS301 and the WMS302 are specified here and inherited by the subconcepts." .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_WindDirection_MeasurementCapability_WMS301
+
+:WM30_WindDirection_MeasurementCapability_WMS301 rdf:type owl:Class ;
+                                                 
+                                                 rdfs:subClassOf :WM30_WindDirection_MeasurementCapability ,
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty ssn:hasMeasurementProperty ;
+                                                                   owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                        owl:intersectionOf ( ssn:MeasurementRange
+                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                               owl:onProperty ssn:hasValue ;
+                                                                                                               owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                    owl:intersectionOf ( :ValueRange
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :unitOfMeasure ;
+                                                                                                                                                           owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                                owl:oneOf ( unit:degreeUnitOfAngle
+                                                                                                                                                                                          )
+                                                                                                                                                                              ]
+                                                                                                                                                         ]
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :hasRangeMaxValueInclusive ;
+                                                                                                                                                           owl:hasValue "355.0"^^xsd:float
+                                                                                                                                                         ]
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :hasRangeMinValueInclusive ;
+                                                                                                                                                           owl:hasValue "0.0"^^xsd:float
+                                                                                                                                                         ]
+                                                                                                                                                       )
+                                                                                                                                  ]
+                                                                                                             ]
+                                                                                                           )
+                                                                                      ]
+                                                                 ] .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_WindDirection_MeasurementCapability_WMS302
+
+:WM30_WindDirection_MeasurementCapability_WMS302 rdf:type owl:Class ;
+                                                 
+                                                 rdfs:subClassOf :WM30_WindDirection_MeasurementCapability ,
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty ssn:hasMeasurementProperty ;
+                                                                   owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                        owl:intersectionOf ( ssn:MeasurementRange
+                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                               owl:onProperty ssn:hasValue ;
+                                                                                                               owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                    owl:intersectionOf ( :ValueRange
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :unitOfMeasure ;
+                                                                                                                                                           owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                                owl:oneOf ( unit:degreeUnitOfAngle
+                                                                                                                                                                                          )
+                                                                                                                                                                              ]
+                                                                                                                                                         ]
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :hasRangeMaxValueInclusive ;
+                                                                                                                                                           owl:hasValue "360.0"^^xsd:float
+                                                                                                                                                         ]
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :hasRangeMinValueInclusive ;
+                                                                                                                                                           owl:hasValue "0.0"^^xsd:float
+                                                                                                                                                         ]
+                                                                                                                                                       )
+                                                                                                                                  ]
+                                                                                                             ]
+                                                                                                           )
+                                                                                      ]
+                                                                 ] .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_WindSpeed
+
+:WM30_WindSpeed rdf:type owl:Class ;
+                
+                rdfs:subClassOf ssn:Sensor ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty ssn:implements ;
+                                  owl:someValuesFrom [ rdf:type owl:Class ;
+                                                       owl:oneOf ( :wm30_CharacteristicTransferFunction
+                                                                 )
+                                                     ]
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty ssn:observes ;
+                                  owl:someValuesFrom :WindSpeed
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty ssn:hasMeasurementCapability ;
+                                  owl:someValuesFrom :WM30_WindSpeed_MeasurementCapability_WSgrt10ms
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty ssn:hasMeasurementCapability ;
+                                  owl:someValuesFrom :WM30_WindSpeed_MeasurementCapability_WSless10ms
+                                ] ;
+                
+                rdfs:comment "The WindSpeed sensor of the WM30.  It implements a known formula for relating the spinning of the cups to windspeed and has different accuracies in different conditions." .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_WindSpeed_MeasurementCapability
+
+:WM30_WindSpeed_MeasurementCapability rdf:type owl:Class ;
+                                      
+                                      rdfs:subClassOf ssn:MeasurementCapability ,
+                                                      [ rdf:type owl:Restriction ;
+                                                        owl:onProperty ssn:forProperty ;
+                                                        owl:allValuesFrom :WindSpeed
+                                                      ] ,
+                                                      [ rdf:type owl:Restriction ;
+                                                        owl:onProperty ssn:hasMeasurementProperty ;
+                                                        owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                             owl:intersectionOf ( :TransducerOutput
+                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                    owl:onProperty ssn:hasValue ;
+                                                                                                    owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                         owl:intersectionOf ( DUL:Amount
+                                                                                                                                              [ rdf:type owl:Restriction ;
+                                                                                                                                                owl:onProperty :unitOfMeasure ;
+                                                                                                                                                owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                     owl:oneOf ( unit:hertz
+                                                                                                                                                                               )
+                                                                                                                                                                   ]
+                                                                                                                                              ]
+                                                                                                                                              [ rdf:type owl:Restriction ;
+                                                                                                                                                owl:onProperty DUL:hasRegionDataValue ;
+                                                                                                                                                owl:hasValue "1.0"^^xsd:float
+                                                                                                                                              ]
+                                                                                                                                            )
+                                                                                                                       ]
+                                                                                                  ]
+                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                    owl:onProperty ssn:hasValue ;
+                                                                                                    owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                         owl:intersectionOf ( DUL:Amount
+                                                                                                                                              [ rdf:type owl:Restriction ;
+                                                                                                                                                owl:onProperty :unitOfMeasure ;
+                                                                                                                                                owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                     owl:oneOf ( unit:metrePerSecond
+                                                                                                                                                                               )
+                                                                                                                                                                   ]
+                                                                                                                                              ]
+                                                                                                                                              [ rdf:type owl:Restriction ;
+                                                                                                                                                owl:onProperty DUL:hasRegionDataValue ;
+                                                                                                                                                owl:hasValue "0.7"^^xsd:float
+                                                                                                                                              ]
+                                                                                                                                            )
+                                                                                                                       ]
+                                                                                                  ]
+                                                                                                )
+                                                                           ]
+                                                      ] ,
+                                                      [ rdf:type owl:Restriction ;
+                                                        owl:onProperty ssn:hasMeasurementProperty ;
+                                                        owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                             owl:intersectionOf ( :DistanceConstant
+                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                    owl:onProperty ssn:hasValue ;
+                                                                                                    owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                         owl:intersectionOf ( DUL:Amount
+                                                                                                                                              [ rdf:type owl:Restriction ;
+                                                                                                                                                owl:onProperty :unitOfMeasure ;
+                                                                                                                                                owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                     owl:oneOf ( unit:metre
+                                                                                                                                                                               )
+                                                                                                                                                                   ]
+                                                                                                                                              ]
+                                                                                                                                              [ rdf:type owl:Restriction ;
+                                                                                                                                                owl:onProperty DUL:hasRegionDataValue ;
+                                                                                                                                                owl:hasValue "2.0"^^xsd:float
+                                                                                                                                              ]
+                                                                                                                                            )
+                                                                                                                       ]
+                                                                                                  ]
+                                                                                                )
+                                                                           ]
+                                                      ] ,
+                                                      [ rdf:type owl:Restriction ;
+                                                        owl:onProperty ssn:hasMeasurementProperty ;
+                                                        owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                             owl:intersectionOf ( :StartingThreshold
+                                                                                                  [ rdf:type owl:Restriction ;
+                                                                                                    owl:onProperty ssn:hasValue ;
+                                                                                                    owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                         owl:intersectionOf ( :ValueRange
+                                                                                                                                              [ rdf:type owl:Restriction ;
+                                                                                                                                                owl:onProperty :unitOfMeasure ;
+                                                                                                                                                owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                     owl:oneOf ( unit:metrePerSecond
+                                                                                                                                                                               )
+                                                                                                                                                                   ]
+                                                                                                                                              ]
+                                                                                                                                              [ rdf:type owl:Restriction ;
+                                                                                                                                                owl:onProperty :hasRangeMaxValueExclusive ;
+                                                                                                                                                owl:hasValue "0.4"^^xsd:double
+                                                                                                                                              ]
+                                                                                                                                            )
+                                                                                                                       ]
+                                                                                                  ]
+                                                                                                )
+                                                                           ]
+                                                      ] ,
+                                                      [ rdf:type owl:Restriction ;
+                                                        owl:onProperty ssn:ofFeature ;
+                                                        owl:allValuesFrom :WindFeature
+                                                      ] ;
+                                      
+                                      rdfs:comment """The WM30 will have two measurement capabilities, one for each of the subconcepts here.  The specifications applicable to both are made here and inherited by the subconcepts.
+
+The transducer output could perhapse be better modelled with a structure that is more easily recognised at 1 Hz per 0.7 m/s, but as it is looks sufficient.
+
+The MeasurementRange of the WM30 can be infered as the combined ranges of the two capabilites.  Another way to do it would be to provide a third capability of the WM30 that specifies only the MeasurementRange.""" .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_WindSpeed_MeasurementCapability_WSgrt10ms
+
+:WM30_WindSpeed_MeasurementCapability_WSgrt10ms rdf:type owl:Class ;
+                                                
+                                                rdfs:subClassOf :WM30_WindSpeed_MeasurementCapability ,
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty ssn:hasMeasurementProperty ;
+                                                                  owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                       owl:intersectionOf ( ssn:Accuracy
+                                                                                                            [ rdf:type owl:Restriction ;
+                                                                                                              owl:onProperty ssn:hasValue ;
+                                                                                                              owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                   owl:intersectionOf ( :ValueRange
+                                                                                                                                                        [ rdf:type owl:Restriction ;
+                                                                                                                                                          owl:onProperty :unitOfMeasure ;
+                                                                                                                                                          owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                               owl:oneOf ( unit:percent
+                                                                                                                                                                                         )
+                                                                                                                                                                             ]
+                                                                                                                                                        ]
+                                                                                                                                                        [ rdf:type owl:Restriction ;
+                                                                                                                                                          owl:onProperty :hasRangeMaxValueInclusive ;
+                                                                                                                                                          owl:hasValue "2.0"^^xsd:float
+                                                                                                                                                        ]
+                                                                                                                                                        [ rdf:type owl:Restriction ;
+                                                                                                                                                          owl:onProperty :hasRangeMinValueInclusive ;
+                                                                                                                                                          owl:hasValue "-2.0"^^xsd:float
+                                                                                                                                                        ]
+                                                                                                                                                      )
+                                                                                                                                 ]
+                                                                                                            ]
+                                                                                                          )
+                                                                                     ]
+                                                                ] ,
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty ssn:inCondition ;
+                                                                  owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                       owl:intersectionOf ( :WindSpeed
+                                                                                                            [ rdf:type owl:Restriction ;
+                                                                                                              owl:onProperty ssn:hasValue ;
+                                                                                                              owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                   owl:intersectionOf ( :ValueRange
+                                                                                                                                                        [ rdf:type owl:Restriction ;
+                                                                                                                                                          owl:onProperty :unitOfMeasure ;
+                                                                                                                                                          owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                               owl:oneOf ( unit:metrePerSecond
+                                                                                                                                                                                         )
+                                                                                                                                                                             ]
+                                                                                                                                                        ]
+                                                                                                                                                        [ rdf:type owl:Restriction ;
+                                                                                                                                                          owl:onProperty :hasRangeMaxValueInclusive ;
+                                                                                                                                                          owl:hasValue "60.0"^^xsd:float
+                                                                                                                                                        ]
+                                                                                                                                                        [ rdf:type owl:Restriction ;
+                                                                                                                                                          owl:onProperty :hasRangeMinValueInclusive ;
+                                                                                                                                                          owl:hasValue "10.0"^^xsd:float
+                                                                                                                                                        ]
+                                                                                                                                                      )
+                                                                                                                                 ]
+                                                                                                            ]
+                                                                                                          )
+                                                                                     ]
+                                                                ] .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WM30_WindSpeed_MeasurementCapability_WSless10ms
+
+:WM30_WindSpeed_MeasurementCapability_WSless10ms rdf:type owl:Class ;
+                                                 
+                                                 rdfs:subClassOf :WM30_WindSpeed_MeasurementCapability ,
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty ssn:hasMeasurementProperty ;
+                                                                   owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                        owl:intersectionOf ( ssn:Accuracy
+                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                               owl:onProperty ssn:hasValue ;
+                                                                                                               owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                    owl:intersectionOf ( :ValueRange
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :unitOfMeasure ;
+                                                                                                                                                           owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                                owl:oneOf ( unit:metrePerSecond
+                                                                                                                                                                                          )
+                                                                                                                                                                              ]
+                                                                                                                                                         ]
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :hasRangeMaxValueInclusive ;
+                                                                                                                                                           owl:hasValue "3.0"^^xsd:float
+                                                                                                                                                         ]
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :hasRangeMinValueInclusive ;
+                                                                                                                                                           owl:hasValue "-3.0"^^xsd:float
+                                                                                                                                                         ]
+                                                                                                                                                       )
+                                                                                                                                  ]
+                                                                                                             ]
+                                                                                                           )
+                                                                                      ]
+                                                                 ] ,
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty ssn:inCondition ;
+                                                                   owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                        owl:intersectionOf ( :WindSpeed
+                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                               owl:onProperty ssn:hasValue ;
+                                                                                                               owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                    owl:intersectionOf ( :ValueRange
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :unitOfMeasure ;
+                                                                                                                                                           owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                                                                                owl:oneOf ( unit:metrePerSecond
+                                                                                                                                                                                          )
+                                                                                                                                                                              ]
+                                                                                                                                                         ]
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :hasRangeMaxValueExclusive ;
+                                                                                                                                                           owl:hasValue "10.0"^^xsd:float
+                                                                                                                                                         ]
+                                                                                                                                                         [ rdf:type owl:Restriction ;
+                                                                                                                                                           owl:onProperty :hasRangeMinValueInclusive ;
+                                                                                                                                                           owl:hasValue "0.4"^^xsd:float
+                                                                                                                                                         ]
+                                                                                                                                                       )
+                                                                                                                                  ]
+                                                                                                             ]
+                                                                                                           )
+                                                                                      ]
+                                                                 ] .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WMS301
+
+:WMS301 rdf:type owl:Class ;
+        
+        rdfs:subClassOf :WM30_WindDirection ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty ssn:hasMeasurementCapability ;
+                          owl:someValuesFrom :WM30_WindDirection_MeasurementCapability_WMS301
+                        ] ;
+        
+        owl:disjointWith :WMS302 .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WMS302
+
+:WMS302 rdf:type owl:Class ;
+        
+        rdfs:subClassOf :WM30_WindDirection ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty ssn:hasMeasurementCapability ;
+                          owl:someValuesFrom :WM30_WindDirection_MeasurementCapability_WMS302
+                        ] .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WindDirection
+
+:WindDirection rdf:type owl:Class ;
+               
+               rdfs:subClassOf dim:Angle .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WindFeature
+
+:WindFeature rdf:type owl:Class ;
+             
+             rdfs:subClassOf ssn:FeatureOfInterest ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty ssn:hasProperty ;
+                               owl:someValuesFrom :WindSpeed
+                             ] .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#WindSpeed
+
+:WindSpeed rdf:type owl:Class ;
+           
+           rdfs:subClassOf dim:VelocityOrSpeed ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty ssn:isPropertyOf ;
+                             owl:allValuesFrom :WindFeature
+                           ] .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/dim#Angle
+
+dim:Angle rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/dim#Temperature
+
+dim:Temperature rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/dim#TemperatureUnit
+
+dim:TemperatureUnit rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/dim#VelocityOrSpeed
+
+dim:VelocityOrSpeed rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/qu#QuantityKind
+
+qu:QuantityKind rdf:type owl:Class ;
+                
+                rdfs:subClassOf ssn:Property .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/qu#Unit
+
+qu:Unit rdf:type owl:Class ;
+        
+        rdfs:subClassOf DUL:UnitOfMeasure .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#Accuracy
+
+ssn:Accuracy rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#FeatureOfInterest
+
+ssn:FeatureOfInterest rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#MeasurementCapability
+
+ssn:MeasurementCapability rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#MeasurementProperty
+
+ssn:MeasurementProperty rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#MeasurementRange
+
+ssn:MeasurementRange rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#OperatingPowerRange
+
+ssn:OperatingPowerRange rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#OperatingRange
+
+ssn:OperatingRange rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#Property
+
+ssn:Property rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#Sensing
+
+ssn:Sensing rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#SensingDevice
+
+ssn:SensingDevice rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#Sensor
+
+ssn:Sensor rdf:type owl:Class .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/ssn#SurvivalRange
+
+ssn:SurvivalRange rdf:type owl:Class .
+
+
+
+###  http://www.loa-cnr.it/ontologies/DUL.owl#Amount
+
+DUL:Amount rdf:type owl:Class .
+
+
+
+###  http://www.loa-cnr.it/ontologies/DUL.owl#Region
+
+DUL:Region rdf:type owl:Class .
+
+
+
+###  http://www.loa-cnr.it/ontologies/DUL.owl#UnitOfMeasure
+
+DUL:UnitOfMeasure rdf:type owl:Class .
+
+
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://purl.oclc.org/NET/ssnx/meteo/WM30#wm30_CharacteristicTransferFunction
+
+:wm30_CharacteristicTransferFunction rdf:type :WM30_CharacteristicTransferFunction ,
+                                              owl:NamedIndividual ;
+                                     
+                                     :sensingDescription """Characteristic transfer function 
+
+U = -0.24 + 0.699 × F 
+
+(where U = wind speed [m/s], F = output frequency [Hz]) 
+"""^^xsd:string .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/quantity#temperature
+
+quantity:temperature rdf:type owl:NamedIndividual .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/unit#degreeCelsius
+
+unit:degreeCelsius rdf:type owl:NamedIndividual .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/unit#degreeUnitOfAngle
+
+unit:degreeUnitOfAngle rdf:type owl:NamedIndividual .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/unit#hertz
+
+unit:hertz rdf:type owl:NamedIndividual .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/unit#metre
+
+unit:metre rdf:type owl:NamedIndividual .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/unit#metrePerSecond
+
+unit:metrePerSecond rdf:type owl:NamedIndividual .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/unit#percent
+
+unit:percent rdf:type owl:NamedIndividual .
+
+
+
+###  http://purl.oclc.org/NET/ssnx/qu/unit#volt
+
+unit:volt rdf:type owl:NamedIndividual .
+
+
+
+
+###  Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net
+

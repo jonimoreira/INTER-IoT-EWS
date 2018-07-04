@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<TITLE>LogiServ:Activity</TITLE>
+</HEAD>
+<BODY>
+<FONT face="Verdana, Helvetica, sans-serif">
+<H2>
+<FONT SIZE="-1">http://ontology.tno.nl/logiserv#Activity</FONT><BR>
+Class LogiServ:Activity</H2>
+<CENTER><IMG border="0" src="diagrams/LogiServ_Activity.jpg"></CENTER><P>
+<HR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdf:type</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/RDFSClass.greyed.gif" width="16" height="16"></TD><TD><FONT size="-1">
+owl:Class</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:comment</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/XSDstring.gif" width="16" height="16"></TD><TD><FONT size="-1">
+An Activity denotes an action that is relevant for the purpose of logistics and provides value for a potential customer. An Activity can be used as a basic building block to compose more complex activities.
+
+We have identified some relevant activity types for logistics, but the list can be further extended. The identified activity types are the following:
+- Transport, which denotes the activity of moving resources (namely, products and/or packages and/or pieces of equipment, but also empty containers) from an origin to a destination, in a certain time, using suitable transport mode and transport means;
+- Transhipment, which denotes the activity of changing transport mode at an intermediate destination and, consequently, transshipment implies a change of transport means (for example, from a truck to a vessel in a port);
+- Loading,  which denotes the activity of placing resources (namely, products and/or packages and/or pieces of equipment, but also empty containers) into/onto a transport means; 
+- Discharge, which denotes the activity of taking out resources (namely, products and/or packages and/or pieces of equipment, but also empty containers) from a transport means;
+- Storage, which denotes the activity of keeping in stock resources (namely, products and/or packages and/or pieces of equipment, but also empty containers) in a warehouse facility for a certain period of time;
+- Consolidation, which denotes the activity of assembling several (smaller) resource units into one (bigger) unit;
+- Deconsolidation, which denotes the activity of disassembling of one (bigger) unit of resources in several (smaller) units.
+- LoadTransportDischarge is an example of complex activity consisting of 1) Load a certain transport means with a container at an origin, 2) Transport the container using the transport means towards a destination; and 3) Discharge the transport means at destination
+
+Properties:
+- An Activity must have a Consumer (at least one)
+- An Activity must have a Provider (at least one)
+- An Activity must specify a Location (at least one)
+- An Activity must specify a Time interval or instant (at least one)
+- An Activity hasConstituent min 1 Activity. In other words, an activity has always as constituent at least itself (mandatory) and can have as constituent other activities (optional). For example, Transport hasConstituent Transport (itself).
+- An Activity isConstituentOf min 1 Activity. In other words, an activity is always constituent of at least itself (mandatory), but can be constituent of more complex activities (optional). For example, Transport isConstituentOf Transport (itself) and LoadTransportDischarge (complex activity). 
+
+</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:subClassOf</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLSomeValuesFrom.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiServ_hasTime.html">LogiServ:hasTime</A> some LogiCO:TemporalRegion
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLSomeValuesFrom.gif" width="16" height="16"></TD><TD><FONT size="-1">
+LogiCO:hasLocation some LogiCO:Location
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMinCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="dul_isConstituentOf.html">dul:isConstituentOf</A> min 1 <A href="LogiServ_Activity.html">LogiServ:Activity</A>
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMinCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="dul_hasConstituent.html">dul:hasConstituent</A> min 1 <A href="LogiServ_Activity.html">LogiServ:Activity</A>
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMaxCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiServ_hasProvider.html">LogiServ:hasProvider</A> max 1 <A href="LogiServ_Provider.html">LogiServ:Provider</A>
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMaxCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiServ_hasConsumer.html">LogiServ:hasConsumer</A> max 1 <A href="LogiServ_Consumer.html">LogiServ:Consumer</A>
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16"></TD><TD><FONT size="-1">
+LogiCO:Activity</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+1">
+<B>References</B></FONT></TH>
+</TR>
+<TR><TD><FONT size="-1"><UL>
+<LI>as rdfs:domain (<A href="LogiServ_hasServiceRequirement.html">LogiServ:hasServiceRequirement</A>,&nbsp;LogiCO:hasTrigger)</LI><LI>as rdfs:range (<A href="LogiServ_isConsumerOf.html">LogiServ:isConsumerOf</A>,&nbsp;LogiCO:isTriggerOf,&nbsp;<A href="dul_hasConstituent.html">dul:hasConstituent</A>,&nbsp;<A href="LogiServ_isProviderOf.html">LogiServ:isProviderOf</A>)</LI><LI>as rdfs:subClassOf (<A href="LogiServ_LoadTransportDischarge.html">LogiServ:LoadTransportDischarge</A>,&nbsp;<A href="LogiServ_Load.html">LogiServ:Load</A>,&nbsp;<A href="LogiServ_Consolidation.html">LogiServ:Consolidation</A>,&nbsp;<A href="LogiServ_Activity.html">LogiServ:Activity</A>,&nbsp;<A href="LogiServ_BusinessServiceDescription.html">LogiServ:business service description</A>,&nbsp;<A href="LogiServ_Transport.html">LogiServ:Transport</A>,&nbsp;<A href="LogiServ_Activity.html">LogiServ:Activity</A>,&nbsp;<A href="LogiServ_Deconsolidation.html">LogiServ:Deconsolidation</A>,&nbsp;<A href="LogiServ_MultimodalRoadSeaTransport.html">LogiServ:MultimodalRoadSeaTransport</A>,&nbsp;<A href="LogiServ_Discharge.html">LogiServ:Discharge</A>,&nbsp;<A href="LogiServ_Transshipment.html">LogiServ:Transshipment</A>,&nbsp;<A href="LogiServ_Storage.html">LogiServ:Storage</A>)</LI></UL></FONT></TABLE><P>
+</FONT>
+<P align="right"><FONT size="-1" face="Verdana, Helvetica, sans-serif">Generated with <A href="http://www.topbraidcomposer.org" target="_top">TopBraid Composer</A>
+ by <A href="http://www.topquadrant.com" target="_top">TopQuadrant, Inc.</A></P>
+</BODY>
+</HTML>

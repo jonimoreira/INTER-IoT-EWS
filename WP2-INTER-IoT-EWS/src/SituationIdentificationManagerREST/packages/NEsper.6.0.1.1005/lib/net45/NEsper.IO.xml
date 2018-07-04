@@ -1,0 +1,890 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NEsper.IO</name>
+    </assembly>
+    <members>
+        <member name="T:com.espertech.esperio.AbstractCoordinatedAdapter">
+            <summary>
+            A skeleton implementation for coordinated adapter reading, for adapters that
+            can do timestamp-coordinated input.
+            </summary>
+        </member>
+        <member name="F:com.espertech.esperio.AbstractCoordinatedAdapter.StateManager">
+            <summary>
+            Statement management.
+            </summary>
+        </member>
+        <member name="F:com.espertech.esperio.AbstractCoordinatedAdapter.EventsToSend">
+            <summary>
+            Sorted events to be sent.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.AbstractCoordinatedAdapter.State">
+            <summary>
+            Get the state of this Adapter.
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractCoordinatedAdapter.#ctor(com.espertech.esper.client.EPServiceProvider,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="epService">the EPServiceProvider for the engine runtime and services</param>
+            <param name="usingEngineThread">true if the Adapter should set time by the scheduling service in the engine,false if it should set time externally through the calling thread</param>
+            <param name="usingExternalTimer">true to use esper's external timer mechanism instead of internal timing</param>
+            <param name="usingTimeSpanEvents"></param>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractCoordinatedAdapter.Start">
+            <summary>
+            Start the sending of events into the runtime egine.
+            </summary>
+            <throws>EPException in case of errors processing the events</throws>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractCoordinatedAdapter.Pause">
+            <summary>
+            Pause the sending of events after a Adapter has been started.
+            </summary>
+            <throws>EPException if this Adapter has already been stopped</throws>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractCoordinatedAdapter.Resume">
+            <summary>
+            Resume sending events after the Adapter has been paused.
+            </summary>
+            <throws>EPException in case of errors processing the events</throws>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractCoordinatedAdapter.Destroy">
+            <summary>
+            Dispose the Adapter, stopping the sending of all events and releasing all
+            the resources, and disallowing any further state changes on the Adapter.
+            </summary>
+            <throws>EPException to indicate errors during destroy</throws>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractCoordinatedAdapter.Stop">
+            <summary>
+            Stop sending events and return the Adapter to the OPENED state, ready to be
+            started once again.
+            </summary>
+            <throws>EPException in case of errors releasing resources</throws>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractCoordinatedAdapter.DisallowStateTransitions">
+            <summary>
+            Disallow subsequent state changes and throw an IllegalStateTransitionException
+            if they are attempted.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.AbstractCoordinatedAdapter.UsingEngineThread">
+            <summary>
+            Gets or sets the using engine thread.
+            </summary>
+            <value>The using engine thread.</value>
+        </member>
+        <member name="P:com.espertech.esperio.AbstractCoordinatedAdapter.UsingExternalTimer">
+            <summary>
+            Gets or sets a value indicating whether to use esper's external timer mechanism
+            instead of internal timing
+            </summary>
+            <value><c>true</c> if [using external timer]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:com.espertech.esperio.AbstractCoordinatedAdapter.UsingTimeSpanEvents">
+            <summary>
+            Gets or sets a value indicating whether to use timespan events.
+            </summary>
+            <value>
+            <c>true</c> if [using time span events]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:com.espertech.esperio.AbstractCoordinatedAdapter.ScheduleSlot">
+            <summary>
+            Gets or sets the schedule slot.
+            </summary>
+            <value>The schedule slot.</value>
+        </member>
+        <member name="P:com.espertech.esperio.AbstractCoordinatedAdapter.EPService">
+            <summary>
+            Sets the service.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractCoordinatedAdapter.Close">
+            <summary>
+            Perform any actions specific to this Adapter that should
+            be completed before the Adapter is stopped.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractCoordinatedAdapter.ReplaceFirstEventToSend">
+            <summary>
+            Remove the first member of eventsToSend and insert
+            another event chosen in some fashion specific to this
+            Adapter.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractCoordinatedAdapter.Reset">
+            <summary>
+            Reset all the changeable state of this Adapter, as if it were just created.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.AbstractCoordinatedAdapter.Runtime">
+            <summary>
+            Gets the runtime.
+            </summary>
+            <value>The runtime.</value>
+        </member>
+        <member name="P:com.espertech.esperio.AbstractCoordinatedAdapter.Sender">
+            <summary>
+            Gets or sets the sender.
+            </summary>
+            <value>The sender.</value>
+        </member>
+        <member name="T:com.espertech.esperio.AbstractSendableEvent">
+            <summary>
+            Base class for sendable event, provides timestamp and schedule slot.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractSendableEvent.#ctor(System.Int64,System.Int64)">
+            <summary>Ctor. </summary>
+            <param name="timestamp">to send</param>
+            <param name="scheduleSlot">the schedule slot assigned by scheduling service</param>
+        </member>
+        <member name="T:com.espertech.esperio.AbstractSender">
+            <summary>
+            Sender that abstracts the send processin terms of threading or further pre-processing.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.AbstractSender.Runtime">
+            <summary>Set the engine runtime to use. </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractSender.SendEvent(com.espertech.esperio.AbstractSendableEvent,System.Object)">
+            <summary>
+            Send an event
+            </summary>
+            <param name="theEvent">The event.</param>
+            <param name="beanToSend">event object</param>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractSender.SendEvent(com.espertech.esperio.AbstractSendableEvent,System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>
+            Send an event.
+            </summary>
+            <param name="theEvent">The event.</param>
+            <param name="mapToSend">event object</param>
+            <param name="eventTypeName">name of event</param>
+        </member>
+        <member name="M:com.espertech.esperio.AbstractSender.OnFinish">
+            <summary>Indicate that sender should stop. </summary>
+        </member>
+        <member name="T:com.espertech.esperio.Adapter">
+            <summary>
+            An Adapter takes some external data, converts it into events, and sends it
+            into the runtime engine.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.Adapter.Start">
+            <summary>
+            Start the sending of events into the runtime egine.
+            </summary>
+            <throws>EPException in case of errors processing the events</throws>
+        </member>
+        <member name="M:com.espertech.esperio.Adapter.Pause">
+            <summary>
+            Pause the sending of events after a Adapter has been started.
+            </summary>
+            <throws>EPException if this Adapter has already been stopped</throws>
+        </member>
+        <member name="M:com.espertech.esperio.Adapter.Resume">
+            <summary>
+            Resume sending events after the Adapter has been paused.
+            </summary>
+            <throws>EPException in case of errors processing the events</throws>
+        </member>
+        <member name="M:com.espertech.esperio.Adapter.Stop">
+            <summary>
+            Stop sending events and return the Adapter to the OPENED state, ready to be
+            started once again.
+            </summary>
+            <throws>EPException in case of errors releasing resources</throws>
+        </member>
+        <member name="M:com.espertech.esperio.Adapter.Destroy">
+            <summary>
+            Dispose the Adapter, stopping the sending of all events and releasing all
+            the resources, and disallowing any further state changes on the Adapter.
+            </summary>
+            <throws>EPException to indicate errors during destroy</throws>
+        </member>
+        <member name="P:com.espertech.esperio.Adapter.State">
+            <summary>
+            Get the state of this Adapter.
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.AdapterCoordinator">
+            <summary>
+            A AdapterCoordinator coordinates several Adapters so that the events they 
+            send into the runtime engine arrive in some well-defined order, in
+            effect making the several Adapters into one large sending Adapter.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterCoordinator.Coordinate(com.espertech.esperio.InputAdapter)">
+            <summary>
+            Coordinate an InputAdapter.
+            <param name="adapter">the InputAdapter to coordinate</param>
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.AdapterCoordinatorImpl">
+            <summary>
+            An implementation of AdapterCoordinator.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterCoordinatorImpl.#ctor(com.espertech.esper.client.EPServiceProvider,System.Boolean)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="epService">the EPServiceProvider for the engine services and runtime</param>
+            <param name="usingEngineThread">true if the coordinator should set time by the scheduling service in the engine,
+                                      false if it should set time externally through the calling thread
+            </param>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterCoordinatorImpl.#ctor(com.espertech.esper.client.EPServiceProvider,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="epService">the EPServiceProvider for the engine services and runtime</param>
+            <param name="usingEngineThread">true if the coordinator should set time by the scheduling service in the engine, false if it should set time externally through the calling thread</param>
+            <param name="usingExternalTimer">true to use esper's external timer mechanism instead of internal timing</param>
+            <param name="usingTimeSpanEvents"></param>
+            <exception cref="T:System.ArgumentNullException">epService;epService cannot be null</exception>
+            <exception cref="T:System.ArgumentException">Illegal type of EPServiceProvider</exception>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterCoordinatorImpl.Read">
+             <summary>
+            @see com.espertech.esper.adapter.ReadableAdapter#read()
+             </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterCoordinatorImpl.Coordinate(com.espertech.esperio.InputAdapter)">
+             <summary>
+            @see com.espertech.esper.adapter.AdapterCoordinator#add(com.espertech.esper.adapter.Adapter)
+             </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterCoordinatorImpl.Close">
+            <summary>
+            Does nothing.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterCoordinatorImpl.ReplaceFirstEventToSend">
+            <summary>
+            Replace the first member of eventsToSend with the next
+            event returned by the read() method of the same Adapter that
+            provided the first event.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterCoordinatorImpl.Reset">
+            <summary>
+            Reset all the changeable state of this ReadableAdapter, as if it were just created.
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.AdapterInputSource">
+            <summary>
+            An input source for adapters.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterInputSource.#ctor(System.String)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="resource">the name of the resource on the classpath to use as the source for an adapter</param>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterInputSource.#ctor(System.Uri)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="url">the URL for the resource to use as source for an adapter</param>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterInputSource.#ctor(System.IO.FileInfo)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="file">the file to use as a source</param>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterInputSource.#ctor(System.IO.Stream)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="inputStream">the stream to use as a source</param>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterInputSource.#ctor(System.IO.TextReader)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="reader">reader is any reader for reading a file or string</param>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterInputSource.GetAsStream">
+            <summary>
+            Get the resource as an input stream. If this resource was specified as an InputStream, 
+            return that InputStream, otherwise, create and return a new InputStream from the 
+            resource. If the source cannot be converted to a stream, return null.
+            </summary>
+            <returns>a stream from the resource</returns>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterInputSource.GetAsReader">
+            <summary>
+            Return the reader if it was set, null otherwise.
+            </summary>
+            <returns>the Reader</returns>
+        </member>
+        <member name="P:com.espertech.esperio.AdapterInputSource.IsResettable">
+            <summary>
+            Return true if calling getStream() will return a new InputStream created from the
+            resource, which, assuming that the resource hasn't been changed, will have the same
+            information as all the previous InputStreams returned by getStream() before they were
+            manipulated; return false if the call will return the same instance of InputStream that 
+            has already been obtained.
+            </summary>
+            <returns>true if each call to getStream() will create a new InputStream from the
+            resource, false if each call will get the same instance of the InputStream
+            </returns>
+        </member>
+        <member name="T:com.espertech.esperio.AdapterSPI">
+            <summary>
+            An Adapter takes some external data, converts it into events, and sends it
+            into the runtime engine.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.AdapterSPI.EPServiceProvider">
+            <summary>
+            Gets or sets the engine instance.
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.AdapterState">
+            <summary>
+            The state of a Adapter.
+            </summary>
+        </member>
+        <member name="F:com.espertech.esperio.AdapterState.OPENED">
+            <summary>
+            Opened state.
+            </summary>
+        </member>
+        <member name="F:com.espertech.esperio.AdapterState.STARTED">
+            <summary>
+            Started state.
+            </summary>
+        </member>
+        <member name="F:com.espertech.esperio.AdapterState.PAUSED">
+            <summary>
+            Paused state.
+            </summary>
+        </member>
+        <member name="F:com.espertech.esperio.AdapterState.DESTROYED">
+            <summary>
+            Destroyed state.
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.AdapterStateManager">
+            <summary>
+            A utility to manage the state transitions for an InputAdapter.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.AdapterStateManager.State">
+            <summary>
+            Gets the state
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterStateManager.Start">
+            <summary>
+            Transition into the STARTED state (from the OPENED state).
+            </summary>
+            <throws>IllegalStateTransitionException if the transition is not allowed</throws>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterStateManager.Stop">
+             <summary>
+             Transition into the OPENED state.
+            @throws IllegalStateTransitionException if the transition isn't allowed
+             </summary>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterStateManager.Pause">
+            <summary>
+            Transition into the PAUSED state.
+            </summary>
+            <throws>IllegalStateTransitionException if the transition isn't allowed</throws>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterStateManager.Resume">
+            <summary>
+            Transition into the STARTED state (from the PAUSED state).
+            </summary>
+            <throws>IllegalStateTransitionException if the state transition is not allowed</throws>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterStateManager.Destroy">
+            <summary>
+            Transition into the DESTROYED state.
+            </summary>
+            <throws>IllegalStateTransitionException if the transition isn't allowed</throws>
+        </member>
+        <member name="M:com.espertech.esperio.AdapterStateManager.DisallowStateTransitions">
+            <summary>
+            Disallow future state changes, and throw an IllegalStateTransitionException if they
+            are attempted.
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.CoordinatedAdapter">
+            <summary>
+            An Adapter that can be coordinated by an AdapterCoordinator.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.CoordinatedAdapter.Read">
+            <summary>
+            Get the next event in line to be sent into the runtime , or null if there is no available event.
+            <returns>an instance of SendableEvent that wraps the next event to send, or null if none</returns>
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.CoordinatedAdapter.UsingEngineThread">
+            <summary>
+            Set the usingEngineThread value
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.CoordinatedAdapter.UsingExternalTimer">
+            <summary>
+            Set the usingExternalTimer value
+            </summary>
+            <value><c>true</c> if [using external timer]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="M:com.espertech.esperio.CoordinatedAdapter.DisallowStateTransitions">
+            <summary>
+            Disallow subsequent state changes and throw an IllegalStateTransitionException
+            if they are attempted.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.CoordinatedAdapter.ScheduleSlot">
+            <summary>
+            Set the scheduleSlot for thisAdapter.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.CoordinatedAdapter.EPService">
+            <summary>
+            Set the epService
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.csv.AbstractTypeCoercer">
+            <summary>Coercer for type conversion. </summary>
+        </member>
+        <member name="F:com.espertech.esperio.csv.AbstractTypeCoercer.Log">
+            <summary>For logging. </summary>
+        </member>
+        <member name="F:com.espertech.esperio.csv.AbstractTypeCoercer.propertyFactories">
+            <summary>Constructors for coercion. </summary>
+        </member>
+        <member name="M:com.espertech.esperio.csv.AbstractTypeCoercer.SetPropertyTypes(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>Ctor. </summary>
+            <param name="propertyTypes">the type conversion to be done</param>
+        </member>
+        <member name="M:com.espertech.esperio.csv.AbstractTypeCoercer.Coerce(System.String,System.String)">
+            <summary>Convert a value. </summary>
+            <param name="property">property name</param>
+            <param name="source">value to convert</param>
+            <returns>object value</returns>
+            <throws>Exception if coercion failed</throws>
+        </member>
+        <member name="T:com.espertech.esperio.csv.BasicTypeCoercer">
+            <summary>
+            Coercer for using the constructor to perform the coercion.
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.csv.CSVInputAdapter">
+            <summary>
+            An event Adapter that uses a CSV file for a source.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapter.#ctor(com.espertech.esper.client.EPServiceProvider,com.espertech.esperio.csv.CSVInputAdapterSpec)">
+            <summary>Ctor.</summary>
+            <param name="epService">provides the engine runtime and services</param>
+            <param name="spec">the parameters for this adapter</param>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapter.#ctor(com.espertech.esper.client.EPServiceProvider,com.espertech.esperio.AdapterInputSource,System.String)">
+            <summary>Ctor.</summary>
+            <param name="epService">provides the engine runtime and services</param>
+            <param name="adapterInputSource">the source of the CSV file</param>
+            <param name="eventTypeName">the name of the Map event to create from the CSV data</param>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapter.#ctor(com.espertech.esperio.csv.CSVInputAdapterSpec)">
+            <summary>Ctor for adapters that will be passed to an AdapterCoordinator.</summary>
+            <param name="adapterSpec">contains parameters that specify the behavior of the input adapter</param>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapter.#ctor(com.espertech.esperio.AdapterInputSource,System.String)">
+            <summary>Ctor for adapters that will be passed to an AdapterCoordinator.</summary>
+            <param name="adapterInputSource">the parameters for this adapter</param>
+            <param name="eventTypeName">the event type name that the input adapter generates events for</param>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapter.Coercer">
+            <summary>
+            Gets or sets the coercing provider.
+            </summary>
+            <value>The coercer.</value>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapter.Close">
+            <summary>
+            Close the CSVReader.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapter.ReplaceFirstEventToSend">
+            <summary>
+            Remove the first member of eventsToSend. If there isanother record in the CSV file, 
+            insert the event createdfrom it into eventsToSend.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapter.Reset">
+            <summary>
+            Reset all the changeable state of this ReadableAdapter, as if it were just created.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapter.ProxyParser(System.String)">
+            <summary>
+            Simplified object construction through type parameters.
+            </summary>
+            <param name="input">The input.</param>
+            <returns></returns>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapter.EasyParser``1(System.String)">
+            <summary>
+            Simplified object construction through type parameters.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="input">The input.</param>
+            <returns></returns>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapter.ObjectFactoryFor(System.Type)">
+            <summary>
+            Retrieves the object factory for a given type. 
+            </summary>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapter.FirstRow">
+            <summary>
+            Gets the first row.
+            </summary>
+            <value>The first row.</value>
+        </member>
+        <member name="T:com.espertech.esperio.csv.CSVInputAdapterSpec">
+            <summary>A spec for CSVAdapters.</summary>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVInputAdapterSpec.#ctor(com.espertech.esperio.AdapterInputSource,System.String)">
+            <summary>Ctor.</summary>
+            <param name="adapterInputSource">the source for the CSV data</param>
+            <param name="eventTypeName">the name of the event type created from the CSV data</param>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapterSpec.EventsPerSec">
+            <summary>
+            Gets or sets the number of events per seconds.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapterSpec.PropertyOrder">
+            <summary>
+            Gets or sets the property order of the properties in the CSV file
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapterSpec.IsLooping">
+            <summary>
+            Gets or sets the flag that indicates if the adapter is looping
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapterSpec.PropertyTypes">
+            <summary>
+            Gets or sets the propertyTypes value
+            </summary>
+            <returns>
+            a mapping between the names and types of the properties in the
+            CSV file; this will also be the form of the Map event created
+            from the data
+            </returns>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapterSpec.IsUsingEngineThread">
+            <summary>
+            Gets or sets a flag indicating whether to use the engine timer thread for work or not.
+            Setting the value to true uses the engine timer thread for work.  Setting the value
+            to false, uses the current thread.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapterSpec.IsUsingExternalTimer">
+            <summary>
+            Gets or sets a value indicating whether this instance is using external timer.
+            </summary>
+            <value>
+            	<c>true</c> if this instance is using external timer; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapterSpec.IsUsingTimeSpanEvents">
+            <summary>
+            Gets or sets a value indicating whether this instance is using time span events.
+            </summary>
+            <value>
+            <c>true</c> if this instance is using time span events; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapterSpec.TimestampColumn">
+            <summary>
+            Gets or sets the timestamp column name.
+            </summary>
+            <returns>the name of the column to use for timestamps</returns>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapterSpec.AdapterInputSource">
+            <summary>
+            Gets or sets the adapter input source.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVInputAdapterSpec.EventTypeName">
+            <summary>
+            Gets or sets the event type name.
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.csv.CSVPropertyOrderHelper">
+            <summary>
+            A utility for resolving property order information based on a
+            propertyTypes map and the first record of a CSV file (which 
+            might represent the title row).
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVPropertyOrderHelper.ResolvePropertyOrder(System.String[],System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Resolve the order of the properties that appear in the CSV file,from the first row of the CSV file.
+            </summary>
+            <param name="firstRow">the first record of the CSV file</param>
+            <param name="propertyTypes">describes the event to send into the EPRuntime</param>
+            <returns>
+            the property names in the order in which they occur in the file
+            </returns>
+        </member>
+        <member name="T:com.espertech.esperio.csv.CSVReader">
+            <summary>
+            A source that processes a CSV file and returns CSV recordsfrom that file.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVReader.#ctor(com.espertech.esperio.AdapterInputSource)">
+            <summary>Ctor.</summary>
+            <param name="adapterInputSource">the source of the CSV file</param>
+            <throws>EPException in case of errors in reading the CSV file</throws>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVReader.Close">
+            <summary>Close the source and release the input source.</summary>
+            <throws>EPException in case of error in closing resources</throws>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVReader.GetNextRecord">
+            <summary>Get the next record from the CSV file.</summary>
+            <returns>a string array containing the values of the record</returns>
+            <throws>EOFException in case no more records can be read (end-of-file has been reached and isLooping is false)</throws>
+            <throws>EPException in case of error in reading the CSV file</throws>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVReader.IsUsingTitleRow">
+            <summary>Gets or sets the isUsingTitleRow value.</summary>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVReader.Looping">
+            <summary>Gets or sets the looping value.</summary>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVReader.Reset">
+            <summary>Reset the source to the beginning of the file.</summary>
+            <throws>EPException in case of errors in resetting the source</throws>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVReader.GetAndClearIsReset">
+            <summary>Return and set to false the isReset value, which is set totrue whenever the CSVReader is reset.</summary>
+            <returns>isReset</returns>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVReader.IsResettable">
+            <summary>Return true if this CSVReader supports the reset() method.</summary>
+            <returns>true if the underlying AdapterInputSource is resettable</returns>
+        </member>
+        <member name="T:com.espertech.esperio.csv.CSVSource">
+            <summary>
+            A wrapper for a Stream or a TextReader.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVSource.#ctor(com.espertech.esperio.AdapterInputSource)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="source">the AdapterInputSource from which to obtain the underlying resource</param>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVSource.Close">
+            <summary>Close the underlying resource.</summary>
+            <throws>IOException to indicate an io error</throws>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVSource.Read">
+            <summary>Read from the underlying resource.</summary>
+            <returns>the result of the read</returns>
+            <throws>IOException for io errors</throws>
+        </member>
+        <member name="P:com.espertech.esperio.csv.CSVSource.IsResettable">
+            <summary>Return true if the underlying resource is resettable.</summary>
+            <returns>true if resettable, false otherwise</returns>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVSource.ResetToMark">
+            <summary>Reset to the last mark position.</summary>
+            <throws>IOException for io errors</throws>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVSource.Mark(System.Int32)">
+            <summary>Set the mark position.</summary>
+            <param name="readAheadLimit">is the maximum number of read-ahead events</param>
+            <throws>IOException when an io error occurs</throws>
+        </member>
+        <member name="M:com.espertech.esperio.csv.CSVSource.Reset">
+            <summary>Reset to the beginning of the resource.</summary>
+        </member>
+        <member name="T:com.espertech.esperio.DirectSender">
+            <summary>Sender that sends without a threadpool. </summary>
+        </member>
+        <member name="T:com.espertech.esperio.ext.BasicTypeCoercerDateFormat">
+            <summary>
+            Date format coercion.
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.ext.ThreadedSender">
+            <summary>
+            Implementation of Sender to send to esper engine using threads
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.ext.ThreadedSender.#ctor(System.Int32)">
+            <summary>Ctor. </summary>
+            <param name="threadPoolSize">size of pool</param>
+        </member>
+        <member name="M:com.espertech.esperio.ext.ThreadedSender.#ctor(com.espertech.esper.compat.threading.IExecutorService)">
+            <summary>Ctor. </summary>
+            <param name="executorService">threadpool to use</param>
+        </member>
+        <member name="M:com.espertech.esperio.ext.ThreadedSender.SendEvent(System.Object)">
+            <summary>Send an event. </summary>
+            <param name="beanToSend">event to send</param>
+        </member>
+        <member name="M:com.espertech.esperio.ext.ThreadedSender.SendEvent(System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>Send an event. </summary>
+            <param name="mapToSend">event to send</param>
+            <param name="eventTypeName">name of event</param>
+        </member>
+        <member name="T:com.espertech.esperio.IllegalStateTransitionException">
+            <summary>
+            Thrown when an illegal Adapter state transition is attempted.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.IllegalStateTransitionException.#ctor(System.String)">
+            <summary>
+            <param name="message">an explanation of the cause of the exception</param>
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.InputAdapter">
+            <summary>
+            An InputAdapter takes some external data, converts it into events, and sends
+            it into the runtime engine.
+            </summary>
+        </member>
+        <member name="F:com.espertech.esperio.InputAdapter_Fields.ESPERIO_MAP_EVENT_TYPE">
+            <summary>
+            Use for MapMessage events to indicate the event type name.
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.OutputAdapter">
+            <summary>
+            An output adapter transforms engine events and
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.OutputAdapter.SubscriptionMap">
+            <summary>
+            Sets the subscriptions for the output adapter.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.OutputAdapter.GetSubscription(System.String)">
+            <summary>
+            Returns a given subscription by it's name, or null if not found
+            </summary>
+            <param name="subscriptionName">is the subscription</param>
+            <returns>subcription or null</returns>
+        </member>
+        <member name="T:com.espertech.esperio.SendableBeanEvent">
+            <summary>
+            An implementation of SendableEvent that wraps a Map event for sending into the runtime.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.SendableBeanEvent.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Type,System.String,System.Int64,System.Int64)">
+            <summary>Converts mapToSend to an instance of beanType </summary>
+            <param name="mapToSend">the map containing data to send into the runtime</param>
+            <param name="beanType">type of the bean to create from mapToSend</param>
+            <param name="eventTypeName">the event type alias for the map event</param>
+            <param name="timestamp">the timestamp for this event</param>
+            <param name="scheduleSlot">the schedule slot for the entity that created this event</param>
+        </member>
+        <member name="M:com.espertech.esperio.SendableBeanEvent.Send(com.espertech.esperio.AbstractSender)">
+            <summary>
+            Sends the specified sender.
+            </summary>
+            <param name="sender">The sender.</param>
+        </member>
+        <member name="T:com.espertech.esperio.SendableEvent">
+            <summary>
+            A wrapper that packages an event up so that it can be
+            sent into the caller-specified runtime. It also provides
+            the scheduling information for this event (send time and
+            schedule slot), so the user can send this event on schedule.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.SendableEvent.Send(com.espertech.esperio.AbstractSender)">
+            <summary> Send the event into the runtime.</summary>
+            <param name="sender">the sender to send an event</param>
+        </member>
+        <member name="P:com.espertech.esperio.SendableEvent.SendTime">
+            <summary>
+            Get the send time of this event, relative to all the other events sent or read by the same entity
+            </summary>
+            <returns>timestamp</returns>
+        </member>
+        <member name="P:com.espertech.esperio.SendableEvent.ScheduleSlot">
+            <summary>
+            Get the schedule slot for the entity that created this event
+            </summary>
+            <returns>schedule slot</returns>
+        </member>
+        <member name="T:com.espertech.esperio.SendableEventComparator">
+            <summary> 
+            A comparator that orders SendableEvents first on sendTime, and
+            then on schedule slot.
+            </summary>
+        </member>
+        <member name="T:com.espertech.esperio.SendableMapEvent">
+            <summary>
+            An implementation of SendableEvent that wraps a Map event for
+            sending into the runtime.
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.SendableMapEvent.#ctor(System.Collections.Generic.IDictionary{System.String,System.Object},System.String,System.Int64,System.Int64)">
+            <summary>
+            Ctor.
+            <param name="mapToSend">the map to send into the runtime</param>
+            <param name="eventTypeName">the event type name for the map event</param>
+            <param name="timestamp">the timestamp for this event</param>
+            <param name="scheduleSlot">the schedule slot for the entity that created this event</param>
+            </summary>
+        </member>
+        <member name="M:com.espertech.esperio.SendableMapEvent.Send(com.espertech.esperio.AbstractSender)">
+            <summary> Send the event into the runtime.</summary>
+            <param name="sender">the sender to send an event</param>
+        </member>
+        <member name="M:com.espertech.esperio.SendableMapEvent.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </returns>
+        </member>
+        <member name="T:com.espertech.esperio.subscription.Subscription">
+            <summary>
+            Subscriptions are associated with an output adapter and dictate which events
+            are sent to a given adapter.
+            </summary>
+        </member>
+        <member name="P:com.espertech.esperio.subscription.Subscription.SubscriptionName">
+            <summary>Gets or sets the subscription name.</summary>
+            <returns>subscription name</returns>
+        </member>
+        <member name="P:com.espertech.esperio.subscription.Subscription.EventTypeName">
+            <summary>Gets the type name of the event type we are looking for.</summary>
+            <returns>event type name</returns>
+        </member>
+        <member name="P:com.espertech.esperio.subscription.Subscription.Adapter">
+            <summary>Gets or sets the output adapter this subscription is associated with.</summary>
+            <returns>output adapter</returns>
+        </member>
+    </members>
+</doc>

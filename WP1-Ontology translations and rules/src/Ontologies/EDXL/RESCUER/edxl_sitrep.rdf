@@ -1,0 +1,2798 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rm "http://fpc.ufba.br/ontologies/edxl_rm#" >
+    <!ENTITY cap "http://fpc.ufba.br/ontologies/edxl_cap#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY sitrep "http://fpc.ufba.br/ontologies/edxl_sitrep#" >
+]>
+
+
+<rdf:RDF xmlns="http://fpc.ufba.br/ontologies/edxl_sitrep#"
+     xml:base="http://fpc.ufba.br/ontologies/edxl_sitrep"
+     xmlns:cap="http://fpc.ufba.br/ontologies/edxl_cap#"
+     xmlns:sitrep="http://fpc.ufba.br/ontologies/edxl_sitrep#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:rm="http://fpc.ufba.br/ontologies/edxl_rm#">
+    <owl:Ontology rdf:about="http://fpc.ufba.br/ontologies/edxl_sitrep">
+        <rm:rights xml:lang="en">(c) The RESCUER project - http://www.rescuer-project.org/</rm:rights>
+        <rm:status xml:lang="en">An ongoing ontology for communication interoperability between systems in the context of the RESCUER Project. This propose is based on EDXL documentation (https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=emergency).</rm:status>
+        <rm:contributor xml:lang="en">Lais Salvador (UFBA)</rm:contributor>
+        <rm:contributor xml:lang="en">Rebeca Barros (UFBA)</rm:contributor>
+        <rm:contributor xml:lang="en">Reinaldo Almeida (UFBA)</rm:contributor>
+        <owl:imports rdf:resource="http://fpc.ufba.br/ontologies/edxl_cap"/>
+        <owl:imports rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#inventoryRefreshDateTime -->
+
+    <owl:AnnotationProperty rdf:about="&rm;inventoryRefreshDateTime">
+        <rdfs:domain rdf:resource="&rm;ResourceStatus"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#anticipatedCompletionDate -->
+
+    <owl:AnnotationProperty rdf:about="&sitrep;anticipatedCompletionDate">
+        <rdfs:domain rdf:resource="&sitrep;DecisionSupportInformation"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#dateTimeOrdered -->
+
+    <owl:AnnotationProperty rdf:about="&sitrep;dateTimeOrdered">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#disasterDeclarationDateTime -->
+
+    <owl:AnnotationProperty rdf:about="&sitrep;disasterDeclarationDateTime">
+        <rdfs:domain rdf:resource="&sitrep;Disaster"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#estimatedArrival -->
+
+    <owl:AnnotationProperty rdf:about="&sitrep;estimatedArrival">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#forTimePeriod -->
+
+    <owl:AnnotationProperty rdf:about="&sitrep;forTimePeriod">
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#incidentStartDateTime -->
+
+    <owl:AnnotationProperty rdf:about="&sitrep;incidentStartDateTime">
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#nextContact -->
+
+    <owl:AnnotationProperty rdf:about="&sitrep;nextContact">
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#requestedArrival -->
+
+    <owl:AnnotationProperty rdf:about="&sitrep;requestedArrival">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#timePeriod -->
+
+    <owl:AnnotationProperty rdf:about="&sitrep;timePeriod"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasLocation -->
+
+    <rdf:Description rdf:about="&rm;hasLocation">
+        <rdfs:range rdf:resource="&rm;Location"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasOwner -->
+
+    <rdf:Description rdf:about="&rm;hasOwner">
+        <rdfs:domain rdf:resource="&rm;Resource"/>
+        <owl:inverseOf rdf:resource="&rm;isOwnerOf"/>
+        <rdfs:range rdf:resource="&sitrep;Organization"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasResource -->
+
+    <rdf:Description rdf:about="&rm;hasResource">
+        <rdfs:range rdf:resource="&rm;Resource"/>
+        <owl:inverseOf rdf:resource="&rm;isResourceOf"/>
+        <rdfs:domain rdf:resource="&sitrep;ResponseResources"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasResourceStatus -->
+
+    <rdf:Description rdf:about="&rm;hasResourceStatus">
+        <rdfs:domain rdf:resource="&rm;Resource"/>
+        <rdfs:range rdf:resource="&rm;ResourceStatus"/>
+        <owl:inverseOf rdf:resource="&rm;isResourceStatusOf"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isOwnerOf -->
+
+    <rdf:Description rdf:about="&rm;isOwnerOf">
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isResourceOf -->
+
+    <rdf:Description rdf:about="&rm;isResourceOf">
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isResourceStatusOf -->
+
+    <rdf:Description rdf:about="&rm;isResourceStatusOf">
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#authorizedBy -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;authorizedBy">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en">The person name and/or PositionTitle (ICSPositionTitle when an Incident management Organziation is in place) of the person formally authorizing the information that makes up the message / report and the associated DateTime that this report was prepared.</rdfs:comment>
+        <rdfs:range rdf:resource="&sitrep;Person"/>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <owl:inverseOf rdf:resource="&sitrep;isAuthorizedBy"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasCasualtyAndIllnessCategory -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasCasualtyAndIllnessCategory">
+        <rdfs:range rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessSummaryReport"/>
+        <owl:inverseOf rdf:resource="&sitrep;isCasualtyAndIllnessCategoryOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasCommandOrganization -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasCommandOrganization">
+        <rdfs:range rdf:resource="&sitrep;CommandOrganization"/>
+        <rdfs:domain rdf:resource="&sitrep;ResponseResources"/>
+        <owl:inverseOf rdf:resource="&sitrep;isCommandOrganizationOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasConfidence -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasConfidence">
+        <rdfs:range rdf:resource="&sitrep;Confidence"/>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <owl:inverseOf rdf:resource="&sitrep;isConfidenceOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasDebrisManagement -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasDebrisManagement">
+        <rdfs:range rdf:resource="&sitrep;DebrisManagement"/>
+        <rdfs:domain rdf:resource="&sitrep;ManagementReportingSummaryReport"/>
+        <owl:inverseOf rdf:resource="&sitrep;isDebrisManagementOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasDecisionSupportInformation -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasDecisionSupportInformation">
+        <rdfs:range rdf:resource="&sitrep;DecisionSupportInformation"/>
+        <rdfs:domain rdf:resource="&sitrep;ManagementReportingSummaryReport"/>
+        <owl:inverseOf rdf:resource="&sitrep;isDecisionSupportInformationOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasDisasterDeclarationAuthority -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasDisasterDeclarationAuthority">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="&sitrep;Disaster"/>
+        <rdfs:range rdf:resource="&sitrep;Organization"/>
+        <owl:inverseOf rdf:resource="&sitrep;isDisasterDeclarationAuthority"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasDisasterInformation -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasDisasterInformation">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="&sitrep;Disaster"/>
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+        <owl:inverseOf rdf:resource="&sitrep;isDisasterInformationOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasHazardRelated -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasHazardRelated">
+        <rdfs:range rdf:resource="&sitrep;Hazards"/>
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+        <owl:inverseOf rdf:resource="&sitrep;isHazardRelatedOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasImmediateNeeds -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasImmediateNeeds">
+        <rdfs:domain rdf:resource="&sitrep;FieldObservationReport"/>
+        <rdfs:range rdf:resource="&sitrep;ImmediateNeeds"/>
+        <owl:inverseOf rdf:resource="&sitrep;isImmediateNeeds"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasIncidentComplexity -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasIncidentComplexity">
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+        <rdfs:range rdf:resource="&sitrep;IncidentComplexity"/>
+        <owl:inverseOf rdf:resource="&sitrep;isIncidentComplexityOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasIncidentRelated -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasIncidentRelated">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="&sitrep;Incident"/>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <owl:inverseOf rdf:resource="&sitrep;isIncidentRelatedOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasIncidentType -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasIncidentType">
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+        <rdfs:range rdf:resource="&sitrep;IncidentType"/>
+        <owl:inverseOf rdf:resource="&sitrep;isIncidentTypeOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasInfrastructureAffectedRelated -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasInfrastructureAffectedRelated">
+        <rdfs:range rdf:resource="&sitrep;InfrastructureAffected"/>
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasJurisdictionInformation -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasJurisdictionInformation">
+        <owl:inverseOf rdf:resource="&sitrep;isJurisdictionInformationOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasLifecyclePhase -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasLifecyclePhase">
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+        <rdfs:range rdf:resource="&sitrep;LifecyclePhase"/>
+        <owl:inverseOf rdf:resource="&sitrep;isLifecyclePhaseOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasNonResponders -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasNonResponders">
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessSummaryReport"/>
+        <rdfs:range rdf:resource="&sitrep;NonResponders"/>
+        <owl:inverseOf rdf:resource="&sitrep;isNonRespondersOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasNotifiableDisease -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasNotifiableDisease">
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessSummaryReport"/>
+        <rdfs:range rdf:resource="&sitrep;NotifiableDisease"/>
+        <owl:inverseOf rdf:resource="&sitrep;isNotifiableDiseaseOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasPositionTitle -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasPositionTitle">
+        <rdfs:domain rdf:resource="&sitrep;Person"/>
+        <rdfs:range rdf:resource="&sitrep;PositionTitle"/>
+        <owl:inverseOf rdf:resource="&sitrep;isPositionTitle"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasPrimaryIncidentInformation -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasPrimaryIncidentInformation">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="&sitrep;Incident"/>
+        <rdfs:domain rdf:resource="&sitrep;SituationInformationReport"/>
+        <owl:inverseOf rdf:resource="&sitrep;isPrimaryIncidentInformationOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasReportVersion -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasReportVersion">
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <rdfs:range rdf:resource="&sitrep;ReportVersion"/>
+        <owl:inverseOf rdf:resource="&sitrep;isReportVersion"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasResourceDetail -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasResourceDetail">
+        <rdfs:domain rdf:resource="&rm;Resource"/>
+        <rdfs:range rdf:resource="&sitrep;ResourceDetail"/>
+        <owl:inverseOf rdf:resource="&sitrep;isResourceDetailOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasResponders -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasResponders">
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessSummaryReport"/>
+        <rdfs:range rdf:resource="&sitrep;Responders"/>
+        <owl:inverseOf rdf:resource="&sitrep;isRespondersOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasResponseResources -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasResponseResources">
+        <rdfs:range rdf:resource="&sitrep;ResponseResources"/>
+        <rdfs:domain rdf:resource="&sitrep;ResponseResourcesTotalsReport"/>
+        <owl:inverseOf rdf:resource="&sitrep;isResponseResourcesOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasSeverity -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasSeverity">
+        <rdfs:range rdf:resource="&cap;Severity"/>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <owl:inverseOf rdf:resource="&sitrep;isSeverityOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasSignificantsEvent -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasSignificantsEvent">
+        <rdfs:range rdf:resource="&sitrep;SignificantEvents"/>
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+        <owl:inverseOf rdf:resource="&sitrep;isSignificantsEventOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasSubIncidentInformation -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasSubIncidentInformation">
+        <rdfs:domain rdf:resource="&sitrep;SituationInformationReport"/>
+        <rdfs:range rdf:resource="&sitrep;SubIncident"/>
+        <owl:inverseOf rdf:resource="&sitrep;isSubIncidentInformationOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasTransportationSystemRelated -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasTransportationSystemRelated">
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+        <rdfs:range rdf:resource="&sitrep;TransportationSystems"/>
+        <owl:inverseOf rdf:resource="&sitrep;isTransportationSystemRelatedOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasUrgency -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasUrgency">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="&cap;Urgency"/>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <owl:inverseOf rdf:resource="&sitrep;isUrgencyOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasVersion -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasVersion">
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <rdfs:range rdf:resource="&sitrep;ReportVersion"/>
+        <owl:inverseOf rdf:resource="&sitrep;isVersionOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hasWeatherRelated -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;hasWeatherRelated">
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+        <rdfs:range rdf:resource="&sitrep;Weather"/>
+        <owl:inverseOf rdf:resource="&sitrep;isWeatherRelatedOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#incidentLocation -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;incidentLocation">
+        <rdfs:comment xml:lang="en">The physical location of the incident applying reusable EDXLLocationType components to express location information using a variety of options including geopolitical (e.g. addresses) and geospatial (e.g. lat/long).</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&rm;hasLocation"/>
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isAuthorizedBy -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isAuthorizedBy"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isCasualtyAndIllnessCategoryOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isCasualtyAndIllnessCategoryOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isCommandOrganizationOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isCommandOrganizationOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isConfidenceOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isConfidenceOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isDebrisManagementOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isDebrisManagementOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isDecisionSupportInformationOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isDecisionSupportInformationOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isDisasterDeclarationAuthority -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isDisasterDeclarationAuthority"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isDisasterInformationOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isDisasterInformationOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="&sitrep;Disaster"/>
+        <rdfs:range rdf:resource="&sitrep;Incident"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isHazardRelatedOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isHazardRelatedOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isImmediateNeeds -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isImmediateNeeds"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isIncidentComplexityOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isIncidentComplexityOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isIncidentRelatedOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isIncidentRelatedOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+        <rdfs:range rdf:resource="&sitrep;Report"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isIncidentTypeOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isIncidentTypeOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isJurisdictionInformationOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isJurisdictionInformationOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isLifecyclePhaseOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isLifecyclePhaseOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isNonRespondersOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isNonRespondersOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isNotifiableDiseaseOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isNotifiableDiseaseOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isPositionTitle -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isPositionTitle"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isPreparedBy -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isPreparedBy">
+        <owl:inverseOf rdf:resource="&sitrep;preparedBy"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isPrimaryIncidentInformationOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isPrimaryIncidentInformationOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+        <rdfs:range rdf:resource="&sitrep;SituationInformationReport"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isReportVersion -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isReportVersion"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isResourceDetailOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isResourceDetailOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isRespondersOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isRespondersOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isResponseResourcesOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isResponseResourcesOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isSeverityOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isSeverityOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isSignificantsEventOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isSignificantsEventOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isSubIncidentInformationOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isSubIncidentInformationOf">
+        <rdfs:range rdf:resource="&sitrep;SituationInformationReport"/>
+        <rdfs:domain rdf:resource="&sitrep;SubIncident"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isTransportationSystemRelatedOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isTransportationSystemRelatedOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isUrgencyOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isUrgencyOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isVersionOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isVersionOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isWeatherRelatedOf -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;isWeatherRelatedOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#jurisdictionLocation -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;jurisdictionLocation">
+        <rdfs:subPropertyOf rdf:resource="&rm;hasLocation"/>
+        <rdfs:domain rdf:resource="&sitrep;Jurisdiction"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#observationLocation -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;observationLocation">
+        <rdfs:comment xml:lang="en">The physical location of the situation being observed, as opposed to the ReportingLocation which represents the location of the observer or reporter.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&rm;hasLocation"/>
+        <rdfs:domain rdf:resource="&sitrep;FieldObservationReport"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#preparedBy -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;preparedBy">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en">The person name and/or PositionTitle (ICSPositionTitle when an Incident Management Organization is in place) of the person preparing the information that makes up the message / report and the associated DateTime that this report was prepared</rdfs:comment>
+        <rdfs:range rdf:resource="&sitrep;Person"/>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportToLocation -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;reportToLocation">
+        <rdfs:subPropertyOf rdf:resource="&rm;hasLocation"/>
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportingLocation -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;reportingLocation">
+        <rdfs:comment xml:lang="en">A structure representing the physical location and/or organization associated with the “PreparedBy” role, or associated with the location that the Field Observation is taking place, i.e. “where I am”.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&rm;hasLocation"/>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportsToBranch -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;reportsToBranch">
+        <rdfs:range rdf:resource="&sitrep;Branch"/>
+        <rdfs:domain rdf:resource="&sitrep;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportsToOrganization -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;reportsToOrganization">
+        <rdfs:range rdf:resource="&sitrep;Organization"/>
+        <rdfs:domain rdf:resource="&sitrep;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportsToPersonName -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;reportsToPersonName">
+        <rdfs:domain rdf:resource="&sitrep;Person"/>
+        <rdfs:range rdf:resource="&sitrep;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportsToPositionTitle -->
+
+    <owl:ObjectProperty rdf:about="&sitrep;reportsToPositionTitle">
+        <rdfs:domain rdf:resource="&sitrep;PositionTitle"/>
+        <rdfs:range rdf:resource="&sitrep;PositionTitle"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#availability -->
+
+    <rdf:Description rdf:about="&rm;availability">
+        <rdfs:domain rdf:resource="&rm;ResourceStatus"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#deploymentStatus -->
+
+    <rdf:Description rdf:about="&rm;deploymentStatus">
+        <rdfs:domain rdf:resource="&rm;ResourceStatus"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#inventoryRefreshDateTime -->
+
+    <owl:DatatypeProperty rdf:about="&rm;inventoryRefreshDateTime">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#locationAddress -->
+
+    <rdf:Description rdf:about="&rm;locationAddress">
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#locationDescription -->
+
+    <rdf:Description rdf:about="&rm;locationDescription">
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#locationLatitude -->
+
+    <rdf:Description rdf:about="&rm;locationLatitude">
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#locationLongitude -->
+
+    <rdf:Description rdf:about="&rm;locationLongitude">
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#locationTargetArea -->
+
+    <rdf:Description rdf:about="&rm;locationTargetArea">
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceName -->
+
+    <rdf:Description rdf:about="&rm;resourceName">
+        <rdfs:domain rdf:resource="&rm;Resource"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#WMDEffects -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;WMDEffects">
+        <rdfs:comment xml:lang="en">Textual descripton of any effects produced by weapons of mass destruction.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#actionPlan -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;actionPlan">
+        <rdfs:comment xml:lang="en">General description of what the officer in the “Prepared By” role needs or expects, or a description of intended next step(s) of Incident Command.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#additionalAssistingOrganizations -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;additionalAssistingOrganizations">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#anticipatedCompletionDate -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;anticipatedCompletionDate">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#areasWhereWorkNotStarted -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;areasWhereWorkNotStarted">
+        <rdfs:comment xml:lang="en">AreasWhereWorkNotStarted stands for areas named in the ValueListType within the Jurisdiction in the Incident being reported where work has begun on Debris Removal.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#areasWithDebrisImpacts -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;areasWithDebrisImpacts">
+        <rdfs:comment xml:lang="en">AreasWithDebrisImpacts stands for areas named in the ValueListType within the Jurisdiction in the Incident being reported which have Debris Impacts</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#branchDivisionGroup -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;branchDivisionGroup"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#countOfConfirmedCases -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;countOfConfirmedCases">
+        <rdfs:domain rdf:resource="&sitrep;NotifiableDisease"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;summaryCount"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#countOfSuspectedCases -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;countOfSuspectedCases">
+        <rdfs:domain rdf:resource="&sitrep;NotifiableDisease"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;summaryCount"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#criticalResourceNeeds -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;criticalResourceNeeds">
+        <rdfs:comment xml:lang="en">A summary of the overall resource needs required over 12-, 24-, 48- and 72-hour time frames, and anticipated after 72-hours.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DecisionSupportInformation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#currents -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;currents">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;weatherEffects"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#damageAssessmentInformation -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;damageAssessmentInformation">
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#dateTimeOrdered -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;dateTimeOrdered">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#daysToClearanceComplete -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;daysToClearanceComplete">
+        <rdfs:comment xml:lang="en">DaysToClearanceComplete stands for number of Days To Complete Clearance of Debris in the Incident being reported.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DebrisManagement"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#daysToDisposalComplete -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;daysToDisposalComplete">
+        <rdfs:comment xml:lang="en">DaysToDisposalComplete stands for number of days remaining to complete disposal of the debris in the incident being reported.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#debris -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;debris">
+        <rdfs:domain rdf:resource="&sitrep;DebrisManagement"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#debrisClearedToDateCY -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;debrisClearedToDateCY">
+        <rdfs:comment xml:lang="en">DebrisClearedToDateCY stands for Debris Cleared To Date in the Incident being reported in the unit of measure of Cubic Yards</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DebrisManagement"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#debrisDisposedToDateCY -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;debrisDisposedToDateCY">
+        <rdfs:comment xml:lang="en">DebrisDisposedToDateCY stands for Total Debris disposed of in the Incident being reported in the unit of measure of Cubic Yards</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#debrisNotYetClearedCY -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;debrisNotYetClearedCY">
+        <rdfs:comment xml:lang="en">DebrisNotYetClearedCY stands for DebrisNotYetCleared in the Incident being reported in the unit of measure of Cubic Yards.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DebrisManagement"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#debrisNotYetDisposedCY -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;debrisNotYetDisposedCY">
+        <rdfs:comment xml:lang="en">DebrisNotYetDisposedCY stands for Total Debris that has not yet been disposed ofin the Incident being reported in the unit of measure of Cubic Yards.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#debrisStorageSitesPercentFilled -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;debrisStorageSitesPercentFilled">
+        <rdfs:comment xml:lang="en">DebrisStorageSitesPercentFilled stands for Percentage of Total space available in Debris Storage Sites which has been filled in the Incident being reported</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#disasterDeclarationDateTime -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;disasterDeclarationDateTime">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#disasterInformation -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;disasterInformation">
+        <rdfs:domain rdf:resource="&sitrep;Disaster"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#disasterName -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;disasterName">
+        <rdfs:comment xml:lang="en">The name assigned to the disaster that is associated with an incident by the DisasterDeclarationAuthority.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Disaster"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#diseaseSuspected -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;diseaseSuspected">
+        <rdfs:domain rdf:resource="&sitrep;NotifiableDisease"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#effectivePublicCommunication -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;effectivePublicCommunication">
+        <rdfs:domain rdf:resource="&sitrep;ExternalAffairs"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#emergencyResponseIssues -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;emergencyResponseIssues">
+        <rdfs:comment xml:lang="en">Brief overview of current and critical response activities and initiatives.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DecisionSupportInformation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#estimatedArrival -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;estimatedArrival">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#estimatedCostsToDate -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;estimatedCostsToDate">
+        <rdfs:comment xml:lang="en">An estimate of the total costs for the incident once all financial costs have been processed based on current spending and projected incident activity levels.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DecisionSupportInformation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#extentOfContamination -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;extentOfContamination">
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#followOnIndication -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;followOnIndication">
+        <rdfs:comment xml:lang="en">Textual description of known or anticipated incidents that will or may happen as a result of, or otherwise immediately following, the current incident</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#forTimePeriod -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;forTimePeriod">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#fromDateTime -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;fromDateTime">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#generalPopulationStatus -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;generalPopulationStatus">
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#haveReceivedMassImmunizationsCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;haveReceivedMassImmunizationsCount">
+        <rdfs:comment xml:lang="en">The number count of people who have received immunizations relevant specifically to incident conditions and/or as part of incident operations.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;summaryCount"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#hazMatIncidentReport -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;hazMatIncidentReport">
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#incidentCause -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;incidentCause">
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#incidentGeographicSize -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;incidentGeographicSize">
+        <rdfs:comment xml:lang="en">The two-dimensional geographic footprint of the incident measured in meters squared, providing the overall size of the incident in terms of geography.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#incidentID -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;incidentID">
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#incidentName -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;incidentName">
+        <rdfs:comment xml:lang="en">The name assigned to the incident (often by the Incident Commmander or lead Agency)</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#incidentStagingAreaLocation -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;incidentStagingAreaLocation">
+        <rdfs:domain rdf:resource="&sitrep;Incident"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#incidentStartDateTime -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;incidentStartDateTime">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+        <rdfs:range rdf:resource="&xsd;dateTimeStamp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#incidentThreatSummaryAndRisk -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;incidentThreatSummaryAndRisk">
+        <rdfs:comment xml:lang="en">A summary of the current threat and risk potential, movement, escalation, or spread over 12-, 24-, 48- and 72-hour standard time frames represented in the “StandardTimeFrames” common type, and any threat or risk anticipated after 72- hours.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;HumanLifeAndSafetyThreat"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#inventoryRefreshDateTime -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;inventoryRefreshDateTime"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#isSufficient -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;isSufficient">
+        <rdfs:domain rdf:resource="&rm;Resource"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#jurisdictionDescription -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;jurisdictionDescription">
+        <rdfs:domain rdf:resource="&sitrep;Jurisdiction"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#jurisdictionName -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;jurisdictionName">
+        <rdfs:domain rdf:resource="&sitrep;Jurisdiction"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#jurisdictionSize -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;jurisdictionSize">
+        <rdfs:domain rdf:resource="&sitrep;Jurisdiction"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#lifeAndSafetyThreat -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;lifeAndSafetyThreat">
+        <rdfs:comment xml:lang="en">A code indicating the current state of the threat and actions taken to manage it.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;HumanLifeAndSafetyThreat"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#messageID -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;messageID">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en">An identifier that uniquely identifies the EDXL-SitRep message / Report.
+</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#nextContact -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;nextContact">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#nonResponderSummaryCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;nonResponderSummaryCount">
+        <rdfs:comment xml:lang="en">For each CasualtyAndIllnessCountCategory, the count of Non-Responder Casualties for this reporting period.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;summaryCount"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#nonResponderSummaryCountToDate -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;nonResponderSummaryCountToDate">
+        <rdfs:comment xml:lang="en">For each CasualtyAndIllnessCountCategory, the count of Non-Responder Casualties for this incident to date</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;summaryCount"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#observationText -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;observationText">
+        <rdfs:comment xml:lang="en">Description of the situation being observed and reported.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;FieldObservationReport"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#originatingMessageID -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;originatingMessageID">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en">Each EDXL-SitRep message contains a MessageID that uniquely identifies the message. OriginatingMessageID identifies the MessageID of the first message in a message sequence to which the message belongs</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;messageID"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#overheadPosition -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;overheadPosition">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#percentContained -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;percentContained">
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#percentOfJurisdictionWithDebrisImpacts -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;percentOfJurisdictionWithDebrisImpacts">
+        <rdfs:comment xml:lang="en">PercentOfJurisdictionWithDebrisImpacts stands for Percent Of the Reporting Jurisdiction that has sustained the impact of Debris in the Incident being reported as a percentage of the total area of the Jurisdiction in question</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#personName -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;personName">
+        <rdfs:domain rdf:resource="&sitrep;Person"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#plannedActions -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;plannedActions">
+        <rdfs:comment xml:lang="en">Discussion of planned actions over the next operational period.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DecisionSupportInformation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#precedingMessageID -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;precedingMessageID">
+        <rdfs:comment xml:lang="en">The PrecedingMessageID identifies the message that immediately preceded the current message in the message sequence.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;messageID"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#probableCause -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;probableCause">
+        <rdfs:domain rdf:resource="&sitrep;NotifiableDisease"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#projectedDemobilizationStartDate -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;projectedDemobilizationStartDate">
+        <rdfs:comment xml:lang="en">The Date/Time at which major or significant demobilization is likely</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#projectedFinalCosts -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;projectedFinalCosts">
+        <rdfs:comment xml:lang="en">An estimate of the total costs for the incident once all financial costs have been processed based on current spending and projected incident activity levels.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DecisionSupportInformation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#projectedFinalIncidentSize -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;projectedFinalIncidentSize">
+        <rdfs:comment xml:lang="en">An estimate of the total physical area likely to be involved or affected over the course of the incident.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DecisionSupportInformation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#projectedIncidentActivity -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;projectedIncidentActivity">
+        <rdfs:comment xml:lang="en">An estimate when it is appropriate to do so of the projected incident activity, potential, movement, escalation, or spread and influencing factors during the next operational period. Direction/scope in which the incident is expected to spread, migrates, or expands during the next operational period, or other factors that may cause activity changes</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DecisionSupportInformation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#projectedNumberToBeSheltered -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;projectedNumberToBeSheltered">
+        <rdfs:comment xml:lang="en">The total number of people projected to require shelter due to the incident, to assist planning and matching of resources</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DecisionSupportInformation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#propertyDamage -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;propertyDamage">
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#relativeHumidity -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;relativeHumidity">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;weatherEffects"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportNumber -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;reportNumber">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en">A unique number for reporting an incident or event, used to identify each new or updated report instance. Used to support report tracking</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportPurpose -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;reportPurpose">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment rdf:datatype="&xsd;string">States the purpose of this Situation Report. May contain description information regarding why the report is being sent and required response or action, if any.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportTitle -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;reportTitle">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment>ReportTitle is the designation of a more specific title for the SitRep report other than or in addition to the title given as the value of the SitRep:&quot;Report element.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportToLocation -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;reportToLocation"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#reportVersion -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;reportVersion">
+        <rdfs:comment xml:lang="en">This indicates the current version of the specific SitRep MessageReportType report being submitted from the same source (“AuthorizedBy”) for the same incident or event. If only one SitRep will be submitted, indicate BOTH “Initial” and “Final”.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;Report"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#requestedArrival -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;requestedArrival">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#requestsForAdditionalSupport -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;requestsForAdditionalSupport">
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#requireMassImmunizationsCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;requireMassImmunizationsCount">
+        <rdfs:comment xml:lang="en">The number of people who require immunizations relevant specifically to incident conditions and/or as part of incident operations</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;summaryCount"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#resourceCommittedCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;resourceCommittedCount">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#resourceOnHandCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;resourceOnHandCount">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#resourcePersonnelCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;resourcePersonnelCount">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#resourceRequestedCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;resourceRequestedCount">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#resourceRequiredCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;resourceRequiredCount">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#resourceStillNeededCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;resourceStillNeededCount">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#resourceTypeCategoryKind -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;resourceTypeCategoryKind">
+        <rdfs:domain rdf:resource="&rm;Resource"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#responderSummaryCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;responderSummaryCount">
+        <rdfs:comment xml:lang="en">For each CasualtyAndIllnessCountCategory, the count of Responder Casualties for this reporting period.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;summaryCount"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#responderSummaryCountToDate -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;responderSummaryCountToDate">
+        <rdfs:comment xml:lang="en">For each CasualtyAndIllnessCountCategory, the count of Responder Casualties for this incident to date</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;summaryCount"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#shelterCountEstimate -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;shelterCountEstimate">
+        <rdfs:comment xml:lang="en">The total number of people projected to require shelter due to the incident, to assist planning and matching of resources.</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;summaryCount"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#specialEquipmentAndSupplies -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;specialEquipmentAndSupplies">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#specialInstructions -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;specialInstructions">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#strategicDiscussion -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;strategicDiscussion">
+        <rdfs:comment xml:lang="en">Discussion of planned activities over the next operational period explaining the relation of overall strategy, constraints, and current available information to:
+1) Critical resource needs identified. 
+2) The Incident Action Plan and management objectives and targets, 
+3) Anticipated results.
+</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DecisionSupportInformation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#summaryCount -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;summaryCount">
+        <rdfs:domain rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#temperature -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;temperature">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;weatherEffects"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#terrorismNexus -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;terrorismNexus">
+        <rdfs:domain rdf:resource="&sitrep;SituationSummary"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#tides -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;tides">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;weatherEffects"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#timePeriod -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;timePeriod">
+        <rdfs:range rdf:resource="&xsd;dateTimeStamp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#toDateTime -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;toDateTime">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;timePeriod"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#totalDebrisGeneratedCY -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;totalDebrisGeneratedCY">
+        <rdfs:comment xml:lang="en">TotalDebrisGeneratedCY stands for Total Debris Generated in the Incident being reported in the unit of measure of Cubic Yards</rdfs:comment>
+        <rdfs:domain rdf:resource="&sitrep;DebrisManagement"/>
+        <rdfs:subPropertyOf rdf:resource="&sitrep;debris"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#unassignedResourcePersonnel -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;unassignedResourcePersonnel">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#warnings -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;warnings">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;weatherEffects"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#watches -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;watches">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;weatherEffects"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#weatherEffects -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;weatherEffects">
+        <rdfs:domain rdf:resource="&sitrep;Weather"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#windDirection -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;windDirection">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;weatherEffects"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#windSpeed -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;windSpeed">
+        <rdfs:subPropertyOf rdf:resource="&sitrep;weatherEffects"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#workAssignment -->
+
+    <owl:DatatypeProperty rdf:about="&sitrep;workAssignment">
+        <rdfs:domain rdf:resource="&sitrep;ResourceDetail"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#CBRNE -->
+
+    <owl:Class rdf:about="&cap;CBRNE">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Env -->
+
+    <owl:Class rdf:about="&cap;Env">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Expected -->
+
+    <owl:Class rdf:about="&cap;Expected">
+        <rdfs:subClassOf rdf:resource="&cap;Urgency"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Extreme -->
+
+    <owl:Class rdf:about="&cap;Extreme">
+        <rdfs:subClassOf rdf:resource="&cap;Severity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Fire -->
+
+    <owl:Class rdf:about="&cap;Fire">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Future -->
+
+    <owl:Class rdf:about="&cap;Future">
+        <rdfs:subClassOf rdf:resource="&cap;Urgency"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Geo -->
+
+    <owl:Class rdf:about="&cap;Geo">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Health -->
+
+    <owl:Class rdf:about="&cap;Health">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Immediate -->
+
+    <owl:Class rdf:about="&cap;Immediate">
+        <rdfs:subClassOf rdf:resource="&cap;Urgency"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Infra -->
+
+    <owl:Class rdf:about="&cap;Infra">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Met -->
+
+    <owl:Class rdf:about="&cap;Met">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Minor -->
+
+    <owl:Class rdf:about="&cap;Minor">
+        <rdfs:subClassOf rdf:resource="&cap;Severity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Moderate -->
+
+    <owl:Class rdf:about="&cap;Moderate">
+        <rdfs:subClassOf rdf:resource="&cap;Severity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#OtherCategory -->
+
+    <owl:Class rdf:about="&cap;OtherCategory">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Past -->
+
+    <owl:Class rdf:about="&cap;Past">
+        <rdfs:subClassOf rdf:resource="&cap;Urgency"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Rescue -->
+
+    <owl:Class rdf:about="&cap;Rescue">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Safety -->
+
+    <owl:Class rdf:about="&cap;Safety">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Security -->
+
+    <owl:Class rdf:about="&cap;Security">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Severe -->
+
+    <owl:Class rdf:about="&cap;Severe">
+        <rdfs:subClassOf rdf:resource="&cap;Severity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Severity -->
+
+    <owl:Class rdf:about="&cap;Severity"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#SeverityUnknown -->
+
+    <owl:Class rdf:about="&cap;SeverityUnknown">
+        <rdfs:subClassOf rdf:resource="&cap;Severity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Transport -->
+
+    <owl:Class rdf:about="&cap;Transport">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Unkown -->
+
+    <owl:Class rdf:about="&cap;Unkown">
+        <rdfs:subClassOf rdf:resource="&cap;Urgency"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_cap#Urgency -->
+
+    <owl:Class rdf:about="&cap;Urgency"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Resource -->
+
+    <rdf:Description rdf:about="&rm;Resource">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ResourceStatus -->
+
+    <rdf:Description rdf:about="&rm;ResourceStatus">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Branch -->
+
+    <owl:Class rdf:about="&sitrep;Branch">
+        <rdfs:subClassOf rdf:resource="&sitrep;CommandOrganization"/>
+        <rdfs:comment xml:lang="en">The organizational level having functional or geographic responsibility for major parts of incident operations.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#CBRNE -->
+
+    <owl:Class rdf:about="&sitrep;CBRNE">
+        <rdfs:subClassOf rdf:resource="&sitrep;ImmediateNeeds"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#CasualtyAndIllnessCategory -->
+
+    <owl:Class rdf:about="&sitrep;CasualtyAndIllnessCategory">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sitrep;isCasualtyAndIllnessCategoryOf"/>
+                <owl:someValuesFrom rdf:resource="&sitrep;CasualtyAndIllnessSummaryReport"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="en">A type of casualty or illness, used to collect counts and statistics by types of casualties.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#CasualtyAndIllnessSummaryReport -->
+
+    <owl:Class rdf:about="&sitrep;CasualtyAndIllnessSummaryReport">
+        <rdfs:subClassOf rdf:resource="&sitrep;Report"/>
+        <owl:disjointWith rdf:resource="&sitrep;FieldObservationReport"/>
+        <owl:disjointWith rdf:resource="&sitrep;ManagementReportingSummaryReport"/>
+        <owl:disjointWith rdf:resource="&sitrep;ResponseResourcesTotalsReport"/>
+        <owl:disjointWith rdf:resource="&sitrep;SituationInformationReport"/>
+        <rdfs:comment xml:lang="en">The “Casualty and Illness Summary” ReportType provides casualty numbers and percentages by
+prescribed categories over specified time periods.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">O relatório Casualty and Illness Summary fornece números e porcentagens de acidentes através de categorias fixas em específicos períodos de tempo. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#CommandOrganization -->
+
+    <owl:Class rdf:about="&sitrep;CommandOrganization">
+        <rdfs:comment xml:lang="en">standard structure with which to carry the Positions, Names, Agency, Branch,and “Report-To” relationships required to share incident organization information as needed across agencies and up the chain of command, such that end applications may if desired create or populate an incident command structure chart</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#CommandStructure -->
+
+    <owl:Class rdf:about="&sitrep;CommandStructure">
+        <rdfs:subClassOf rdf:resource="&sitrep;CommandOrganization"/>
+        <rdfs:comment xml:lang="en">top level of the organization structure of an Incident Command Structure</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Complex -->
+
+    <owl:Class rdf:about="&sitrep;Complex">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentComplexity"/>
+        <owl:disjointWith rdf:resource="&sitrep;Low"/>
+        <owl:disjointWith rdf:resource="&sitrep;Moderate"/>
+        <owl:disjointWith rdf:resource="&sitrep;ModerateComplex"/>
+        <rdfs:comment xml:lang="en">Public / Professional preparedness is low, Coordination Complexity and involvement is high (local, regional, state and national)</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Preparação profissional e do público é baixa, complexidade de coordenação e envolvimento é alta (local, regional, estadual e nacional).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Confidence -->
+
+    <owl:Class rdf:about="&sitrep;Confidence">
+        <rdfs:comment xml:lang="en">The level of confidence or sureness in the content of the EDXL- SitRep message, endorsed by the officer in the“AuthorizedBy” role.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#DebrisManagement -->
+
+    <owl:Class rdf:about="&sitrep;DebrisManagement">
+        <rdfs:comment xml:lang="en">Track the details of debris management in the incident being reported.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#DecisionSupportInformation -->
+
+    <owl:Class rdf:about="&sitrep;DecisionSupportInformation">
+        <rdfs:comment xml:lang="en">Provide general management-level status and descriptive information about resources, scope and status of the incident response</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Disaster -->
+
+    <owl:Class rdf:about="&sitrep;Disaster">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sitrep;isDisasterInformationOf"/>
+                <owl:someValuesFrom rdf:resource="&sitrep;Incident"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#EmergencyMedicalServices -->
+
+    <owl:Class rdf:about="&sitrep;EmergencyMedicalServices">
+        <rdfs:subClassOf rdf:resource="&sitrep;ImmediateNeeds"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Evacuated -->
+
+    <owl:Class rdf:about="&sitrep;Evacuated">
+        <rdfs:subClassOf rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:comment xml:lang="en">Accounted for and being evacuated from the scene</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Contabilizado e evacuado do local</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#ExternalAffairs -->
+
+    <owl:Class rdf:about="&sitrep;ExternalAffairs">
+        <rdfs:comment xml:lang="en">Provides information about concerns that are external to the ManagementReportingSummary context that nevertheless needs to be taken into account by the responder organizations and jurisdictions.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Fatality -->
+
+    <owl:Class rdf:about="&sitrep;Fatality">
+        <rdfs:subClassOf rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:comment xml:lang="en">Deceased</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Falecido</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#FieldObservationReport -->
+
+    <owl:Class rdf:about="&sitrep;FieldObservationReport">
+        <rdfs:subClassOf rdf:resource="&sitrep;Report"/>
+        <owl:disjointWith rdf:resource="&sitrep;ManagementReportingSummaryReport"/>
+        <owl:disjointWith rdf:resource="&sitrep;ResponseResourcesTotalsReport"/>
+        <owl:disjointWith rdf:resource="&sitrep;SituationInformationReport"/>
+        <rdfs:comment xml:lang="en">FieldObservation refers to directly observed phenomena in the field reported by the actual witness to the events reported in this EDXL-SitRep report message type</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Refere-se a observação direta do fenômeno no campo, reportado pela atual testemunha dos eventos resportados no EDXL-SitRep.   </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Final -->
+
+    <owl:Class rdf:about="&sitrep;Final">
+        <rdfs:subClassOf rdf:resource="&sitrep;ReportVersion"/>
+        <rdfs:comment xml:lang="en">The last of this specific SitRep MessageReportType to be submitted from
+same source (“AuthorizedBy”) for the same incident or event.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">O último report, de uma mesma fonte, referente a um incidente.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#FireAndHazardousMaterials -->
+
+    <owl:Class rdf:about="&sitrep;FireAndHazardousMaterials">
+        <rdfs:subClassOf rdf:resource="&sitrep;ImmediateNeeds"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Hazards -->
+
+    <owl:Class rdf:about="&sitrep;Hazards"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#HighlyConfident -->
+
+    <owl:Class rdf:about="&sitrep;HighlyConfident">
+        <rdfs:subClassOf rdf:resource="&sitrep;Confidence"/>
+        <owl:disjointWith rdf:resource="&sitrep;NoConfidence"/>
+        <owl:disjointWith rdf:resource="&sitrep;SomewhatConfident"/>
+        <owl:disjointWith rdf:resource="&sitrep;Unsure"/>
+        <rdfs:comment xml:lang="en">Topmost level of confidence</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Hospitalized -->
+
+    <owl:Class rdf:about="&sitrep;Hospitalized">
+        <rdfs:subClassOf rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:comment xml:lang="en">In-route or arrived at an Emergency Department or Hospital</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A caminho ou que acabou de chegar a um Departamento de Emergência ou Hospital. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#HumanLifeAndSafetyThreat -->
+
+    <owl:Class rdf:about="&sitrep;HumanLifeAndSafetyThreat">
+        <rdfs:subClassOf rdf:resource="&sitrep;Hazards"/>
+        <rdfs:comment xml:lang="en">Hazards which are potentially dangerous and cause a threat to human life and safety
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#ImmediateNeeds -->
+
+    <owl:Class rdf:about="&sitrep;ImmediateNeeds">
+        <rdfs:comment xml:lang="en">Any pressing needs that the observer feels must be dispatched or provided urgently</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#InQuarantine -->
+
+    <owl:Class rdf:about="&sitrep;InQuarantine">
+        <rdfs:subClassOf rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:comment xml:lang="en">Accounted for and under quarantine by authorities</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Contabilizados e em quarentena pelas autoridades</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#InTemporaryShelters -->
+
+    <owl:Class rdf:about="&sitrep;InTemporaryShelters">
+        <rdfs:subClassOf rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:comment xml:lang="en">Accounted for and have been placed in a temporary shelter</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Contabilizados e colocados em abrigos temporários</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Incident -->
+
+    <owl:Class rdf:about="&sitrep;Incident">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sitrep;isIncidentRelatedOf"/>
+                <owl:onClass rdf:resource="&sitrep;Report"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="en">A collection of happenings, observations and actions that have been correlated on some basis that may require resources to perform Public Safety/Emergency/Disaster mitigation, planning and preparation, response or recovery. It is a generic term referring to occurrences of any scale that may require some form of Emergency Response and Management, and that requires tracking and information exchange. “Incident” is viewed from the NIMS Emergency Management perspective as a formal or informal declaration of emergency or disaster by an organization at the state, local, federal level or by a jurisdiction. </rdfs:comment>
+        <rdfs:comment xml:lang="pt">Uma coleção de acontecimentos, observações e ações que foram correlacionados em alguma base e que pode exigir recursos para realizar a mitigação, planejamento e preparação, resposta e recuperação da Segurança Pública/Emergência/Desastres. É um termo genérico que se refere a ocorrências de qualquer escala que pode exigir alguma forma de gerenciamento e resposta à emergência, e que requer acompanhamento e troca de informação. &quot;Incidente&quot; é visto a partir da perspectiva do NIMS como uma declaração formal ou informal de emergência ou desastre por uma organização de nível local, estadual federal ou por uma jurisdição.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#IncidentComplexity -->
+
+    <owl:Class rdf:about="&sitrep;IncidentComplexity">
+        <rdfs:comment xml:lang="en">Information indicating the complexity, complications, level of difficulty or cross- profession / jurisdiction / organization aspects involved in addressing or responding to the incident.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#IncidentManagement -->
+
+    <owl:Class rdf:about="&sitrep;IncidentManagement">
+        <rdfs:subClassOf rdf:resource="&sitrep;ImmediateNeeds"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#IncidentType -->
+
+    <owl:Class rdf:about="&sitrep;IncidentType">
+        <rdfs:comment xml:lang="en">General type or category of Incident</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#InfrastructureAffected -->
+
+    <owl:Class rdf:about="&sitrep;InfrastructureAffected">
+        <rdfs:comment xml:lang="en">Infrastructure and/or operational systems actually or most likely affected by disaster.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Initial -->
+
+    <owl:Class rdf:about="&sitrep;Initial">
+        <rdfs:subClassOf rdf:resource="&sitrep;ReportVersion"/>
+        <rdfs:comment xml:lang="en">This is the first transmission of this kind of Report from the same source
+(“AuthorizedBy”) for this incident or event.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A primeira transmissão do Report referente ao incidente.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Injury -->
+
+    <owl:Class rdf:about="&sitrep;Injury">
+        <rdfs:subClassOf rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:comment xml:lang="en">Physical or mental damage or sickness including those that may be caused through a biological event such as an epidemic or an exposure to toxic or radiological substances.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Danos físicos ou mentais ou doenças incluindo aquelas que podem ter sido causadas através de um evento biológico como uma epidemia ou exposição a substâncias tôxicas ou radiológicas. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Jurisdiction -->
+
+    <owl:Class rdf:about="&sitrep;Jurisdiction">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sitrep;isJurisdictionInformationOf"/>
+                <owl:someValuesFrom rdf:resource="&sitrep;ManagementReportingSummaryReport"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sitrep;isJurisdictionInformationOf"/>
+                <owl:someValuesFrom rdf:resource="&sitrep;Incident"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="en">In context of emergency response to incidents, “jurisdiction” has two similar definitions:
+1. Reference to a geo-political area or location. A jurisdiction is pre-defined physical location or area over which legal authority extends. Though a jurisdiction itself is not a person, role, or title, a jurisdiction has assigned to it one or more government personnel with legal authority for certain types of decision-making such as allocation of emergency resources and invocation of mutual aid agreements.
+2. Reference to an organization or agency that has “Authority” over something (such as an incident, or a set of identified resources). Jurisdiction in this sence may be general, such as “federal”, “city”, or “state”, or may be specific agency names such as “Warren County”, “US Coast Guard”, “Panama City”, and “NYPD”.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">No contexto da resposta a incidentes de emergência, &quot;jurisdição&quot; tem duas definições semelhantes: 
+1. Referência a uma área ou localização geo-política. A jurisdição é uma localização física pré-definida ou área sobre a qual se estende uma autoridade legal. Jurisdição não é uma pessoa, função ou título, a uma jurisdição atribui-se um ou mais funcionários do governo com autoridade legal para certos tipos de decisão como a alocação de recursos de emergência e invocação de acordos de ajuda mútua. 
+2. Referência a uma organização ou agência que tem &quot;autoridade&quot; sobre algo (como um incidente, ou um conjunto de recursos identificados). Jurisdição neste sentido pode ser geral, como &quot;Federal&quot;, &quot;cidade&quot;, ou &quot;estado&quot;, ou pode ser nomes de agências específicas, tais como &quot;Warren County&quot;, &quot;Guarda Costeira dos EUA&quot;, &quot;Cidade do Panamá&quot;, e &quot;NYPD &quot;.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#LawEnforcement -->
+
+    <owl:Class rdf:about="&sitrep;LawEnforcement">
+        <rdfs:subClassOf rdf:resource="&sitrep;ImmediateNeeds"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#LifecyclePhase -->
+
+    <owl:Class rdf:about="&sitrep;LifecyclePhase">
+        <rdfs:comment xml:lang="en">The incident response lifecycle stage currently in effect</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A fase atual do ciclo de vida do incidente.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Low -->
+
+    <owl:Class rdf:about="&sitrep;Low">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentComplexity"/>
+        <owl:disjointWith rdf:resource="&sitrep;Moderate"/>
+        <owl:disjointWith rdf:resource="&sitrep;ModerateComplex"/>
+        <rdfs:comment xml:lang="en">Public / Professional preparedness is high, Coordination Complexity and involvement is low (local only)</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Preparação profissional e do público é alta, complexidade de coordenação e envolvimento é baixa (apenas local).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#ManagementReportingSummaryReport -->
+
+    <owl:Class rdf:about="&sitrep;ManagementReportingSummaryReport">
+        <rdfs:subClassOf rdf:resource="&sitrep;Report"/>
+        <owl:disjointWith rdf:resource="&sitrep;ResponseResourcesTotalsReport"/>
+        <owl:disjointWith rdf:resource="&sitrep;SituationInformationReport"/>
+        <rdfs:comment xml:lang="en">The ManagementReportingSummary Report Type contains elements to manage information related to situation information such as property categories, damage assessments, transportation systems, hazards, weather concerns and general threats to the life and property.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">O relatório ManagementReportingSummary contém elementos para gerenciar informações relacionadas a situação como propriedades de categorias, avaliação dos danos, sistemas de transporte, perigos, preocupações climáticas e ameaçãs gerais a vidas e propriedades.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#MassCare -->
+
+    <owl:Class rdf:about="&sitrep;MassCare">
+        <rdfs:subClassOf rdf:resource="&sitrep;ImmediateNeeds"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Missing -->
+
+    <owl:Class rdf:about="&sitrep;Missing">
+        <rdfs:subClassOf rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:comment xml:lang="en">Cannot be located</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Não pode ser localizado.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Mitigation -->
+
+    <owl:Class rdf:about="&sitrep;Mitigation">
+        <rdfs:subClassOf rdf:resource="&sitrep;LifecyclePhase"/>
+        <owl:disjointWith rdf:resource="&sitrep;Preparedness"/>
+        <owl:disjointWith rdf:resource="&sitrep;Recovery"/>
+        <owl:disjointWith rdf:resource="&sitrep;Response"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Moderate -->
+
+    <owl:Class rdf:about="&sitrep;Moderate">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentComplexity"/>
+        <owl:disjointWith rdf:resource="&sitrep;ModerateComplex"/>
+        <rdfs:comment xml:lang="en">Public / Professional preparedness is high, Coordination Complexity and involvement is moderate (local, regional)</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Preparação profissional e do público é alta, complexidade de coordenação e envolvimento é moderada (local, regional).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#ModerateComplex -->
+
+    <owl:Class rdf:about="&sitrep;ModerateComplex">
+        <rdfs:subClassOf rdf:resource="&sitrep;IncidentComplexity"/>
+        <rdfs:comment xml:lang="en">Public / Professional preparedness is moderate-high, Coordination Complexity and involvement is high (local, regional, state, possibly national).</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Preparação profissional e do público é moderada-alta, complexidade de coordenação e envolvimento é alta (local, regional, estado, possivelmente nacional).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#NoConfidence -->
+
+    <owl:Class rdf:about="&sitrep;NoConfidence">
+        <rdfs:subClassOf rdf:resource="&sitrep;Confidence"/>
+        <owl:disjointWith rdf:resource="&sitrep;SomewhatConfident"/>
+        <owl:disjointWith rdf:resource="&sitrep;Unsure"/>
+        <rdfs:comment xml:lang="en">Lack of confidence – Can be used to support cancellation of previous report</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#NonResponders -->
+
+    <owl:Class rdf:about="&sitrep;NonResponders">
+        <rdfs:comment xml:lang="en">“Non-Responders” are those civilians who are affected by the incident, but who are not included as part of the authorized response effort (are not categorized as “Responders”.)</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Cidadãos que foram afetados pelo incidente mas que não estão incluídos como parte do esforço autorizado de resposta. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#NotifiableDisease -->
+
+    <owl:Class rdf:about="&sitrep;NotifiableDisease">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&sitrep;isNotifiableDiseaseOf"/>
+                <owl:someValuesFrom rdf:resource="&sitrep;CasualtyAndIllnessSummaryReport"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="en">Is one for which regular, frequent, timely information on individual cases is considered necessary to prevent and control that disease.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">é aquele para o qual, regular e frequentemente, a informação oportuna sobre casos individuais é considerado necessário para prevenir e controlar essa doença.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Organization -->
+
+    <owl:Class rdf:about="&sitrep;Organization">
+        <rdfs:comment xml:lang="en">Division of government with a specific function, or a nongovernmental organization (e.g., private contractor, business, etc.) that offers a particular kind of assistance.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Divisão do governo com uma função específica ou uma organização não-governamental que oferece algum tipo de assistência particular.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Person -->
+
+    <owl:Class rdf:about="&sitrep;Person"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#PositionTitle -->
+
+    <owl:Class rdf:about="&sitrep;PositionTitle">
+        <rdfs:subClassOf rdf:resource="&sitrep;CommandOrganization"/>
+        <rdfs:comment xml:lang="en">Name, role name or title of a professional that may fall at any level of the Incident Command Structure hierarchy</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Preparedness -->
+
+    <owl:Class rdf:about="&sitrep;Preparedness">
+        <rdfs:subClassOf rdf:resource="&sitrep;LifecyclePhase"/>
+        <owl:disjointWith rdf:resource="&sitrep;Recovery"/>
+        <owl:disjointWith rdf:resource="&sitrep;Response"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#PrimaryHazards -->
+
+    <owl:Class rdf:about="&sitrep;PrimaryHazards">
+        <rdfs:subClassOf rdf:resource="&sitrep;Hazards"/>
+        <rdfs:comment xml:lang="en">Hazardous chemicals, fuel types, infectious agents, radiation, etc.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#PrimaryIncident -->
+
+    <owl:Class rdf:about="&sitrep;PrimaryIncident">
+        <rdfs:subClassOf rdf:resource="&sitrep;Incident"/>
+        <rdfs:comment xml:lang="en">The initial incident</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#PublicHealth -->
+
+    <owl:Class rdf:about="&sitrep;PublicHealth">
+        <rdfs:subClassOf rdf:resource="&sitrep;ImmediateNeeds"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#PublicWorks -->
+
+    <owl:Class rdf:about="&sitrep;PublicWorks">
+        <rdfs:subClassOf rdf:resource="&sitrep;ImmediateNeeds"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Recovery -->
+
+    <owl:Class rdf:about="&sitrep;Recovery">
+        <rdfs:subClassOf rdf:resource="&sitrep;LifecyclePhase"/>
+        <owl:disjointWith rdf:resource="&sitrep;Response"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Report -->
+
+    <owl:Class rdf:about="&sitrep;Report">
+        <rdfs:comment xml:lang="en">Report or inform that contains more detailed information about the incident. Report must declare one of the five specific types: FieldObservation, SituationInformation,  ResponseResourcesTotals, CasualtyAndIllnessSummary and ManagementReportingSummary.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Relato ou informe que contém informações mais detalhadas sobre o incident. No caso do EDXL-Sitrep determinam-se 5 tipos distintos: o de observação de campo, o de informações sobre a situação, o sobre recursos, o de casualidades e vítimas e o de gerenciamento.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#ReportVersion -->
+
+    <owl:Class rdf:about="&sitrep;ReportVersion">
+        <rdfs:comment xml:lang="en">Indicates the current version of the specific SitRep MessageReportType report being submitted from the same source for the same incident or event</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#ResourceDetail -->
+
+    <owl:Class rdf:about="&sitrep;ResourceDetail">
+        <rdfs:comment xml:lang="en">Contains counts for each specific type, categoryor kind of responding resource required, committed, on-hand, requested or still needed; in order to manage and coordinate resource decisions. IF</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Responders -->
+
+    <owl:Class rdf:about="&sitrep;Responders">
+        <rdfs:comment xml:lang="en">Are those personnel belonging to organizations and agencies officially assisting and cooperating with response efforts, and may be included as part of unified command partnerships. Responders may include both paid professionals and volunteer personnel who have recognized emergency response authority at the time of the incident, such as a firefighter, EMT, police officer or Incident Commander</rdfs:comment>
+        <rdfs:comment xml:lang="pt">São aquelas pessoas pertencentes a organizações e agências oficialmente ajudando e cooperando com os esforços de resposta, e podem ser incluído como parte de parcerias de um comando unificado. Respondedores podem incluir tanto os profissionais pagos quantol voluntários que reconheceram uma autoridade de resposta de emergência no momento do incidente, como um bombeiro, EMT, policial ou Comandante do Incidente. 
+
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Response -->
+
+    <owl:Class rdf:about="&sitrep;Response">
+        <rdfs:subClassOf rdf:resource="&sitrep;LifecyclePhase"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#ResponseResources -->
+
+    <owl:Class rdf:about="&sitrep;ResponseResources"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#ResponseResourcesTotalsReport -->
+
+    <owl:Class rdf:about="&sitrep;ResponseResourcesTotalsReport">
+        <rdfs:subClassOf rdf:resource="&sitrep;Report"/>
+        <owl:disjointWith rdf:resource="&sitrep;SituationInformationReport"/>
+        <rdfs:comment xml:lang="en">The ResponseResourcesTotals Report Type contains elements to identify resource needs and resources to meet those needs. These elements are used to manage and coordinate resource decisions.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">O relatório do tipo ResponseResoucesTotals contém elementos para identificar recursos necessários e recursos para suprir essas necessidades. Esses elementos são usados para gerenciar e coordenar decisões de recursos.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Rumor -->
+
+    <owl:Class rdf:about="&sitrep;Rumor">
+        <rdfs:subClassOf rdf:resource="&sitrep;ExternalAffairs"/>
+        <rdfs:comment xml:lang="en">The individual item of information which the responding agency organization wishes to communicate to the public or coordinating agencies with regard to the incident that the responding organizations are engaging</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#SearchAndRescue -->
+
+    <owl:Class rdf:about="&sitrep;SearchAndRescue">
+        <rdfs:subClassOf rdf:resource="&sitrep;ImmediateNeeds"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#ShelteringInPlace -->
+
+    <owl:Class rdf:about="&sitrep;ShelteringInPlace">
+        <rdfs:subClassOf rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:comment xml:lang="en">Accounted for but sheltering in their original location at time of the incident</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Contabilizados mas resgardados em suas localizações originais no momento do incidente.  </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#SignificantEvents -->
+
+    <owl:Class rdf:about="&sitrep;SignificantEvents">
+        <rdfs:comment xml:lang="en">Significant results, decisions or progress resulting from an incident such as, evacuations, incident growth, etc. during the period being reported</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Resultados significativos, decisões ou progresso resultante de um incidente como, evacuações, crescimento do incidente, etc durante o período em análise.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#SituationInformationReport -->
+
+    <owl:Class rdf:about="&sitrep;SituationInformationReport">
+        <rdfs:subClassOf rdf:resource="&sitrep;Report"/>
+        <rdfs:comment xml:lang="en">The SituationInformation Report Type identifies and describes the incident with which the message is concerned.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">O SituationInformation Report identifica e descreve o incidente sobre o qual a mensagem está preocupada.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#SituationSummary -->
+
+    <owl:Class rdf:about="&sitrep;SituationSummary">
+        <rdfs:comment xml:lang="en">Provides concise status and descriptive information about the overall situation, primarily as input to human decision-making across coordinating organizations and up the chain of command .</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#SomewhatConfident -->
+
+    <owl:Class rdf:about="&sitrep;SomewhatConfident">
+        <rdfs:subClassOf rdf:resource="&sitrep;Confidence"/>
+        <owl:disjointWith rdf:resource="&sitrep;Unsure"/>
+        <rdfs:comment xml:lang="en">Medium level of confidence</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#SubIncident -->
+
+    <owl:Class rdf:about="&sitrep;SubIncident">
+        <rdfs:subClassOf rdf:resource="&sitrep;Incident"/>
+        <rdfs:comment xml:lang="en">Any subincident that occurs during, after, as a result of the initial incident or which is clearly connected to the initial incident but which is significant enough to require a separate report</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Qualquer incidente que acontece durante ou depois como resultado de um incidente inicial ou que é claramente relacionado a um incidente incial mas é significante o suficiente para requerer um relatório separado.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#TalkingPoint -->
+
+    <owl:Class rdf:about="&sitrep;TalkingPoint">
+        <rdfs:subClassOf rdf:resource="&sitrep;ExternalAffairs"/>
+        <rdfs:comment xml:lang="en">The individual item of information which the responding agency organization wishes to communicate to the public or coordinating agencies with regard to the incident that the responding organizations are engaging</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#TransportationSystems -->
+
+    <owl:Class rdf:about="&sitrep;TransportationSystems">
+        <rdfs:comment xml:lang="en">Transportation systems, such as surface roadways, inland waterways, airports, etc</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Trapped -->
+
+    <owl:Class rdf:about="&sitrep;Trapped">
+        <rdfs:subClassOf rdf:resource="&sitrep;CasualtyAndIllnessCategory"/>
+        <rdfs:comment xml:lang="en">In need of rescue due to incident or other conditions</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Necessitando de resgate devido a incidente ou outras condições.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Unsure -->
+
+    <owl:Class rdf:about="&sitrep;Unsure">
+        <rdfs:subClassOf rdf:resource="&sitrep;Confidence"/>
+        <rdfs:comment xml:lang="en">Low level of confidence</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Update -->
+
+    <owl:Class rdf:about="&sitrep;Update">
+        <rdfs:subClassOf rdf:resource="&sitrep;ReportVersion"/>
+        <rdfs:comment xml:lang="en">A subsequent SitRep MessageReportType from the same source (“AuthorizedBy”) for the same incident or event.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Um report subsequente, de uma mesma fonte, referente a um incidente.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_sitrep#Weather -->
+
+    <owl:Class rdf:about="&sitrep;Weather">
+        <rdfs:comment xml:lang="en">Current and predicted weather and related factors that may effect or cause concern for the incident and related areas.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="&sitrep;nextContact">
+        <rdfs:comment xml:lang="en">DateTime of next contact or report planned by the “Prepared By” role to set expectations for provision or receipt of updated or additional information.</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="&sitrep;forTimePeriod">
+        <rdfs:comment xml:lang="en">ForTimePeriod designates the period of time between the FromDateTime and the ToDateTime elements</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="&sitrep;anticipatedCompletionDate">
+        <rdfs:comment xml:lang="en">The Date/Time at which incident containment or control is expected, or at which time the incdent is expected to be closed or when significant incident support will be discontinued</rdfs:comment>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+

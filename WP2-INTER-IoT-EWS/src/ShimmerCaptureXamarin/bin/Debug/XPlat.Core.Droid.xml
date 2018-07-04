@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XPlat.Core.Droid</name>
+    </assembly>
+    <members>
+        <member name="M:XPlat.Droid.ApplicationModel.Manifest.ApplicationManifestManager.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:XPlat.Droid.ApplicationModel.Manifest.ApplicationManifestManager"/> class.
+            </summary>
+            <remarks>
+            When using the default constructor, the CurrentActivity property must be set in order to request permissions.
+            </remarks>
+        </member>
+        <member name="M:XPlat.Droid.ApplicationModel.Manifest.ApplicationManifestManager.#ctor(Android.App.Activity)">
+            <summary>
+            Initializes a new instance of the <see cref="T:XPlat.Droid.ApplicationModel.Manifest.ApplicationManifestManager"/> class.
+            </summary>
+            <param name="activity">
+            The current active Activity.
+            </param>
+        </member>
+        <member name="P:XPlat.Droid.ApplicationModel.Manifest.ApplicationManifestManager.CurrentActivity">
+            <inheritdoc />
+        </member>
+        <member name="P:XPlat.Droid.ApplicationModel.Manifest.ApplicationManifestManager.CurrentRequestId">
+            <inheritdoc />
+        </member>
+        <member name="M:XPlat.Droid.ApplicationModel.Manifest.ApplicationManifestManager.CheckContentProviderExists(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:XPlat.Droid.ApplicationModel.Manifest.ApplicationManifestManager.RequestPermissionAsync(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:XPlat.Droid.ApplicationModel.Manifest.ApplicationManifestManager.CheckPermissionGranted(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="P:XPlat.Droid.ApplicationModel.Manifest.IApplicationManifestManager.CurrentActivity">
+            <summary>
+            Gets or sets the current activity.
+            </summary>
+        </member>
+        <member name="P:XPlat.Droid.ApplicationModel.Manifest.IApplicationManifestManager.CurrentRequestId">
+            <summary>
+            Gets the current request id.
+            </summary>
+        </member>
+        <member name="M:XPlat.Droid.ApplicationModel.Manifest.IApplicationManifestManager.CheckContentProviderExists(System.String)">
+            <summary>
+            Checks whether a content provider exists.
+            </summary>
+            <param name="providerName">
+            The name of the provider to check.
+            </param>
+            <returns>
+            When this method completes, true will be returned if the provider exists.
+            </returns>
+        </member>
+        <member name="M:XPlat.Droid.ApplicationModel.Manifest.IApplicationManifestManager.RequestPermissionAsync(System.String[])">
+            <summary>
+            Requests for permissions to be granted.
+            </summary>
+            <param name="permissions">
+            The list of permissions that need to be granted.
+            </param>
+            <returns>
+            When this method completes, true will be returned if all the permissions requested were granted.
+            </returns>
+        </member>
+        <member name="M:XPlat.Droid.ApplicationModel.Manifest.IApplicationManifestManager.CheckPermissionGranted(System.String)">
+            <summary>
+            Checks whether a permission is granted.
+            </summary>
+            <param name="permission">
+            The permission to check.
+            </param>
+            <returns>
+            When this method completes, true will be returned if the permission has been granted.
+            </returns>
+        </member>
+    </members>
+</doc>

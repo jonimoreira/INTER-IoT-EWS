@@ -1,0 +1,50 @@
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pvn: <http://ontology.universAAL.org/uAAL.owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://ontology.universAAL.org/Context.owl#> .
+<http://ontology.universAAL.org/ContextBus.owl> rdfs:comment "Ontology of the universAAL Context Bus"^^xsd:string ;
+  a owl:Ontology ;
+  owl:imports <http://ontology.universAAL.org/DataRepresentation.owl> ;
+  rdfs:label "Context Bus"^^xsd:string .
+:ContextProviderType rdfs:comment "An enumeration for the type of context providers."^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Context Provider Type"^^xsd:string ;
+  rdfs:subClassOf pvn:ManagedIndividual ;
+  owl:oneOf (
+    :controller
+    :gauge
+    :reasoner
+  ) .
+:reasoner a :ContextProviderType .
+:gauge a :ContextProviderType .
+:controller a :ContextProviderType .
+:ContextProvider rdfs:comment "Represents the set of components that may publish context events."^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Context Provider"^^xsd:string ;
+  rdfs:subClassOf pvn:ManagedIndividual ,
+    [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty :hasType
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom :ContextProviderType ;
+      owl:onProperty :hasType
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom pvn:ManagedIndividual ;
+      owl:onProperty :hasSource
+    ] .
+:hasSource rdfs:domain :ContextProvider ;
+  a owl:ObjectProperty .
+:hasType rdfs:domain :ContextProvider ;
+  a owl:ObjectProperty ,
+    owl:FunctionalProperty .
+:myClassesOfEvents rdfs:domain :ContextProvider ;
+  a owl:ObjectProperty .
+:ContextEventPattern a rdfs:class .
+:ContextEvent a rdfs:class .

@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE>LogiServ:Event</TITLE>
+</HEAD>
+<BODY>
+<FONT face="Verdana, Helvetica, sans-serif">
+<H2>
+<FONT SIZE="-1">http://ontology.tno.nl/logiserv#Event</FONT><BR>
+Class LogiServ:Event</H2>
+<CENTER><IMG border="0" src="diagrams/LogiServ_Event.jpg"></CENTER><P>
+<HR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdf:type</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/RDFSClass.greyed.gif" width="16" height="16"></TD><TD><FONT size="-1">
+owl:Class</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:comment</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/XSDstring.gif" width="16" height="16"></TD><TD><FONT size="-1">
+An event is a trigger that can be used to synchronize two or more logistics activities.  
+For example, consider an activity of road transport by truck, which is followed by the activity of discharge of this truck at destination. In this case, the departure of the truck can be regarded as a trigger for the activity of transport, while the arrival of this truck to its destination can be regarded as a trigger for the activity of discharge.
+
+</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:subClassOf</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMaxCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiServ_hasStatus.html">LogiServ:has status</A> max 1
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLNamedClassPrimitive.greyed.gif" width="16" height="16"></TD><TD><FONT size="-1">
+LogiCO:Event</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+1">
+<B>References</B></FONT></TH>
+</TR>
+<TR><TD><FONT size="-1"><UL>
+<LI>as rdfs:domain (LogiCO:isTriggerOf)</LI><LI>as rdfs:range (LogiCO:hasTrigger)</LI><LI>as rdfs:subClassOf (<A href="LogiServ_Arrive.html">LogiServ:Arrive</A>,&nbsp;<A href="LogiServ_Resume.html">LogiServ:Resume</A>,&nbsp;<A href="LogiServ_Drop.html">LogiServ:Drop</A>,&nbsp;<A href="LogiServ_Suspend.html">LogiServ:Suspend</A>,&nbsp;<A href="LogiServ_Subscribe.html">LogiServ:Subscribe</A>,&nbsp;<A href="LogiServ_Depart.html">LogiServ:Depart</A>,&nbsp;<A href="LogiServ_Pick.html">LogiServ:Pick</A>,&nbsp;<A href="LogiServ_Notify.html">LogiServ:Notify</A>)</LI></UL></FONT></TABLE><P>
+</FONT>
+<P align="right"><FONT size="-1" face="Verdana, Helvetica, sans-serif">Generated with <A href="http://www.topbraidcomposer.org" target="_top">TopBraid Composer</A>
+ by <A href="http://www.topquadrant.com" target="_top">TopQuadrant, Inc.</A></P>
+</BODY>
+</HTML>

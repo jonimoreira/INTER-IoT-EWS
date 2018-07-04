@@ -1,0 +1,534 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XLR8.CGLib</name>
+    </assembly>
+    <members>
+        <member name="T:XLR8.CGLib.CapsuleEmitter">
+            <summary>
+            Creates classes from specifications.
+            </summary>
+        </member>
+        <member name="M:XLR8.CGLib.CapsuleEmitter.GetAssemblyBuilder">
+            <summary>
+            Gets the assembly builder.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.CapsuleEmitter.GetModuleBuilder">
+            <summary>
+            Gets the module builder.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.CapsuleEmitter.CreateCapsule(System.String,XLR8.CGLib.CapsuleField[])">
+            <summary>
+            Creates the capsule.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="fields">The fields.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastBase.GetParameterTypes(System.Reflection.MethodInfo)">
+            <summary>
+            Gets the parameter types.
+            </summary>
+            <param name="method">The method.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastBase.EmitCastConversion(System.Reflection.Emit.ILGenerator,System.Type)">
+            <summary>
+            Emits the cast or conversion.
+            </summary>
+            <param name="il">The il.</param>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastBase.EmitLoadInt(System.Reflection.Emit.ILGenerator,System.Int32)">
+            <summary>
+            Emits the load int.
+            </summary>
+            <param name="il">The il.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="T:XLR8.CGLib.FastClass">
+            <summary>
+            Provides access to dynamic code reflection; resulting code reflection
+            will be faster than using reflection, but will result in code being
+            loaded into the current address space.  In other words, this class
+            builds a proxy around a class and generates MSIL specifically for
+            the purpose of exposing functionality.
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastClass._fastClassId">
+            <summary>
+            Static sequential id generation for classes
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastClass._id">
+            <summary>
+            Unique identifier assigned to each FastClass upon creation.
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastClass._targetType">
+            <summary>
+            Type that the FastClass is proxying.
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastClass._methodCache">
+            <summary>
+            Maps methods to FastMethods
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastClass._fieldCache">
+            <summary>
+            Maps fields to FastFields
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastClass._propertyCache">
+            <summary>
+            Maps fields to FastProperty
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastClass._ctorCache">
+            <summary>
+            Maps constructors to FastConstructors
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastClass._instanceLock">
+            <summary>
+            Internal lock
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastClass.FastClassCache">
+            <summary>
+            Maps types to their FastClass implementation.
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastClass.FastClassCacheLock">
+            <summary>
+            Static lock used for the fastClassCache
+            </summary>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.#cctor">
+            <summary>
+            Initializes the <see cref="T:XLR8.CGLib.FastClass"/> class.
+            </summary>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.Create(System.Type)">
+            <summary>
+            Creates a FastClass for the specified target type.
+            </summary>
+            <param name="targetType">Type of the target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.#ctor(System.Type,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:XLR8.CGLib.FastClass"/> class.
+            </summary>
+            <param name="targetType">Type of the target.</param>
+            <param name="id">The class id.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.NewInstance">
+            <summary>
+            News the instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.GetDefaultConstructor">
+            <summary>
+            Gets the default constructor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.GetConstructor(System.Reflection.ConstructorInfo)">
+            <summary>
+            Gets a fast constructor implementation for the given
+            constructor.
+            </summary>
+            <param name="ctor">The constructor.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.GetConstructor(System.Type[])">
+            <summary>
+            Gets the constructor.
+            </summary>
+            <param name="paramTypes">The param types.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.CreateMethod(System.Reflection.MethodInfo)">
+            <summary>
+            Creates the method.
+            </summary>
+            <param name="method">The method.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.GetMethod(System.Reflection.MethodInfo)">
+            <summary>
+            Gets a fast method implementation for the given
+            method.
+            </summary>
+            <param name="method">The method.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.GetMethod(System.String)">
+            <summary>
+            Gets the method.
+            </summary>
+            <param name="name">The name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.GetMethod(System.String,System.Type[])">
+            <summary>
+            Gets the method.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="paramTypes">The param types.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.GetField(System.Reflection.FieldInfo)">
+            <summary>
+            Gets a fast field implementation for the given
+            field.
+            </summary>
+            <param name="field">The field.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.GetField(System.String)">
+            <summary>
+            Gets the field.
+            </summary>
+            <param name="name">The name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.GetProperty(System.Reflection.PropertyInfo)">
+            <summary>
+            Gets a fast property implementation for the given
+            property.
+            </summary>
+            <param name="property">The property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastClass.GetProperty(System.String)">
+            <summary>
+            Gets the property.
+            </summary>
+            <param name="name">The name.</param>
+            <returns></returns>
+        </member>
+        <member name="P:XLR8.CGLib.FastClass.TargetType">
+            <summary>
+            Gets the type the FastClass is proxying for.
+            </summary>
+        </member>
+        <member name="P:XLR8.CGLib.FastClass.Id">
+            <summary>
+            Gets the unique internally assigned identifier.
+            </summary>
+            <value>The id.</value>
+        </member>
+        <member name="M:XLR8.CGLib.FastClassUtil.GetGetMethodForProperty(System.Type,System.String)">
+            <summary>
+            Finds a property with the given name.  Once found, extracts the Get method
+            and returns the method.  This method searches for non-public get methods
+            if one can not be found.  Eventually, this should get wrapped with a
+            FastMethod.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="propName">Name of the prop.</param>
+            <returns></returns>
+        </member>
+        <member name="F:XLR8.CGLib.FastConstructor._fastClass">
+            <summary>
+            Class object that this constructor belongs to.
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastConstructor._targetConstructor">
+            <summary>
+            Method that is being proxied
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastConstructor._dynamicMethod">
+            <summary>
+            Dynamic method that is constructed for invocation.
+            </summary>
+        </member>
+        <member name="M:XLR8.CGLib.FastConstructor.GetParameterTypes(System.Reflection.ConstructorInfo)">
+            <summary>
+            Gets the parameter types.
+            </summary>
+            <param name="constructor">The constructor.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastConstructor.#ctor(XLR8.CGLib.FastClass,System.Reflection.ConstructorInfo)">
+            <summary>
+            Constructs a wrapper around the target constructor.
+            </summary>
+            <param name="_fastClass">The _fast class.</param>
+            <param name="constructor">The constructor.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastConstructor.New(System.Object[])">
+            <summary>
+            Creates a new instance of the target using the parameters.
+            </summary>
+            <param name="paramList">The param list.</param>
+        </member>
+        <member name="P:XLR8.CGLib.FastConstructor.Target">
+            <summary>
+            Gets the target constructor.
+            </summary>
+            <value>The target method.</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastConstructor.DeclaringType">
+            <summary>
+            Gets the type of the declaring.
+            </summary>
+            <value>The type of the declaring.</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastConstructor.ParameterCount">
+            <summary>
+            Gets the parameter count.
+            </summary>
+            <value>The parameter count.</value>
+        </member>
+        <member name="F:XLR8.CGLib.FastField.fastClass">
+            <summary>
+            Class object that this method belongs to.
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastField.targetField">
+            <summary>
+            Field that is being proxied
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastField.dynamicGetMethod">
+            <summary>
+            Dynamic method that is constructed for invocation.
+            </summary>
+        </member>
+        <member name="M:XLR8.CGLib.FastField.#ctor(XLR8.CGLib.FastClass,System.Reflection.FieldInfo)">
+            <summary>
+            Constructs a wrapper around the target field.
+            </summary>
+            <param name="_fastClass">The _fast class.</param>
+            <param name="field">The field.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastField.CreateDynamicGetMethod(System.Reflection.FieldInfo)">
+            <summary>
+            Creates the dynamic get method.
+            </summary>
+            <param name="field">The field.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastField.CreateDynamicSetMethod(System.Reflection.FieldInfo)">
+            <summary>
+            Creates the dynamic set method.
+            </summary>
+            <param name="field">The field.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastField.Get(System.Object)">
+            <summary>
+            Gets the value of the field
+            </summary>
+            <param name="target">The target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastField.GetStatic">
+            <summary>
+            Gets the value of a static field
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastField.Set(System.Object,System.Object)">
+            <summary>
+            Sets the value of an instance field.
+            </summary>
+            <param name="target">The target.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastField.SetStatic(System.Object)">
+            <summary>
+            Sets the value of a static field.
+            </summary>
+            <param name="value">The value.</param>
+        </member>
+        <member name="P:XLR8.CGLib.FastField.Target">
+            <summary>
+            Gets the target field.
+            </summary>
+            <value>The target field.</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastField.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastField.FieldType">
+            <summary>
+            Gets the field type.
+            </summary>
+            <value>The field type</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastField.DeclaringType">
+            <summary>
+            Gets the type of the declaring.
+            </summary>
+            <value>The type of the declaring.</value>
+        </member>
+        <member name="F:XLR8.CGLib.FastMethod._fastClass">
+            <summary>
+            Class object that this method belongs to.
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastMethod._targetMethod">
+            <summary>
+            Method that is being proxied
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastMethod._dynamicMethod">
+            <summary>
+            Dynamic method that is constructed for invocation.
+            </summary>
+        </member>
+        <member name="M:XLR8.CGLib.FastMethod.#ctor(XLR8.CGLib.FastClass,System.Reflection.MethodInfo)">
+            <summary>
+            Constructs a wrapper around the target method.
+            </summary>
+            <param name="fastClass">The _fast class.</param>
+            <param name="method">The method.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastMethod.Invoke(System.Object,System.Object[])">
+            <summary>
+            Invokes the method on the specified target.
+            </summary>
+            <param name="target">The target.</param>
+            <param name="paramList">The param list.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastMethod.InvokeStatic(System.Object[])">
+            <summary>
+            Invokes the method on the specified target.
+            </summary>
+            <param name="paramList">The param list.</param>
+            <returns></returns>
+        </member>
+        <member name="P:XLR8.CGLib.FastMethod.Target">
+            <summary>
+            Gets the target method.
+            </summary>
+            <value>The target method.</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastMethod.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastMethod.ReturnType">
+            <summary>
+            Gets the type of the return.
+            </summary>
+            <value>The type of the return.</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastMethod.DeclaringType">
+            <summary>
+            Gets the type of the declaring.
+            </summary>
+            <value>The type of the declaring.</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastMethod.ParameterCount">
+            <summary>
+            Gets the parameter count.
+            </summary>
+            <value>The parameter count.</value>
+        </member>
+        <member name="T:XLR8.CGLib.FastProperty">
+            <summary>
+            Provides access to property information and creates dynamic method to access
+            properties rather than relying upon reflection.
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastProperty.fastClass">
+            <summary>
+            Class object that this method belongs to.
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastProperty.targetProperty">
+            <summary>
+            Property that is being proxied
+            </summary>
+        </member>
+        <member name="F:XLR8.CGLib.FastProperty.dynamicGetMethod">
+            <summary>
+            Dynamic method that is constructed for invocation.
+            </summary>
+        </member>
+        <member name="M:XLR8.CGLib.FastProperty.#ctor(XLR8.CGLib.FastClass,System.Reflection.PropertyInfo)">
+            <summary>
+            Constructs a wrapper around the target property.
+            </summary>
+            <param name="_fastClass">The _fast class.</param>
+            <param name="property">The property.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastProperty.CreateDynamicGetMethod(System.Reflection.PropertyInfo)">
+            <summary>
+            Creates the dynamic get method.
+            </summary>
+            <param name="property">The property.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastProperty.CreateDynamicSetMethod(System.Reflection.PropertyInfo)">
+            <summary>
+            Creates the dynamic set method.
+            </summary>
+            <param name="property">The property.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastProperty.Get(System.Object)">
+            <summary>
+            Gets the value of the property
+            </summary>
+            <param name="target">The target.</param>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastProperty.GetStatic">
+            <summary>
+            Gets the value of a static property
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XLR8.CGLib.FastProperty.Set(System.Object,System.Object)">
+            <summary>
+            Sets the value of an instance property.
+            </summary>
+            <param name="target">The target.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:XLR8.CGLib.FastProperty.SetStatic(System.Object)">
+            <summary>
+            Sets the value of a static property.
+            </summary>
+            <param name="value">The value.</param>
+        </member>
+        <member name="P:XLR8.CGLib.FastProperty.Target">
+            <summary>
+            Gets the target property.
+            </summary>
+            <value>The target property.</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastProperty.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastProperty.PropertyType">
+            <summary>
+            Gets the property type.
+            </summary>
+            <value>The property type</value>
+        </member>
+        <member name="P:XLR8.CGLib.FastProperty.DeclaringType">
+            <summary>
+            Gets the type of the declaring.
+            </summary>
+            <value>The type of the declaring.</value>
+        </member>
+    </members>
+</doc>

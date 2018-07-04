@@ -1,0 +1,208 @@
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ns: <http://ontology.universAAL.org/Location.owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://ontology.universaal.org/Lighting.owl#> .
+<http://ontology.universaal.org/Lighting.owl> rdfs:comment "The ontology defining the most general concepts dealing with light sources and their control."^^xsd:string ;
+  a owl:Ontology ;
+  owl:imports <http://ontology.universAAL.org/DataRepresentation.owl> ,
+    <http://ontology.universAAL.org/ServiceBus.owl> ,
+    <http://ontology.universAAL.org/Location.owl> ;
+  rdfs:label "Lighting"^^xsd:string .
+:NaturalLight rdfs:comment "The type of natural light sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Natural Light"^^xsd:string ;
+  rdfs:subClassOf :LightType ;
+  owl:oneOf (
+    :moon_shine
+    :sun_shine
+  ) .
+:moon_shine a :NaturalLight .
+:sun_shine a :NaturalLight .
+:BeamingSource rdfs:comment "The class of beaming light sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Beaming Source"^^xsd:string ;
+  rdfs:subClassOf :LightSource ,
+    [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty :beamingDirection
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom ns:Location ;
+      owl:onProperty :beamingDirection
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty :targetSurface
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom ns:Location ;
+      owl:onProperty :targetSurface
+    ] .
+:targetSurface rdfs:domain :BeamingSource ;
+  a owl:ObjectProperty ,
+    owl:FunctionalProperty .
+:beamingDirection rdfs:domain :BeamingSource ;
+  a owl:ObjectProperty ,
+    owl:FunctionalProperty .
+:ElectricLight rdfs:comment "The type of electric light sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Electric Light"^^xsd:string ;
+  rdfs:subClassOf :LightType ;
+  owl:oneOf (
+    :carbon_arc_lamp
+    :discharge_lamp
+    :fluorescent_lamp
+    :halogen_lamp
+    :led_lamp
+    :light_bulb
+  ) .
+:discharge_lamp a :ElectricLight .
+:led_lamp a :ElectricLight .
+:halogen_lamp a :ElectricLight .
+:light_bulb a :ElectricLight .
+:fluorescent_lamp a :ElectricLight .
+:carbon_arc_lamp a :ElectricLight .
+:BlinkableLightSource rdfs:comment "The class of blinkable light sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Blinkable Light Source"^^xsd:string ;
+  rdfs:subClassOf :LightSource ,
+    [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty :blinkingState
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:boolean ;
+      owl:onProperty :blinkingState
+    ] .
+:blinkingState rdfs:domain :BlinkableLightSource ;
+  a owl:DatatypeProperty ,
+    owl:FunctionalProperty .
+:Lighting rdfs:comment "The class of services controling light sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Lighting"^^xsd:string ;
+  rdfs:subClassOf <http://www.daml.org/services/owl-s/1.1/Service.owl#Service> ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom :LightSource ;
+      owl:onProperty :controls
+    ] .
+:controls rdfs:domain :Lighting ;
+  a owl:ObjectProperty .
+:Beaming rdfs:comment "The class of services controling beaming sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Beaming"^^xsd:string ;
+  rdfs:subClassOf :Lighting ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom :BeamingSource ;
+      owl:onProperty :controls
+    ] .
+:LightType rdfs:comment "The type of a light source"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Light Type"^^xsd:string .
+:BlinkableLighting rdfs:comment "The class of services controling blinkable light sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Blinkable Lighting"^^xsd:string ;
+  rdfs:subClassOf :Lighting ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom :BlinkableLightSource ;
+      owl:onProperty :controls
+    ] .
+:LightSource rdfs:comment "The class of all light sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Light Source"^^xsd:string ;
+  rdfs:subClassOf <http://ontology.universaal.org/PhThing.owl#Device> ,
+    [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty :ambientCoverage
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom ns:Location ;
+      owl:onProperty :ambientCoverage
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty :hasType
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom :LightType ;
+      owl:onProperty :hasType
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty :srcBrightness
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom [
+        a owl:Class ;
+        owl:withRestrictions (
+          [
+            xsd:minInclusive "0"^^xsd:int
+          ]
+          [
+            xsd:maxInclusive "100"^^xsd:int
+          ]
+        ) ;
+        owl:onDatatype xsd:int
+      ] ;
+      owl:onProperty :srcBrightness
+    ] ,
+    [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty :srcColor
+    ] .
+:srcBrightness rdfs:domain :LightSource ;
+  a owl:DatatypeProperty ,
+    owl:FunctionalProperty .
+:hasType rdfs:domain :LightSource ;
+  a owl:ObjectProperty ,
+    owl:FunctionalProperty .
+:ambientCoverage rdfs:domain :LightSource ;
+  a owl:ObjectProperty ,
+    owl:FunctionalProperty .
+:srcColor rdfs:domain :LightSource ;
+  a owl:ObjectProperty ,
+    owl:FunctionalProperty .
+:BlinkableBeamingSource rdfs:comment "The class of blinkable beaming sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Blinkable Beaming Source"^^xsd:string ;
+  rdfs:subClassOf :BeamingSource ,
+    :BlinkableLightSource .
+:FlamingLight rdfs:comment "The type of faming light sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Flaming Light"^^xsd:string ;
+  rdfs:subClassOf :LightType ;
+  owl:oneOf (
+    :candle_light
+    :gas_lamp
+    :oil_lamp
+  ) .
+:gas_lamp a :FlamingLight .
+:candle_light a :FlamingLight .
+:oil_lamp a :FlamingLight .
+:BlinkableBeaming rdfs:comment "The class of services controling blinkable beaming sources"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Blinkable Beaming"^^xsd:string ;
+  rdfs:subClassOf :Beaming ,
+    :BlinkableLighting ,
+    [
+      a owl:Restriction ;
+      owl:allValuesFrom :BlinkableBeamingSource ;
+      owl:onProperty :controls
+    ] .

@@ -1,0 +1,769 @@
+
+@prefix pvn: <http://ontology.universAAL.org/uAAL.owl#> .
+@prefix ns: <http://www.daml.org/services/owl-s/1.1/Service.owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1: <http://ontology.universAAL.org/Profile.owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ns2: <http://ontology.universAAL.org/Disease.owl#> .
+@prefix ns3: <http://ontology.universaal.org/Health.owl#> .
+@prefix ns4: <http://ontology.universaal.org/HealthMeasurement.owl#> .
+@prefix : <http://www.w3.org/2002/07/owl#> .
+<http://ontology.universaal.org/Health.owl> rdfs:comment "The ontology defining the health service, based on the treatment concept."^^xsd:string ;
+  a :Ontology ;
+  :imports <http://ontology.universAAL.org/DataRepresentation.owl> ,
+    <http://ontology.universAAL.org/ServiceBus.owl> ,
+    <http://ontology.universAAL.org/Location.owl> ,
+    <http://ontology.universAAL.org/Profile.owl> ,
+    <http://ontology.universaal.org/HealthMeasurement.owl> ,
+    <http://ontology.universAAL.org/Disease.owl> ;
+  rdfs:label "HealthOntology"^^xsd:string .
+ns3:WeightMeasurementTreatment rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "Weight Measurement"^^xsd:string ;
+  rdfs:subClassOf ns3:TakeMeasurementActivity ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:WeightMeasurement ;
+      :onProperty ns3:hasMeasurementRequirements
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom [
+        a :Restriction ;
+        :allValuesFrom ns4:PersonWeight ;
+        :onProperty ns3:hasMeasurement
+      ] ;
+      :onProperty ns3:hasPerformedSession
+    ] .
+ns3:Treatment rdfs:comment "This class describes the concept of treatment, that is the set of activities that an assisted person is suggested to do."^^xsd:string ;
+  a :Class ;
+  rdfs:label "Treatment"^^xsd:string ;
+  rdfs:subClassOf pvn:ManagedIndividual ,
+    pvn:PrivateResource ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:name
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty ns3:name
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:completeness
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:float ;
+      :onProperty ns3:completeness
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:status
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:StatusType ;
+      :onProperty ns3:status
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:isAssociatedToADisease
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty ns3:isAssociatedToADisease
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:hasTreatmentPlanning
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:TreatmentPlanning ;
+      :onProperty ns3:hasTreatmentPlanning
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:hasCaregiver
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:Caregiver ;
+      :onProperty ns3:hasCaregiver
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:motivationalStatus
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:MotivationalStatusType ;
+      :onProperty ns3:motivationalStatus
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:description
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty ns3:description
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:PerformedSession ;
+      :onProperty ns3:hasPerformedSession
+    ] .
+ns3:motivationalStatus rdfs:domain ns3:Treatment ;
+  a :DatatypeProperty .
+ns3:hasTreatmentPlanning rdfs:domain ns3:Treatment ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns3:hasCaregiver rdfs:domain ns3:Treatment ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns3:description rdfs:domain ns3:Treatment ;
+  a :DatatypeProperty .
+ns3:status rdfs:domain ns3:Treatment ;
+  a :DatatypeProperty .
+ns3:hasPerformedSession rdfs:domain ns3:Treatment ;
+  a :ObjectProperty .
+ns3:name rdfs:domain ns3:Treatment ;
+  a :DatatypeProperty .
+ns3:completeness rdfs:domain ns3:Treatment ;
+  a :DatatypeProperty .
+ns3:isAssociatedToADisease rdfs:domain ns3:Treatment ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns3:HealthService rdfs:comment "Description of the health service."^^xsd:string ;
+  a :Class ;
+  rdfs:label "HealthService"^^xsd:string ;
+  rdfs:subClassOf ns:Service ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:assistedPerson
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:AssistedPerson ;
+      :onProperty ns3:assistedPerson
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:healthProfile
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:HealthProfile ;
+      :onProperty ns3:healthProfile
+    ] .
+ns3:assistedPerson rdfs:domain ns3:HealthService ;
+  a :ObjectProperty .
+ns3:healthProfile rdfs:domain ns3:HealthService ;
+  a :ObjectProperty .
+ns3:SessionManagementService rdfs:comment "Description of the performed session management service."^^xsd:string ;
+  a :Class ;
+  rdfs:label "PerformedSessionManagementService"^^xsd:string ;
+  rdfs:subClassOf ns3:HealthService ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:Session ;
+      :onProperty ns3:managesSession
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:sessionsTreatment
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:Treatment ;
+      :onProperty ns3:sessionsTreatment
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:sessionsFrom
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:long ;
+      :onProperty ns3:sessionsFrom
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:sessionsTo
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:long ;
+      :onProperty ns3:sessionsTo
+    ] .
+ns3:managesSession rdfs:domain ns3:SessionManagementService ;
+  a :ObjectProperty .
+ns3:sessionsFrom rdfs:domain ns3:SessionManagementService ;
+  a :DatatypeProperty .
+ns3:sessionsTo rdfs:domain ns3:SessionManagementService ;
+  a :DatatypeProperty .
+ns3:sessionsTreatment rdfs:domain ns3:SessionManagementService ;
+  a :ObjectProperty .
+ns3:Walking rdfs:comment "This concept describes all the activities that can be considered as healthy habits"^^xsd:string ;
+  a :Class ;
+  rdfs:label "Walking"^^xsd:string ;
+  rdfs:subClassOf ns3:HealthyHabitsAdoption .
+ns3:HeartRateRequirement rdfs:comment "This class describes a heart rate measurement requirement."^^xsd:string ;
+  a :Class ;
+  rdfs:label "HeartRateRequirement"^^xsd:string ;
+  rdfs:subClassOf ns3:MeasurementRequirements .
+ns3:TreatmentPlanning rdfs:comment "This class describes the planning of the sessions that composes the treatment."^^xsd:string ;
+  a :Class ;
+  rdfs:label "TreatmentPlanning"^^xsd:string ;
+  rdfs:subClassOf pvn:ManagedIndividual ,
+    pvn:PrivateResource ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:recurrence
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty ns3:recurrence
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:startDate
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:dateTime ;
+      :onProperty ns3:startDate
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:endDate
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:dateTime ;
+      :onProperty ns3:endDate
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:Session ;
+      :onProperty ns3:hasSessions
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:description
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty ns3:description
+    ] .
+ns3:endDate rdfs:domain ns3:TreatmentPlanning ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns3:description rdfs:domain ns3:TreatmentPlanning ;
+  a :DatatypeProperty .
+ns3:hasSessions rdfs:domain ns3:TreatmentPlanning ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns3:startDate rdfs:domain ns3:TreatmentPlanning ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns3:recurrence rdfs:domain ns3:TreatmentPlanning ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns3:WeightMeasurement rdfs:comment "This class describes a weight measurement requirement."^^xsd:string ;
+  a :Class ;
+  rdfs:label "WeightMeasurement"^^xsd:string ;
+  rdfs:subClassOf ns3:MeasurementRequirements ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:minValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:PersonWeight ;
+      :onProperty ns3:minValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:maxValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:PersonWeight ;
+      :onProperty ns3:maxValueAllowed
+    ] .
+ns3:minValueAllowed rdfs:domain ns3:WeightMeasurement ;
+  a :ObjectProperty .
+ns3:maxValueAllowed rdfs:domain ns3:WeightMeasurement ;
+  a :ObjectProperty .
+ns3:DisplayTreatmentService rdfs:comment "Services to display specific treatments."^^xsd:string ;
+  a :Class ;
+  rdfs:label "HealthDisplayTreatmentService"^^xsd:string ;
+  rdfs:subClassOf ns:Service ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:treatmentToBeDisplayed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:Treatment ;
+      :onProperty ns3:treatmentToBeDisplayed
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:targetUser
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:AssistedPerson ;
+      :onProperty ns3:targetUser
+    ] .
+ns3:targetUser rdfs:domain ns3:DisplayTreatmentService ;
+  a :ObjectProperty .
+ns3:treatmentToBeDisplayed rdfs:domain ns3:DisplayTreatmentService ;
+  a :ObjectProperty .
+ns3:HeartRateMeasurementTreatment rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "Pulse Measurement"^^xsd:string ;
+  rdfs:subClassOf ns3:TakeMeasurementActivity ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:HeartRateRequirement ;
+      :onProperty ns3:hasMeasurementRequirements
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom [
+        a :Restriction ;
+        :allValuesFrom ns4:HeartRate ;
+        :onProperty ns3:hasMeasurement
+      ] ;
+      :onProperty ns3:hasPerformedSession
+    ] .
+ns3:ActivityHeartRateRequirement rdfs:comment "This class describes a heart rate measurement requirement during the activity."^^xsd:string ;
+  a :Class ;
+  rdfs:label "HeartRateRequirement"^^xsd:string ;
+  rdfs:subClassOf ns3:HeartRateRequirement ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:minValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:HeartRate ;
+      :onProperty ns3:minValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:maxValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:HeartRate ;
+      :onProperty ns3:maxValueAllowed
+    ] .
+ns3:minValueAllowed rdfs:domain ns3:ActivityHeartRateRequirement ;
+  a :ObjectProperty .
+ns3:maxValueAllowed rdfs:domain ns3:ActivityHeartRateRequirement ;
+  a :ObjectProperty .
+ns3:PerformedSession rdfs:comment "This class describes a session that has been performed."^^xsd:string ;
+  a :Class ;
+  rdfs:label "PerformedSession"^^xsd:string ;
+  rdfs:subClassOf pvn:ManagedIndividual ,
+    pvn:PrivateResource .
+ns3:StatusType rdfs:comment "This class defines the types of possible status of the treatment: planned, actived, finished or cancelled."^^xsd:string ;
+  a :Class ;
+  rdfs:label "StatusType"^^xsd:string ;
+  :oneOf (
+    ns3:planned
+    ns3:actived
+    ns3:finished
+    ns3:cancelled
+    ns3:prolonged
+  ) .
+ns3:cancelled a ns3:StatusType .
+ns3:finished a ns3:StatusType .
+ns3:actived a ns3:StatusType .
+ns3:prolonged a ns3:StatusType .
+ns3:planned a ns3:StatusType .
+ns3:MeasurementRequirements rdfs:comment "This concept involves all the measurement types that are required in a treatment."^^xsd:string ;
+  a :Class ;
+  rdfs:label "MeasurementRequirements"^^xsd:string ;
+  rdfs:subClassOf pvn:ManagedIndividual ,
+    pvn:PrivateResource ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:maxValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:HealthMeasurement ;
+      :onProperty ns3:maxValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:minValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:HealthMeasurement ;
+      :onProperty ns3:minValueAllowed
+    ] .
+ns3:minValueAllowed rdfs:domain ns3:MeasurementRequirements ;
+  a :ObjectProperty .
+ns3:maxValueAllowed rdfs:domain ns3:MeasurementRequirements ;
+  a :ObjectProperty .
+ns3:PhysicalActivity rdfs:comment "This concept describes a physical activity."^^xsd:string ;
+  a :Class ;
+  rdfs:label "MeasuredPhysicalActivity"^^xsd:string ;
+  rdfs:subClassOf ns3:HealthyHabitsAdoption ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:hasAssociatedMeasurement
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:TakeMeasurementActivity ;
+      :onProperty ns3:hasAssociatedMeasurement
+    ] .
+ns3:hasAssociatedMeasurement rdfs:domain ns3:PhysicalActivity ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns3:Diet rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "Diet"^^xsd:string ;
+  rdfs:subClassOf ns3:HealthyHabitsAdoption .
+ns3:TreatmentManagementService rdfs:comment "Description of the treatment management service."^^xsd:string ;
+  a :Class ;
+  rdfs:label "TreatmentManagementService"^^xsd:string ;
+  rdfs:subClassOf ns3:HealthService ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:Treatment ;
+      :onProperty ns3:managesTreatments
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:listsTreatmentsTimestampFrom
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:long ;
+      :onProperty ns3:listsTreatmentsTimestampFrom
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:listsTreatmentsTimestampTo
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:long ;
+      :onProperty ns3:listsTreatmentsTimestampTo
+    ] .
+ns3:listsTreatmentsTimestampTo rdfs:domain ns3:TreatmentManagementService ;
+  a :DatatypeProperty .
+ns3:listsTreatmentsTimestampFrom rdfs:domain ns3:TreatmentManagementService ;
+  a :DatatypeProperty .
+ns3:managesTreatments rdfs:domain ns3:TreatmentManagementService ;
+  a :ObjectProperty .
+ns3:BloodPressureMeasurement rdfs:comment "This class describes a blood pressure measurement requirement."^^xsd:string ;
+  a :Class ;
+  rdfs:label "BloodPressureMeasurement"^^xsd:string ;
+  rdfs:subClassOf ns3:MeasurementRequirements ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:minValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:BloodPressure ;
+      :onProperty ns3:minValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:maxValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:BloodPressure ;
+      :onProperty ns3:maxValueAllowed
+    ] .
+ns3:minValueAllowed rdfs:domain ns3:BloodPressureMeasurement ;
+  a :ObjectProperty .
+ns3:maxValueAllowed rdfs:domain ns3:BloodPressureMeasurement ;
+  a :ObjectProperty .
+ns3:TakeMeasurementActivity rdfs:comment "This is a treatment that consists of taking measurements."^^xsd:string ;
+  a :Class ;
+  rdfs:label "TakeMeasurementActivity"^^xsd:string ;
+  rdfs:subClassOf ns3:Treatment ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:hasMeasurementRequirements
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:MeasurementRequirements ;
+      :onProperty ns3:hasMeasurementRequirements
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:PerformedMeasurementSession ;
+      :onProperty ns3:hasPerformedSession
+    ] .
+ns3:hasMeasurementRequirements rdfs:domain ns3:TakeMeasurementActivity ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns3:HealthyHabitsAdoption rdfs:comment "This concept describes all the activities that can be considered as healthy habits"^^xsd:string ;
+  a :Class ;
+  rdfs:label "HealthyHabitsAdoption"^^xsd:string ;
+  rdfs:subClassOf ns3:Treatment .
+ns3:Session rdfs:comment "A planned session is a session that has been schedule so as to perform an assigned activity."^^xsd:string ;
+  a :Class ;
+  rdfs:label "PlannedSession"^^xsd:string ;
+  rdfs:subClassOf pvn:ManagedIndividual ,
+    pvn:PrivateResource ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:date
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:dateTime ;
+      :onProperty ns3:date
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:startTime
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:dateTime ;
+      :onProperty ns3:startTime
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:duration
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:duration ;
+      :onProperty ns3:duration
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:details
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty ns3:details
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:performed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:PerformedSession ;
+      :onProperty ns3:performed
+    ] .
+ns3:details rdfs:domain ns3:Session ;
+  a :DatatypeProperty .
+ns3:duration rdfs:domain ns3:Session ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns3:date rdfs:domain ns3:Session ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns3:performed rdfs:domain ns3:Session ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns3:startTime rdfs:domain ns3:Session ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns3:MotivationalStatusType rdfs:comment "This class defines the types of motivational status of the treatment: precontemplation, contemplation, action or maintenance."^^xsd:string ;
+  a :Class ;
+  rdfs:label "MotivationalStatusType"^^xsd:string ;
+  :oneOf (
+    ns3:precontemplation
+    ns3:contemplation
+    ns3:action
+    ns3:maintenance
+    ns3:undefined
+  ) .
+ns3:precontemplation a ns3:MotivationalStatusType .
+ns3:contemplation a ns3:MotivationalStatusType .
+ns3:action a ns3:MotivationalStatusType .
+ns3:maintenance a ns3:MotivationalStatusType .
+ns3:undefined a ns3:MotivationalStatusType .
+ns3:HealthProfileManagementService rdfs:comment "Services to manage Health Profile."^^xsd:string ;
+  a :Class ;
+  rdfs:label "HealthProfileManagementService"^^xsd:string ;
+  rdfs:subClassOf ns3:HealthService .
+ns3:ReposeHeartRateRequirement rdfs:comment "This class describes a reposed heart rate measurement requirement."^^xsd:string ;
+  a :Class ;
+  rdfs:label "ReposeHeartRateRequirement"^^xsd:string ;
+  rdfs:subClassOf ns3:HeartRateRequirement ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:minValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:HeartRate ;
+      :onProperty ns3:minValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :maxCardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:maxValueAllowed
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:HeartRate ;
+      :onProperty ns3:maxValueAllowed
+    ] .
+ns3:minValueAllowed rdfs:domain ns3:ReposeHeartRateRequirement ;
+  a :ObjectProperty .
+ns3:maxValueAllowed rdfs:domain ns3:ReposeHeartRateRequirement ;
+  a :ObjectProperty .
+ns3:BloodPreasureMeasurementTreatment rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "Blood Preasure Measurement"^^xsd:string ;
+  rdfs:subClassOf ns3:TakeMeasurementActivity ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:BloodPressureMeasurement ;
+      :onProperty ns3:hasMeasurementRequirements
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom [
+        a :Restriction ;
+        :allValuesFrom ns4:BloodPressure ;
+        :onProperty ns3:hasMeasurement
+      ] ;
+      :onProperty ns3:hasPerformedSession
+    ] .
+ns3:HealthProfile rdfs:comment "Health profile listing all treatments for an Assisted Person"^^xsd:string ;
+  a :Class ;
+  rdfs:label "HealthProfile"^^xsd:string ;
+  rdfs:subClassOf ns1:SubProfile ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns3:Treatment ;
+      :onProperty ns3:hasTreatment
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:isAssignedToAP
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:AssistedPerson ;
+      :onProperty ns3:isAssignedToAP
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:HealthMeasurement ;
+      :onProperty ns3:lastMeasurements
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:birthDate
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:dateTime ;
+      :onProperty ns3:birthDate
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:gender
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:Gender ;
+      :onProperty ns3:gender
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns2:Disease ;
+      :onProperty ns3:diseases
+    ] .
+ns3:gender rdfs:domain ns3:HealthProfile ;
+  a :ObjectProperty .
+ns3:isAssignedToAP rdfs:domain ns3:HealthProfile ;
+  a :ObjectProperty .
+ns3:diseases rdfs:domain ns3:HealthProfile ;
+  a :ObjectProperty .
+ns3:hasTreatment rdfs:domain ns3:HealthProfile ;
+  a :ObjectProperty .
+ns3:lastMeasurements rdfs:domain ns3:HealthProfile ;
+  a :ObjectProperty .
+ns3:birthDate rdfs:domain ns3:HealthProfile ;
+  a :DatatypeProperty .
+ns3:PerformedMeasurementSession rdfs:comment "This class describes a session with a health measurement involved that has been performed."^^xsd:string ;
+  a :Class ;
+  rdfs:label "PerformedSession"^^xsd:string ;
+  rdfs:subClassOf ns3:PerformedSession ,
+    pvn:PrivateResource ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns3:hasMeasurement
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns4:HealthMeasurement ;
+      :onProperty ns3:hasMeasurement
+    ] .
+ns3:hasMeasurement rdfs:domain ns3:PerformedMeasurementSession ;
+  a :ObjectProperty ,
+    :FunctionalProperty .

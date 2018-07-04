@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5BD311FF-B0D7-4CFB-AB5C-9A4EF1026996}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ContextManager.DataObjects</RootNamespace>
+    <AssemblyName>ContextManager.DataObjects</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr4.Runtime.Standard, Version=4.6.0.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr4.Runtime.Standard.4.6.0\lib\net35\Antlr4.Runtime.Standard.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.1.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.1.1\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CoT Library">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\CoT Library.dll</HintPath>
+    </Reference>
+    <Reference Include="EDXLCoT">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\EDXLCoT.dll</HintPath>
+    </Reference>
+    <Reference Include="EDXLSharp">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\EDXLSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="EDXLSharp.CAPLib">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\EDXLSharp.CAPLib.dll</HintPath>
+    </Reference>
+    <Reference Include="EDXLSharp.CIQLib">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\EDXLSharp.CIQLib.dll</HintPath>
+    </Reference>
+    <Reference Include="EDXLSharp.EDXLDELib">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\EDXLSharp.EDXLDELib.dll</HintPath>
+    </Reference>
+    <Reference Include="EDXLSharp.EDXLHAVELib">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\EDXLSharp.EDXLHAVELib.dll</HintPath>
+    </Reference>
+    <Reference Include="EDXLSharp.EDXLHAVE_2_0Lib">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\EDXLSharp.EDXLHAVE_2_0Lib.dll</HintPath>
+    </Reference>
+    <Reference Include="EDXLSharp.EDXLRMLib">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\EDXLSharp.EDXLRMLib.dll</HintPath>
+    </Reference>
+    <Reference Include="EDXLSharp.EDXLSitRepLib">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\EDXLSharp.EDXLSitRepLib.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GeoOASISWhereLib">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\GeoOASISWhereLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MEXLSitRepLib">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\MEXLSitRepLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MEXLTEPLib">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\MEXLTEPLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.KitchenSink.CRC, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.KitchenSink.CRC.1.1.0\lib\net40-Client\Nito.KitchenSink.CRC.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Sharpen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sharpen.1.0.0.3\lib\Sharpen.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="XLR8.CGLib, Version=1.0.1.4868, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XLR8.CGLib.1.0.2\lib\net40\XLR8.CGLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xml.Schema.Linq">
+      <HintPath>..\..\..\Program Files (x86)\EDXLSharp\EDXLSharplib\Xml.Schema.Linq.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseDataObject.cs" />
+    <Compile Include="EDXL\CAPmessage.cs" />
+    <Compile Include="EDXL\IncidentInformationType.cs" />
+    <Compile Include="EDXL\IReport.cs" />
+    <Compile Include="EDXL\SitRepType.cs" />
+    <Compile Include="EDXL\SituationInference.cs" />
+    <Compile Include="EDXL\SituationInformationType.cs" />
+    <Compile Include="IEsperEvent.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SAREF\Device.cs" />
+    <Compile Include="SAREF\Sensor.cs" />
+    <Compile Include="SEMIoTICS\AccelerometerSensorObservation.cs" />
+    <Compile Include="SSN_SOSA\ObservableProperty.cs" />
+    <Compile Include="SSN_SOSA\Observation.cs" />
+    <Compile Include="SEMIoTICS\VehicleCollisionDetectedObservation.cs" />
+    <Compile Include="SSN_SOSA\Platform.cs" />
+    <Compile Include="SSN_SOSA\Point.cs" />
+    <Compile Include="SSN_SOSA\Property.cs" />
+    <Compile Include="SSN_SOSA\Result.cs" />
+    <Compile Include="SSN_SOSA\Sensor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

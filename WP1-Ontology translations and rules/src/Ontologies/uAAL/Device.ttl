@@ -1,0 +1,860 @@
+
+@prefix ns: <http://ontology.universaal.org/Measurement.owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ns1: <http://ontology.universAAL.org/Device.owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://www.w3.org/2002/07/owl#> .
+<http://ontology.universAAL.org/Device.owl> rdfs:comment "The Collection of Devices Ontology"^^xsd:string ;
+  a :Ontology ;
+  :imports <http://ontology.universAAL.org/DataRepresentation.owl> ,
+    <http://ontology.universAAL.org/ServiceBus.owl> ,
+    <http://ontology.universAAL.org/Location.owl> ,
+    <http://ontology.universaal.org/Measurement.owl> ;
+  rdfs:label "device"^^xsd:string .
+ns1:CurtainController rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "CurtainController"^^xsd:string ;
+  rdfs:subClassOf ns1:CurtainActuator ,
+    ns1:CurtainSensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:CurtainController ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:SwitchActuator rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "SwitchActuator"^^xsd:string ;
+  rdfs:subClassOf ns1:Actuator ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:SwitchActuator ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:DoorController rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "DoorController"^^xsd:string ;
+  rdfs:subClassOf ns1:DoorActuator ,
+    ns1:DoorSensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:DoorController ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:SmokeSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "SmokeSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:EnvironmentSensor .
+ns1:Sensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "Sensor"^^xsd:string ;
+  rdfs:subClassOf ns1:ValueDevice .
+ns1:PresenceSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "PresenceSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:PresenceSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:HeaterSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "HeaterSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:HeaterSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:BlindActuator rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "BlindActuator"^^xsd:string ;
+  rdfs:subClassOf ns1:Actuator ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:BlindActuator ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:PanicButtonSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "PanicButtonSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:PanicButtonSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:ExitSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "ExitSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:ExitValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:ExitSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:DimmerController rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "DimmerController"^^xsd:string ;
+  rdfs:subClassOf ns1:DimmerActuator ,
+    ns1:DimmerSensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:DimmerController ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:WindowActuator rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "WindowActuator"^^xsd:string ;
+  rdfs:subClassOf ns1:Actuator ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:WindowActuator ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:MotionSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "MotionSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:MotionValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:MotionSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:CO2Sensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "CO2Sensor"^^xsd:string ;
+  rdfs:subClassOf ns1:EnvironmentSensor .
+ns1:GlassBreakSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "GlassBreakSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:GlassBreakSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:COMeter rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "COMeter"^^xsd:string ;
+  rdfs:subClassOf ns1:EnvironmentMeter .
+ns1:WindowSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "WindowSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:WindowSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:LightController rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "LightController"^^xsd:string ;
+  rdfs:subClassOf ns1:LightActuator ,
+    ns1:LightSensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:LightController ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:BlindController rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "BlindController"^^xsd:string ;
+  rdfs:subClassOf ns1:BlindActuator ,
+    ns1:BlindSensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:BlindController ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:HumiditySensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "HumiditySensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:float ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:HumiditySensor ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:SwitchController rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "SwitchController"^^xsd:string ;
+  rdfs:subClassOf ns1:SwitchActuator ,
+    ns1:SwitchSensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:SwitchController ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:HeaterActuator rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "HeaterActuator"^^xsd:string ;
+  rdfs:subClassOf ns1:Actuator ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:HeaterActuator ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:DimmerSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "DimmerSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:DimmerSensor ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:BlindSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "BlindSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:BlindSensor ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:MotionValue rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "MotionValue"^^xsd:string ;
+  :oneOf (
+    ns1:Detected
+    ns1:Delayed
+    ns1:Tampered
+  ) .
+ns1:Tampered a ns1:MotionValue .
+ns1:Delayed a ns1:MotionValue .
+ns1:Detected a ns1:MotionValue .
+ns1:TemperatureLevelSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "TemperatureLevelSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:TemperatureLevelValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:TemperatureLevelSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:CO2Meter rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "CO2Meter"^^xsd:string ;
+  rdfs:subClassOf ns1:EnvironmentMeter .
+ns1:LightSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "LightSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:LightSensor ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:StatusValue rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "StatusValue"^^xsd:string ;
+  :oneOf (
+    ns1:Activated
+    ns1:NotActivated
+    ns1:NoCondition
+  ) .
+ns1:NoCondition a ns1:StatusValue .
+ns1:NotActivated a ns1:StatusValue .
+ns1:Activated a ns1:StatusValue .
+ns1:ValueType rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "ValueType"^^xsd:string ;
+  :oneOf (
+    ns1:event
+    ns1:state
+  ) .
+ns1:state a ns1:ValueType .
+ns1:event a ns1:ValueType .
+ns1:WindowController rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "WindowController"^^xsd:string ;
+  rdfs:subClassOf ns1:WindowActuator ,
+    ns1:WindowSensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:WindowController ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:DosageValue rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "DosageValue"^^xsd:string ;
+  :oneOf (
+    ns1:Taken
+    ns1:Missed
+    ns1:NoCondition
+  ) .
+ns1:NoCondition a ns1:DosageValue .
+ns1:Missed a ns1:DosageValue .
+ns1:Taken a ns1:DosageValue .
+ns1:ValueDevice rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "ValueDevice"^^xsd:string ;
+  rdfs:subClassOf <http://ontology.universaal.org/PhThing.owl#Device> ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:ValueType ;
+      :onProperty ns1:valueType
+    ] .
+ns1:valueType rdfs:domain ns1:ValueDevice ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:hasValue rdfs:domain ns1:ValueDevice ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:CurtainActuator rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "CurtainActuator"^^xsd:string ;
+  rdfs:subClassOf ns1:Actuator ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:CurtainActuator ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:DoorSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "DoorSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:DoorSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:EnvironmentSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "EnvironmentSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:EnvironmentSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:EnvironmentMeter rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "EnvironmentMeter"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns:Measurement ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:EnvironmentMeter ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:GasSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "GasSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:EnvironmentSensor .
+ns1:WaterFlowController rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "WaterFlowController"^^xsd:string ;
+  rdfs:subClassOf ns1:WaterFlowActuator ,
+    ns1:WaterFlowSensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:WaterFlowController ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:HeaterController rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "HeaterController"^^xsd:string ;
+  rdfs:subClassOf ns1:HeaterActuator ,
+    ns1:HeaterSensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:HeaterController ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:SmokeMeter rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "SmokeMeter"^^xsd:string ;
+  rdfs:subClassOf ns1:EnvironmentMeter .
+ns1:TemperatureSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "TemperatureSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:float ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:TemperatureSensor ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:CurtainSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "CurtainSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:CurtainSensor ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:FallSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "FallSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:FallSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:SwitchSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "SwitchSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:SwitchSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:LightActuator rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "LightActuator"^^xsd:string ;
+  rdfs:subClassOf ns1:Actuator ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:LightActuator ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:TemperatureLevelValue rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "TemperatureLevelValue"^^xsd:string ;
+  :oneOf (
+    ns1:HighTemperature
+    ns1:LowTemperature
+    ns1:ChangeTooFast
+  ) .
+ns1:LowTemperature a ns1:TemperatureLevelValue .
+ns1:HighTemperature a ns1:TemperatureLevelValue .
+ns1:ChangeTooFast a ns1:TemperatureLevelValue .
+ns1:DimmerActuator rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "DimmerActuator"^^xsd:string ;
+  rdfs:subClassOf ns1:Actuator ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:int ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:DimmerActuator ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+ns1:FloodSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "FloodSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:FloodSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:Actuator rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "Actuator"^^xsd:string ;
+  rdfs:subClassOf ns1:ValueDevice .
+ns1:EnuresisSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "EnuresisSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:EnuresisSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:DoorActuator rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "DoorActuator"^^xsd:string ;
+  rdfs:subClassOf ns1:Actuator ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:DoorActuator ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:ExitValue rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "ExitValue"^^xsd:string ;
+  :oneOf (
+    ns1:Exit
+    ns1:DoorLeftOpen
+    ns1:NoCondition
+  ) .
+ns1:NoCondition a ns1:ExitValue .
+ns1:DoorLeftOpen a ns1:ExitValue .
+ns1:Exit a ns1:ExitValue .
+ns1:ContactSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "ContactSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:ContactSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:DosageSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "DosageSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:DosageValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:DosageSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:GasMeter rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "GasMeter"^^xsd:string ;
+  rdfs:subClassOf ns1:EnvironmentMeter .
+ns1:WaterFlowActuator rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "WaterFlowActuator"^^xsd:string ;
+  rdfs:subClassOf ns1:Actuator ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:WaterFlowActuator ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:COSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "COSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:EnvironmentSensor .
+ns1:WaterFlowSensor rdfs:comment ""^^xsd:string ;
+  a :Class ;
+  rdfs:label "WaterFlowSensor"^^xsd:string ;
+  rdfs:subClassOf ns1:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns1:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:StatusValue ;
+      :onProperty ns1:hasValue
+    ] .
+ns1:hasValue rdfs:domain ns1:WaterFlowSensor ;
+  a :ObjectProperty ,
+    :FunctionalProperty .

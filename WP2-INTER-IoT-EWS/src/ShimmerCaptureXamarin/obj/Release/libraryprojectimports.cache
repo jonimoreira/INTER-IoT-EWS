@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Paths>
+  <Jars></Jars>
+  <ResolvedResourceDirectories>
+    <ResolvedResourceDirectory>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Release\__library_projects__\Microsoft.Azure.Amqp\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Release\__library_projects__\PCLCrypto\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Release\__library_projects__\PerpetualEngine.SimpleStorage.Droid\library_project_imports\res</ResolvedResourceDirectory>
+  </ResolvedResourceDirectories>
+  <ResolvedAssetDirectories>
+    <ResolvedAssetDirectory>obj\Release\__library_projects__\Microsoft.Azure.Amqp\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Release\__library_projects__\PCLCrypto\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Release\__library_projects__\PerpetualEngine.SimpleStorage.Droid\library_project_imports\assets</ResolvedAssetDirectory>
+  </ResolvedAssetDirectories>
+  <ResolvedEnvironmentFiles />
+  <ResolvedResourceDirectoryStamps>
+    <ResolvedResourceDirectoryStamp>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Release\__library_projects__\Microsoft.Azure.Amqp.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Release\__library_projects__\PCLCrypto.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Release\__library_projects__\PerpetualEngine.SimpleStorage.Droid.stamp</ResolvedResourceDirectoryStamp>
+  </ResolvedResourceDirectoryStamps>
+</Paths>

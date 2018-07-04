@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="INTERIoTEWS.Shimmer3CaptureECGdata" android:versionCode="1" android:versionName="1.0.1" android:installLocation="auto">
+  <!--suppress UsesMinSdkAttributes-->
+  <uses-sdk android:minSdkVersion="13" />
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+  <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <application android:label="Shimmer3CaptureECGdata" android:name="android.app.Application" android:allowBackup="true" android:icon="@drawable/icon">
+    <activity android:icon="@drawable/icon" android:label="ShimmerCaptureXamarin" android:name="md53c7a7d677c32c995c5ccfc3456161258.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="INTERIoTEWS.Shimmer3CaptureECGdata.mono.MonoRuntimeProvider.__mono_init__" />
+  </application>
+</manifest>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1521146486032" name="http://tridec.server.de/ontologies/TRIDEC5.2.2.owl" uri="TRIDEC5.2.2.owl"/>
+    </group>
+</catalog>

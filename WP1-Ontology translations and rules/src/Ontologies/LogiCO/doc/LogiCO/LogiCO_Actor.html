@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<TITLE>LogiCO:Actor</TITLE>
+</HEAD>
+<BODY>
+<FONT face="Verdana, Helvetica, sans-serif">
+<H2>
+<FONT SIZE="-1">http://ontology.tno.nl/logico#Actor</FONT><BR>
+Class LogiCO:Actor</H2>
+<CENTER><IMG border="0" src="diagrams/LogiCO_Actor.jpg"></CENTER><P>
+<HR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1"><A href="LogiCO_mappingToEDI.html">LogiCO:mappingToEDI</A></FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/XSDLiteral.gif" width="16" height="16"></TD><TD><FONT size="-1">
+UN/EDIFACT D.12B Data Element 3035  Party function code qualifier  
+Desc: Code giving specific meaning to a party.
+
+D.12B Core Component Library UN02000044
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/RDFResource.greyed.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="http://www.unece.org/fileadmin/DAM/trade/untdid/d12b/tred/tred3035.htm" target="_top">http://www.unece.org/fileadmin/DAM/trade/untdid/d12b/tred/tred3035.htm</A>
+</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdf:type</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/RDFSClass.greyed.gif" width="16" height="16"></TD><TD><FONT size="-1">
+owl:Class</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:comment</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/XSDstring.gif" width="16" height="16"></TD><TD><FONT size="-1">
+An actor represents a company, an authority or an individual that provides or requests activities and operates on physical resources. 
+We have identified a number of Actor types that are relevant for logistics, but the list can be further extended.
+
+Equivalent to the concept of Agent in:
+DOLCE UltraLite (DUL) ontology: 'Any agentive Object , either physical (e.g. a whale, a robot, an oak), or social (e.g. a corporation, an institution, a community)'.
+</FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TR BGCOLOR="white">
+<TD>
+<B><FONT size="-1">rdfs:subClassOf</FONT></B>
+<DL>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLSomeValuesFrom.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiCO_hasAddress.html">LogiCO:hasAddress</A> some <A href="LogiCO_Address.html">LogiCO:Address</A>
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMinCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiCO_hasPhoneNr.html">LogiCO:has phone nr</A> min 1
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMinCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiCO_hasEmail.html">LogiCO:has email</A> min 1
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLMaxCardinality.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiCO_hasWebsiteURI.html">LogiCO:has website URI</A> max 1
+</FONT></TD></TR></TABLE>
+</DD>
+<DD>
+<TABLE><TR><TD VALIGN="TOP">
+<IMG border="0" src="icons/OWLNamedClassPrimitive.gif" width="16" height="16"></TD><TD><FONT size="-1">
+<A href="LogiCO_Object.html">LogiCO:Object</A></FONT></TD></TR></TABLE>
+</DD>
+</DL>
+</TD></TR>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+1">
+<B>Instances</B></FONT></TH>
+</TR>
+<TR><TD><FONT size="-1">
+<A href="LogiCO_Actor_1.html">LogiCO:Actor 1</A></FONT></TABLE><P>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+1">
+<B>References</B></FONT></TH>
+</TR>
+<TR><TD><FONT size="-1"><UL>
+<LI>as rdfs:domain (<A href="LogiCO_hasActorID.html">LogiCO:hasActorID</A>,&nbsp;<A href="LogiCO_isSupplierOf.html">LogiCO:isSupplierOf</A>)</LI><LI>as rdfs:range (<A href="LogiCO_hasSupplier.html">LogiCO:hasSupplier</A>)</LI><LI>as rdfs:subClassOf (<A href="LogiCO_Insurer.html">LogiCO:Insurer</A>,&nbsp;<A href="LogiCO_CodeIssuingAgency.html">LogiCO:CodeIssuingAgency</A>,&nbsp;<A href="LogiCO_Seller.html">LogiCO:Seller</A>,&nbsp;<A href="LogiCO_Consignor.html">LogiCO:Consignor</A>,&nbsp;<A href="LogiCO_Forwarder.html">LogiCO:Forwarder</A>,&nbsp;<A href="LogiCO_CustomsAuthorithy.html">LogiCO:CustomsAuthorithy</A>,&nbsp;<A href="LogiCO_Stevedore.html">LogiCO:Stevedore</A>,&nbsp;<A href="LogiCO_Bank.html">LogiCO:Bank</A>,&nbsp;<A href="LogiCO_CustomsBroker.html">LogiCO:CustomsBroker</A>,&nbsp;<A href="LogiCO_Shipper.html">LogiCO:Shipper</A>,&nbsp;<A href="LogiCO_Consignee.html">LogiCO:Consignee</A>,&nbsp;<A href="LogiCO_Carrier.html">LogiCO:Carrier</A>,&nbsp;<A href="LogiCO_Buyer.html">LogiCO:Buyer</A>,&nbsp;<A href="LogiCO_TerminalOperator.html">LogiCO:TerminalOperator</A>)</LI></UL></FONT></TABLE><P>
+</FONT>
+<P align="right"><FONT size="-1" face="Verdana, Helvetica, sans-serif">Generated with <A href="http://www.topbraidcomposer.org" target="_top">TopBraid Composer</A>
+ by <A href="http://www.topquadrant.com" target="_top">TopQuadrant, Inc.</A></P>
+</BODY>
+</HTML>

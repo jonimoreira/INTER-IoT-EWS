@@ -1,0 +1,93 @@
+
+@prefix ns: <http://www.daml.org/services/owl-s/1.1/Service.owl#> .
+@prefix psn: <http://ontology.universAAL.org/Service.owl#> .
+@prefix pvn: <http://ontology.universAAL.org/uAAL.owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ns1: <http://www.daml.org/services/owl-s/1.1/Process.owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://www.w3.org/2002/07/owl#> .
+<http://ontology.universAAL.org/ServiceBus.owl> rdfs:comment "Ontology of the universAAL Service Bus"^^xsd:string ;
+  a :Ontology ;
+  :imports <http://ontology.universAAL.org/DataRepresentation.owl> ;
+  rdfs:label "Service Bus"^^xsd:string .
+ns:Service rdfs:comment "The root of the hierarchy of service classes in universAAL."^^xsd:string ;
+  a :Class ;
+  rdfs:label "universAAL Service"^^xsd:string ;
+  rdfs:subClassOf pvn:ManagedIndividual .
+pvn:numberOfValueRestrictions rdfs:domain ns:Service ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+pvn:instanceLevelRestrictions rdfs:domain ns:Service ;
+  a :ObjectProperty .
+psn:InitialServiceDialog rdfs:comment "The class of all services starting an initial dialog correlated to a specific service class"^^xsd:string ;
+  a :Class ;
+  rdfs:label "Initial Service Dialog"^^xsd:string ;
+  rdfs:subClassOf psn:UserInterfaceService .
+psn:UserInterfaceService rdfs:comment "The class of all services starting an initial dialog correlated to a specific service class"^^xsd:string ;
+  a :Class ;
+  rdfs:label "User Interface Service"^^xsd:string ;
+  rdfs:subClassOf ns:Service ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty psn:correlatedServiceClass
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:anyURI ;
+      :onProperty psn:correlatedServiceClass
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty psn:description
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:string ;
+      :onProperty psn:description
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty psn:infoRetrievalProcess
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:anyURI ;
+      :onProperty psn:infoRetrievalProcess
+    ] ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty psn:vendor
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom xsd:anyURI ;
+      :onProperty psn:vendor
+    ] .
+psn:correlatedServiceClass rdfs:domain psn:UserInterfaceService ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+psn:vendor rdfs:domain psn:UserInterfaceService ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+psn:description rdfs:domain psn:UserInterfaceService ;
+  a :DatatypeProperty ,
+    :FunctionalProperty .
+psn:infoRetrievalProcess rdfs:domain psn:UserInterfaceService ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns1:Result a rdfs:class .
+pvn:ServiceRealization a rdfs:class .
+ns1:Output a rdfs:class .
+<http://www.daml.org/services/owl-s/1.1/Profile.owl#Profile> a rdfs:class .
+pvn:ServiceResponse a rdfs:class .
+ns1:Parameter a rdfs:class .
+ns1:Input a rdfs:class .
+pvn:ServiceRequest a rdfs:class .
+pvn:MultiServiceResponse a rdfs:class .
+pvn:AggregatingFilter a rdfs:class .
+ns1:Perform a rdfs:class .
+ns1:ThisPerform a ns1:Perform .

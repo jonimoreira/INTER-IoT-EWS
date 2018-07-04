@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dct="http://purl.org/dc/terms/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dcat="http://www.w3.org/ns/dcat#"
+  xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+>
+  <dcat:Dataset rdf:about="https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70">
+    <dcat:keyword>general</dcat:keyword>
+    <dcat:keyword>cap-au-std</dcat:keyword>
+    <dct:description>The Common Alerting Protocol (CAP) is an open data standard that is developed and maintained by OASIS, a USA-based open standards organisation. CAP is an international standard that facilitates the construction and exchange of all-hazard emergency alert and warning messages between various alerting technologies, systems and networks. CAP enables a single warning message to be prepared for dissemination simultaneously over a wide variety of warning systems that understand and can process CAP-formatted messages. &#13;
+&#13;
+The standardised alerts produced using CAP can be exploited by a wide range of software applications and technology devices, each capable of processing the message and responding accordingly. Examples of the kinds of sensor and alerting technologies that can interoperate using CAP messages are data networks, landline and mobile phones, internet, fax, pagers, sirens, billboards and electronic road signs. &#13;
+&#13;
+Early versions of CAP have been in use since 2009 in the various Australian jurisdictions and Commonwealth agencies that are responsible for distributing emergency warning messages to the Australian community. These existing implementations were used as the baseline to develop the common national approach that is now introduced in this CAP-AU standard. &#13;
+&#13;
+For further information about the CAP-AU standard please contact CAPAU.Custodian@ag.gov.au&#13;
+&#13;
+Intellectual Property Statement / Copyright Notice - Use of the CAP-AU-STD documents shall be in accordance with the Intellectual Property Statements and Copyright Notices detailed within each CAP-AU-STD document downloaded from this collection</dct:description>
+    <dcat:keyword>emergency</dcat:keyword>
+    <dcat:keyword>emergencies</dcat:keyword>
+    <dct:identifier>03a32b0a-4f6c-46aa-9103-7d24f7f34f70</dct:identifier>
+    <dcat:distribution>
+      <dcat:Distribution rdf:about="https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/9b97546f-3537-4b0e-b189-57e8c213f3fd">
+        <dct:title>Attachment B to CAP-AU-STD</dct:title>
+        <dct:format>PDF</dct:format>
+        <dcat:accessURL>https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/9b97546f-3537-4b0e-b189-57e8c213f3fd/download/attachment-b-to-cap-au-std.pdf</dcat:accessURL>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:keyword>common alerting protocol</dcat:keyword>
+    <dcat:keyword>cap</dcat:keyword>
+    <dcat:keyword>emergency management</dcat:keyword>
+    <dcat:distribution>
+      <dcat:Distribution rdf:about="https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/0dbd7a5d-7a3f-4542-b1f2-2bd5246453a8">
+        <dct:format>PDF</dct:format>
+        <dcat:accessURL>https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/0dbd7a5d-7a3f-4542-b1f2-2bd5246453a8/download/xml-schema-definition-for-cap-au.pdf</dcat:accessURL>
+        <dct:title>CAP-AU XML Schema Definition </dct:title>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:keyword>XML</dcat:keyword>
+    <dcat:keyword>alert</dcat:keyword>
+    <dcat:distribution>
+      <dcat:Distribution rdf:about="https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/137e98ce-f069-48ca-a420-274afc4ad78c">
+        <dct:title>CAP-AU Schema Definition XML </dct:title>
+        <dct:format>XML</dct:format>
+        <dcat:mediaType>application/xml</dcat:mediaType>
+        <dcat:accessURL>http://data.gov.au/storage/f/2013-09-26T00%3A59%3A28.751Z/cap-au-3-0.xsd</dcat:accessURL>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:contactPoint>
+      <vcard:Organization rdf:nodeID="N92fefc18cf7147c2929b2ce7b7767059">
+        <vcard:fn>kater</vcard:fn>
+        <vcard:hasEmail>CAPAU.Custodian@ag.gov.au</vcard:hasEmail>
+      </vcard:Organization>
+    </dcat:contactPoint>
+    <dcat:keyword>community</dcat:keyword>
+    <dcat:keyword>cap-au</dcat:keyword>
+    <dcat:distribution>
+      <dcat:Distribution rdf:about="https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/aaed5efe-c238-4e30-a764-bb4d5e51a996">
+        <dct:format>PDF</dct:format>
+        <dcat:accessURL>https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/aaed5efe-c238-4e30-a764-bb4d5e51a996/download/emergency-data-exchange-language-edxl-guidance-on-cap-logos-and-symbols.pdf</dcat:accessURL>
+        <dct:title>Emergency Data Exchange Language (EDXL) Guidance on CAP Logos and Symbols</dct:title>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:keyword>safety</dcat:keyword>
+    <dcat:keyword>technology</dcat:keyword>
+    <dcat:distribution>
+      <dcat:Distribution rdf:about="https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/21ae0744-6e7e-4512-8995-c00ae1680624">
+        <dcat:accessURL>https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/21ae0744-6e7e-4512-8995-c00ae1680624/download/cap-au-hazard-event-codes-interoperability-matrix-hecx.csv</dcat:accessURL>
+        <dct:format>CSV</dct:format>
+        <dct:title>CAP-AU Hazard Event Codes interoperability matriX (HECX)</dct:title>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:keyword>information communications technologies</dcat:keyword>
+    <dcat:distribution>
+      <dcat:Distribution rdf:about="https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/466cc411-84f3-401c-86cc-fcbd1a7d888a">
+        <dct:format>PDF</dct:format>
+        <dcat:accessURL>https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/466cc411-84f3-401c-86cc-fcbd1a7d888a/download/attachment-c-to-cap-au-std.pdf</dcat:accessURL>
+        <dct:title>Attachment C to CAP-AU-STD</dct:title>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2017-12-20T09:07:14.224610</dct:modified>
+    <dcat:keyword>OASIS</dcat:keyword>
+    <dct:language>English</dct:language>
+    <dcat:keyword>australia</dcat:keyword>
+    <dcat:keyword>society</dcat:keyword>
+    <dct:title>Common Alerting Protocol - Australia (CAP-AU-STD)</dct:title>
+    <dcat:keyword>standard</dcat:keyword>
+    <dcat:keyword>communication</dcat:keyword>
+    <dcat:distribution>
+      <dcat:Distribution rdf:about="https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/a715415e-4263-4828-9ade-c30dfa18e12b">
+        <dct:format>PDF</dct:format>
+        <dcat:accessURL>https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/a715415e-4263-4828-9ade-c30dfa18e12b/download/attachment-a-to-cap-au-std.pdf</dcat:accessURL>
+        <dct:title>Attachment A to CAP-AU-STD</dct:title>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:distribution>
+      <dcat:Distribution rdf:about="https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/ab0976b2-16e0-462d-9ab9-06bf14478e34">
+        <dct:format>PDF</dct:format>
+        <dct:title>CAP-AU-STD version 3.0</dct:title>
+        <dcat:accessURL>https://data.gov.au/dataset/03a32b0a-4f6c-46aa-9103-7d24f7f34f70/resource/ab0976b2-16e0-462d-9ab9-06bf14478e34/download/cap-au-std-version-3.0.pdf</dcat:accessURL>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:keyword>warning</dcat:keyword>
+    <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2013-09-16T05:35:15.512874</dct:issued>
+    <dct:publisher>
+      <foaf:Organization rdf:about="https://data.gov.au/organization/c5766f7d-963a-4f30-915e-f1a6f1143301">
+        <foaf:name>Bureau of Meteorology</foaf:name>
+      </foaf:Organization>
+    </dct:publisher>
+  </dcat:Dataset>
+</rdf:RDF>

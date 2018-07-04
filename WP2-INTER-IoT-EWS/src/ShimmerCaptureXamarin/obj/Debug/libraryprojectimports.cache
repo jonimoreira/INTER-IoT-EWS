@@ -1,8 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Paths>
   <Jars></Jars>
-  <ResolvedResourceDirectories />
-  <ResolvedAssetDirectories />
+  <ResolvedResourceDirectories>
+    <ResolvedResourceDirectory>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Debug\__library_projects__\Microsoft.Azure.Amqp\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Debug\__library_projects__\PCLCrypto\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Debug\__library_projects__\PerpetualEngine.SimpleStorage.Droid\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Debug\__library_projects__\Plugin.Geolocator\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Debug\__library_projects__\Plugin.Permissions\library_project_imports\res</ResolvedResourceDirectory>
+  </ResolvedResourceDirectories>
+  <ResolvedAssetDirectories>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Microsoft.Azure.Amqp\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\PCLCrypto\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\PerpetualEngine.SimpleStorage.Droid\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Plugin.Geolocator\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Plugin.Permissions\library_project_imports\assets</ResolvedAssetDirectory>
+  </ResolvedAssetDirectories>
   <ResolvedEnvironmentFiles />
-  <ResolvedResourceDirectoryStamps />
+  <ResolvedResourceDirectoryStamps>
+    <ResolvedResourceDirectoryStamp>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Debug\__library_projects__\Microsoft.Azure.Amqp.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Debug\__library_projects__\PCLCrypto.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Debug\__library_projects__\PerpetualEngine.SimpleStorage.Droid.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Debug\__library_projects__\Plugin.Geolocator.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>D:\ShimmerCaptureXamarin_v0\ShimmerCaptureXamarin\obj\Debug\__library_projects__\Plugin.Permissions.stamp</ResolvedResourceDirectoryStamp>
+  </ResolvedResourceDirectoryStamps>
 </Paths>

@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "exports": {
+    "INTERIoTEWS.Context.DataObjects/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.2",
+      "compile": {
+        "bin/Debug/ContextManager.DataObjects.dll": {}
+      },
+      "runtime": {
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/CoT Library.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/EDXLCoT.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/EDXLSharp.CAPLib.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/EDXLSharp.CIQLib.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/EDXLSharp.EDXLDELib.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/EDXLSharp.EDXLHAVELib.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/EDXLSharp.EDXLHAVE_2_0Lib.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/EDXLSharp.EDXLRMLib.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/EDXLSharp.EDXLSitRepLib.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/EDXLSharp.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/GeoOASISWhereLib.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/MEXLSitRepLib.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/MEXLTEPLib.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/Microsoft.SqlServer.Types.dll": {},
+        "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/Xml.Schema.Linq.dll": {},
+        "../packages/Antlr4.Runtime.Standard.4.6.0/lib/net35/Antlr4.Runtime.Standard.dll": {},
+        "../packages/Castle.Core.4.1.1/lib/net45/Castle.Core.dll": {},
+        "../packages/Common.Logging.3.4.1/lib/net40/Common.Logging.dll": {},
+        "../packages/Common.Logging.Core.3.4.1/lib/net40/Common.Logging.Core.dll": {},
+        "../packages/EntityFramework.6.2.0/lib/net45/EntityFramework.SqlServer.dll": {},
+        "../packages/EntityFramework.6.2.0/lib/net45/EntityFramework.dll": {},
+        "../packages/Newtonsoft.Json.11.0.2/lib/net45/Newtonsoft.Json.dll": {},
+        "../packages/Nito.KitchenSink.CRC.1.1.0/lib/net40-Client/Nito.KitchenSink.CRC.dll": {},
+        "../packages/Sharpen.1.0.0.3/lib/Sharpen.dll": {},
+        "../packages/XLR8.CGLib.1.0.2/lib/net40/XLR8.CGLib.dll": {},
+        "bin/Debug/ContextManager.DataObjects.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/ContextManager.DataObjects.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace ShimmerCaptureXamarin.SAREF4health
 {
@@ -55,6 +56,43 @@ namespace ShimmerCaptureXamarin.SAREF4health
             }
         }
 
+
+
+        public JObject IsMeasuredIn_JsonLD
+        {
+            get
+            {
+                JObject result = new JObject();
+                result.Add("@id", isMeasuredIn);
+                result.Add("@type", "saref:UnitOfMeasure");
+
+                return result;
+            }
+        }
+
+
+        public JObject RelatesToProperty_JsonLD
+        {
+            get
+            {
+                JObject result = new JObject();
+                result.Add("@id", relatesToProperty);
+
+                if (relatesToProperty.Contains("sarefInst:Acceleration"))
+                {
+                    string types = @"
+                        [ 'dim:Acceleration', 'saref:Property' ]
+                    ";
+                    JArray array = JArray.Parse(types);
+                    result.Add("@type", array);
+                }
+                else
+                    result.Add("@type", "saref:Property");
+                    
+                return result;
+            }
+        }
+
         public string Type
         {
             get
@@ -65,6 +103,7 @@ namespace ShimmerCaptureXamarin.SAREF4health
             set
             {
                 type = value;
+                UpdateJSONLD();
             }
         }
 
@@ -78,6 +117,7 @@ namespace ShimmerCaptureXamarin.SAREF4health
             set
             {
                 id = value;
+                UpdateJSONLD();
             }
         }
 
@@ -91,8 +131,10 @@ namespace ShimmerCaptureXamarin.SAREF4health
             set
             {
                 label = value;
+                UpdateJSONLD();
             }
         }
+
 
         public double HasTimestamp
         {
@@ -104,6 +146,7 @@ namespace ShimmerCaptureXamarin.SAREF4health
             set
             {
                 hasTimestamp = value;
+                UpdateJSONLD();
             }
         }
 
@@ -130,13 +173,39 @@ namespace ShimmerCaptureXamarin.SAREF4health
             set
             {
                 hasValue = value;
+                UpdateJSONLD();
             }
         }
+
+
+        private void UpdateJSONLD()
+        {
+            if (jSONLDobject != null)
+            {
+                jSONLDobject["label"] = this.label;
+                jSONLDobject["saref:hasTimestamp"] = ConvertTimestampXSDdateTime(this.hasTimestamp);
+                jSONLDobject["saref:hasValue"] = this.hasValue;
+
+                // TODO: implement the rest...
+            }
+        }
+
+        private string ConvertTimestampXSDdateTime(double timestamp)
+        {
+            string result = string.Empty;
+
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dateTime = dateTime.AddMilliseconds(timestamp).ToLocalTime();
+            result = SoapDateTime.ToString(dateTime);
+
+            return result;
+        }
+
     }
 
-    public class ECGMeasurementsSeries
+    public class ECGSampleSequence
     {
-        public ECGMeasurementsSeries()
+        public ECGSampleSequence()
         {
         }
 
@@ -148,7 +217,7 @@ namespace ShimmerCaptureXamarin.SAREF4health
         private string id;
         private string label;
         private double hasTimestamp;
-        private List<double> hasValue;
+        private List<double> hasValues;
         private JObject jSONLDobject;
 
         public string IsMeasuredIn
@@ -229,16 +298,16 @@ namespace ShimmerCaptureXamarin.SAREF4health
             }
         }
 
-        public List<double> HasValue
+        public List<double> HasValues
         {
             get
             {
-                return hasValue;
+                return hasValues;
             }
 
             set
             {
-                hasValue = value;
+                hasValues = value;
             }
         }
 

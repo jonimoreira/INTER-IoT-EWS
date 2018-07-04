@@ -1,0 +1,1561 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://fpc.ufba.br/ontologies/edxl_rm#"
+     xml:base="http://fpc.ufba.br/ontologies/edxl_rm"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://fpc.ufba.br/ontologies/edxl_rm">
+        <contributor>Rebeca Barros (UFBA)</contributor>
+        <contributor>Pedro Kislansky</contributor>
+        <contributor>Reinaldo Almeida (UFBA)</contributor>
+        <status>An ongoing ontology for communication interoperability between systems in the context of the RESCUER Project. This propose is based on EDXL documentation (https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=emergency).</status>
+        <contributor>Laís Salvador (UFBA)</contributor>
+        <rights xml:lang="en">(c) The RESCUER project - http://www.rescuer-project.org/</rights>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#contributor -->
+
+    <owl:AnnotationProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#contributor"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#rights -->
+
+    <owl:AnnotationProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#rights"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#status -->
+
+    <owl:AnnotationProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#status"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasAssignment -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasAssignment">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Assignment"/>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceInformation"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasContact -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasContact">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en">The contact associated with the resource message</rdfs:comment>
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Contact"/>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#isContactOf"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasFunding -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasFunding">
+        <rdfs:comment xml:lang="en">The funds that will pay for the resource</rdfs:comment>
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Funding"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#isFundingOf"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#CommitResource"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ReleaseResource"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ReportResourceDeploymentStatus"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestExtendedDeploymentDuration"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestInformation"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestQuote"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestResource"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasIncidentInformation -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasIncidentInformation">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Incident"/>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#isIncidentInformationOf"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasJurisdiction -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasJurisdiction">
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Jurisdiction"/>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Ownership"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasLocation -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasLocation">
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Location"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#isLocationOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Contact"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasMessageRecall -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasMessageRecall">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en">MessageRecall is used to replace a previously sent message by updating or canceling it.</rdfs:comment>
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#MessageRecall"/>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasOwner -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasOwner">
+        <rdfs:comment xml:lang="en">An agency or supplier that owns the resource (which may not be the home unit or dispatch). </rdfs:comment>
+        <rdfs:comment xml:lang="pt">Uma agência ou fornecedor que é dono do recurso (que pode não ser a unidade responsável por manter a informação sobre o recurso)</rdfs:comment>
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Ownership"/>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasResource -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasResource">
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceInformation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasResourceInformation -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasResourceInformation">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceInformation"/>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#isResourceInformationOf"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasResourceStatus -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasResourceStatus">
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceStatus"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#isResourceStatusOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasResponseInformation -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasResponseInformation">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceInformation"/>
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseInformation"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#isResponseInformationOf"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasResponsibleParty -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasResponsibleParty">
+        <rdfs:range rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Contact"/>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#hasScheduleInformation -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#hasScheduleInformation">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isAssignmentOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isAssignmentOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasAssignment"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isContactOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isContactOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isFundingOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isFundingOf">
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isIncidentInformationOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isIncidentInformationOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isJurisdictionOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isJurisdictionOf">
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasJurisdiction"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isLocationOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isLocationOf"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isMessageRecallOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isMessageRecallOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasMessageRecall"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isOwnerOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isOwnerOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasOwner"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isResourceInformationOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isResourceInformationOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isResourceOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isResourceOf">
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasResource"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isResourceStatusOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isResourceStatusOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isResponseInformationOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isResponseInformationOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isResponsiblePartyOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isResponsiblePartyOf">
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasResponsibleParty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#isScheduleInformationOf -->
+
+    <owl:ObjectProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#isScheduleInformationOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <owl:inverseOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasScheduleInformation"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#additionalContactInformation -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#additionalContactInformation">
+        <rdfs:comment xml:lang="en">Any other contact information including name and other Party information.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Contact"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#anticipatedFunction -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#anticipatedFunction">
+        <rdfs:comment xml:lang="en">Anticipated function, task, job, or role to be provided by the requested resource.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Função antecipada, tarefa, job ou função a ser fornecida pelo recurso solicitado.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Assignment"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#availability -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#availability">
+        <rdfs:comment xml:lang="en">Text to describe availability and limitations on availability. Resource availability refers to resource that it is present or ready for immediate use, or otherwise accessible or obtainable, or is qualified or willing to do something or to assume a responsibility.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceStatus"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#contactDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#contactDescription">
+        <rdfs:comment xml:lang="en">Identifying information associated with a contact role related to the resource message</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Contact"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#contactRadioChannel -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#contactRadioChannel">
+        <rdfs:comment xml:lang="en">Contact radio channel of the person or organization referred to in ContactRole.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Contact"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#contactRadioType -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#contactRadioType">
+        <rdfs:comment xml:lang="en">Contact radio type of the person or organization referred to in ContactRole.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Contact"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#contactRole -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#contactRole">
+        <rdfs:comment xml:lang="en">Role of the contact associated with the resource message.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Contact"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#dateTime -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#dateTime">
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#deploymentStatus -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#deploymentStatus">
+        <rdfs:comment xml:lang="en">Any value from a discrete managed list, used to specify the general state of a resource if known</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceStatus"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#fundCode -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#fundCode">
+        <rdfs:comment xml:lang="en">Identifies the funds that will pay for the resource.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Funding"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#fundingInfo -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#fundingInfo">
+        <rdfs:comment xml:lang="en">Provides additional information on the funds that will pay for the resource</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Funding"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#incidentDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#incidentDescription">
+        <rdfs:comment xml:lang="en">A free form description of the incident to which the current message refers</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Incident"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#incidentID -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#incidentID">
+        <rdfs:comment xml:lang="en">The name or other identifier of the incident to which the current message refers.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Incident"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#locationAddress -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#locationAddress">
+        <rdfs:comment xml:lang="en">A CIQ structure containing address details in an internationally-applicable format</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A estrutura CIQ contendo detalhes do endereço em um formato internacionalmente aplicável</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Location"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#locationDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#locationDescription">
+        <rdfs:comment xml:lang="en">A free-form textual description of a location</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Location"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#locationLatitude -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#locationLatitude">
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#locationLongitude -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#locationLongitude"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#locationTargetArea -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#locationTargetArea">
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Location"/>
+        <rdfs:range rdf:resource="&rdf;XMLLiteral"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#messageContentType -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#messageContentType">
+        <rdfs:comment xml:lang="en">Specifies the purpose / type of resource content / payload being sent within the Resource Messaging.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#messageDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#messageDescription">
+        <rdfs:comment xml:lang="en">Text field used to specify the information requested in a request for information and the response to a request for information. May also be used to include additional information in other message types.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Campo de texto usado para especificar a informação requisitada na requisição para informação e na resposta para a requisição para a informação. Pode ser usado também para incluir informação asicional em outros tipos de mensagens.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#messageID -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#messageID">
+        <rdfs:comment xml:lang="en">An identifier that uniquely identifies the resource message.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#modeOfTransportation -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#modeOfTransportation">
+        <rdfs:comment xml:lang="en">Method or mode used to transport the resource to or from the incident.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Assignment"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#navigationInstructions -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#navigationInstructions">
+        <rdfs:comment xml:lang="en">Instructions that define how to get to the “ReportTo” location</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Assignment"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#orderID -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#orderID">
+        <rdfs:comment xml:lang="en">Reference to the external system number or ID assigned by the ordering system or personnel meeting the request for resources that has been made.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Assignment"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#originatingMessageID -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#originatingMessageID">
+        <rdfs:comment xml:lang="en">Each EDXL resource message contains a MessageID that uniquely identifies the resource message. OriginatingMessageID identifies the MessageID of the first message in a message sequence to which the message belongs. If the message is itself the originating message in a new sequence, OriginatingMessageID will have the same value as the MessageID element.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#owner -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#owner">
+        <rdfs:comment xml:lang="en">The name of an agency or supplier that owns the resource (which may not be the home unit or dispatch). Also referred to as home agency</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Ownership"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#owningHomeDispatch -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#owningHomeDispatch">
+        <rdfs:comment xml:lang="en">Resource home agency dispatch center name. This identifies the dispatch unit that has primary responsibility for maintaining information on the resource (e.g., Ft. Collins Dispatch Center, Rocky Mountain Area Coordination Center).</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Nome do centro de despachos da agência local de recursos. Isso identifica a unidade de despacho que é o principal responsável por manter as informações sobre os recursos (por exemplo, Ft. Collins centro de expedição, Área Rocky Mountain Centro de coordenação).</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Ownership"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#owningHomeUnit -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#owningHomeUnit">
+        <rdfs:comment xml:lang="en">The unit (office, district, organization, etc.) from which the resource typically works or is used (e.g., Manti-LaSalle National Forest/Sanpete District). When released from an assignment, the location to which the resource is released will usually be determined by the home unit.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A unidade (escritório, distrito, organização, etc) a partir do qual o recurso normalmente funciona ou é usado (por exemplo, Manti-LaSalle Floresta Nacional / Sanpete District). Quando liberado de uma atribuição, o local no qual o recurso é liberado normalmente será determinado pela unidade de casa.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Ownership"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#precedingMessageID -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#precedingMessageID">
+        <rdfs:comment xml:lang="en">The PrecedingMessageID identifies the message that immediately preceded the current message in the message sequence. </rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#CommitResource"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ReleaseResource"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ReportResourceDeploymentStatus"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestExtendedDeploymentDuration"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestInformation"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestQuote"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+                    <rdf:Description rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#precedingResourceInfoElementID -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#precedingResourceInfoElementID">
+        <rdfs:comment xml:lang="en">This element identifies the instance of ResourceInformation within the message specified in the EDXLResourceMessage:PrecedingMessageID element</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseInformation"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#priceQuote -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#priceQuote">
+        <rdfs:comment xml:lang="en">Description of quoted cost to acquire desired resource including currency, if the distinction is appropriate.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Assignment"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#quantity -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#quantity">
+        <rdfs:comment xml:lang="en">Description of amount of resource needed in both quantity and units of measure (if applicable)</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Assignment"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#reasonCode -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#reasonCode">
+        <rdfs:comment xml:lang="en">Code from a managed list that offers an explanation for a declined or provisional response to a Request or Unsolicited Offer</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseInformation"/>
+        <rdfs:range rdf:resource="&rdf;XMLLiteral"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#recalledMessageID -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#recalledMessageID">
+        <rdfs:comment xml:lang="en">The identifier of the previously sent message that is to be recalled</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#MessageRecall"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#reportingInstructions -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#reportingInstructions">
+        <rdfs:comment xml:lang="en">A text description which explains to whom or where the resource should report upon arrival. This could include a name for a person, place or functional role.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Assignment"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceCertifications -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#resourceCertifications">
+        <rdfs:comment xml:lang="en">Statements of recognition that a resource has met special requirements or qualifications within a field</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceCredentials -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#resourceCredentials">
+        <rdfs:comment xml:lang="en">Statements of resource qualifications showing that a person or role has a right to exercise official power</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#resourceDescription">
+        <rdfs:comment xml:lang="en">Free Text description of resource or resource characteristics, situation requiring resource assistance, or statement of mission the resource satisfies.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceID -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#resourceID">
+        <rdfs:comment xml:lang="en">This identifier (if available) is used to identify and track a resource.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceInfoID -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#resourceInfoID">
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceInformation"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceKeyword -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#resourceKeyword">
+        <rdfs:comment xml:lang="en">Any value from a discrete managed list, used to specify a keyword.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceName -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#resourceName">
+        <rdfs:comment xml:lang="en">A name or title of the resource used for identification and tracking</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceSpecialRequirements -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#resourceSpecialRequirements">
+        <rdfs:comment xml:lang="en">A description of any special needs related to the requested resource (e.g. must carry protective equipment)</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceTypeInfo -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#resourceTypeInfo">
+        <rdfs:comment xml:lang="en">The resource type as defined by either a Keyword structure or a valid schema.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#resourceTypeStructure -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#resourceTypeStructure">
+        <rdfs:comment xml:lang="en">Uniform Resource Name (URN) paired with a string “keyword” for a certified list of resources maintained by the Community of Interest (for the value referenced.)
+</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#responseReason -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#responseReason">
+        <rdfs:comment xml:lang="en">Explanation for a declined or provisional response to a Request, Response, Unsolicited Offer, or a Request Return.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseInformation"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#restrictions -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#restrictions">
+        <rdfs:comment xml:lang="en">Description of a condition governing the availability of resources. E.g. condition for number of beds available may be &quot;if patients have insurance&quot;. This may be thought of as a term/condition or a restriction on availability</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Descrição de uma condição da disponibilidade de recursos. Por exemplo condição para o número de camas disponíveis podem ser &quot;se o paciente tem seguro&quot;. Isto pode ser pensado como um termo / ou um estado de restrição em disponibilidade.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Assignment"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#scheduleDateTime -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#scheduleDateTime">
+        <rdfs:comment xml:lang="en">The date and time that a scheduled event takes place.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:subPropertyOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#dateTime"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#sentDateTime -->
+
+    <owl:DatatypeProperty rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#sentDateTime">
+        <rdfs:comment xml:lang="en">The system stamped date and time the resource message was sent.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <rdfs:subPropertyOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#dateTime"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Accept -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Accept">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseInformation"/>
+        <rdfs:comment xml:lang="en">The acceptance of a Request or Unsolicited Offer.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A aceitação de uma requisição ou oferta não solicitada.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ActualArrival -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ActualArrival">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time when the resource arrives at its “ReportTo” location</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ActualDeparture -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ActualDeparture">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time when the resource Departs from its current location for transit to a “ReportTo” location</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ActualReturnArrival -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ActualReturnArrival">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time the resource arrives from its deployment at its “OwningJurisdiction”.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ActualReturnDeparture -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ActualReturnDeparture">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time the resource Departs from its deployment for transit to its “OwningJurisdiction”</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Assignment -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Assignment">
+        <rdfs:comment xml:lang="en">Information and Instructions about the mission of a Resource</rdfs:comment>
+        <rdfs:comment xml:lang="en">Informações e instruções sobre a missão atribuída a um recurso. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#BeginAvailable -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#BeginAvailable">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time the resource will become available for allocation.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Cancel -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Cancel">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#MessageRecall"/>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#CommitResource -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#CommitResource">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#OfferUnsolicitedResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ReleaseResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ReportResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “CommitResource” message is used by a Resource Supplier to confirm that resources have been committed to a Resource Consumer request. Usually, the CommitResource is in response to a RequisitionResource, or even a RequestResource. The CommitResource is the only message used to indicate the resources have been allocated to an assignment/incident.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;CommitResource&quot; é usado por um fornecedor de recursos para confirmar que os recursos foram comprometidos a um pedido do Consumidor de Recursos. Normalmente, o CommitResource é em resposta a um RequisitionResource, ou mesmo um RequestResource. O CommitResource é a única mensagem usado para indicar os recursos foram alocados para uma atribuição / incidente.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Committed -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Committed">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Confirmation from Resource Supplier that resource has been allocated to Resource Consumer, usually in response to a “RequisitionResource” message.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Contact -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Contact">
+        <rdfs:comment xml:lang="en">The contact associated with the resource message.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">O contato associado com uma mensagem de recurso. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Current -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Current">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Location of resource at date and time of message.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Decline -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Decline">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseInformation"/>
+        <rdfs:comment xml:lang="en">The decline of a Request or Unsolicited Offer.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A recusa de uma requisição ou oferta não solicitada. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#EndAvailable -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#EndAvailable">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time the resource will cease to be available for deployment.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#EstimatedArrival -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#EstimatedArrival">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time the resource is expected to arrive at its “ReportTo” location.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#EstimatedDeparture -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#EstimatedDeparture">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time when the resource is estimated to Depart from its current location for transit to a “ReportTo” location.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#EstimatedReturnArrival -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#EstimatedReturnArrival">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time the resource is expected to arrive from its deployment at its “OwningJurisdiction”.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#EstimatedReturnDeparture -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#EstimatedReturnDeparture">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time the resource is expected to Depart from its deployment for transit to its “OwningJurisdiction”.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Funding -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Funding">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#isFundingOf"/>
+                <owl:someValuesFrom rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="en">The funds that will pay for the resource</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Os fundos que pagarão pelo recurso. Dinheiro provido por uma organização ou governo para um propósito particular.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Incident -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Incident">
+        <rdfs:comment xml:lang="en">Term referring to occurrences of any scale that may require some form of Emergency Response and Management, and that requires tracking and information exchange. 
+“Incident” is viewed from the NIMS Emergency Management perspective as a formal or informal declaration of emergency or disaster by an organization at the state, local, federal level or by a jurisdiction.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Termo que se refere a ocorrências de qualquer escala que pode exigir alguma forma de gerenciamento e resposta à emergência, e que requer acompanhamento e troca de informação. No Sistema Nacional de Gerenciamento de Emergência americano (NIMS), &quot;Incidente&quot; é visto como uma declaração formal ou informal de emergência ou desastre por uma organização de nível local, estadual, federal ou por uma jurisdição.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Jurisdiction -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Jurisdiction"/>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Location -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Location">
+        <rdfs:comment xml:lang="en">Refers to the physical location of the affected area.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Refere-se a localização física de uma área afetada. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#MessageRecall -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#MessageRecall">
+        <rdfs:comment xml:lang="en">MessageRecall is used to replace a previously sent message by updating or canceling it.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">MessageRecall é usada para substituir uma mensagem enviada anteriormente, atualizando ou cancelando-a. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#OfferUnsolicitedResource -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#OfferUnsolicitedResource">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ReleaseResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ReportResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “OfferUnsolicitedResource” message is used to offer available resources (that have not been requested) to assist with an emergency response.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;OfferUnsolicitedResource&quot; é usada para oferecer recursos disponíveis (que não foram solicitadas) para ajudar com uma resposta de emergência.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Ownership -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Ownership">
+        <rdfs:comment xml:lang="en">Refers to the information about a owner of a resource.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Refere-se a informações sobre o dono de um recurso. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Provisional -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Provisional">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseInformation"/>
+        <rdfs:comment xml:lang="en">A provisional acceptance of a Request or Unsolicited Offer.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Uma aceitação temporário de uma requisição ou oferta não solicitada. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ReleaseResource -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ReleaseResource">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ReportResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “ReleaseResource” message is used by authorities at the incident to “release” (demobilize) a resource back to its original point of assignment or to another location / assignment.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;ReleaseResource&quot; é utilizado por autoridades no incidente para &quot;liberar&quot; (desmobilizar) um recurso de volta ao seu ponto original de atribuição ou para outro local / atribuição.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ReportResourceDeploymentStatus -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ReportResourceDeploymentStatus">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “ReportResourceDeploymentStatus” message is used to report on the current status of any deployed resource. The message can be sent from the Resource Supplier to the Resource Consumer, or from the Resource Consumer to the Resource Supplier</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;ReportResourceDeploymentStatus&quot; é usada para informar sobre o status atual de qualquer recurso implantado. A mensagem pode ser enviada a partir do fornecedor do recurso para o consumidor desse recurso, ou vice-versa. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ReportTo -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ReportTo">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Location of place where resource is to be delivered.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequestExtendedDeploymentDuration -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestExtendedDeploymentDuration">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “RequestExtendedDeploymentDuration” message is sent by the Resource Consumer to the
+Resource Supplier when the Consumer wishes to retain one or more resources longer than previously agreed (e.g., in the original RequisitionResource and CommitResource messages).</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;RequestExtendedDeploymentDuration&quot; é enviada pelo consumidor do recurso para o fornecedor quando este pretende manter um ou mais recursos por mais tempo do que o previsto anteriormente (por exemplo, tempo previsto da RequisitionResource original ou nas mensagens de CommitResource).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequestInformation -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestInformation">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">One use of the “RequestInformation” message is to ask questions about specific resources. In this case, the message can be the initial message sent from the Resource Consumer to the Resource Suppliers, or it can be a follow up message seeking further information after the Resource Consumer has sent a RequestResource or other resource messages. A RequestInformation can be used in this manner even after a resource has been committed and/or deployed; however, if the request is related to the status of a deployed resource, the RequestResourceDeploymentStatus message MUST be used instead. A second use of this message type is to provide a general description of the sender’s situation and needs, with the expectation of receiving responses suggesting suitable resources. This is useful when the Resource Consumer is not able to issue a specific RequestResource message because of a lack of knowledge about the resources that would be most appropriate for the situation</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Um uso da mensagem &quot;RequestInformation&quot; é para fazer perguntas sobre os recursos específicos. Neste caso, a mensagem pode ser a mensagem inicial enviada pelo consumidor do recursos aos fornecedores, ou pode ser mensagens posteriores buscando mais informações depois que o consumidor enviou uma RequestResource ou outras mensagens de recursos. A RequestInformation pode ser usado dessa maneira mesmo depois que um recurso tenha sido reservado e / ou implantado; no entanto, se o pedido está relacionado com o status de um recurso implantado, a mensagem RequestResourceDeploymentStatus deve ser usado em seu lugar. Um segundo uso deste tipo de mensagem é proporcionar uma descrição geral da situação e das necessidades do remetente, com a expectativa de receber respostas sugerindo recursos adequados. Isto é útil quando o consumidor não é capaz de emitir uma mensagem RequestResource específico por causa de uma falta de conhecimento sobre os recursos que seriam mais apropriado para a situação</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequestQuote -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestQuote">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “RequestQuote” message is used by the Resource Consumer to request a price quote from the Resource Supplier.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;RequestQuote&quot; é usada pelo consumidor do recurso para solicitar uma cotação de preço ao fornecedor.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequestResource -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestResource">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “RequestResource” message is used as an announcement to a broad audience of potential suppliers as well as potential suppliers in the local geographic area of interest. It is intended to be used by Emergency Managers, Incident Commanders and other First Responders to request information on availability of needed resources.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;RequestResource&quot; é usada como um anúncio para um público amplo de potenciais fornecedores, bem como os potenciais fornecedores na área geográfica de interesse local. Destina-se a ser utilizado por gerentes da emergência, comandantes e outros socorristas para solicitar informações sobre a disponibilidade de recursos necessários.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestResourceDeploymentStatus">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “RequestResourceDeploymentStatus” message is used to request the current status of one or more deployed resources. It can be sent by the Resource Supplier to the Resource Consumer (e.g., to check the status of the resource after a “ReleaseResource” message) or by the Resource Consumer to the Resource Supplier (e.g., to track the progress of a resource after a “RequisitionResource” message).</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;RequestResourceDeploymentStatus&quot; é utilizada para solicitar o status atual de um ou mais recursos implantados. Ela pode ser enviado pelo fornecedor ao consumidor de recursos (por exemplo, para verificar o status do recurso depois de uma mensagem de &quot;ReleaseResource&quot;) ou pelo consumidor para o fornecedor (por exemplo, para acompanhar o andamento de um recurso após um mensagem &quot;RequisitionResource&quot;).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestReturn">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “RequestReturn” message is used to request release (demobilization) of resource(s) back to its original owning jurisdiction and location or to another location / assignment.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;RequestReturn&quot; é usada para liberação do pedido (desmobilização) de recurso (s) de volta à sua jurisdição e local original ou para outro local / atribuição.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequestedArrival -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestedArrival">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">When the resource is needed. Completed for Resource requests, returns, etc.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequestedDeparture -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestedDeparture">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time when the resource is requested to Depart from its current location for transit to a “ReportTo” location.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequestedReturnArrival -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestedReturnArrival">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time the resource is requested to arrive from its deployment at its “OwningJurisdiction”.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequestedReturnDeparture -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequestedReturnDeparture">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Date and time the resource is requested to Depart from its deployment for transit to its “OwningJurisdiction”.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#RequisitionResource">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “RequisitionResource” message is used by Resource Consumers to order resources from Resource Suppliers. These may relate to one or more responses to a previous Request Resource message.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;RequisitionResource&quot; é utilizada por consumidores para pedir recursos a partir de fornecedores. Estes podem estar relacionados com uma ou mais respostas a uma mensagem de Solicitação de Recursos anterior.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Resource -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Resource">
+        <rdfs:comment xml:lang="en">Necessary element to deal with a emergency situation. A Resource contains information about its Identity, Description and Status. A Resource owner can also be identified. A Resource may also have a schedule which includes Temporal and Spatial details.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">elemento necessário para lidar com a situação de emergência. Um recurso conterá também informações sobre sua identidade, descrição e status além de uma relação com a instituição que é dona dele. Outras informações como tempo esperado para chegada ou local de um recursos específico ou até para que tipos de incidentes eles devem ser atribuídos, são consideradas. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ResourceInformation -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResourceInformation">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasScheduleInformation"/>
+                        <owl:someValuesFrom rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasResource"/>
+                        <owl:onClass rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Resource"/>
+                        <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasResponseInformation"/>
+                        <owl:onClass rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseInformation"/>
+                        <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="en">This element identifies the instance of ResourceInformation within the message. It does not identify the Resource.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Este elemento identifica a instância de ResourceInformation dentro da mensagem. Não identifica o elemento Resource.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasIncidentInformation"/>
+                        <owl:someValuesFrom rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Incident"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasResourceInformation"/>
+                        <owl:someValuesFrom rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceInformation"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#hasMessageRecall"/>
+                        <owl:onClass rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#MessageRecall"/>
+                        <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="en">A mensage based on a Request/Response model. Most of the Request messages expect a Response, and in some cases, messages are used to notify others of changes or offers of resources.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Mensagem baseada no modelo Requisição/Resposta. A maioria das mensagens de requisição esperam uma resposta, e em alguns casos, mensagens são usada para notificar outros sobre mudanças ou oferecer recursos disponíveis. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ResourceStatus -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResourceStatus">
+        <rdfs:comment xml:lang="en">Refers to the general state of a resource if known.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Refere-se ao estado do geral do recurso se conhecido. </rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ResponseInformation -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseInformation">
+        <rdfs:comment xml:lang="en">Refers to a kind of reponse given to a request.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Referente ao tipo de resposta dado a uma determinada requisição. Pode ser do tipo: aceito, recursado e provisório. Uma explicação deve ser associada quando a resposta for do tipo recursar ou provisória.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestExtendedDeploymentDuration">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “ResponseToRequestExtendedDeploymentDuration” message is used as the response to a
+“RequestExtendedDeploymentDuration” message. It allows the sender to accept, decline, or offer
+conditions upon which deployment duration of resources may be extended.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;ResponseToRequestExtendedDeploymentDuration&quot; é utilizada como resposta a uma mensagem de &quot;RequestExtendedDeploymentDuration&quot;. Ele permite ao remetente  aceitar, recusar ou oferecer condições sob as quais a duração de implantação de recursos pode ser prorrogado.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestInformation">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “ResponseToRequestInformation” message is used by Resource Suppliers to respond to a RequestInformation message from Resource Consumers. If the RequestInformation message contained one or more ResourceInformation elements, the response MUST Accept or Decline for each ResourceInformation element with a separate ResponseInformation element. However, accepting here only entails agreeing to supply the requested information, not agreeing to supply resources. If the RequestInformation message did not contain any ResourceInformation elements, one or more ResponseInformation elements MAY be included in the response message</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestQuote">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “ResponseToRequestQuote” message is used by the Resource Supplier to respond to a RequestQuote Message. The supplier may respond with pricing or decline to respond with pricing (i.e. a response that says that the Resource Supplier is unable to supply a requested quote). The Resource Supplier may provide quotes for several alternative resources that match a single resource request.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;ResponseToRequestQuote&quot; é utilizada pelo fornecedor de recursos para responder a uma mensagem &quot;RequestQuote&quot;. O fornecedor pode responder com preços ou recusar-se a responder com os preços (ou seja, uma resposta que diz que o fornecedor é incapaz de fornecer um orçamento solicitado). O fornecedor pode fornecer cotações de vários recursos alternativos que correspondem a uma única solicitação de recursos.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestResource">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <owl:disjointWith rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn"/>
+        <rdfs:comment xml:lang="en">The “ResponseToRequestResource” message is used by potential resource suppliers (e.g. mutual aid partners, equipment suppliers, etc.) to respond to RequestResource messages from Emergency Managers, Incident Commanders and First Responders or others with logistics responsibilities. The response may identify availability, limitations and other pertinent information related to resources in the original request.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;ResponseToRequestResource&quot; é utilizado por potenciais fornecedores de recursos (por exemplo, parceiros de ajuda mútua, fornecedores de equipamentos, etc) para responder a mensagens &quot;RequestResource&quot; enviadas pelos gerenciadores de emergência, comandantes e socorristas ou outros com responsabilidades de logística. A resposta pode identificar a disponibilidade, limitações e outras informações pertinentes relacionadas com os recursos do pedido inicial.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#ResponseToRequestReturn">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#ResourceMessage"/>
+        <rdfs:comment xml:lang="en">The “ResponseToRequestReturn” message is used by Resource Consumers to respond to a RequestReturn message from Resource Suppliers. The response identifies the resources in the original request message and how the Resource Consumer has responded.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">A mensagem &quot;ResponseToRequestReturn&quot; é utilizada por consumidores de recursos para responder a uma mensagem &quot;RequestReturn&quot; dos fornecedores. A resposta identifica os recursos da mensagem de solicitação original e como consumidor tem respondido.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Route -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Route">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#Schedule"/>
+        <rdfs:comment xml:lang="en">Information specifying the course of transit of resource from.Resource Supplier to Resource Consumer.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Schedule -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Schedule">
+        <rdfs:comment xml:lang="en">A scheduled event that occurs at a particular time and/or at a particular location.</rdfs:comment>
+        <rdfs:comment xml:lang="pt">Um evento planejado que ocorre em um determinado momento e / ou em um local particular.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://fpc.ufba.br/ontologies/edxl_rm#Update -->
+
+    <owl:Class rdf:about="http://fpc.ufba.br/ontologies/edxl_rm#Update">
+        <rdfs:subClassOf rdf:resource="http://fpc.ufba.br/ontologies/edxl_rm#MessageRecall"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+

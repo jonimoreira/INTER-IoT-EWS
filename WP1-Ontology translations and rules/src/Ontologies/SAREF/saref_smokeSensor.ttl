@@ -1,0 +1,121 @@
+# baseURI: http://ontology.tno.nl/saref/smokesensor
+# imports: https://w3id.org/saref
+
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix saref: <https://w3id.org/saref#> .
+@prefix saref-ss: <http://ontology.tno.nl/saref/smokesensor#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://ontology.tno.nl/saref/smokesensor>
+  rdf:type owl:Ontology ;
+  owl:imports <https://w3id.org/saref> ;
+.
+saref-ss:Audio
+  rdf:type saref:Property ;
+  rdfs:label "Audio"^^xsd:string ;
+  saref:hasValue "70"^^xsd:string ;
+  saref:isMeasuredIn <http://www.wurvoc.org/vocabularies/om-1.6/decibel> ;
+.
+saref-ss:BuildingObject_Window
+  rdf:type saref:Window ;
+  rdfs:label "Window"^^xsd:string ;
+.
+saref-ss:BuildingSpace_HotelRoom
+  rdf:type saref:BuildingSpace ;
+  rdfs:label "Hotel room"^^xsd:string ;
+  geo:lat "52.0705"^^xsd:string ;
+  geo:long "4.30070"^^xsd:string ;
+  saref:contains <http://ontology.tno.nl/saref/tempsensor#BuildingObject_window> ;
+  saref:hasSpaceType "Hotel room"^^xsd:string ;
+.
+saref-ss:Comfort
+  rdf:type saref:Task ;
+  rdfs:label "Comfort"^^xsd:string ;
+.
+saref-ss:EventFunction
+  rdf:type saref:EventFunction ;
+  rdfs:label "Event function"^^xsd:string ;
+  saref:hasCommand saref-ss:NotifyCommand ;
+  saref:hasThreshold saref-ss:Smoke_threshold_value ;
+.
+saref-ss:GetSensingDataCommand
+  rdf:type saref:GetCommand ;
+  rdfs:comment "The GetSensingDataCommand does not act upon any state, since it only gives a directive to retrieve a certain value."^^xsd:string ;
+  rdfs:label "Get sensing data command"^^xsd:string ;
+  saref:isCommandOf saref-ss:SensingFunction ;
+.
+saref-ss:NotifyCommand
+  rdf:type saref:NotifyCommand ;
+  rdfs:label "Notify command"^^xsd:string ;
+  saref:isCommandOf saref-ss:EventFunction ;
+.
+saref-ss:OffState
+  rdf:type saref:OffState ;
+  rdfs:label "OFF state"^^xsd:string ;
+.
+saref-ss:OnState
+  rdf:type saref:OnState ;
+  rdfs:label "ON state"^^xsd:string ;
+.
+saref-ss:SenseSmoke
+  rdf:type saref:Service ;
+  rdfs:label "Sense smoke"^^xsd:string ;
+  saref:hasInputParameter saref-ss:Smoke ;
+  saref:hasOutputParameter saref-ss:Smoke ;
+  saref:isOfferedBy saref-ss:SmokeSensor_SS4001 ;
+  saref:represents saref-ss:SensingFunction ;
+.
+saref-ss:SensingFunction
+  rdf:type saref:SensingFunction ;
+  rdfs:label "Sensing function"^^xsd:string ;
+  saref:hasCommand saref-ss:GetSensingDataCommand ;
+  saref:hasSensorType "Smoke"^^xsd:string ;
+.
+saref-ss:Smoke
+  rdf:type saref:Smoke ;
+  rdfs:label "Smoke"^^xsd:string ;
+.
+saref-ss:SmokeAlarm
+  rdf:type saref:Service ;
+  rdfs:label "Smoke alarm"^^xsd:string ;
+  saref:hasInputParameter saref-ss:Smoke ;
+  saref:hasOutputParameter saref-ss:Audio ;
+  saref:isOfferedBy saref-ss:SmokeSensor_SS4001 ;
+  saref:represents saref-ss:EventFunction ;
+.
+saref-ss:SmokeSensor_SS4001
+  rdf:type saref:SmokeSensor ;
+  rdfs:label "Smoke sensor SS4001"^^xsd:string ;
+  saref:IsUsedFor saref-ss:Smoke ;
+  saref:accomplishes saref:Safety ;
+  saref:hasCategory saref:Sensor ;
+  saref:hasDescription "Temperature sensor TS2001 is an example of how to instantiate a temperature sensor using SAREF"^^xsd:string ;
+  saref:hasFunction saref-ss:EventFunction ;
+  saref:hasFunction saref-ss:SensingFunction ;
+  saref:hasManufacturer "manufacturer-ccsd"^^xsd:string ;
+  saref:hasModel "SS-4001-ccsd-15"^^xsd:string ;
+  saref:hasState saref-ss:OffState ;
+  saref:hasState saref-ss:OnState ;
+  saref:isLocatedIn saref-ss:BuildingSpace_HotelRoom ;
+  saref:offers saref-ss:SenseSmoke ;
+  saref:offers saref-ss:SmokeAlarm ;
+.
+saref-ss:SmokeUnit
+  rdf:type saref:UnitOfMeasure ;
+  rdfs:label "Smoke unit"^^xsd:string ;
+.
+saref-ss:Smoke_threshold_value
+  rdf:type saref:Smoke ;
+  rdfs:label "Smoke threshold value"^^xsd:string ;
+  saref:hasValue "00000"^^xsd:string ;
+  saref:isMeasuredIn saref-ss:SmokeUnit ;
+.
+saref-ss:Temperature
+  rdf:type saref:Temperature ;
+  rdfs:label "Temperature"^^xsd:string ;
+  saref:hasValue "not applicable"^^xsd:string ;
+.

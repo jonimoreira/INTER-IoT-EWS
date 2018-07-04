@@ -1,0 +1,72 @@
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://ontology.universAAL.org/uAAL.owl#> .
+<http://ontology.universAAL.org/DataRepresentation.owl> rdfs:comment "Ontology of the universAAL Basic Data Representation Model"^^xsd:string ;
+  a owl:Ontology ;
+  rdfs:label "Basic Data Representation Model"^^xsd:string .
+:ManagedIndividual rdfs:comment "The root of the whole class hierarchy in the uAAL ontology."^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "uAAL Ontology Root Class"^^xsd:string .
+:ComparableIndividual rdfs:comment "The root class for all comparable individuals in the uAAL ontology."^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Comparable Individual"^^xsd:string ;
+  rdfs:subClassOf :ManagedIndividual .
+:LevelRating rdfs:comment "An enumeration for specifying the level of appearance / availability of a phenomen."^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Level Rating"^^xsd:string ;
+  rdfs:subClassOf :ComparableIndividual ;
+  owl:oneOf (
+    :none
+    :low
+    :middle
+    :high
+    :full
+  ) .
+:full a :LevelRating .
+:middle a :LevelRating .
+:high a :LevelRating .
+:low a :LevelRating .
+:none a :LevelRating .
+:AbsLocation rdfs:comment "The root class for all locations."^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Abstract Location"^^xsd:string ;
+  rdfs:subClassOf :ComparableIndividual .
+:PrivateResource rdfs:comment "An abstract superclass that ManagedIndividuals can subclass to indicate they represent private data"^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "Private Resource"^^xsd:string ;
+  rdfs:subClassOf :ManagedIndividual .
+:Rating rdfs:comment "An enumeration for rating the perceived quality of a service similar to the german marks system for students' work."^^xsd:string ;
+  a owl:Class ;
+  rdfs:label "QoS Rating"^^xsd:string ;
+  rdfs:subClassOf :ComparableIndividual ;
+  owl:oneOf (
+    :poor
+    :almost_poor
+    :almost_sufficient
+    :sufficient
+    :rich_sufficient
+    :almost_satisfying
+    :satisfying
+    :rich_satisfying
+    :almost_good
+    :good
+    :rich_good
+    :almost_excellent
+    :excellent
+  ) .
+:poor a :Rating .
+:rich_sufficient a :Rating .
+:rich_satisfying a :Rating .
+:almost_satisfying a :Rating .
+:sufficient a :Rating .
+:excellent a :Rating .
+:almost_excellent a :Rating .
+:satisfying a :Rating .
+:almost_poor a :Rating .
+:rich_good a :Rating .
+:almost_good a :Rating .
+:good a :Rating .
+:almost_sufficient a :Rating .
+<http://ontology.universAAL.org/Service.owl#PropertyPath> a rdfs:class .

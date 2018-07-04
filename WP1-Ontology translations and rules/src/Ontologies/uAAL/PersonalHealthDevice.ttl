@@ -1,0 +1,72 @@
+
+@prefix ns: <http://ontology.universAAL.org/PersonalHealthDevice.owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ns1: <http://ontology.universaal.org/HealthMeasurement.owl#> .
+@prefix ns2: <http://ontology.universAAL.org/Device.owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <http://www.w3.org/2002/07/owl#> .
+<http://ontology.universAAL.org/PersonalHealthDevice.owl> rdfs:comment "Ontology for person-related health devices (Continua certified devices) e.g. blood pressure monitor, weighing scale,..."^^xsd:string ;
+  a :Ontology ;
+  :imports <http://ontology.universaal.org/Measurement.owl> ,
+    <http://ontology.universAAL.org/Device.owl> ,
+    <http://ontology.universaal.org/HealthMeasurement.owl> ;
+  rdfs:label "PersonalHealthDevice"^^xsd:string .
+ns:HeartRateSensor rdfs:comment "The class of all heart rate sensors."^^xsd:string ;
+  a :Class ;
+  rdfs:label "HeartRateSensor"^^xsd:string ;
+  rdfs:subClassOf ns2:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns2:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:HeartRate ;
+      :onProperty ns2:hasValue
+    ] .
+ns:WeighingScale rdfs:comment "The class of all weighing scales."^^xsd:string ;
+  a :Class ;
+  rdfs:label "WeighingScale"^^xsd:string ;
+  rdfs:subClassOf ns2:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns2:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:PersonWeight ;
+      :onProperty ns2:hasValue
+    ] .
+ns2:hasValue rdfs:domain ns:WeighingScale ;
+  a :ObjectProperty ,
+    :FunctionalProperty .
+ns:BloodOxygenSatSensor rdfs:comment "The class of all blood oxygen sensors."^^xsd:string ;
+  a :Class ;
+  rdfs:label "BloodOxygenSatSensor"^^xsd:string ;
+  rdfs:subClassOf ns2:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns2:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:BloodOxygenSaturation ;
+      :onProperty ns2:hasValue
+    ] .
+ns:BloodPressureSensor rdfs:comment "The class of all blood pressure sensors."^^xsd:string ;
+  a :Class ;
+  rdfs:label "BloodPressureSensor"^^xsd:string ;
+  rdfs:subClassOf ns2:Sensor ,
+    [
+      a :Restriction ;
+      :cardinality "1"^^xsd:nonNegativeInteger ;
+      :onProperty ns2:hasValue
+    ] ,
+    [
+      a :Restriction ;
+      :allValuesFrom ns1:BloodPressure ;
+      :onProperty ns2:hasValue
+    ] .
