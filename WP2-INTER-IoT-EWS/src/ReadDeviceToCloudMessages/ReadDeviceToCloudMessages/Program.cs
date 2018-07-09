@@ -15,8 +15,8 @@ namespace ReadDeviceToCloudMessages
 {
     class Program
     {
-        static string connectionString = "HostName=MyDrivingIoTHubEWS.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=tCI9KK86Dpkd2c22WbsRFzTQX0uMjrxnKzu1bpsM1ZI=";
-        //static string connectionString = "HostName=INTER-IoT-EWS-hub-b1.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=udH+LztKT05v1gJZXzVMV+52mg3zsTtAB09JCC0YgHM=";
+        static string connectionString = "XXXXXXX";
+        
         static string iotHubD2cEndpoint = "messages/events";
         static EventHubClient eventHubClient;
 
@@ -186,9 +186,9 @@ namespace ReadDeviceToCloudMessages
 
 
         static Microsoft.Azure.Devices.Client.DeviceClient deviceClient;
-        static string iotHubUri = "MyDrivingIoTHubEWS.azure-devices.net";
-        static string deviceKey = "hI336rVjlnimW9VdaHYOSqfWq83VAf+Tkdc6VJKrhUA="; // From IoT Hub UI (IoT devices) Id: "ZY224DC54P"; // From MyDrivingDB.Device (table) => "bef8d779-a60d-4ac2-86f6-fd7be93022be";
-        static string deviceId = "ZY224DC54P";
+        static string iotHubUri = "XXXXX";
+        static string deviceKey = "XXXXXXX"
+        static string deviceId = "XXXXXXX";
 
         private static async void SendToAzureIoTHub(JObject eCGDeviceJSON)
         {
