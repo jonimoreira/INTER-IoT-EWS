@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETFramework,Version=v4.5.2/",
-    "signature": "62683d9b26d680a79cb9d014a9989000e22f125c"
+    "signature": "e60c3889e1c57fd86db72cde07b6f396f9388e98"
   },
   "compilationOptions": {
     "defines": [
@@ -22,6 +22,7 @@
           "System.Data.DataSetExtensions": "4.0.0.0",
           "System.Net.Http": "4.0.0.0",
           "System.Runtime.Serialization": "4.0.0.0",
+          "dotNetRDF": "2.1.0",
           "EntityFramework": "6.2.0",
           "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
           "Microsoft.AspNetCore.Mvc": "1.0.1",
@@ -70,6 +71,22 @@
           "lib/net40/Common.Logging.Core.dll": {}
         }
       },
+      "dotNetRDF/2.1.0": {
+        "dependencies": {
+          "HtmlAgilityPack": "1.8.2",
+          "Newtonsoft.Json": "11.0.2",
+          "VDS.Common": "1.10.0",
+          "Microsoft.CSharp": "4.0.0.0",
+          "System": "4.0.0.0",
+          "System.Configuration": "4.0.0.0",
+          "System.Security": "4.0.0.0",
+          "System.Web": "4.0.0.0",
+          "System.Xml": "4.0.0.0"
+        },
+        "compile": {
+          "lib/net40/dotNetRDF.dll": {}
+        }
+      },
       "EntityFramework/6.2.0": {
         "dependencies": {
           "System.ComponentModel.DataAnnotations": "4.0.0.0"
@@ -77,6 +94,11 @@
         "compile": {
           "lib/net45/EntityFramework.SqlServer.dll": {},
           "lib/net45/EntityFramework.dll": {}
+        }
+      },
+      "HtmlAgilityPack/1.8.2": {
+        "compile": {
+          "lib/Net45/HtmlAgilityPack.dll": {}
         }
       },
       "Libuv/1.9.0": {
@@ -1123,6 +1145,11 @@
           "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
+      "VDS.Common/1.10.0": {
+        "compile": {
+          "lib/net40-client/VDS.Common.dll": {}
+        }
+      },
       "WindowsAzure.ServiceBus/4.1.10": {
         "dependencies": {
           "System.Runtime.Serialization": "4.0.0.0",
@@ -1178,9 +1205,9 @@
           ".NETFramework/v4.5.2/System.Core.dll": {}
         }
       },
-      "System.ComponentModel.DataAnnotations/4.0.0.0": {
+      "System.Configuration/4.0.0.0": {
         "compile": {
-          ".NETFramework/v4.5.2/System.ComponentModel.DataAnnotations.dll": {}
+          ".NETFramework/v4.5.2/System.Configuration.dll": {}
         }
       },
       "System.Security/4.0.0.0": {
@@ -1188,9 +1215,19 @@
           ".NETFramework/v4.5.2/System.Security.dll": {}
         }
       },
+      "System.Web/4.0.0.0": {
+        "compile": {
+          ".NETFramework/v4.5.2/System.Web.dll": {}
+        }
+      },
       "System.Xml/4.0.0.0": {
         "compile": {
           ".NETFramework/v4.5.2/System.Xml.dll": {}
+        }
+      },
+      "System.ComponentModel.DataAnnotations/4.0.0.0": {
+        "compile": {
+          ".NETFramework/v4.5.2/System.ComponentModel.DataAnnotations.dll": {}
         }
       },
       "System.Xml.Linq/4.0.0.0": {
@@ -1247,6 +1284,7 @@
           "System.Data.DataSetExtensions": "4.0.0.0",
           "System.Net.Http": "4.0.0.0",
           "System.Runtime.Serialization": "4.0.0.0",
+          "dotNetRDF": "2.1.0",
           "EntityFramework": "6.2.0",
           "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
           "Microsoft.AspNetCore.Mvc": "1.0.1",
@@ -1295,6 +1333,22 @@
           "lib/net40/Common.Logging.Core.dll": {}
         }
       },
+      "dotNetRDF/2.1.0": {
+        "dependencies": {
+          "HtmlAgilityPack": "1.8.2",
+          "Newtonsoft.Json": "11.0.2",
+          "VDS.Common": "1.10.0",
+          "Microsoft.CSharp": "4.0.0.0",
+          "System": "4.0.0.0",
+          "System.Configuration": "4.0.0.0",
+          "System.Security": "4.0.0.0",
+          "System.Web": "4.0.0.0",
+          "System.Xml": "4.0.0.0"
+        },
+        "runtime": {
+          "lib/net40/dotNetRDF.dll": {}
+        }
+      },
       "EntityFramework/6.2.0": {
         "dependencies": {
           "System.ComponentModel.DataAnnotations": "4.0.0.0"
@@ -1302,6 +1356,11 @@
         "runtime": {
           "lib/net45/EntityFramework.SqlServer.dll": {},
           "lib/net45/EntityFramework.dll": {}
+        }
+      },
+      "HtmlAgilityPack/1.8.2": {
+        "runtime": {
+          "lib/Net45/HtmlAgilityPack.dll": {}
         }
       },
       "Libuv/1.9.0": {
@@ -2256,6 +2315,11 @@
           "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
+      "VDS.Common/1.10.0": {
+        "runtime": {
+          "lib/net40-client/VDS.Common.dll": {}
+        }
+      },
       "WindowsAzure.ServiceBus/4.1.10": {
         "dependencies": {
           "System.Runtime.Serialization": "4.0.0.0",
@@ -2308,9 +2372,11 @@
       "mscorlib/4.0.0.0": {},
       "System/4.0.0.0": {},
       "System.Core/4.0.0.0": {},
-      "System.ComponentModel.DataAnnotations/4.0.0.0": {},
+      "System.Configuration/4.0.0.0": {},
       "System.Security/4.0.0.0": {},
+      "System.Web/4.0.0.0": {},
       "System.Xml/4.0.0.0": {},
+      "System.ComponentModel.DataAnnotations/4.0.0.0": {},
       "System.Xml.Linq/4.0.0.0": {},
       "System.Text.RegularExpressions/4.0.0.0": {},
       "System.Runtime.InteropServices.WindowsRuntime/4.0.0.0": {},
@@ -2348,10 +2414,20 @@
       "serviceable": true,
       "sha512": "sha512-wLHldZHvxsSD6Ahonfj00/SkfHfKqO+YT6jsUwVm8Rch1REL9IArHAcSLXxYxYfu5/4ydGtmXvOtaH3AkVPu0A=="
     },
+    "dotNetRDF/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/JjFUzTkX1v285zSaAhTMqbEui+0CrlB+I5y4J8JEG+SYZsQ8kYDE3UuKUh6BrmufOG7TqXjBgDA+bhVCxqo7A=="
+    },
     "EntityFramework/6.2.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-ptGyXOf26qLrtn+2doAmylIlCxOnBJANwlyyLrXDmqIk9O18IzLWHyxDwwAyhgXkxmbiaA0WNpRy67WRReInBw=="
+    },
+    "HtmlAgilityPack/1.8.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6eZx+QMxghcaVurr3QSa5FT0P5EgqxZBcalj5LpEEW3X72mKbbAuyaIaNUCifk467R68KgJA6x/W1VnYxBlT0Q=="
     },
     "Libuv/1.9.0": {
       "type": "package",
@@ -2953,6 +3029,11 @@
       "serviceable": true,
       "sha512": "sha512-8vgCOG9mPeOd3xwyL20OT9RyOKq9PmJb0Iltzwj6eay38Cq2v6ojvpSDbc+sc6YXit+iAVyyvHTS29rBvDpdDQ=="
     },
+    "VDS.Common/1.10.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lvqLezZHYcgBfhNDcRKTICuvRQGhYaFrITqhTbqDp4mli1SES2iwlGI3TxLxygcAiyRUJ/ieHCmX1WsF+PGMNg=="
+    },
     "WindowsAzure.ServiceBus/4.1.10": {
       "type": "package",
       "serviceable": true,
@@ -3003,7 +3084,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.ComponentModel.DataAnnotations/4.0.0.0": {
+    "System.Configuration/4.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -3013,7 +3094,17 @@
       "serviceable": false,
       "sha512": ""
     },
+    "System.Web/4.0.0.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
     "System.Xml/4.0.0.0": {
+      "type": "referenceassembly",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.ComponentModel.DataAnnotations/4.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

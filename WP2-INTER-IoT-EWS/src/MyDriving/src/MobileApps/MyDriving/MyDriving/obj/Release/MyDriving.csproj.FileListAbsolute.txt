@@ -27,6 +27,8 @@ D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyD
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\bin\Release\Plugin.Settings.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\bin\Release\Plugin.Share.Abstractions.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\bin\Release\Plugin.Share.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\bin\Release\ShimmerAPI.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\bin\Release\ShimmerClosedLibraryRev0_5.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\bin\Release\Splat.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\bin\Release\SQLitePCL.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\bin\Release\System.Net.Http.Extensions.dll

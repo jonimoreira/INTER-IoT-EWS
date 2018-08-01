@@ -3,8 +3,10 @@ D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyD
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Acr.UserDialogs.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Acr.UserDialogs.Interface.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\AndHUD.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Google.Protobuf.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\HockeySDK.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Humanizer.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\MathNet.Numerics.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Microsoft.Azure.Devices.Client.PCL.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Microsoft.WindowsAzure.Mobile.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Microsoft.WindowsAzure.Mobile.Ext.dll
@@ -31,6 +33,8 @@ D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyD
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Plugin.Share.Abstractions.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Plugin.Share.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Refractored.Controls.CircleImageView.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\ShimmerAPI.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\ShimmerClosedLibraryRev0_5.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\Splat.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\SQLitePCL.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\SQLitePCL.Ext.dll
@@ -67,6 +71,7 @@ D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyD
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\MyDriving.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\MyDriving.Utils.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\ObdLibAndroid.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\System.Numerics.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\System.Runtime.Serialization.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\System.ServiceModel.Internals.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Android\obj\Release\android\assets\ObdShare.dll

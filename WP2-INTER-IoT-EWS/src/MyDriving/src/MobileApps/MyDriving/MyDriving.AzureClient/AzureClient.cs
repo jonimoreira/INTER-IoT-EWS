@@ -12,7 +12,7 @@ namespace MyDriving.AzureClient
 {
     public class AzureClient : IAzureClient
     {
-        const string DefaultMobileServiceUrl = "https://mydrivingmobileapp.azurewebsites.net";
+        const string DefaultMobileServiceUrl = "XXXXXXXXXXXXXXXXX";
         static IMobileServiceClient client;
 
         public IMobileServiceClient Client => client ?? (client = CreateClient());

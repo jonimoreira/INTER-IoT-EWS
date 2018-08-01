@@ -18,9 +18,11 @@ D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyD
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\bin\Release\System.Net.Http.Extensions.xml
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\bin\Release\System.Net.Http.Primitives.xml
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\obj\Release\MyDriving.Utils.csproj.App.config
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\obj\Release\MyDriving.Utils.csprojResolveAssemblyReference.cache
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\obj\Release\MyDriving.Utils.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\obj\Release\MyDriving.Utils.pdb
-D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\obj\Release\MyDriving.Utils.csprojResolveAssemblyReference.cache
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\obj\Release\MyDriving.Utils.dll.mdb
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\bin\Release\MyDriving.Utils.dll.mdb
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\obj\Release\MyDriving.Utils.dll.mdb
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\bin\Release\MyDriving.Utils.dll.mdb
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.Utils\obj\Release\MyDriving.Utils.dll.mdb

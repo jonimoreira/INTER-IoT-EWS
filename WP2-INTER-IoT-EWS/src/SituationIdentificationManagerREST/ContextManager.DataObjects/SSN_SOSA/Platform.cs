@@ -16,16 +16,18 @@ namespace INTERIoTEWS.Context.DataObjects.SOSA
     {
         public object Identifier { get; private set; }
 
-        public Platform(object identifier, Point _location)
+        public Platform(object identifier, Point _location, string _label)
         {
             this.Identifier = identifier;
             this.location = _location;
+            this.label = _label;
 
             if (_location == null)
                 throw new Exception("GeoPoint (location) data is null, input error.");
         }
 
         public Point location { get; private set; }
+        public string label { get; private set; }
 
     }
 }

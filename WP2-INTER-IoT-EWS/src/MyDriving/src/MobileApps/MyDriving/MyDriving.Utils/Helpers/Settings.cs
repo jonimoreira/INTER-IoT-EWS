@@ -116,7 +116,12 @@ namespace MyDriving.Utils
 
         public string DeviceConnectionString
         {
-            get { return AppSettings.GetValueOrDefault(DeviceConnectionStringKey, DeviceConnectionStringDefault); }
+            get
+            {
+                // TODO: Check why SharedAccessKey is pointing to the access key of the IoT device of the free tier IoT Hub (I think it was a step during the registration, maybe linked to the MS Account (FB? HockeyApp?))
+                return "XXXXXXXXXXXXXXXXX";
+                //return AppSettings.GetValueOrDefault(DeviceConnectionStringKey, DeviceConnectionStringDefault);
+            }
             set
             {
                 if (AppSettings.AddOrUpdateValue(DeviceConnectionStringKey, value))

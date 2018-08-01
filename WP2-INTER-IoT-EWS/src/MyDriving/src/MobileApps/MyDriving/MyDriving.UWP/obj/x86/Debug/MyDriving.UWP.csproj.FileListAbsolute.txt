@@ -185,6 +185,8 @@ D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyD
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.UWP\bin\x86\Debug\ObdLibUWP.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.UWP\bin\x86\Debug\ObdShare.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.UWP\bin\x86\Debug\Plugin.EmbeddedResource.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.UWP\bin\x86\Debug\ShimmerClosedLibraryRev0_5.dll
+D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.UWP\bin\x86\Debug\ShimmerAPI.dll
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.UWP\bin\x86\Debug\ObdLibUWP.pdb
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.UWP\bin\x86\Debug\ObdLibUWP.pri
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving.UWP\bin\x86\Debug\MyDriving.AzureClient.pdb

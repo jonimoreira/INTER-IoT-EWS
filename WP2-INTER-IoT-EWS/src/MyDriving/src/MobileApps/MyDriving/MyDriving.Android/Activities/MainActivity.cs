@@ -15,7 +15,7 @@ using Android.Runtime;
 using System;
 using System.Threading.Tasks;
 using HockeyApp;
-
+using Android.Content;
 
 namespace MyDriving.Droid
 {
@@ -24,6 +24,17 @@ namespace MyDriving.Droid
         ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : BaseActivity
     {
+
+        FragmentCurrentTrip fragmentCurrentTrip = null;
+
+        public override void OnAccelerationChanged(float x, float y, float z)
+        {
+            if (fragmentCurrentTrip != null)
+            {
+                fragmentCurrentTrip.OnAccelerationChanged(x, y, z);
+            }
+        }
+
         DrawerLayout drawerLayout;
         NavigationView navigationView;
 
@@ -33,6 +44,7 @@ namespace MyDriving.Droid
 
         protected override int LayoutResource => Resource.Layout.activity_main;
 
+        
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -62,7 +74,7 @@ namespace MyDriving.Droid
 
                 drawerLayout.CloseDrawers();
             };
-
+            
             if (Intent.GetBooleanExtra("tracking", false))
             {
                 ListItemClicked(Resource.Id.menu_current_trip);
@@ -76,6 +88,9 @@ namespace MyDriving.Droid
                 ListItemClicked(Resource.Id.menu_current_trip);
                 SupportActionBar.Title = "Current Trip";
             }
+
+            Intent.PutExtra("test", "value");
+
         }
 
         void InitializeHockeyApp()
@@ -126,13 +141,15 @@ namespace MyDriving.Droid
             oldPosition = itemId;
 
             Android.Support.V4.App.Fragment fragment = null;
+
             switch (itemId)
             {
                 case Resource.Id.menu_past_trips:
-                    fragment = FragmentPastTrips.NewInstance();
+                    fragment = FragmentPastTrips.NewInstance();                    
                     break;
                 case Resource.Id.menu_current_trip:
-                    fragment = FragmentCurrentTrip.NewInstance();
+                    fragmentCurrentTrip = FragmentCurrentTrip.NewInstance();
+                    fragment = fragmentCurrentTrip;
                     break;
                 case Resource.Id.menu_profile:
                     fragment = FragmentProfile.NewInstance();
@@ -183,6 +200,11 @@ namespace MyDriving.Droid
                 }
                 base.OnBackPressed();
             }
+            
         }
+
+        
+
+
     }
 }

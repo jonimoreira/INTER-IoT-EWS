@@ -18,8 +18,10 @@
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\Castle.Core\4.1.1\lib\net45\Castle.Core.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\Common.Logging\3.4.1\lib\net40\Common.Logging.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\Common.Logging.Core\3.4.1\lib\net40\Common.Logging.Core.dll
+--reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\dotNetRDF\2.1.0\lib\net40\dotNetRDF.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\EntityFramework\6.2.0\lib\net45\EntityFramework.SqlServer.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\EntityFramework\6.2.0\lib\net45\EntityFramework.dll
+--reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\HtmlAgilityPack\1.8.2\lib\Net45\HtmlAgilityPack.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\Microsoft.ApplicationInsights\2.1.0\lib\net45\Microsoft.ApplicationInsights.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\Microsoft.ApplicationInsights.Agent.Intercept\1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\Microsoft.ApplicationInsights.AspNetCore\1.0.0\lib\net451\Microsoft.ApplicationInsights.AspNetCore.dll
@@ -139,6 +141,7 @@
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Threading.Tasks.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\System.Threading.Tasks.Extensions\4.0.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\Validation\2.0.6.15003\lib\portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\Validation.dll
+--reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\VDS.Common\1.10.0\lib\net40-client\VDS.Common.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\WindowsAzure.ServiceBus\4.1.10\lib\net45\Microsoft.ServiceBus.dll
 --reference:C:\Users\LuizRebeloMoreiraJ\.nuget\packages\XLR8.CGLib\1.0.2\lib\net40\XLR8.CGLib.dll
 --reference:D:\INTERIoTEWS\SituationIdentificationManagerREST\ContextManager.DataObjects\bin\Release\ContextManager.DataObjects.dll
@@ -149,9 +152,11 @@
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\mscorlib.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Core.dll
---reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.ComponentModel.DataAnnotations.dll
+--reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Configuration.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Security.dll
+--reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Web.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xml.dll
+--reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.ComponentModel.DataAnnotations.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xml.Linq.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Text.RegularExpressions.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Runtime.InteropServices.WindowsRuntime.dll
@@ -165,15 +170,10 @@
 D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\Program.cs
 D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\Startup.cs
 D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\Controllers\DeviceObservationsController.cs
-D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\Domain\AccelerometerSensor.cs
-D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\Domain\Device.cs
-D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\Domain\SSN_SOSA\Observation.cs
-D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\Domain\SSN_SOSA\VehicleCollisionDetectedFromECGDeviceAccelerometerComputedByMobile.cs
 D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\Models\EWSContext.cs
 D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\SituationIdentification\Situation.cs
 D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\SituationIdentification\SituationType.cs
 D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\SituationIdentification\CEP\EventProcessor.cs
-D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\SituationIdentification\CEP\IEsperEvent.cs
 D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\SituationReaction\NotificationActivity.cs
 D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\SituationReaction\SituationReactionProcess.cs
 D:\INTERIoTEWS\SituationIdentificationManagerREST\src\ContextManagerREST\SituationReaction\TargetNotificationRequirement.cs

@@ -117,4 +117,50 @@
         app:backgroundTint="@color/recording_accent"
         app:pressedTranslationZ="8dp"
         android:clickable="true" />
+
+  <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#99FFFFFF"
+        android:layout_gravity="top"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        android:id="@+id/stats">
+
+      <android.support.design.widget.FloatingActionButton
+          android:id="@+id/fabHeart"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_heart"
+          android:layout_gravity="top"
+          app:elevation="4dp"
+          app:backgroundTint="@color/recording_accent"
+          app:pressedTranslationZ="8dp"
+          android:clickable="true" />
+
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:textAppearance="?android:attr/textAppearanceMedium"
+          android:text="Heart rate"
+          android:textColor="@color/stat_display"
+          android:id="@+id/text_heart" />
+    
+  </LinearLayout>
+  
+<!--
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/sendHeartData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_facebook"
+        android:layout_gravity="center_horizontal"
+        app:elevation="4dp"
+        app:backgroundTint="@color/recording_accent"
+        app:pressedTranslationZ="8dp"
+        android:clickable="true" />
+-->
+
 </FrameLayout>

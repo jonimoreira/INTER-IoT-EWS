@@ -60,8 +60,16 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Protobuf, Version=3.3.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Protobuf.3.3.0\lib\netstandard1.0\Google.Protobuf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="HockeySDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HockeySDK.Xamarin.4.1.0-beta1\lib\MonoAndroid403\HockeySDK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=3.20.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MathNet.Numerics.3.20.0\lib\portable-net45+netcore45+MonoAndroid1+MonoTouch1\MathNet.Numerics.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.Devices.Client.PCL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -99,6 +107,12 @@
     <Reference Include="Plugin.Share.Abstractions, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Plugin.Share.4.0.0\lib\MonoAndroid10\Plugin.Share.Abstractions.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="ShimmerAPI">
+      <HintPath>..\..\ShimmerLibs\ShimmerAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="ShimmerClosedLibraryRev0_5">
+      <HintPath>..\..\ShimmerLibs\ShimmerClosedLibraryRev0_5.dll</HintPath>
     </Reference>
     <Reference Include="Square.OkHttp, Version=2.7.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Square.OkHttp.2.7.5.0\lib\MonoAndroid\Square.OkHttp.dll</HintPath>
@@ -307,6 +321,7 @@
     <Compile Include="Helpers\AndroidExtensions.cs" />
     <Compile Include="Fragments\FragmentGettingStarted.cs" />
     <Compile Include="Activities\GettingStartedActivity.cs" />
+    <Compile Include="ShimmerLogAndStreamXamarin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -390,7 +405,7 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_notification.png" />
     <AndroidResource Include="Resources\layout\activity_trip_summary.axml" />
     <AndroidResource Include="Resources\layout\fragment_current_trip.axml">
-      <SubType>AndroidResource</SubType>
+      <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_started_1.axml" />
     <AndroidResource Include="Resources\layout\fragment_started_3.axml" />
@@ -471,7 +486,9 @@
   <ItemGroup>
     <AndroidEnvironment Include="environment.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_heart.png" />
+  </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\fonts\Corbert-Regular.otf" />
   </ItemGroup>

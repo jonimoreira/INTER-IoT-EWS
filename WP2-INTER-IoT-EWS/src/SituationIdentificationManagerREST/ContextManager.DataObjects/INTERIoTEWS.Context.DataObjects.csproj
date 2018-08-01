@@ -129,7 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDataObject.cs" />
-    <Compile Include="EDXL\CAPmessage.cs" />
+    <Compile Include="EDXL\CAP.cs" />
+    <Compile Include="EDXL\DE.cs" />
     <Compile Include="EDXL\IncidentInformationType.cs" />
     <Compile Include="EDXL\IReport.cs" />
     <Compile Include="EDXL\SitRepType.cs" />

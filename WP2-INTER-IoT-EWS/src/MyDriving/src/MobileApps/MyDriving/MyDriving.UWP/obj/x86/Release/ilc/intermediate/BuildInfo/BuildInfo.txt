@@ -23,12 +23,12 @@ Microsoft.WindowsAzure.Mobile.Ext.dll                  : 2.0.31125.0
 Microsoft.WindowsAzure.Mobile.SQLiteStore.dll          : 2.0.31217.0
 mscorlib.dll                                           : 4.6.23123.0
 MvvmHelpers.dll                                        : 1.0.1.0
-MyDriving.AzureClient.dll                              : 1.0.6701.32243
+MyDriving.AzureClient.dll                              : 1.0.6768.35195
 MyDriving.DataStore.Abstractions.dll                   : 1.0.0.0
 MyDriving.DataStore.Azure.dll                          : 1.0.0.0
 MyDriving.DataStore.Mock.dll                           : 1.0.0.0
-MyDriving.dll                                          : 1.0.6702.20942
-MyDriving.Utils.dll                                    : 1.0.6701.32241
+MyDriving.dll                                          : 1.0.6768.35202
+MyDriving.Utils.dll                                    : 1.0.6768.35194
 Newtonsoft.Json.dll                                    : 8.0.3.19514
 ObdLibUWP.dll                                          : 1.0.0.0
 ObdShare.dll                                           : 1.0.0.0
@@ -46,6 +46,7 @@ Plugin.Settings.Abstractions.dll                       : 2.1.0
 Plugin.Settings.dll                                    : 2.1.0
 Plugin.Share.Abstractions.dll                          : 4.0.0
 Plugin.Share.dll                                       : 4.0.0
+ShimmerAPI.dll                                         : 1.0.0.0
 Splat.dll                                              : 1.6.2
 sqlite3.dll                                            : 3.23.1
 SQLitePCL.dll                                          : 3.8.7.2

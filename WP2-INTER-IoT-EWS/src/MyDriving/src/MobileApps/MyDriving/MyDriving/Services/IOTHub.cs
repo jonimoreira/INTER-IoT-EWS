@@ -38,7 +38,7 @@ namespace MyDriving.Services
                 catch (Exception ex2)
                 {
                     transportType = TransportType.Http1;
-                    Utils.Logger.Instance.Track("Connected to IoTHub via " + transportType.ToString());
+                    Utils.Logger.Instance.Track("Connected   to IoTHub via " + transportType.ToString());
                     deviceClient = DeviceClient.CreateFromConnectionString(connectionStr, transportType);
                 }
             }

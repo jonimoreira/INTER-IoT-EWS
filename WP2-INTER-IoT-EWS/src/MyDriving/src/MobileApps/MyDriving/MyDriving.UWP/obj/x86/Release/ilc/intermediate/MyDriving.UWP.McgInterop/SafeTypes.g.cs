@@ -51,6 +51,95 @@ using System.Runtime.InteropServices.WindowsRuntime;
 // warning CS0628 new protected member declared in sealed class
 #pragma warning disable 628
 
+namespace McgInterop
+{
+	[global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Sequential, CharSet=global::System.Runtime.InteropServices.CharSet.Unicode, Size=520)]
+	public unsafe partial struct InlineArray_ushort___260
+	{
+		// Copies characters from this buffer, up to the first null or end of buffer, into a new string.
+		public string CopyToString()
+		{
+			fixed (ushort* ptrFirstElement = &(firstElement))
+			{
+				char* ptr = ((char*)ptrFirstElement);
+				char* end = ptr;
+				char* limit = (ptr + 260);
+				while (end < limit 
+							&& (*(end)) != 0)
+				{
+					end = end + 1;
+				}
+				return new string(ptr, 0, ((int)(end - ptr)));
+			}
+		}
+
+		public ushort this[uint index]
+		{
+			get
+			{
+				if (index < 0 
+							|| index >= 260)
+					throw new global::System.IndexOutOfRangeException();
+				fixed (global::McgInterop.InlineArray_ushort___260* pThis = &(this))
+					return ((ushort*)pThis)[index];
+			}
+			set
+			{
+				if (index < 0 
+							|| index >= 260)
+					throw new global::System.IndexOutOfRangeException();
+				fixed (global::McgInterop.InlineArray_ushort___260* pThis = &(this))
+					((ushort*)pThis)[index] = value;
+			}
+		}
+		public const int Length = 260;
+		ushort firstElement;
+	}
+
+	[global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Sequential, CharSet=global::System.Runtime.InteropServices.CharSet.Unicode, Size=28)]
+	public unsafe partial struct InlineArray_ushort___14
+	{
+		// Copies characters from this buffer, up to the first null or end of buffer, into a new string.
+		public string CopyToString()
+		{
+			fixed (ushort* ptrFirstElement = &(firstElement))
+			{
+				char* ptr = ((char*)ptrFirstElement);
+				char* end = ptr;
+				char* limit = (ptr + 14);
+				while (end < limit 
+							&& (*(end)) != 0)
+				{
+					end = end + 1;
+				}
+				return new string(ptr, 0, ((int)(end - ptr)));
+			}
+		}
+
+		public ushort this[uint index]
+		{
+			get
+			{
+				if (index < 0 
+							|| index >= 14)
+					throw new global::System.IndexOutOfRangeException();
+				fixed (global::McgInterop.InlineArray_ushort___14* pThis = &(this))
+					return ((ushort*)pThis)[index];
+			}
+			set
+			{
+				if (index < 0 
+							|| index >= 14)
+					throw new global::System.IndexOutOfRangeException();
+				fixed (global::McgInterop.InlineArray_ushort___14* pThis = &(this))
+					((ushort*)pThis)[index] = value;
+			}
+		}
+		public const int Length = 14;
+		ushort firstElement;
+	}
+}
+
 namespace Microsoft.HockeyApp.Extensibility
 {
 	[global::System.Runtime.InteropServices.McgRedirectedType("Microsoft.HockeyApp.Extensibility.NativeMethods+_SYSTEM_INFO,Microsoft.HockeyApp.Kit, Version=4.0.0.2430, Cultur" +
@@ -68,6 +157,43 @@ namespace Microsoft.HockeyApp.Extensibility
 		public uint dwAllocationGranularity;
 		public ushort wProcessorLevel;
 		public ushort wProcessorRevision;
+	}
+}
+
+namespace Microsoft.Win32.SafeHandles
+{
+	[global::System.Runtime.InteropServices.McgRedirectedType("Microsoft.Win32.SafeHandles.SafeFindHandle,System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToke" +
+		"n=b03f5f7f11d50a3a")]
+	public unsafe class SafeFindHandle__System_IO_FileSystem : global::System.Runtime.InteropServices.SafeHandle
+	{
+		public SafeFindHandle__System_IO_FileSystem() : 
+				base(default(global::System.IntPtr), false)
+		{
+		}
+
+		public override bool IsInvalid
+		{
+			get
+			{
+				return false;
+			}
+		}
+
+		protected override bool ReleaseHandle()
+		{
+			return false;
+		}
+	}
+}
+
+namespace System.Net
+{
+	[global::System.Runtime.InteropServices.McgRedirectedType("System.Net.UnsafeCommonNativeMethods+NtStatus,System.Private.Networking, Version=4.0.0.0, Culture=neutral, Publi" +
+		"cKeyToken=b03f5f7f11d50a3a")]
+	public enum UnsafeCommonNativeMethods_NtStatus__System_Private_Networking : uint
+	{
+		Success = 0x0u,
+		InvalidParameter = 0xC000000Du,
 	}
 }
 
@@ -6329,6 +6455,15 @@ namespace Windows.Networking
 		}
 
 		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "CanonicalName")]
+		public string get_CanonicalName()
+		{
+			string __retVal = global::Windows.Networking.IHostName__Impl.StubClass.get_CanonicalName(this);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			return __retVal;
+		}
+
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
 		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "Type")]
 		public global::Windows.Networking.HostNameType get_Type()
 		{
@@ -6350,6 +6485,26 @@ namespace Windows.Networking
 		}
 	}
 
+	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Networking.IEndpointPair))]
+	[global::System.Runtime.InteropServices.McgWindowsRuntimeVersion(0)]
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe sealed class EndpointPair : global::System.__ComObject, global::Windows.Networking.IEndpointPair
+	{
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "RemoteHostName")]
+		public global::Windows.Networking.HostName get_RemoteHostName()
+		{
+			global::Windows.Networking.HostName __retVal = global::Windows.Networking.IEndpointPair__Impl.StubClass.get_RemoteHostName(this);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			return __retVal;
+		}
+
+		public EndpointPair(global::System.IntPtr dummy)
+		{
+		}
+	}
+
 	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
 	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
 	public unsafe interface IHostNameFactory
@@ -6367,8 +6522,21 @@ namespace Windows.Networking
 		string get_DisplayName();
 
 		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "CanonicalName")]
+		string get_CanonicalName();
+
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
 		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "Type")]
 		global::Windows.Networking.HostNameType get_Type();
+	}
+
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe interface IEndpointPair
+	{
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "RemoteHostName")]
+		global::Windows.Networking.HostName get_RemoteHostName();
 	}
 
 	[global::System.Runtime.InteropServices.McgWindowsRuntimeVersion(0)]
@@ -6672,6 +6840,15 @@ namespace Windows.Networking.Sockets
 		}
 
 		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "Control")]
+		public global::Windows.Networking.Sockets.StreamSocketControl get_Control()
+		{
+			global::Windows.Networking.Sockets.StreamSocketControl __retVal = global::Windows.Networking.Sockets.IStreamSocket__Impl.StubClass.get_Control(this);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			return __retVal;
+		}
+
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
 		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "Information")]
 		public global::Windows.Networking.Sockets.StreamSocketInformation get_Information()
 		{
@@ -6741,6 +6918,28 @@ namespace Windows.Networking.Sockets
 		}
 	}
 
+	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Networking.Sockets.IStreamSocketControl))]
+	[global::System.Runtime.InteropServices.McgWindowsRuntimeVersion(0)]
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe sealed class StreamSocketControl : global::System.__ComObject, global::Windows.Networking.Sockets.IStreamSocketControl, global::Windows.Networking.Sockets.IStreamSocketControl2, global::Windows.Networking.Sockets.IStreamSocketControl3
+	{
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertySet, "OutboundBufferSizeInBytes")]
+		public void put_OutboundBufferSizeInBytes(uint value)
+		{
+			global::Windows.Networking.Sockets.IStreamSocketControl__Impl.StubClass.put_OutboundBufferSizeInBytes(
+								this, 
+								value
+							);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+		}
+
+		public StreamSocketControl(global::System.IntPtr dummy)
+		{
+		}
+	}
+
 	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Networking.Sockets.IStreamSocketInformation))]
 	[global::System.Runtime.InteropServices.McgWindowsRuntimeVersion(0)]
 	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
@@ -6770,10 +6969,104 @@ namespace Windows.Networking.Sockets
 		}
 	}
 
+	[global::System.Runtime.InteropServices.McgWindowsRuntimeVersion(65536)]
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe sealed class SocketError : global::System.__ComObject
+	{
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		public static global::Windows.Networking.Sockets.SocketErrorStatus GetStatus(int hresult)
+		{
+			global::Windows.Networking.Sockets.SocketErrorStatus retval;
+			retval = __Factory_Windows_Networking_Sockets__ISocketErrorStatics_GetStatus(
+								"Windows.Networking.Sockets.SocketError", 
+								hresult
+							);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			return retval;
+		}
+
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		static global::Windows.Networking.Sockets.SocketErrorStatus __Factory_Windows_Networking_Sockets__ISocketErrorStatics_GetStatus(
+					string typeName, 
+					int hresult)
+		{
+			global::Windows.Networking.Sockets.SocketErrorStatus __pRetVal;
+			__pRetVal = global::Windows.Networking.Sockets.ISocketErrorStatics__Impl.StubClass.GetStatus(
+								global::System.Runtime.InteropServices.McgModuleManager.GetActivationFactory(
+													typeName, 
+													typeof(global::Windows.Networking.Sockets.ISocketErrorStatics).TypeHandle
+												), 
+								hresult
+							);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			return __pRetVal;
+		}
+
+		public SocketError(global::System.IntPtr dummy)
+		{
+		}
+	}
+
+	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Networking.Sockets.IDatagramSocket))]
+	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::System.IDisposable))]
+	[global::System.Runtime.InteropServices.McgWindowsRuntimeVersion(65536)]
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe sealed class DatagramSocket : global::System.__ComObject, global::Windows.Networking.Sockets.IDatagramSocket, global::System.IDisposable
+	{
+		public void Dispose()
+		{
+			global::System.IDisposable__Impl.StubClass.Close(this);
+		}
+
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		public static global::Windows.Foundation.IAsyncOperation<global::System.Collections.Generic.IReadOnlyList<global::Windows.Networking.EndpointPair>> GetEndpointPairsAsync(
+					global::Windows.Networking.HostName remoteHostName, 
+					string remoteServiceName)
+		{
+			global::Windows.Foundation.IAsyncOperation<global::System.Collections.Generic.IReadOnlyList<global::Windows.Networking.EndpointPair>> retval;
+			retval = __Factory_Windows_Networking_Sockets__IDatagramSocketStatics_GetEndpointPairsAsync(
+								"Windows.Networking.Sockets.DatagramSocket", 
+								remoteHostName, 
+								remoteServiceName
+							);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			return retval;
+		}
+
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		static global::Windows.Foundation.IAsyncOperation<global::System.Collections.Generic.IReadOnlyList<global::Windows.Networking.EndpointPair>> __Factory_Windows_Networking_Sockets__IDatagramSocketStatics_GetEndpointPairsAsync(
+					string typeName, 
+					global::Windows.Networking.HostName remoteHostName, 
+					string remoteServiceName)
+		{
+			global::Windows.Foundation.IAsyncOperation<global::System.Collections.Generic.IReadOnlyList<global::Windows.Networking.EndpointPair>> __pRetVal;
+			__pRetVal = global::Windows.Networking.Sockets.IDatagramSocketStatics__Impl.StubClass.GetEndpointPairsAsync(
+								global::System.Runtime.InteropServices.McgModuleManager.GetActivationFactory(
+													typeName, 
+													typeof(global::Windows.Networking.Sockets.IDatagramSocketStatics).TypeHandle
+												), 
+								remoteHostName, 
+								remoteServiceName
+							);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			return __pRetVal;
+		}
+
+		public DatagramSocket(global::System.IntPtr dummy)
+		{
+		}
+	}
+
 	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
 	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
 	public unsafe interface IStreamSocket : global::System.IDisposable
 	{
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "Control")]
+		global::Windows.Networking.Sockets.StreamSocketControl get_Control();
+
 		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
 		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "Information")]
 		global::Windows.Networking.Sockets.StreamSocketInformation get_Information();
@@ -6796,6 +7089,27 @@ namespace Windows.Networking.Sockets
 					global::Windows.Networking.HostName remoteHostName, 
 					string remoteServiceName, 
 					global::Windows.Networking.Sockets.SocketProtectionLevel protectionLevel);
+	}
+
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe interface IStreamSocketControl
+	{
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertySet, "OutboundBufferSizeInBytes")]
+		void put_OutboundBufferSizeInBytes(uint value);
+	}
+
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe interface IStreamSocketControl2
+	{
+	}
+
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe interface IStreamSocketControl3
+	{
 	}
 
 	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
@@ -6831,6 +7145,30 @@ namespace Windows.Networking.Sockets
 		global::Windows.Foundation.IAsyncAction CancelIOAsync();
 	}
 
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe interface ISocketErrorStatics
+	{
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		global::Windows.Networking.Sockets.SocketErrorStatus GetStatus(int hresult);
+	}
+
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe interface IDatagramSocketStatics
+	{
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		global::Windows.Foundation.IAsyncOperation<global::System.Collections.Generic.IReadOnlyList<global::Windows.Networking.EndpointPair>> GetEndpointPairsAsync(
+					global::Windows.Networking.HostName remoteHostName, 
+					string remoteServiceName);
+	}
+
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public unsafe interface IDatagramSocket : global::System.IDisposable
+	{
+	}
+
 	[global::System.Runtime.InteropServices.McgWindowsRuntimeVersion(0)]
 	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
 	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
@@ -6845,6 +7183,44 @@ namespace Windows.Networking.Sockets
 		Tls10 = 6,
 		Tls11 = 7,
 		Tls12 = 8,
+	}
+
+	[global::System.Runtime.InteropServices.McgWindowsRuntimeVersion(0)]
+	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
+	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
+	public enum SocketErrorStatus
+	{
+		Unknown = 0,
+		OperationAborted = 1,
+		HttpInvalidServerResponse = 2,
+		ConnectionTimedOut = 3,
+		AddressFamilyNotSupported = 4,
+		SocketTypeNotSupported = 5,
+		HostNotFound = 6,
+		NoDataRecordOfRequestedType = 7,
+		NonAuthoritativeHostNotFound = 8,
+		ClassTypeNotFound = 9,
+		AddressAlreadyInUse = 10,
+		CannotAssignRequestedAddress = 11,
+		ConnectionRefused = 12,
+		NetworkIsUnreachable = 13,
+		UnreachableHost = 14,
+		NetworkIsDown = 15,
+		NetworkDroppedConnectionOnReset = 16,
+		SoftwareCausedConnectionAbort = 17,
+		ConnectionResetByPeer = 18,
+		HostIsDown = 19,
+		NoAddressesFound = 20,
+		TooManyOpenFiles = 21,
+		MessageTooLong = 22,
+		CertificateExpired = 23,
+		CertificateUntrustedRoot = 24,
+		CertificateCommonNameIsIncorrect = 25,
+		CertificateWrongUsage = 26,
+		CertificateRevoked = 27,
+		CertificateNoRevocationCheck = 28,
+		CertificateRevocationServerOffline = 29,
+		CertificateIsInvalid = 30,
 	}
 }
 
@@ -10451,6 +10827,7 @@ namespace Windows.Storage
 	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Storage.IStorageFolder))]
 	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Storage.IStorageItem))]
 	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Storage.Search.IStorageFolderQueryOperations))]
+	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Storage.IStorageFolder2))]
 	[global::System.Runtime.InteropServices.McgWindowsRuntimeVersion(65536)]
 	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
 	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
@@ -10596,6 +10973,17 @@ namespace Windows.Storage
 		}
 
 		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		public global::Windows.Foundation.IAsyncOperation<global::Windows.Storage.IStorageItem> TryGetItemAsync(string name)
+		{
+			global::Windows.Foundation.IAsyncOperation<global::Windows.Storage.IStorageItem> __retVal = global::Windows.Storage.IStorageFolder2__Impl.StubClass.TryGetItemAsync(
+								this, 
+								name
+							);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			return __retVal;
+		}
+
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
 		public static global::Windows.Foundation.IAsyncOperation<global::Windows.Storage.StorageFolder> GetFolderFromPathAsync(string path)
 		{
 			global::Windows.Foundation.IAsyncOperation<global::Windows.Storage.StorageFolder> retval;
@@ -10632,6 +11020,7 @@ namespace Windows.Storage
 	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Storage.IStorageFile))]
 	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Storage.Streams.IRandomAccessStreamReference))]
 	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Storage.IStorageItem))]
+	[global::System.Runtime.CompilerServices.DependencyReductionConditionallyDependent(typeof(global::Windows.Storage.IStorageFilePropertiesWithAvailability))]
 	[global::System.Runtime.InteropServices.McgWindowsRuntimeVersion(65536)]
 	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
 	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
@@ -10745,6 +11134,15 @@ namespace Windows.Storage
 		public global::Windows.Foundation.IAsyncOperation<global::Windows.Storage.Streams.IRandomAccessStreamWithContentType> OpenReadAsync()
 		{
 			global::Windows.Foundation.IAsyncOperation<global::Windows.Storage.Streams.IRandomAccessStreamWithContentType> __retVal = global::Windows.Storage.Streams.IRandomAccessStreamReference__Impl.StubClass.OpenReadAsync(this);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			return __retVal;
+		}
+
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "IsAvailable")]
+		public bool get_IsAvailable()
+		{
+			bool __retVal = global::Windows.Storage.IStorageFilePropertiesWithAvailability__Impl.StubClass.get_IsAvailable(this);
 			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
 			return __retVal;
 		}
@@ -11087,6 +11485,9 @@ namespace Windows.Storage
 	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
 	public unsafe interface IStorageFilePropertiesWithAvailability
 	{
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "IsAvailable")]
+		bool get_IsAvailable();
 	}
 
 	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
@@ -11099,6 +11500,8 @@ namespace Windows.Storage
 	[global::Internal.Reflection.ExplicitScope("Windows, Version=255.255.255.255, Culture=neutral, PublicKeyToken=null, ContentType=WindowsRuntime")]
 	public unsafe interface IStorageFolder2
 	{
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		global::Windows.Foundation.IAsyncOperation<global::Windows.Storage.IStorageItem> TryGetItemAsync(string name);
 	}
 
 	[global::Internal.Reflection.MetadataTransformed(global::Internal.Reflection.MetadataTransformation.OriginallyForeignObject)]
@@ -37499,6 +37902,15 @@ namespace Windows.Web.Http.Filters
 		}
 
 		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "ServerCredential")]
+		public global::Windows.Security.Credentials.PasswordCredential get_ServerCredential()
+		{
+			global::Windows.Security.Credentials.PasswordCredential __retVal = global::Windows.Web.Http.Filters.IHttpBaseProtocolFilter__Impl.StubClass.get_ServerCredential(this);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			return __retVal;
+		}
+
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
 		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertySet, "ServerCredential")]
 		public void put_ServerCredential(global::Windows.Security.Credentials.PasswordCredential value)
 		{
@@ -37592,6 +38004,10 @@ namespace Windows.Web.Http.Filters
 		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
 		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertySet, "ProxyCredential")]
 		void put_ProxyCredential(global::Windows.Security.Credentials.PasswordCredential value);
+
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertyGet, "ServerCredential")]
+		global::Windows.Security.Credentials.PasswordCredential get_ServerCredential();
 
 		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
 		[global::System.Runtime.InteropServices.McgAccessor(global::System.Runtime.InteropServices.McgAccessorKind.PropertySet, "ServerCredential")]
@@ -38206,7 +38622,6 @@ namespace Windows.Web.Http.Headers
 	}
 }
 
-
 [global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Sequential, CharSet=global::System.Runtime.InteropServices.CharSet.Unicode)]
 [global::System.Runtime.InteropServices.McgRedirectedType("Interop+mincore+CPINFOEXW,System.Text.Encoding.CodePages, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5" +
 	"f7f11d50a3a")]
@@ -38246,3 +38661,70 @@ public unsafe partial struct Interop_mincore_CPINFOEXW__CodePageName_e__FixedBuf
 	[global::System.Runtime.InteropServices.FieldOffset(0)]
 	public byte FixedElementField;
 }
+
+[global::System.Runtime.InteropServices.McgRedirectedType("Interop+mincore+GET_FILEEX_INFO_LEVELS,System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b0" +
+	"3f5f7f11d50a3a")]
+public enum Interop_mincore_GET_FILEEX_INFO_LEVELS__System_IO_FileSystem : uint
+{
+	GetFileExInfoStandard = 0x0u,
+	GetFileExMaxInfoLevel = 0x1u,
+}
+
+[global::System.Runtime.InteropServices.McgRedirectedType("Interop+mincore+WIN32_FILE_ATTRIBUTE_DATA,System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken" +
+	"=b03f5f7f11d50a3a")]
+public unsafe partial struct Interop_mincore_WIN32_FILE_ATTRIBUTE_DATA__System_IO_FileSystem
+{
+	public int fileAttributes;
+	public uint ftCreationTimeLow;
+	public uint ftCreationTimeHigh;
+	public uint ftLastAccessTimeLow;
+	public uint ftLastAccessTimeHigh;
+	public uint ftLastWriteTimeLow;
+	public uint ftLastWriteTimeHigh;
+	public uint fileSizeHigh;
+	public uint fileSizeLow;
+}
+
+[global::System.Runtime.InteropServices.McgRedirectedType("Interop+mincore+FINDEX_INFO_LEVELS,System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f" +
+	"7f11d50a3a")]
+public enum Interop_mincore_FINDEX_INFO_LEVELS__System_IO_FileSystem : uint
+{
+	FindExInfoStandard = 0x0u,
+	FindExInfoBasic = 0x1u,
+	FindExInfoMaxInfoLevel = 0x2u,
+}
+
+[global::System.Runtime.InteropServices.McgRedirectedType("Interop+mincore+WIN32_FIND_DATA,System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f1" +
+	"1d50a3a")]
+public unsafe partial struct Interop_mincore_WIN32_FIND_DATA__System_IO_FileSystem
+{
+	public uint dwFileAttributes;
+	public global::Interop_mincore_FILE_TIME__System_IO_FileSystem ftCreationTime;
+	public global::Interop_mincore_FILE_TIME__System_IO_FileSystem ftLastAccessTime;
+	public global::Interop_mincore_FILE_TIME__System_IO_FileSystem ftLastWriteTime;
+	public uint nFileSizeHigh;
+	public uint nFileSizeLow;
+	public uint dwReserved0;
+	public uint dwReserved1;
+	public string cFileName;
+	public string cAlternateFileName;
+}
+
+[global::System.Runtime.InteropServices.McgRedirectedType("Interop+mincore+FILE_TIME,System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+	"a")]
+public unsafe partial struct Interop_mincore_FILE_TIME__System_IO_FileSystem
+{
+	public uint dwLowDateTime;
+	public uint dwHighDateTime;
+}
+
+[global::System.Runtime.InteropServices.McgRedirectedType("Interop+mincore+FINDEX_SEARCH_OPS,System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7" +
+	"f11d50a3a")]
+public enum Interop_mincore_FINDEX_SEARCH_OPS__System_IO_FileSystem : uint
+{
+	FindExSearchNameMatch = 0x0u,
+	FindExSearchLimitToDirectories = 0x1u,
+	FindExSearchLimitToDevices = 0x2u,
+	FindExSearchMaxSearchOp = 0x3u,
+}
+

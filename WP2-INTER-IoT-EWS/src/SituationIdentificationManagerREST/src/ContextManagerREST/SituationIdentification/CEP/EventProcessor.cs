@@ -50,15 +50,16 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
         {
             
             {
-                // Get observation regarding the detected collision
+                // 7.1.1.1	Detected with ECG device accelerometer, computed by smartphone
+                // Get observation regarding the detected collision processed by the smartphone with high-frequency data from ECG device
                 //     AND the corss axial function processed by the smartphone to detect the collision: join by 
                 string statementName = "UC01_VehicleCollisionDetected_ST01";
                 var expr = @"
                     SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
-                           o.resultTime AS TriggerSituationEventTimeStamp, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
+                           o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
                            o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
                            CrossAxialUsedToDetectCollision.hasResult.hasValue AS ComputedCrossAxialValue 
-                    FROM  VehicleCollisionDetectedObservation.win:time(1 second) AS o 
+                    FROM  VehicleCollisionDetectedObservation.win:time(5 second) AS o 
                             INNER JOIN 
                           Observation.win:time(1 second) AS CrossAxialUsedToDetectCollision ON o.MessageId = CrossAxialUsedToDetectCollision.MessageId
                     WHERE o.Value = true
@@ -70,10 +71,12 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             }
             
             {
+                // 7.1.1.2	Detected with ECG device accelerometer, computed by EWS (cloud)
+                // Get acceleration data and copmpute the cross axial function (Threshold in the EPL)
                 string statementName = "UC01_VehicleCollisionDetected_ST02";
                 var expr = @"
                     SELECT AccelerationAxisX.madeBySensor.Identifier AS sensorId, AccelerationAxisX.Identifier AS observationId, AccelerationAxisX.observedProperty, 
-                           AccelerationAxisX.resultTime AS TriggerSituationEventTimeStamp, AccelerationAxisX.hasResult.hasValue AS resultValue, AccelerationAxisX.hasResult.hasUnit AS resultUnit,
+                           AccelerationAxisX.resultTime AS TriggerEventBegin, AccelerationAxisX.hasResult.hasValue AS resultValue, AccelerationAxisX.hasResult.hasUnit AS resultUnit,
                            AccelerationAxisX.madeBySensor.isHostedBy.location.Lat AS latitude, AccelerationAxisX.madeBySensor.isHostedBy.location.Long AS longitude
                            , (Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) AS ComputedCrossAxialValue
                            , AccelerationAxisX.observedProperty.Label, AccelerationAxisY.observedProperty.Label, AccelerationAxisZ.observedProperty.Label
@@ -83,7 +86,45 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                           AND AccelerationAxisY.MessageId = AccelerationAxisZ.MessageId
                           AND AccelerationAxisX.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisX'
                           AND AccelerationAxisY.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisY'
-                          AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) > 3
+                          AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) > 20
+                ";
+
+                // TODO: check the bug when using Z axis 
+
+                /*
+                 * ,
+                           (Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisZ.hasResult.hasValue, 2)) AS ComputedCrossAxialValue
+                 * 
+                 WHERE AccelerationAxisX.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisX'
+                        AND AccelerationAxisY.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisY'
+                        AND AccelerationAxisZ.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisZ'
+                        AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisZ.hasResult.hasValue, 2)) > 0
+                 */
+                createStatement(statementName, expr);
+
+            }
+
+
+
+            {
+                // 7.1.1.4	Detected with smartphone accelerometer, computed by EWS (cloud)
+                // Get acceleration data and copmpute the cross axial function (Threshold in the EPL)
+                string statementName = "UC01_VehicleCollisionDetected_ST04";
+                var expr = @"
+                    SELECT AccelerationAxisX.madeBySensor.Identifier AS sensorId, AccelerationAxisX.Identifier AS observationId, AccelerationAxisX.observedProperty, 
+                           AccelerationAxisX.resultTime AS TriggerEventBegin, AccelerationAxisX.hasResult.hasValue AS resultValue, AccelerationAxisX.hasResult.hasUnit AS resultUnit,
+                           AccelerationAxisX.madeBySensor.isHostedBy.location.Lat AS latitude, AccelerationAxisX.madeBySensor.isHostedBy.location.Long AS longitude
+                           , (Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) AS ComputedCrossAxialValue
+                           , AccelerationAxisX.observedProperty.Label, AccelerationAxisY.observedProperty.Label, AccelerationAxisZ.observedProperty.Label
+                           , AccelerationAxisX.hasResult.hasValue, AccelerationAxisY.hasResult.hasValue, AccelerationAxisZ.hasResult.hasValue
+                           , AccelerationAxisX.madeBySensor.isHostedBy.label
+                    FROM  Observation.win:time(5 second) AS AccelerationAxisX, Observation.win:time(5 second) AS AccelerationAxisY, Observation.win:time(5 second) AS AccelerationAxisZ
+                    WHERE AccelerationAxisX.MessageId = AccelerationAxisY.MessageId
+                          AND AccelerationAxisY.MessageId = AccelerationAxisZ.MessageId
+                          AND AccelerationAxisX.madeBySensor.isHostedBy.label = 'Smartphone'
+                          AND AccelerationAxisX.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisX'
+                          AND AccelerationAxisY.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisY'
+                          AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) > 5
                 ";
 
                 // TODO: check the bug when using Z axis 
@@ -103,10 +144,30 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 
             /*
             {
+                // Get heart rate for bradychardia detection (threshold in EPL) 
+                string statementName = "UC02_HealthEarlyWarningScore_ST01";
+                var expr = @"
+                    SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
+                           o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
+                           o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
+                           CrossAxialUsedToDetectCollision.hasResult.hasValue AS ComputedCrossAxialValue 
+                    FROM  Observation.win:time(1 second) AS o 
+                            INNER JOIN 
+                          Observation.win:time(1 second) AS CrossAxialUsedToDetectCollision ON o.MessageId = CrossAxialUsedToDetectCollision.MessageId
+                    WHERE o.Value = true
+                        AND CrossAxialUsedToDetectCollision.observedProperty.Label = 'https://w3id.org/saref/instances#CrossAxialFunction'
+                ";
+
+                createStatement(statementName, expr);
+
+            }
+
+            /*
+            {
                 string statementName = "UC01_VehicleCollisionDetected_ST03";
                 var expr = @"
                     SELECT AccelerationAxisX.madeBySensor.Identifier AS sensorId, AccelerationAxisX.Identifier AS observationId, AccelerationAxisX.observedProperty, 
-                           AccelerationAxisX.resultTime AS TriggerSituationEventTimeStamp, AccelerationAxisX.hasResult.hasValue AS resultValue, AccelerationAxisX.hasResult.hasUnit AS resultUnit,
+                           AccelerationAxisX.resultTime AS TriggerEventBegin, AccelerationAxisX.hasResult.hasValue AS resultValue, AccelerationAxisX.hasResult.hasUnit AS resultUnit,
                            AccelerationAxisX.madeBySensor.isHostedBy.location.Lat AS latitude, AccelerationAxisX.madeBySensor.isHostedBy.location.Long AS longitude
                            , AccelerationAxisX.observedProperty.Label, AccelerationAxisY.observedProperty.Label, AccelerationAxisZ.observedProperty.Label
                            , AccelerationAxisX.hasResult.hasValue, AccelerationAxisY.hasResult.hasValue, AccelerationAxisZ.hasResult.hasValue
@@ -127,7 +188,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                 string statementName = "UC01_VehicleCollisionDetected_ST02";
                 var expr = @"
                     SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
-                           o.resultTime AS TriggerSituationEventTimeStamp, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
+                           o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
                            o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude 
                     FROM  Observation AS o 
                     WHERE o.hasResult.hasValue > 1000

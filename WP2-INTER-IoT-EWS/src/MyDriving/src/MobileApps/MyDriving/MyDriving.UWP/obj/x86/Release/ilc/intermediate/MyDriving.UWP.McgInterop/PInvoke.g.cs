@@ -1294,6 +1294,136 @@ namespace McgInterop
 			// Return
 			return unsafe___value;
 		}
+
+		// Signature, FormatMessage, [fwd] [return] [Mcg.CodeGen.BlittableValueMarshaller] int__int, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] int__int, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] System_IntPtr____w64 int, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] uint__unsigned int, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] int__int, [fwd] [in] [out] [Mcg.CodeGen.StringBuilderMarshaller] System_Text_StringBuilder__wchar_t *, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] int__int, [fwd] [in] [Mcg.CodeGen.BlittableArrayMarshaller] rg_System_IntPtr____w64 int *, 
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgPInvokeMarshalStub("System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "Interop+mincore", "FormatMessage")]
+		public static int FormatMessage(
+					int dwFlags, 
+					global::System.IntPtr lpSource_mustBeNull, 
+					uint dwMessageId, 
+					int dwLanguageId, 
+					global::System.Text.StringBuilder lpBuffer, 
+					int nSize, 
+					global::System.IntPtr[] arguments)
+		{
+			// Setup
+			ushort* unsafe_lpBuffer = default(ushort*);
+			global::System.IntPtr* unsafe_arguments;
+			int unsafe___value;
+			try
+			{
+				// Marshalling
+				if (lpBuffer == null)
+					unsafe_lpBuffer = null;
+				else
+				{
+					unsafe_lpBuffer = (ushort*)global::McgInterop.McgHelpers.CoTaskMemAllocAndZeroMemory(new global::System.IntPtr(checked(lpBuffer.Capacity * 2 
+										+ 2)));
+					if (unsafe_lpBuffer == null)
+						throw new global::System.OutOfMemoryException();
+				}
+				if (unsafe_lpBuffer != null)
+					global::System.Runtime.InteropServices.McgMarshal.StringBuilderToUnicodeString(
+										lpBuffer, 
+										unsafe_lpBuffer
+									);
+				fixed (global::System.IntPtr* pinned_arguments = global::McgInterop.McgCoreHelpers.GetArrayForCompat(arguments))
+				{
+					unsafe_arguments = (global::System.IntPtr*)pinned_arguments;
+					// Call to native method
+					unsafe___value = global::McgInterop.api_ms_win_core_localization_l1_2_0_dll_PInvokes.FormatMessage(
+										dwFlags, 
+										lpSource_mustBeNull, 
+										dwMessageId, 
+										dwLanguageId, 
+										unsafe_lpBuffer, 
+										nSize, 
+										unsafe_arguments
+									);
+					global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+					global::System.Runtime.InteropServices.McgMarshal.SaveLastWin32Error();
+				}
+				if (lpBuffer != null)
+					global::System.Runtime.InteropServices.McgMarshal.UnicodeStringToStringBuilder(
+										unsafe_lpBuffer, 
+										lpBuffer
+									);
+				// Return
+				return unsafe___value;
+			}
+			finally
+			{
+				// Cleanup
+				if (unsafe_lpBuffer != null)
+					global::System.Runtime.InteropServices.ExternalInterop.SafeCoTaskMemFree(unsafe_lpBuffer);
+			}
+		}
+
+		// Signature, FormatMessage__0, [fwd] [return] [Mcg.CodeGen.BlittableValueMarshaller] int__int, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] int__int, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] System_IntPtr____w64 int, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] uint__unsigned int, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] int__int, [fwd] [in] [out] [Mcg.CodeGen.StringBuilderMarshaller] System_Text_StringBuilder__wchar_t *, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] int__int, [fwd] [in] [Mcg.CodeGen.BlittableArrayMarshaller] rg_System_IntPtr____w64 int *, 
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgPInvokeMarshalStub("Microsoft.Win32.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "Interop+mincore", "FormatMessage")]
+		public static int FormatMessage__0(
+					int dwFlags, 
+					global::System.IntPtr lpSource_mustBeNull, 
+					uint dwMessageId, 
+					int dwLanguageId, 
+					global::System.Text.StringBuilder lpBuffer, 
+					int nSize, 
+					global::System.IntPtr[] arguments)
+		{
+			// Setup
+			ushort* unsafe_lpBuffer = default(ushort*);
+			global::System.IntPtr* unsafe_arguments;
+			int unsafe___value;
+			try
+			{
+				// Marshalling
+				if (lpBuffer == null)
+					unsafe_lpBuffer = null;
+				else
+				{
+					unsafe_lpBuffer = (ushort*)global::McgInterop.McgHelpers.CoTaskMemAllocAndZeroMemory(new global::System.IntPtr(checked(lpBuffer.Capacity * 2 
+										+ 2)));
+					if (unsafe_lpBuffer == null)
+						throw new global::System.OutOfMemoryException();
+				}
+				if (unsafe_lpBuffer != null)
+					global::System.Runtime.InteropServices.McgMarshal.StringBuilderToUnicodeString(
+										lpBuffer, 
+										unsafe_lpBuffer
+									);
+				fixed (global::System.IntPtr* pinned_arguments = global::McgInterop.McgCoreHelpers.GetArrayForCompat(arguments))
+				{
+					unsafe_arguments = (global::System.IntPtr*)pinned_arguments;
+					// Call to native method
+					unsafe___value = global::McgInterop.api_ms_win_core_localization_l1_2_0_dll_PInvokes.FormatMessage__0(
+										dwFlags, 
+										lpSource_mustBeNull, 
+										dwMessageId, 
+										dwLanguageId, 
+										unsafe_lpBuffer, 
+										nSize, 
+										unsafe_arguments
+									);
+					global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+					global::System.Runtime.InteropServices.McgMarshal.SaveLastWin32Error();
+				}
+				if (lpBuffer != null)
+					global::System.Runtime.InteropServices.McgMarshal.UnicodeStringToStringBuilder(
+										unsafe_lpBuffer, 
+										lpBuffer
+									);
+				// Return
+				return unsafe___value;
+			}
+			finally
+			{
+				// Cleanup
+				if (unsafe_lpBuffer != null)
+					global::System.Runtime.InteropServices.ExternalInterop.SafeCoTaskMemFree(unsafe_lpBuffer);
+			}
+		}
 	}
 
 	/// <summary>
@@ -1437,6 +1567,108 @@ namespace McgInterop
 	}
 
 	/// <summary>
+	/// P/Invoke class for module 'api-ms-win-core-file-l1-1-0.dll'
+	/// </summary>
+	public unsafe static partial class api_ms_win_core_file_l1_1_0_dll
+	{
+		// Signature, GetFileAttributesEx, [fwd] [return] [Mcg.CodeGen.Win32BoolMarshaller] bool__System.Boolean, [fwd] [in] [Mcg.CodeGen.UnicodeStringMarshaller] string__wchar_t *, [fwd] [in] [Mcg.CodeGen.EnumMarshaller] Interop_mincore_GET_FILEEX_INFO_LEVELS__System_IO_FileSystem__Interop_mincore_GET_FILEEX_INFO_LEVELS__System_IO_FileSystem, [fwd] [in] [out] [managedbyref] [nativebyref] [Mcg.CodeGen.BlittableStructMarshaller] Interop_mincore_WIN32_FILE_ATTRIBUTE_DATA__System_IO_FileSystem____Interop_mincore_WIN32_FILE_ATTRIBUTE_DATA__System_IO_FileSystem, 
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgPInvokeMarshalStub("System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "Interop+mincore", "GetFileAttributesEx")]
+		public static bool GetFileAttributesEx(
+					string name, 
+					global::Interop_mincore_GET_FILEEX_INFO_LEVELS__System_IO_FileSystem fileInfoLevel, 
+					ref global::Interop_mincore_WIN32_FILE_ATTRIBUTE_DATA__System_IO_FileSystem lpFileInformation)
+		{
+			// Setup
+			ushort* unsafe_name = default(ushort*);
+			global::Interop_mincore_WIN32_FILE_ATTRIBUTE_DATA__System_IO_FileSystem unsafe_lpFileInformation;
+			int unsafe___value;
+			// Marshalling
+			fixed (char* pinned_name = name)
+			{
+				unsafe_name = (ushort*)pinned_name;
+				unsafe_lpFileInformation = lpFileInformation;
+				// Call to native method
+				unsafe___value = global::McgInterop.api_ms_win_core_file_l1_1_0_dll_PInvokes.GetFileAttributesEx(
+									unsafe_name, 
+									fileInfoLevel, 
+									&(unsafe_lpFileInformation)
+								);
+				global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+				global::System.Runtime.InteropServices.McgMarshal.SaveLastWin32Error();
+				lpFileInformation = unsafe_lpFileInformation;
+			}
+			// Return
+			return unsafe___value != 0;
+		}
+
+		// Signature, FindFirstFileEx, [fwd] [return] [Mcg.CodeGen.Win32HandleMarshaller] Microsoft_Win32_SafeHandles_SafeFindHandle__System_IO_FileSystem____w64 int, [fwd] [in] [Mcg.CodeGen.UnicodeStringMarshaller] string__wchar_t *, [fwd] [in] [Mcg.CodeGen.EnumMarshaller] Interop_mincore_FINDEX_INFO_LEVELS__System_IO_FileSystem__Interop_mincore_FINDEX_INFO_LEVELS__System_IO_FileSystem, [fwd] [in] [out] [managedbyref] [nativebyref] [Mcg.CodeGen.StructMarshaller] Interop_mincore_WIN32_FIND_DATA__System_IO_FileSystem____Interop_mincore_WIN32_FIND_DATA__System_IO_FileSystem, [fwd] [in] [Mcg.CodeGen.EnumMarshaller] Interop_mincore_FINDEX_SEARCH_OPS__System_IO_FileSystem__Interop_mincore_FINDEX_SEARCH_OPS__System_IO_FileSystem, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] System_IntPtr____w64 int, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] int__int, 
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgPInvokeMarshalStub("System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "Interop+mincore", "FindFirstFileEx")]
+		public static global::Microsoft.Win32.SafeHandles.SafeFindHandle__System_IO_FileSystem FindFirstFileEx(
+					string lpFileName, 
+					global::Interop_mincore_FINDEX_INFO_LEVELS__System_IO_FileSystem fInfoLevelId, 
+					ref global::Interop_mincore_WIN32_FIND_DATA__System_IO_FileSystem lpFindFileData, 
+					global::Interop_mincore_FINDEX_SEARCH_OPS__System_IO_FileSystem fSearchOp, 
+					global::System.IntPtr lpSearchFilter, 
+					int dwAdditionalFlags)
+		{
+			// Setup
+			ushort* unsafe_lpFileName = default(ushort*);
+			global::Interop_mincore_WIN32_FIND_DATA__System_IO_FileSystem__Impl.UnsafeType unsafe_lpFindFileData = default(global::Interop_mincore_WIN32_FIND_DATA__System_IO_FileSystem__Impl.UnsafeType);
+			global::Microsoft.Win32.SafeHandles.SafeFindHandle__System_IO_FileSystem __value;
+			global::System.IntPtr unsafe___value;
+			// Marshalling
+			fixed (char* pinned_lpFileName = lpFileName)
+			{
+				unsafe_lpFileName = (ushort*)pinned_lpFileName;
+				global::Interop_mincore_WIN32_FIND_DATA__System_IO_FileSystem__Impl.Marshal__SafeToUnsafe(
+									ref lpFindFileData, 
+									out unsafe_lpFindFileData
+								);
+				__value = new global::Microsoft.Win32.SafeHandles.SafeFindHandle__System_IO_FileSystem();
+				// Call to native method
+				unsafe___value = global::McgInterop.api_ms_win_core_file_l1_1_0_dll_PInvokes.FindFirstFileEx(
+									unsafe_lpFileName, 
+									fInfoLevelId, 
+									&(unsafe_lpFindFileData), 
+									fSearchOp, 
+									lpSearchFilter, 
+									dwAdditionalFlags
+								);
+				global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+				global::System.Runtime.InteropServices.McgMarshal.SaveLastWin32Error();
+				global::System.Runtime.InteropServices.McgMarshal.InitializeHandle(
+									__value, 
+									unsafe___value
+								);
+				global::Interop_mincore_WIN32_FIND_DATA__System_IO_FileSystem__Impl.Marshal__UnsafeToSafe(
+									ref unsafe_lpFindFileData, 
+									out lpFindFileData
+								);
+			}
+			// Return
+			return __value;
+		}
+
+		// Signature, FindClose, [fwd] [return] [Mcg.CodeGen.Win32BoolMarshaller] bool__System.Boolean, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] System_IntPtr____w64 int, 
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgPInvokeMarshalStub("System.IO.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "Interop+mincore", "FindClose")]
+		public static bool FindClose(global::System.IntPtr hFindFile)
+		{
+			// Setup
+			int unsafe___value;
+			// Marshalling
+			// Call to native method
+			unsafe___value = global::McgInterop.api_ms_win_core_file_l1_1_0_dll_PInvokes.FindClose(hFindFile);
+			global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+			global::System.Runtime.InteropServices.McgMarshal.SaveLastWin32Error();
+			// Return
+			return unsafe___value != 0;
+		}
+	}
+
+	/// <summary>
 	/// P/Invoke class for module 'api-ms-win-core-winrt-robuffer-l1-1-0.dll'
 	/// </summary>
 	public unsafe static partial class api_ms_win_core_winrt_robuffer_l1_1_0_dll
@@ -1469,6 +1701,210 @@ namespace McgInterop
 				// Cleanup
 				global::System.Runtime.InteropServices.McgMarshal.ComSafeRelease(new global::System.IntPtr(((void*)unsafe_bufferMarshalerPtr)));
 			}
+		}
+	}
+
+	/// <summary>
+	/// P/Invoke class for module 'ntdll.dll'
+	/// </summary>
+	public unsafe static partial class ntdll_dll
+	{
+		// Signature, RtlIpv6AddressToStringExW, [fwd] [return] [Mcg.CodeGen.EnumMarshaller] System_Net_UnsafeCommonNativeMethods_NtStatus__System_Private_Networking__UnsafeCommonNativeMethods_NtStatus__System_Private_Networking, [fwd] [in] [Mcg.CodeGen.BlittableArrayMarshaller] rg_byte__unsigned char *, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] uint__unsigned int, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] ushort__unsigned short, [fwd] [in] [out] [Mcg.CodeGen.StringBuilderMarshaller] System_Text_StringBuilder__wchar_t *, [fwd] [in] [out] [managedbyref] [nativebyref] [Mcg.CodeGen.BlittableValueMarshaller] uint__unsigned int, 
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgPInvokeMarshalStub("System.Private.Networking, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "System.Net.UnsafeCommonNativeMethods", "RtlIpv6AddressToStringExW")]
+		public static global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking RtlIpv6AddressToStringExW(
+					byte[] address, 
+					uint scopeId, 
+					ushort port, 
+					global::System.Text.StringBuilder addressString, 
+					ref uint addressStringLength)
+		{
+			// Setup
+			byte* unsafe_address;
+			ushort* unsafe_addressString = default(ushort*);
+			uint unsafe_addressStringLength;
+			global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking unsafe___value;
+			try
+			{
+				// Marshalling
+				fixed (byte* pinned_address = global::McgInterop.McgCoreHelpers.GetArrayForCompat(address))
+				{
+					unsafe_address = (byte*)pinned_address;
+					if (addressString == null)
+						unsafe_addressString = null;
+					else
+					{
+						unsafe_addressString = (ushort*)global::McgInterop.McgHelpers.CoTaskMemAllocAndZeroMemory(new global::System.IntPtr(checked(addressString.Capacity * 2 
+											+ 2)));
+						if (unsafe_addressString == null)
+							throw new global::System.OutOfMemoryException();
+					}
+					if (unsafe_addressString != null)
+						global::System.Runtime.InteropServices.McgMarshal.StringBuilderToUnicodeString(
+											addressString, 
+											unsafe_addressString
+										);
+					unsafe_addressStringLength = addressStringLength;
+					// Call to native method
+					unsafe___value = global::McgInterop.ntdll_dll_PInvokes.RtlIpv6AddressToStringExW(
+										unsafe_address, 
+										scopeId, 
+										port, 
+										unsafe_addressString, 
+										&(unsafe_addressStringLength)
+									);
+					global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+					addressStringLength = unsafe_addressStringLength;
+					if (addressString != null)
+						global::System.Runtime.InteropServices.McgMarshal.UnicodeStringToStringBuilder(
+											unsafe_addressString, 
+											addressString
+										);
+				}
+				// Return
+				return unsafe___value;
+			}
+			finally
+			{
+				// Cleanup
+				if (unsafe_addressString != null)
+					global::System.Runtime.InteropServices.ExternalInterop.SafeCoTaskMemFree(unsafe_addressString);
+			}
+		}
+
+		// Signature, RtlIpv4AddressToStringExW, [fwd] [return] [Mcg.CodeGen.EnumMarshaller] System_Net_UnsafeCommonNativeMethods_NtStatus__System_Private_Networking__UnsafeCommonNativeMethods_NtStatus__System_Private_Networking, [fwd] [in] [Mcg.CodeGen.BlittableArrayMarshaller] rg_byte__unsigned char *, [fwd] [in] [Mcg.CodeGen.BlittableValueMarshaller] ushort__unsigned short, [fwd] [in] [out] [Mcg.CodeGen.StringBuilderMarshaller] System_Text_StringBuilder__wchar_t *, [fwd] [in] [out] [managedbyref] [nativebyref] [Mcg.CodeGen.BlittableValueMarshaller] uint__unsigned int, 
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgPInvokeMarshalStub("System.Private.Networking, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "System.Net.UnsafeCommonNativeMethods", "RtlIpv4AddressToStringExW")]
+		public static global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking RtlIpv4AddressToStringExW(
+					byte[] address, 
+					ushort port, 
+					global::System.Text.StringBuilder addressString, 
+					ref uint addressStringLength)
+		{
+			// Setup
+			byte* unsafe_address;
+			ushort* unsafe_addressString = default(ushort*);
+			uint unsafe_addressStringLength;
+			global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking unsafe___value;
+			try
+			{
+				// Marshalling
+				fixed (byte* pinned_address = global::McgInterop.McgCoreHelpers.GetArrayForCompat(address))
+				{
+					unsafe_address = (byte*)pinned_address;
+					if (addressString == null)
+						unsafe_addressString = null;
+					else
+					{
+						unsafe_addressString = (ushort*)global::McgInterop.McgHelpers.CoTaskMemAllocAndZeroMemory(new global::System.IntPtr(checked(addressString.Capacity * 2 
+											+ 2)));
+						if (unsafe_addressString == null)
+							throw new global::System.OutOfMemoryException();
+					}
+					if (unsafe_addressString != null)
+						global::System.Runtime.InteropServices.McgMarshal.StringBuilderToUnicodeString(
+											addressString, 
+											unsafe_addressString
+										);
+					unsafe_addressStringLength = addressStringLength;
+					// Call to native method
+					unsafe___value = global::McgInterop.ntdll_dll_PInvokes.RtlIpv4AddressToStringExW(
+										unsafe_address, 
+										port, 
+										unsafe_addressString, 
+										&(unsafe_addressStringLength)
+									);
+					global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+					addressStringLength = unsafe_addressStringLength;
+					if (addressString != null)
+						global::System.Runtime.InteropServices.McgMarshal.UnicodeStringToStringBuilder(
+											unsafe_addressString, 
+											addressString
+										);
+				}
+				// Return
+				return unsafe___value;
+			}
+			finally
+			{
+				// Cleanup
+				if (unsafe_addressString != null)
+					global::System.Runtime.InteropServices.ExternalInterop.SafeCoTaskMemFree(unsafe_addressString);
+			}
+		}
+
+		// Signature, RtlIpv6StringToAddressExW, [fwd] [return] [Mcg.CodeGen.EnumMarshaller] System_Net_UnsafeCommonNativeMethods_NtStatus__System_Private_Networking__UnsafeCommonNativeMethods_NtStatus__System_Private_Networking, [fwd] [in] [Mcg.CodeGen.UnicodeStringMarshaller] string__wchar_t *, [fwd] [out] [Mcg.CodeGen.BlittableArrayMarshaller] rg_byte__unsigned char *, [fwd] [out] [managedbyref] [nativebyref] [Mcg.CodeGen.BlittableValueMarshaller] uint__unsigned int, [fwd] [out] [managedbyref] [nativebyref] [Mcg.CodeGen.BlittableValueMarshaller] ushort__unsigned short, 
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgPInvokeMarshalStub("System.Private.Networking, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "System.Net.UnsafeCommonNativeMethods", "RtlIpv6StringToAddressExW")]
+		public static global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking RtlIpv6StringToAddressExW(
+					string s, 
+					byte[] address, 
+					out uint scopeId, 
+					out ushort port)
+		{
+			// Setup
+			ushort* unsafe_s = default(ushort*);
+			byte* unsafe_address;
+			uint unsafe_scopeId;
+			ushort unsafe_port;
+			global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking unsafe___value;
+			// Marshalling
+			fixed (char* pinned_s = s)
+			{
+				unsafe_s = (ushort*)pinned_s;
+				fixed (byte* pinned_address = global::McgInterop.McgCoreHelpers.GetArrayForCompat(address))
+				{
+					unsafe_address = (byte*)pinned_address;
+					// Call to native method
+					unsafe___value = global::McgInterop.ntdll_dll_PInvokes.RtlIpv6StringToAddressExW(
+										unsafe_s, 
+										unsafe_address, 
+										&(unsafe_scopeId), 
+										&(unsafe_port)
+									);
+					global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+					port = unsafe_port;
+					scopeId = unsafe_scopeId;
+				}
+			}
+			// Return
+			return unsafe___value;
+		}
+
+		// Signature, RtlIpv4StringToAddressExW, [fwd] [return] [Mcg.CodeGen.EnumMarshaller] System_Net_UnsafeCommonNativeMethods_NtStatus__System_Private_Networking__UnsafeCommonNativeMethods_NtStatus__System_Private_Networking, [fwd] [in] [Mcg.CodeGen.UnicodeStringMarshaller] string__wchar_t *, [fwd] [in] [Mcg.CodeGen.Win32BoolMarshaller] bool__System.Boolean, [fwd] [out] [Mcg.CodeGen.BlittableArrayMarshaller] rg_byte__unsigned char *, [fwd] [out] [managedbyref] [nativebyref] [Mcg.CodeGen.BlittableValueMarshaller] ushort__unsigned short, 
+		[global::System.Runtime.InteropServices.McgGeneratedMarshallingCode]
+		[global::System.Runtime.InteropServices.McgPInvokeMarshalStub("System.Private.Networking, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "System.Net.UnsafeCommonNativeMethods", "RtlIpv4StringToAddressExW")]
+		public static global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking RtlIpv4StringToAddressExW(
+					string s, 
+					bool strict, 
+					byte[] address, 
+					out ushort port)
+		{
+			// Setup
+			ushort* unsafe_s = default(ushort*);
+			byte* unsafe_address;
+			ushort unsafe_port;
+			global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking unsafe___value;
+			// Marshalling
+			fixed (char* pinned_s = s)
+			{
+				unsafe_s = (ushort*)pinned_s;
+				fixed (byte* pinned_address = global::McgInterop.McgCoreHelpers.GetArrayForCompat(address))
+				{
+					unsafe_address = (byte*)pinned_address;
+					// Call to native method
+					unsafe___value = global::McgInterop.ntdll_dll_PInvokes.RtlIpv4StringToAddressExW(
+										unsafe_s, 
+										(strict ? 1 : 0), 
+										unsafe_address, 
+										&(unsafe_port)
+									);
+					global::System.Runtime.InteropServices.DebugAnnotations.PreviousCallContainsUserCode();
+					port = unsafe_port;
+				}
+			}
+			// Return
+			return unsafe___value;
 		}
 	}
 
@@ -1855,6 +2291,28 @@ namespace McgInterop
 					uint CodePage, 
 					uint dwFlags, 
 					global::Interop_mincore_CPINFOEXW__System_Text_Encoding_CodePages* lpCPInfoEx);
+
+		[global::McgInterop.McgGeneratedNativeCallCode]
+		[global::System.Runtime.InteropServices.DllImport("api-ms-win-core-localization-l1-2-1.dll", EntryPoint="FormatMessageW", CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+		public extern static int FormatMessage(
+					int dwFlags, 
+					global::System.IntPtr lpSource_mustBeNull, 
+					uint dwMessageId, 
+					int dwLanguageId, 
+					ushort* lpBuffer, 
+					int nSize, 
+					global::System.IntPtr* arguments);
+
+		[global::McgInterop.McgGeneratedNativeCallCode]
+		[global::System.Runtime.InteropServices.DllImport("api-ms-win-core-localization-l1-2-1.dll", EntryPoint="FormatMessageW", CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+		public extern static int FormatMessage__0(
+					int dwFlags, 
+					global::System.IntPtr lpSource_mustBeNull, 
+					uint dwMessageId, 
+					int dwLanguageId, 
+					ushort* lpBuffer, 
+					int nSize, 
+					global::System.IntPtr* arguments);
 	}
 
 	public unsafe static partial class api_ms_win_core_com_l1_1_0_dll_PInvokes
@@ -1905,11 +2363,71 @@ namespace McgInterop
 		public extern static void SysFreeString(global::System.IntPtr bstr);
 	}
 
+	public unsafe static partial class api_ms_win_core_file_l1_1_0_dll_PInvokes
+	{
+		[global::McgInterop.McgGeneratedNativeCallCode]
+		[global::System.Runtime.InteropServices.DllImport("api-ms-win-core-file-l1-2-1.dll", EntryPoint="GetFileAttributesExW", CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+		public extern static int GetFileAttributesEx(
+					ushort* name, 
+					global::Interop_mincore_GET_FILEEX_INFO_LEVELS__System_IO_FileSystem fileInfoLevel, 
+					global::Interop_mincore_WIN32_FILE_ATTRIBUTE_DATA__System_IO_FileSystem* lpFileInformation);
+
+		[global::McgInterop.McgGeneratedNativeCallCode]
+		[global::System.Runtime.InteropServices.DllImport("api-ms-win-core-file-l1-2-1.dll", EntryPoint="FindFirstFileExW", CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+		public extern static global::System.IntPtr FindFirstFileEx(
+					ushort* lpFileName, 
+					global::Interop_mincore_FINDEX_INFO_LEVELS__System_IO_FileSystem fInfoLevelId, 
+					global::Interop_mincore_WIN32_FIND_DATA__System_IO_FileSystem__Impl.UnsafeType* lpFindFileData, 
+					global::Interop_mincore_FINDEX_SEARCH_OPS__System_IO_FileSystem fSearchOp, 
+					global::System.IntPtr lpSearchFilter, 
+					int dwAdditionalFlags);
+
+		[global::McgInterop.McgGeneratedNativeCallCode]
+		[global::System.Runtime.InteropServices.DllImport("api-ms-win-core-file-l1-2-1.dll", CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+		public extern static int FindClose(global::System.IntPtr hFindFile);
+	}
+
 	public unsafe static partial class api_ms_win_core_winrt_robuffer_l1_1_0_dll_PInvokes
 	{
 		[global::McgInterop.McgGeneratedNativeCallCode]
 		[global::System.Runtime.InteropServices.DllImport("api-ms-win-core-winrt-robuffer-l1-1-0.dll", CallingConvention=global::System.Runtime.InteropServices.CallingConvention.StdCall)]
 		public extern static int RoGetBufferMarshaler(global::System.Runtime.InteropServices.IMarshal__System_Runtime_WindowsRuntime__Impl.Vtbl*** bufferMarshalerPtr);
+	}
+
+	public unsafe static partial class ntdll_dll_PInvokes
+	{
+		[global::McgInterop.McgGeneratedNativeCallCode]
+		[global::System.Runtime.InteropServices.DllImport("ntdll.dll", CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+		public extern static global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking RtlIpv6AddressToStringExW(
+					byte* address, 
+					uint scopeId, 
+					ushort port, 
+					ushort* addressString, 
+					uint* addressStringLength);
+
+		[global::McgInterop.McgGeneratedNativeCallCode]
+		[global::System.Runtime.InteropServices.DllImport("ntdll.dll", CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+		public extern static global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking RtlIpv4AddressToStringExW(
+					byte* address, 
+					ushort port, 
+					ushort* addressString, 
+					uint* addressStringLength);
+
+		[global::McgInterop.McgGeneratedNativeCallCode]
+		[global::System.Runtime.InteropServices.DllImport("ntdll.dll", CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+		public extern static global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking RtlIpv6StringToAddressExW(
+					ushort* s, 
+					byte* address, 
+					uint* scopeId, 
+					ushort* port);
+
+		[global::McgInterop.McgGeneratedNativeCallCode]
+		[global::System.Runtime.InteropServices.DllImport("ntdll.dll", CallingConvention=global::System.Runtime.InteropServices.CallingConvention.Winapi)]
+		public extern static global::System.Net.UnsafeCommonNativeMethods_NtStatus__System_Private_Networking RtlIpv4StringToAddressExW(
+					ushort* s, 
+					int strict, 
+					byte* address, 
+					ushort* port);
 	}
 }
 

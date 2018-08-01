@@ -20,6 +20,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
     public class SemanticTranslations
     {
         private JToken inputData;
+        private const string vehicleCollisionProperty = "https://w3id.org/saref/instances#VehicleCollisionDetectedFromECGDeviceAccelerometerComputedByMobile";
 
         public SemanticTranslations(JToken input)
         {
@@ -100,6 +101,11 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                 jsonLdParser.Load(tStore, reader);
             }
 
+            //InMemoryDataset ds = new InMemoryDataset(tStore, new Uri("http://mydefaultgraph.org"));
+            //ISparqlQueryProcessor processor = new LeviathanQueryProcessor(ds);
+            //Should get a Graph back from a CONSTRUCT query
+            //SparqlQueryParser sparqlparser = new SparqlQueryParser();
+            
             Platform platform = null;
             Point geoPoint = null;
 
@@ -108,18 +114,24 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                 PREFIX saref: <https://w3id.org/saref#>
                 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
                 PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                 
-                SELECT ?devicesubclass ?device ?location ?lat ?long 
+                SELECT ?devicesubclass ?device ?location ?lat ?long ?label 
                 WHERE  
 	                {
 					?device geo:location ?location.
 	                ?device rdf:type ?devicesubclass.
+                    ?device rdfs:label ?label.
 	                ?location geo:lat ?lat.
 	                ?location geo:long ?long
 	                } 
 
             ";
             Object results = tStore.ExecuteQuery(sparqlQuery);
+
+            //SparqlQuery query = sparqlparser.ParseFromString(sparqlQuery);
+            //Object results = processor.ProcessQuery(query);
+
             if (results is SparqlResultSet)
             {
                 SparqlResultSet rset = (SparqlResultSet)results;
@@ -141,7 +153,9 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     geoPoint = new Point(locationId, lat, lon);
 
                     string deviceId = spqlResult["device"].ToString();
-                    platform = new Platform(deviceId, geoPoint);
+                    LiteralNode labelValueNode = (LiteralNode)spqlResult.Value("label");
+                    string label = labelValueNode.Value;
+                    platform = new Platform(deviceId, geoPoint, label);
 
                     break;
                 }
@@ -160,13 +174,15 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 	                ?measurement saref:hasValue ?measValue.
 	                ?measurement saref:hasTimestamp ?measTime. 
 	                ?measurement saref:isMeasuredIn ?measUnit. 
-	                ?measurement saref:relatesToProperty ?measProp.					
+	                ?measurement saref:relatesToProperty ?measProp.
 	                } 
                 ORDER BY ?measTime
 
             ";
 
             results = tStore.ExecuteQuery(sparqlQuery);
+            //query = sparqlparser.ParseFromString(sparqlQuery);
+            //results = processor.ProcessQuery(query);
 
             Dictionary<string, Sensor> sensorsDic = new Dictionary<string, Sensor>();
             string messageId = string.Empty;
@@ -181,7 +197,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     if (messageId == string.Empty)
                         messageId = platform.Identifier + "_" + DateTime.Now.ToUniversalTime() + "_" + Guid.NewGuid();
 
-                    string sensorId = spqlResult["sensor"].ToString();
+                    string sensorId = spqlResult["sensor"].ToString().Trim();
                     Sensor sensor;
                     if (sensorsDic.ContainsKey(sensorId))
                         sensor = sensorsDic[sensorId];
@@ -191,16 +207,16 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                         sensorsDic.Add(sensorId, sensor);
                     }
                     
-                    string measurementId = spqlResult["measurement"].ToString();
-
+                    string measurementId = spqlResult["measurement"].ToString().Trim();
+                    
                     LiteralNode measurementValueNode = (LiteralNode) spqlResult.Value("measValue");
                     double measurementValue = measurementValueNode.AsValuedNode().AsDouble(); 
 
                     LiteralNode measurementTimeNode = (LiteralNode)spqlResult.Value("measTime");
                     DateTime measDateTime = DateTime.Parse(measurementTimeNode.Value); 
 
-                    string measurementUnit = spqlResult["measUnit"].ToString();
-                    string measurementProperty = spqlResult["measProp"].ToString();
+                    string measurementUnit = spqlResult["measUnit"].ToString().Trim();
+                    string measurementProperty = spqlResult["measProp"].ToString().Trim();
 
                     Observation observation = new Observation(measurementId, sensor, messageId);
                     observation.hasSimpleResult = i++; // Test
@@ -217,16 +233,20 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     // sosa:resultTime predicate
                     observation.resultTime = measDateTime;
 
-                    if (measurementProperty == "https://w3id.org/saref/instances#VehicleCollisionDetectedFromECGDeviceAccelerometerComputedByMobile")
-                        AddVehicleCollisionDetected(observation, result);
-                    //else if (measurementProperty == "https://w3id.org/saref/instances#VehicleCollisionDetectedFromECGDeviceAccelerometerComputedByMobile")
-
-                    else
-                        AddObservation(observation, result);
+                    // Treat specific observations (e.g. collision detected, heart rate, etc)
+                    switch (measurementProperty)
+                    {
+                        case vehicleCollisionProperty:
+                            AddVehicleCollisionDetected(observation, result);
+                            break;
+                        default:
+                            AddObservation(observation, result);
+                            break;
+                    }                    
                     
                 }
             }
-
+            
 
                     /*
                     foreach (Triple triple in tStore.Triples)

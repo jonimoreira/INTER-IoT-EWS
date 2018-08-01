@@ -10,7 +10,7 @@ namespace ContextManager.DataObjects.EDXL.InferenceHandler
     public class SituationInference
     {
         private string SituationTypeIdentified;
-        private Dictionary<String, object> AttributesSituationIdentified;
+        public Dictionary<String, object> AttributesSituationIdentified;
 
         public SituationInference(string situationTypeIdentified, Dictionary<String, object> attributesSituationIdentified)
         {
@@ -40,7 +40,7 @@ namespace ContextManager.DataObjects.EDXL.InferenceHandler
             KeyValuePair<SeverityType, UrgencyType> result = new KeyValuePair<SeverityType, UrgencyType>(SeverityType.Unknown, UrgencyType.Unknown);
 
             // (unit of measure: m/s2.  1 G = 9.806 m/s2 (common threshold = 4G)
-            double threshold = 10; 
+            double threshold = 30; 
             double computedCrossAxialValue = double.Parse(AttributesSituationIdentified["ComputedCrossAxialValue"].ToString());
 
             double acceleration = Math.Sqrt(computedCrossAxialValue);

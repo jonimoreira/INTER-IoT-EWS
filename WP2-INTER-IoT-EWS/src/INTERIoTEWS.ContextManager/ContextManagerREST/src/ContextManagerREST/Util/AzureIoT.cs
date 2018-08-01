@@ -16,9 +16,9 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
     public class AzureIoT
     {
 
-        private string iotHubUri = "XXXXXXXXXXXXXXXXXXXXXXXX";
-        private string deviceKey = "XXXXXXXXXXXXXXXXXXXXXXXX";
-        private string deviceId = "XXXXXXXXXXXXXXXXXXXXXXXX";
+        private string iotHubUri = "XXXXXXXXXXXXXXXXX";
+        private string deviceKey = "XXXXXXXXXXXXXXXXX";
+        private string deviceId = "XXXXXXXXXXXXXXXXX";
 
 
         public async void SendToAzureIoTHub(JToken messageJson)
@@ -43,7 +43,7 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
         // To listen directly from Azure IoT Hub and call PUT /api/deviceobservations/{deviceId}
         //free tier: static string connectionString = "HostName=MyDrivingIoTHubEWS.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=tCI9KK86Dpkd2c22WbsRFzTQX0uMjrxnKzu1bpsM1ZI=";
-        static string connectionString = "XXXXXXXXXXXXXXXXXXXXXXXX";
+        static string connectionString = "HostName=INTER-IoT-EWS-hub-b1.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=udH+LztKT05v1gJZXzVMV+52mg3zsTtAB09JCC0YgHM=";
         static string iotHubD2cEndpoint = "messages/events";
         static EventHubClient eventHubClient;
 
@@ -79,12 +79,54 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
                 // Save in MongoDB
                 //mongoDB.SaveDocument(data);
-                new Task(() => { mongoDB.SaveDocument(data, "DeviceObservations_SAREF"); }).Start();
+
+                JObject messageJson = JObject.Parse(data);
+                if (messageJson["@type"] != null)
+                {
+                    string domain = "other";
+                    switch (messageJson["@type"].ToString())
+                    {
+                        case "saref:Device":
+                            new Task(() => { mongoDB.SaveDocument(data, "DeviceObservations_SAREF"); }).Start();
+                            domain = "health";
+                            break;
+                        case "edxl_cap:AlertMessage":
+                        case "edxl_de:EDXLDistribution":
+                            new Task(() => { mongoDB.SaveDocument(data, "DeviceObservations_EDXL"); }).Start();
+                            domain = "emergency";
+                            break;
+                        case "LogiTrans:TransportEvent":
+                            new Task(() => { mongoDB.SaveDocument(data, "DeviceObservations_Logistics"); }).Start();
+                            domain = "logistics";
+                            break;
+                        default:
+                            new Task(() => { mongoDB.SaveDocument(data, "OtherMessages_JSONLD"); }).Start();
+                            break;
+                    }
+                    SaveFile(domain, data);
+
+                }
+                else
+                    new Task(() => { mongoDB.SaveDocument(data, "OtherMessages"); }).Start();
+
 
                 // Verify message: add INTER-IoT graphs (to be used by Sit.Identifier)
                 //VerifyMessageTypeAndTakeAction(data, mongoDB);
                 new Task(() => { VerifyMessageTypeAndTakeAction(data, mongoDB); }).Start();
 
+                //SaveFile("1234", data);
+
+            }
+        }
+
+        private static void SaveFile(string deviceId, JToken data)
+        {
+            Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+
+            string filePath = @"D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\data\" + deviceId + "_" + unixTimestamp.ToString() + "_" + Guid.NewGuid() + ".json";
+            using (StreamWriter outputFile = new StreamWriter(filePath))
+            {
+                outputFile.Write(data.ToString());
             }
         }
 
@@ -108,6 +150,9 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
                         //SendFormattedDataToSituationIdentifier(messageFormattedINTER_IoT_GraphSrtucture);
                         new Task(() => { PreProcessFormattedData(messageFormattedINTER_IoT_GraphSrtucture); }).Start();
 
+
+                        break;
+                    case "edxl_cap:AlertMessage":
 
                         break;
                     default:
@@ -172,7 +217,9 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
                 }
             }
             catch (Exception ex)
-            { }
+            {
+                Console.WriteLine("Error on [SendFormattedDataToSituationIdentifier]:" + ex.Message);
+            }
         }
 
         private static JObject AddINTER_IoT_GraphSrtucture(JObject messageJson)

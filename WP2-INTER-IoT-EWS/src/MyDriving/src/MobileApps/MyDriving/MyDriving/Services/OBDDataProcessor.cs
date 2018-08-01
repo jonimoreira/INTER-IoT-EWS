@@ -110,6 +110,54 @@ namespace MyDriving.Services
             }
         }
 
+        public async Task SendHealthDataToIOTHub(Newtonsoft.Json.Linq.JObject fieldGatewayDevice_Smartphone)
+        {
+            string packagedBlob = fieldGatewayDevice_Smartphone.ToString(Formatting.None);
+
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                //If there is no network connection, save in buffer and try again
+                Logger.Instance.Track("[SendHealthDataToIOTHub] Unable to push data to IOT Hub - no network connection.");
+                await AddTripPointToBuffer(packagedBlob);
+                return;
+            }
+
+            try
+            {
+                await iotHub.SendEvent(packagedBlob);
+            }
+            catch (Exception e)
+            {
+                //An exception will be thrown if the data isn't received by the IOT Hub; store data in buffer and try again
+                Logger.Instance.Track("[SendHealthDataToIOTHub] Unable to send data to IOT Hub: " + e.Message);
+                AddTripPointToBuffer(packagedBlob);
+            }
+        }
+
+        public async Task SendLogisticsDataToIOTHub(Newtonsoft.Json.Linq.JObject logisticsData)
+        {
+            string packagedBlob = logisticsData.ToString(Formatting.None);
+
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                //If there is no network connection, save in buffer and try again
+                Logger.Instance.Track("[SendLogisticsDataToIOTHub] Unable to push data to IOT Hub - no network connection.");
+                await AddTripPointToBuffer(packagedBlob);
+                return;
+            }
+
+            try
+            {
+                await iotHub.SendEvent(packagedBlob);
+            }
+            catch (Exception e)
+            {
+                //An exception will be thrown if the data isn't received by the IOT Hub; store data in buffer and try again
+                Logger.Instance.Track("[SendLogisticsDataToIOTHub] Unable to send data to IOT Hub: " + e.Message);
+                AddTripPointToBuffer(packagedBlob);
+            }
+        }
+
         private async Task AddTripPointToBuffer(string tripDataPointBlob)
         {
             IOTHubData iotHubData = new IOTHubData {Blob = tripDataPointBlob};

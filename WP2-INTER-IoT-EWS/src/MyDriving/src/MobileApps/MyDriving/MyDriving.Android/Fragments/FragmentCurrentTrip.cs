@@ -25,7 +25,11 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using Android.Views.Animations;
 using Android.Animation;
-
+using ShimmerAPI;
+using ShimmerLibrary;
+using Newtonsoft.Json.Linq;
+using Android.Content;
+using Android.Util;
 
 namespace MyDriving.Droid.Fragments
 {
@@ -52,7 +56,7 @@ namespace MyDriving.Droid.Fragments
                 SetupMap();
         }
 
-        public static FragmentCurrentTrip NewInstance() => new FragmentCurrentTrip {Arguments = new Bundle()};
+        public static FragmentCurrentTrip NewInstance() => new FragmentCurrentTrip { Arguments = new Bundle() };
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -64,6 +68,11 @@ namespace MyDriving.Droid.Fragments
             mapView.OnCreate(savedInstanceState);
 
             fab = view.FindViewById<FloatingActionButton>(Resource.Id.fab);
+
+            fabHeart = view.FindViewById<FloatingActionButton>(Resource.Id.fabHeart);
+            //sendHeartData = view.FindViewById<FloatingActionButton>(Resource.Id.sendHeartData);
+            text_heart = view.FindViewById<TextView>(Resource.Id.text_heart);
+
             time = view.FindViewById<TextView>(Resource.Id.text_time);
             distance = view.FindViewById<TextView>(Resource.Id.text_distance);
             distanceUnits = view.FindViewById<TextView>(Resource.Id.text_distance_units);
@@ -79,6 +88,8 @@ namespace MyDriving.Droid.Fragments
         {
             mapView.GetMapAsync(this);
             base.OnActivityCreated(savedInstanceState);
+            // Shimmer
+            SetTextHeart("Click to connect to ECG unit");
         }
 
 
@@ -98,7 +109,7 @@ namespace MyDriving.Droid.Fragments
             timerAnimator.SetDuration(Java.Util.Concurrent.TimeUnit.Seconds.ToMillis(1));
             timerAnimator.SetInterpolator(new AccelerateInterpolator());
             timerAnimator.Update +=
-                (sender, e) => { Activity.RunOnUiThread(() => stats.Alpha = (float) e.Animation.AnimatedValue); };
+                (sender, e) => { Activity.RunOnUiThread(() => stats.Alpha = (float)e.Animation.AnimatedValue); };
             timerAnimator.Start();
         }
 
@@ -121,10 +132,19 @@ namespace MyDriving.Droid.Fragments
                 case nameof(viewModel.CurrentTrip):
                     TripSummaryActivity.ViewModel = viewModel.TripSummary;
                     ResetTrip();
-                    StartActivity(new Android.Content.Intent(Activity, typeof (TripSummaryActivity)));
+                    StartActivity(new Android.Content.Intent(Activity, typeof(TripSummaryActivity)));
                     break;
                 case "Stats":
                     UpdateStats();
+                    break;
+                case nameof(viewModel.VehicleCollisionDetection):
+                    if (viewModel.VehicleCollisionDetection.collisionDetected)
+                    {
+                        Activity?.RunOnUiThread(() =>
+                        {
+                            text_heart.Text = "Collision detected!";
+                        });
+                    }
                     break;
             }
         }
@@ -162,7 +182,7 @@ namespace MyDriving.Droid.Fragments
             Activity?.RunOnUiThread(() =>
             {
                 var logicalDensity = Resources.DisplayMetrics.Density;
-                var thicknessPoints = (int) Math.Ceiling(20*logicalDensity + .5f);
+                var thicknessPoints = (int)Math.Ceiling(20 * logicalDensity + .5f);
 
                 var b = ContextCompat.GetDrawable(Activity, Resource.Drawable.ic_start_point) as BitmapDrawable;
                 var finalIcon = Bitmap.CreateScaledBitmap(b.Bitmap, thicknessPoints, thicknessPoints, false);
@@ -180,7 +200,7 @@ namespace MyDriving.Droid.Fragments
             Activity?.RunOnUiThread(() =>
             {
                 var logicalDensity = Resources.DisplayMetrics.Density;
-                var thicknessPoints = (int) Math.Ceiling(20*logicalDensity + .5f);
+                var thicknessPoints = (int)Math.Ceiling(20 * logicalDensity + .5f);
                 var b = ContextCompat.GetDrawable(Activity, Resource.Drawable.ic_end_point) as BitmapDrawable;
                 var finalIcon = Bitmap.CreateScaledBitmap(b.Bitmap, thicknessPoints, thicknessPoints, false);
 
@@ -210,7 +230,7 @@ namespace MyDriving.Droid.Fragments
             Activity?.RunOnUiThread(() =>
             {
                 var logicalDensity = Resources.DisplayMetrics.Density;
-                var thicknessCar = (int) Math.Ceiling(26*logicalDensity + .5f);
+                var thicknessCar = (int)Math.Ceiling(26 * logicalDensity + .5f);
                 var b =
                     ContextCompat.GetDrawable(Activity,
                         recording ? Resource.Drawable.ic_car_red : Resource.Drawable.ic_car_blue) as BitmapDrawable;
@@ -221,6 +241,7 @@ namespace MyDriving.Droid.Fragments
                 carMarker?.SetIcon(BitmapDescriptorFactory.FromBitmap(finalIcon));
 
                 fab.SetImageResource(recording ? Resource.Drawable.ic_stop : Resource.Drawable.ic_start);
+                fabHeart.SetImageResource(Resource.Drawable.ic_heart);
             });
         }
 
@@ -237,7 +258,7 @@ namespace MyDriving.Droid.Fragments
 
             if (viewModel.CurrentTrip.HasSimulatedOBDData)
             {
-                var activity = (BaseActivity) Activity;
+                var activity = (BaseActivity)Activity;
                 activity.SupportActionBar.Title = "Current Trip (Sim OBD)";
             }
 
@@ -253,6 +274,9 @@ namespace MyDriving.Droid.Fragments
                 UpdateCamera(carMarker.Position);
                 AddStartMarker(start.ToLatLng());
             }
+
+            viewModel.MobileDeviceId = Android.OS.Build.Serial;
+
         }
 
         void UpdateMap(TripPoint point, bool updateCamera = true)
@@ -338,6 +362,13 @@ namespace MyDriving.Droid.Fragments
                 trailPointList.CollectionChanged -= OnTrailUpdated;
             if (fab != null)
                 fab.Click -= OnRecordButtonClick;
+
+            if (fabHeart != null)
+                fabHeart.Click -= OnShimmerECGButtonClick;
+            if (sendHeartData != null)
+                sendHeartData.Click -= OnSendHeartDataButtonClick;
+
+
             //If we are recording then don't stop the background service
             if ((viewModel?.IsRecording).GetValueOrDefault())
                 return;
@@ -354,8 +385,13 @@ namespace MyDriving.Droid.Fragments
 
             if (fab != null)
                 fab.Click += OnRecordButtonClick;
+            if (fabHeart != null)
+                fabHeart.Click += OnShimmerECGButtonClick;
+            if (sendHeartData != null)
+                sendHeartData.Click += OnSendHeartDataButtonClick;
             await StartLocationService();
         }
+
 
         async Task StartLocationService()
         {
@@ -426,7 +462,7 @@ namespace MyDriving.Droid.Fragments
                 AddEndMarker(viewModel.CurrentPosition.ToLatLng());
                 UpdateCarIcon(false);
 
-                var activity = (BaseActivity) Activity;
+                var activity = (BaseActivity)Activity;
                 activity.SupportActionBar.Title = "Current Trip";
 
                 await viewModel.SaveRecordingTripAsync();
@@ -444,7 +480,7 @@ namespace MyDriving.Droid.Fragments
 
                 if (viewModel.CurrentTrip.HasSimulatedOBDData)
                 {
-                    var activity = (BaseActivity) Activity;
+                    var activity = (BaseActivity)Activity;
                     activity.SupportActionBar.Title = "Current Trip (Sim OBD)";
                 }
             }
@@ -485,5 +521,189 @@ namespace MyDriving.Droid.Fragments
         }
 
         #endregion
-    }
+
+
+        #region Shimmer3 ECG structures
+
+        // Shimmer 
+        ShimmerLogAndStreamXamarin shimmer;
+        bool buttonConnectedClicked = false;
+        FloatingActionButton fabHeart;
+        FloatingActionButton sendHeartData;
+        TextView text_heart;
+
+        private bool isStreaming = false;
+        private double samplingRate = 256.0;
+
+
+        async void OnSendHeartDataButtonClick(object sender, EventArgs e)
+        {
+            if (viewModel?.CurrentPosition == null || viewModel.IsBusy)
+                return;
+            viewModel.SendECGdataToCloud();
+        }
+
+        async void OnShimmerECGButtonClick(object sender, EventArgs e)
+        {
+            if (viewModel?.CurrentPosition == null || viewModel.IsBusy)
+                return;
+
+            if (!viewModel.IsStreamingHealthdevice)
+                ConnectShimmer3ECG();
+        }
+
+        public void ConnectShimmer3ECG()
+        {
+            byte[] defaultECGReg1 = ShimmerBluetooth.SHIMMER3_DEFAULT_TEST_REG1; //also see ShimmerBluetooth.SHIMMER3_DEFAULT_ECG_REG1
+            byte[] defaultECGReg2 = ShimmerBluetooth.SHIMMER3_DEFAULT_TEST_REG2; //also see ShimmerBluetooth.SHIMMER3_DEFAULT_ECG_REG2
+
+            string bluetoothAddress = "00:06:66:88:db:ca".ToUpper();
+            shimmer = new ShimmerLogAndStreamXamarin("ShimmerXamarin", bluetoothAddress);
+            shimmer.UICallback += this.HandleEvent;
+            buttonConnectedClicked = true;
+            shimmer.StartConnectThread();
+
+            //samplingRate = shimmer.GetSamplingRate();
+            viewModel.SamplingRate = samplingRate;
+        }
+
+
+        async void HandleEvent(object sender, EventArgs args)
+        {
+            CustomEventArgs eventArgs = (CustomEventArgs)args;
+            int indicator = eventArgs.getIndicator();
+
+            switch (indicator)
+            {
+                case (int)ShimmerBluetooth.ShimmerIdentifier.MSG_IDENTIFIER_STATE_CHANGE:
+                    isStreaming = false;
+                    viewModel.IsStreamingHealthdevice = isStreaming;
+                    System.Diagnostics.Debug.Write(((ShimmerBluetooth)sender).GetDeviceName() + " State = " + ((ShimmerBluetooth)sender).GetStateString() + System.Environment.NewLine);
+                    int state = (int)eventArgs.getObject();
+                    if (state == (int)ShimmerBluetooth.SHIMMER_STATE_CONNECTED)
+                    {
+                        string status = "Connected";
+                        System.Diagnostics.Debug.Write(status);
+
+                        SetTextHeart(status);
+
+                        buttonConnectedClicked = false;
+                        shimmer.StartStreaming();
+
+                    }
+                    else if (state == (int)ShimmerBluetooth.SHIMMER_STATE_CONNECTING)
+                    {
+                        string status = "Connecting";
+                        System.Diagnostics.Debug.Write(status);
+
+                        SetTextHeart(status);
+                    }
+                    else if (state == (int)ShimmerBluetooth.SHIMMER_STATE_NONE)
+                    {
+                        string status = "Disconnected";
+                        System.Diagnostics.Debug.Write(status);
+
+                        SetTextHeart(status);
+
+                    }
+                    else if (state == (int)ShimmerBluetooth.SHIMMER_STATE_STREAMING)
+                    {
+                        string status = "Streaming";
+                        System.Diagnostics.Debug.Write(status);
+
+                        SetTextHeart(status);
+                        isStreaming = true;
+                        viewModel.IsStreamingHealthdevice = isStreaming;
+                    }
+                    break;
+                case (int)ShimmerBluetooth.ShimmerIdentifier.MSG_IDENTIFIER_DATA_PACKET:
+                    ObjectCluster objectCluster = new ObjectCluster((ObjectCluster)eventArgs.getObject());
+
+
+                    if (viewModel.IsRecording)
+                    {
+                        lock (viewModel.ioTFrequencyControl)
+                        {
+                            bool saved = viewModel.SaveMeasurements(objectCluster);
+
+                            // if aggregated all ECG data in a message according to the frequencies, send to cloud
+                            if (viewModel.ioTFrequencyControl.CounterSamplesInMessage >= viewModel.ioTFrequencyControl.FrequencyIoTDeviceToGatewayInHertz * viewModel.ioTFrequencyControl.PeriodGatewayToCloudInSeconds)
+                            {
+                                viewModel.SendECGdataToCloud();
+                                viewModel.ioTFrequencyControl.CounterSamplesInMessage = 0;
+                            }
+
+                        }
+                    }
+                    /*
+                    SensorData dataAccelX = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X, "CAL");
+                    SensorData dataTimestamp = objectCluster.GetData(objectCluster.GetNames().IndexOf("System Timestamp"));
+                    SensorData dataECG_LL_RA = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_LL_RA, "CAL");
+                    SensorData dataECG_LA_RA = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_LA_RA, "CAL");
+                    SensorData dataECG_VX_RL = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_VX_RL, "CAL");
+
+                    SensorData batteryLevel = objectCluster.GetData(Shimmer3Configuration.SignalNames.V_SENSE_BATT, "CAL");
+
+                    double hrdataCalc = double.MinValue;
+                    double hrdataCalcInter = double.MinValue;
+                    
+                    //SetTextHeart(dataTimestamp.Data + " (" + dataTimestamp.Unit + ")");
+                    */
+                    break;
+            }
+
+            if (buttonConnectedClicked)
+                shimmer.StartConnectThread();
+
+
+        }
+
+        private void SetTextHeart(string status)
+        {
+            Android.Content.Res.ColorStateList color = new Android.Content.Res.ColorStateList(new int[][] { new int[0] }, new int[] { Android.Graphics.Color.Black });
+            switch (status)
+            {
+                case "Connected":
+                    color = new Android.Content.Res.ColorStateList(new int[][] { new int[0] }, new int[] { Android.Graphics.Color.Green });
+                    break;
+                case "Connecting":
+                    color = new Android.Content.Res.ColorStateList(new int[][] { new int[0] }, new int[] { Android.Graphics.Color.LightSeaGreen });
+                    break;
+                case "Disconnected":
+                    color = new Android.Content.Res.ColorStateList(new int[][] { new int[0] }, new int[] { Android.Graphics.Color.Gray });
+                    break;
+                case "Streaming":
+                    color = new Android.Content.Res.ColorStateList(new int[][] { new int[0] }, new int[] { Android.Graphics.Color.Blue });
+                    break;
+                default:
+                    break;
+            }
+
+            SetTextHeart(status, color);
+        }
+
+        private void SetTextHeart(string status, Android.Content.Res.ColorStateList color)
+        {
+            Activity?.RunOnUiThread(() =>
+            {
+                text_heart.Text = status;
+                fabHeart.BackgroundTintList = color;
+            });
+        }
+
+
+        #endregion
+
+        public void OnAccelerationChanged(float x, float y, float z)
+        {
+            float a = x + y + z;
+
+            if (viewModel != null && !viewModel.IsBusy)
+                viewModel.OnAccelerationChanged(x, y, z);
+
+        }
+        
+    }  
+
+    
 }

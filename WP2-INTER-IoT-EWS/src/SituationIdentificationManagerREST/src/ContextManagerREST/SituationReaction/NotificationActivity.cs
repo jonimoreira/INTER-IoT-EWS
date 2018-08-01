@@ -26,7 +26,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 
         public void Execute(Situation situationIdentified)
         {
-            CAPmessage edxlCAP = new CAPmessage(situationIdentified.Type.Name, situationIdentified.AttributesFromEPL, situationIdentified.SituationInference);
+            CAP edxlCAP = new CAP(situationIdentified.Type.Name, situationIdentified.AttributesFromEPL, situationIdentified.SituationInference);
                         
             // Add target requirements to the message
             foreach (TargetNotificationRequirement requirement in TargetNotificationRequirements)
@@ -46,7 +46,10 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     break;
             }
 
-            JObject jsonLd = edxlCAP.GetJsonLD();
+            DE edxlDE = new DE(edxlCAP);
+
+            //JObject jsonLd = edxlCAP.GetJsonLD();
+            JObject jsonLd = edxlDE.GetJsonLD();
 
             AzureIoT azureIoT = new AzureIoT();
             azureIoT.SendToAzureIoTHub(jsonLd);

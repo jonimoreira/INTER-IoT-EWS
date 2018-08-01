@@ -15,7 +15,8 @@ namespace MyDriving.AzureClient
 {
     public class DeviceProvisionHandler
     {
-        private const string DefaultHostName = "mydrivingiothubews.azure-devices.net";
+        //private const string DefaultHostName = "mydrivingiothubews.azure-devices.net";
+        private const string DefaultHostName = "XXXXXXXXXXXXXXXXX";
         private static DeviceProvisionHandler _handler;
 
         private DeviceProvisionHandler()

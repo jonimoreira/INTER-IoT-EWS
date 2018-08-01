@@ -14,18 +14,33 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
         private MongoClient client;
         private IMongoDatabase database;
         //private const string mongoDbServerConnstr = "mongodb://localhost:27017";
-        private const string mongoDbServerConnstr = "XXXXXXXXXXXXXXXXXXXXXXXX";
+        private const string mongoDbServerConnstr = "mongodb://18.184.254.139:27017";
         private const string mongoDbDatabase = "INTER_IoT_EWS_v0";
+        private string collection = "DeviceObservations_";
+
+        public string Collection
+        {
+            get
+            {
+                return collection;
+            }
+
+            set
+            {
+                collection = value;
+            }
+        }
 
         public MongoDBContext()
         {
             client = new MongoClient(mongoDbServerConnstr);
             database = client.GetDatabase(mongoDbDatabase);
+            Collection += "EDXL";
         }
 
         public void SaveDocument(JToken jsonDoc)
         {
-            var collDeviceObs = database.GetCollection<BsonDocument>("DeviceObservations");
+            var collDeviceObs = database.GetCollection<BsonDocument>(Collection);
             var docInput = BsonDocument.Parse(jsonDoc.ToString());
             collDeviceObs.InsertOne(docInput);
             // collDeviceObs.InsertOneAsync(docInput); // async insert
@@ -41,14 +56,14 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
         public void SaveDocument(string jsonDoc)
         {
-            var collDeviceObs = database.GetCollection<BsonDocument>("DeviceObservations");
+            var collDeviceObs = database.GetCollection<BsonDocument>(Collection);
             var docInput = BsonDocument.Parse(jsonDoc);
             collDeviceObs.InsertOne(docInput);
         }
 
         public void TestQueries()
         {
-            var collDeviceObs = database.GetCollection<BsonDocument>("DeviceObservations");
+            var collDeviceObs = database.GetCollection<BsonDocument>(Collection);
             
             var document = collDeviceObs.Find(new BsonDocument()).FirstOrDefault();
             
@@ -92,7 +107,7 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
         public void FindQuery(string field, string value)
         {
-            var collDeviceObs = database.GetCollection<BsonDocument>("DeviceObservations");
+            var collDeviceObs = database.GetCollection<BsonDocument>(Collection);
 
             var filter = new BsonDocument(field, value);
             //var filter = "{ " + field + ": '" + value + "'}";
@@ -108,7 +123,7 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
         public void FindQueryWithJson(string jsonDoc)
         {
-            var collDeviceObs = database.GetCollection<BsonDocument>("DeviceObservations");
+            var collDeviceObs = database.GetCollection<BsonDocument>(Collection);
 
             var filter = jsonDoc;
             
@@ -122,7 +137,7 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
         public void FindQueryWithBuilder()
         {
-            var collDeviceObs = database.GetCollection<BsonDocument>("DeviceObservations");
+            var collDeviceObs = database.GetCollection<BsonDocument>(Collection);
 
             var builder = Builders<BsonDocument>.Filter;
             var filter = builder.Lt("geo:location.geo:lat", 50) & builder.Eq("saref:makesMeasurement.relatesToProperty", "sarefInst:VehicleCollisionDetectedFromMobileDevice");
@@ -137,14 +152,14 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
         public long GetCountDocuments()
         {
-            var collDeviceObs = database.GetCollection<BsonDocument>("DeviceObservations");
+            var collDeviceObs = database.GetCollection<BsonDocument>(Collection);
             long countDocs = collDeviceObs.Find(new BsonDocument()).Count();
             return countDocs;
         }
 
         public List<JObject> GetAllDocuments()
         {
-            var collDeviceObs = database.GetCollection<BsonDocument>("DeviceObservations");
+            var collDeviceObs = database.GetCollection<BsonDocument>(Collection);
             var cursor = collDeviceObs.Find(new BsonDocument()).ToCursor();
             List<JObject> result = new List<JObject>();
             foreach (var doc in cursor.ToEnumerable())

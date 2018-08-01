@@ -12,6 +12,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 [assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("System.Net.Http")]
 [assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("Microsoft.HockeyApp.Kit")]
 [assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("System.Text.Encoding.CodePages")]
+[assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("System.IO.FileSystem")]
+[assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("System.Private.Networking")]
 
 
 // -----------------------------------------------------------------------------------------------------------

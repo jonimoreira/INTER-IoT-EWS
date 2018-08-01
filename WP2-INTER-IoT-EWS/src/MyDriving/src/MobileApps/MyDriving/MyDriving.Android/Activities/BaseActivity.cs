@@ -23,8 +23,9 @@ namespace MyDriving.Droid
             set { Toolbar.SetNavigationIcon(value); }
         }
 
-        public void OnAccelerationChanged(float x, float y, float z)
+        public virtual void OnAccelerationChanged(float x, float y, float z)
         {
+            float a = x + y;
         }
 
         public void OnShake(float force)

@@ -12,12 +12,12 @@ Microsoft.WindowsAzure.Mobile.Ext, Version=2.0.0.0, Culture=neutral, PublicKeyTo
 Microsoft.WindowsAzure.Mobile.SQLiteStore, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
 MvvmHelpers, Version=1.0.1.0, Culture=neutral, PublicKeyToken=null
-MyDriving, Version=1.0.6702.20942, Culture=neutral, PublicKeyToken=null
-MyDriving.AzureClient, Version=1.0.6701.32243, Culture=neutral, PublicKeyToken=null
+MyDriving, Version=1.0.6768.35202, Culture=neutral, PublicKeyToken=null
+MyDriving.AzureClient, Version=1.0.6768.35195, Culture=neutral, PublicKeyToken=null
 MyDriving.DataStore.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MyDriving.DataStore.Azure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MyDriving.DataStore.Mock, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-MyDriving.Utils, Version=1.0.6701.32241, Culture=neutral, PublicKeyToken=null
+MyDriving.Utils, Version=1.0.6768.35194, Culture=neutral, PublicKeyToken=null
 MyDriving.UWP, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 MyDriving.UWP.McgInterop, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed
@@ -37,15 +37,18 @@ Plugin.Settings, Version=2.1.0.0, Culture=neutral, PublicKeyToken=null
 Plugin.Settings.Abstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=null
 Plugin.Share, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null
 Plugin.Share.Abstractions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null
+ShimmerAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 Splat, Version=1.6.2.0, Culture=neutral, PublicKeyToken=null
 SQLitePCL, Version=3.8.7.2, Culture=neutral, PublicKeyToken=bddade01e9c850c5
 SQLitePCL.Ext, Version=3.8.7.2, Culture=neutral, PublicKeyToken=bddade01e9c850c5
+System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
 System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Collections, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Collections.Concurrent, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Collections.NonGeneric, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Collections.Specialized, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.ComponentModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+System.ComponentModel.EventBasedAsync, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Data.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Diagnostics.Contracts, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Diagnostics.Debug, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
@@ -67,6 +70,7 @@ System.Linq.Queryable, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f
 System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+System.Net.NetworkInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Net.Primitives, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Net.Requests, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Net.WebHeaderCollection, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
@@ -80,6 +84,7 @@ System.Private.CoreLib.DynamicDelegate, Version=4.0.0.0, Culture=neutral, Public
 System.Private.CoreLib.InteropServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Private.CoreLib.Threading, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Private.CoreLib.WinRTInterop, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+System.Private.DataContractSerialization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Private.DeveloperExperience.AppX, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Private.DispatchProxy, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Private.Interop, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
@@ -92,6 +97,7 @@ System.Private.Reflection.Execution, Version=4.0.0.0, Culture=neutral, PublicKey
 System.Private.Reflection.Extensibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Private.Reflection.Metadata, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Private.Reflection.MissingMetadataException, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+System.Private.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Private.SharedLibrary.Interop.Generated, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 System.Private.StackTraceGenerator, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Private.Threading, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
@@ -111,7 +117,10 @@ System.Runtime.Handles, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7
 System.Runtime.Implementation, Version=4.0.20.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Runtime.InteropServices, Version=4.0.20.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Runtime.InteropServices.WindowsRuntime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+System.Runtime.Serialization.Generated, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null
+System.Runtime.Serialization.Generated.Intermediate, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null
 System.Runtime.Serialization.Primitives, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+System.Runtime.Serialization.Xml, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Runtime.WindowsRuntime, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
 System.Runtime.WindowsRuntime.UI.Xaml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
 System.Security.Claims, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
@@ -127,4 +136,6 @@ System.Threading.Tasks.Parallel, Version=4.0.0.0, Culture=neutral, PublicKeyToke
 System.Threading.Timer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Xml.ReaderWriter, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 System.Xml.XDocument, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+System.Xml.XmlDocument, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+System.Xml.XmlSerializer, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 Validation, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7

@@ -63,8 +63,9 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
         }
         
         private void ExecuteSituationIdentificationManager(List<Observation> observations)
-        {   
-            foreach (Observation observation in observations)
+        {
+            List<Observation> ordered = observations.OrderByDescending(x => x.Identifier).ToList();
+            foreach (Observation observation in ordered)
             {
                 SendEventToCEP(observation);
             }
