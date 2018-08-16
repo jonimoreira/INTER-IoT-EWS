@@ -261,9 +261,9 @@ namespace INTERIoTEWS.UIprototype
 
         static Microsoft.Azure.Devices.Client.DeviceClient deviceClient;
         
-        static string iotHubUri = "XXXXXXXXXXXXXXXX";
-        static string deviceKey = "XXXXXXXXXXXXXXXX";
-        static string deviceId = "XXXXXXXXXXXXXXXX";
+        static string iotHubUri = "INTER-IoT-EWS-hub-b1.azure-devices.net";
+        static string deviceKey = "4JNGbXKLdw8sxdRFUcR5111efeHLNLi2W86AtJtMXls=";
+        static string deviceId = "ZY224DC54P";
 
         public void SendDataToAzureIoTHub()
         {
