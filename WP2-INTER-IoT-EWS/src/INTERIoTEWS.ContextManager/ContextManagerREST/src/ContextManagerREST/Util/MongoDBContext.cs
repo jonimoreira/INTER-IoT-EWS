@@ -48,10 +48,12 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
         public void SaveDocument(JToken jsonDoc, string collectionName)
         {
+            /*
             var collDeviceObs = database.GetCollection<BsonDocument>(collectionName);
             var docInput = BsonDocument.Parse(jsonDoc.ToString());
             collDeviceObs.InsertOne(docInput);
             // collDeviceObs.InsertOneAsync(docInput); // async insert
+            */
         }
 
         public void SaveDocument(string jsonDoc)

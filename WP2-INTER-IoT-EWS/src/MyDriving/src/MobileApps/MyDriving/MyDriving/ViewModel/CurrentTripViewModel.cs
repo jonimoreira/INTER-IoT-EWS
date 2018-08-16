@@ -194,6 +194,22 @@ namespace MyDriving.ViewModel
                     Longitude = CurrentPosition.Longitude,
                     Sequence = CurrentTrip.Points.Count,
                 });
+
+                // Insert Trip Id in SQL Server (instead of inserting only on the end)
+                /*
+                CurrentTrip.Name = CurrentTrip.Id + " " + DateTime.Now.ToString("d") + " " + DateTime.Now.ToString("t");
+                CurrentTrip.EndTimeStamp = DateTime.UtcNow;
+                CurrentTrip.HardStops = 0;
+                CurrentTrip.HardAccelerations = 0;
+
+                // workaround: RecordedTimeStamp is added 2h after inserting in DB...
+                DateTime realRecordedTimeStamp = CurrentTrip.RecordedTimeStamp;
+
+                await StoreManager.TripStore.InsertAsync(CurrentTrip);
+                
+                CurrentTrip.RecordedTimeStamp = realRecordedTimeStamp;
+                */
+
             }
             catch (Exception ex)
             {
@@ -224,7 +240,7 @@ namespace MyDriving.ViewModel
             {
                 if (string.IsNullOrWhiteSpace(name))
                 {
-                    CurrentTrip.Name = DateTime.Now.ToString("d") + " " + DateTime.Now.ToString("t");
+                    CurrentTrip.Name = DateTime.UtcNow.ToString("d") + " " + DateTime.UtcNow.ToString("t");
                     var result = await Acr.UserDialogs.UserDialogs.Instance.PromptAsync(new Acr.UserDialogs.PromptConfig
                     {
                         Text = CurrentTrip.Name,
@@ -256,6 +272,7 @@ namespace MyDriving.ViewModel
                 CurrentTrip.Rating = 90;
 
                 await StoreManager.TripStore.InsertAsync(CurrentTrip);
+                //await StoreManager.TripStore.UpdateAsync(CurrentTrip);
 
                 foreach (var photo in photos)
                 {
@@ -681,7 +698,6 @@ namespace MyDriving.ViewModel
         #region Shimmer3: SAREF4health
 
         private JsonLD jsonLdSaref4health = new JsonLD();
-        private VehicleCollisionDetection vehicleCollisionDetection = new VehicleCollisionDetection(3*Gforce);
         public string MobileDeviceId { get; set; }
         public bool IsStreamingHealthdevice { get; set; }
         
@@ -774,18 +790,44 @@ namespace MyDriving.ViewModel
         private ECGToHRAdaptive ECGtoHRAdaptive;
         public double SamplingRate { get; set; }
 
+        const double Gforce = 9.806; // m/s2 
+        double thresholdCollision = 3 * Gforce;
+
+        private VehicleCollisionDetection vehicleCollisionDetectionFromECGDevice = null;
         public VehicleCollisionDetection VehicleCollisionDetection
         {
             get
             {
-                return vehicleCollisionDetection;
+                if (vehicleCollisionDetectionFromECGDevice == null)
+                    vehicleCollisionDetectionFromECGDevice = new VehicleCollisionDetection(thresholdCollision);
+
+                return vehicleCollisionDetectionFromECGDevice;
             }
 
             set
             {
-                vehicleCollisionDetection = value;
+                vehicleCollisionDetectionFromECGDevice = value;
             }
         }
+
+        private VehicleCollisionDetection vehicleCollisionDetectionFromSmartphone = null;
+        public VehicleCollisionDetection VehicleCollisionDetectionFromSmartphone
+        {
+            get
+            {
+                if (vehicleCollisionDetectionFromSmartphone == null)
+                    vehicleCollisionDetectionFromSmartphone = new VehicleCollisionDetection(thresholdCollision);
+
+                return vehicleCollisionDetectionFromSmartphone;
+            }
+
+            set
+            {
+                vehicleCollisionDetectionFromSmartphone = value;
+            }
+        }
+
+        public string currentStatus = string.Empty;
 
         public IoTFrequencyControl ioTFrequencyControl = new IoTFrequencyControl();
 
@@ -806,28 +848,28 @@ namespace MyDriving.ViewModel
 
             CompactECGData(dataTimestamp, dataECG_LL_RA, dataECG_LA_RA, dataECG_VX_RL);
 
-            SensorData dataAccelX = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X, "CAL");
-            SensorData dataAccelY = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Y, "CAL");
-            SensorData dataAccelZ = objectCluster.GetData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Z, "CAL");
+            SensorData dataAccelX = objectCluster.GetData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_X, "CAL");
+            SensorData dataAccelY = objectCluster.GetData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Y, "CAL");
+            SensorData dataAccelZ = objectCluster.GetData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Z, "CAL");
 
             accelerationX_ECGdevice_List = GetAccelerationX_ECGdevice_List();
             lock (accelerationX_ECGdevice_List)
             {
-                Measurement accelerationX_ECGdeviceMeasurement = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X, dataAccelX, dataTimestamp.Data);
+                Measurement accelerationX_ECGdeviceMeasurement = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_X, dataAccelX, dataTimestamp.Data);
                 accelerationX_ECGdevice_List.Add(accelerationX_ECGdeviceMeasurement);
             }
 
             accelerationY_ECGdevice_List = GetAccelerationY_ECGdevice_List();
             lock (accelerationY_ECGdevice_List)
             {
-                Measurement accelerationY_ECGdeviceMeasurement = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Y, dataAccelY, dataTimestamp.Data);
+                Measurement accelerationY_ECGdeviceMeasurement = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Y, dataAccelY, dataTimestamp.Data);
                 accelerationY_ECGdevice_List.Add(accelerationY_ECGdeviceMeasurement);
             }
 
             accelerationZ_ECGdevice_List = GetAccelerationZ_ECGdevice_List();
             lock (accelerationZ_ECGdevice_List)
             {
-                Measurement accelerationZ_ECGdeviceMeasurement = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Z, dataAccelZ, dataTimestamp.Data);
+                Measurement accelerationZ_ECGdeviceMeasurement = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Z, dataAccelZ, dataTimestamp.Data);
                 accelerationZ_ECGdevice_List.Add(accelerationZ_ECGdeviceMeasurement);
             }
             
@@ -843,7 +885,7 @@ namespace MyDriving.ViewModel
 
                 if (!VehicleCollisionDetection.collisionDetected && ioTFrequencyControl.CounterSamplesInMessage > 0)
                 {
-                    VehicleCollisionDetection.collisionDetected = DetectCollision(crossAxialEnergy);
+                    VehicleCollisionDetection.collisionDetected = DetectCollision(crossAxialEnergy, VehicleCollisionDetection);
 
                     if (VehicleCollisionDetection.collisionDetected)
                     {
@@ -884,9 +926,7 @@ namespace MyDriving.ViewModel
 
             return true;
         }
-
-        const double Gforce = 9.806; // m/s2 
-
+        
         public double ComputeCrossAxialFunction(SensorData dataAccelX, SensorData dataAccelY, SensorData dataAccelZ)
         {
             double x = Math.Abs(dataAccelX.Data);
@@ -901,29 +941,29 @@ namespace MyDriving.ViewModel
             return Math.Pow(x, 2.0) + Math.Pow(y, 2.0) + Math.Pow(z, 2.0);
         }
 
-        public bool DetectCollision(double currentCrossAxialEnergy)
+        public bool DetectCollision(double currentCrossAxialEnergy, VehicleCollisionDetection collisionDetection)
         {
-            VehicleCollisionDetection.crossAxialEnergyWhenCollisionDetected = currentCrossAxialEnergy;
+            collisionDetection.crossAxialEnergyWhenCollisionDetected = currentCrossAxialEnergy;
             bool result = false;
-            VehicleCollisionDetection.sumCrossAxialValues += currentCrossAxialEnergy;
-            VehicleCollisionDetection.countCrossAxialValues++;
-            VehicleCollisionDetection.meanCrossAxialValues = VehicleCollisionDetection.sumCrossAxialValues / VehicleCollisionDetection.countCrossAxialValues;
-            VehicleCollisionDetection.varianceCrossAxialValues += Math.Pow(currentCrossAxialEnergy - VehicleCollisionDetection.meanCrossAxialValues, 2);
+            collisionDetection.sumCrossAxialValues += currentCrossAxialEnergy;
+            collisionDetection.countCrossAxialValues++;
+            collisionDetection.meanCrossAxialValues = collisionDetection.sumCrossAxialValues / collisionDetection.countCrossAxialValues;
+            collisionDetection.varianceCrossAxialValues += Math.Pow(currentCrossAxialEnergy - collisionDetection.meanCrossAxialValues, 2);
 
-            VehicleCollisionDetection.sumOfDerivation += (currentCrossAxialEnergy) * (currentCrossAxialEnergy);
-            VehicleCollisionDetection.sumOfDerivationAverage = VehicleCollisionDetection.sumOfDerivation / VehicleCollisionDetection.countCrossAxialValues;
-            VehicleCollisionDetection.standardDeviation = Math.Sqrt(VehicleCollisionDetection.sumOfDerivationAverage - (VehicleCollisionDetection.meanCrossAxialValues * VehicleCollisionDetection.meanCrossAxialValues));
+            collisionDetection.sumOfDerivation += (currentCrossAxialEnergy) * (currentCrossAxialEnergy);
+            collisionDetection.sumOfDerivationAverage = collisionDetection.sumOfDerivation / collisionDetection.countCrossAxialValues;
+            collisionDetection.standardDeviation = Math.Sqrt(collisionDetection.sumOfDerivationAverage - (collisionDetection.meanCrossAxialValues * collisionDetection.meanCrossAxialValues));
 
             //double standardDeviation = CalculateStandardDeviation(); // 100; // Math.Sqrt(varianceCrossAxialValues);
             // Anomaly detection
             double minVal = double.MinValue; // vehicleCollisionDetection.Threshold + vehicleCollisionDetection.meanCrossAxialValues - vehicleCollisionDetection.standardDeviation;
-            double maxVal = VehicleCollisionDetection.Threshold + VehicleCollisionDetection.meanCrossAxialValues + VehicleCollisionDetection.standardDeviation;
+            double maxVal = collisionDetection.Threshold + collisionDetection.meanCrossAxialValues + collisionDetection.standardDeviation;
             /*
             if ((currentCrossAxialEnergy < minVal) 
                 || (currentCrossAxialEnergy > maxVal))
                 result = true;
                 */
-            if (Math.Sqrt(currentCrossAxialEnergy) > VehicleCollisionDetection.Threshold)
+            if (Math.Sqrt(currentCrossAxialEnergy) > collisionDetection.Threshold)
                 result = true;
 
             return result;
@@ -987,7 +1027,7 @@ namespace MyDriving.ViewModel
             JObject contextJSON = jsonLdSaref4health.GetContextJSON_SAREF4health();
             List<JObject> devicesComposingMobile = new List<JObject>();
 
-            if (IsStreamingHealthdevice && false)
+            if (IsStreamingHealthdevice)
             {
                 // ECG device (unit)
                 JObject eCGDeviceJSON = FormatMessageSAREF4health_ECGDevice();
@@ -999,7 +1039,7 @@ namespace MyDriving.ViewModel
 
             AddSmartphoneAccelerationData(devicesComposingMobile);
 
-            JObject mobileDevice = jsonLdSaref4health.GetFieldGatewayMobileDeviceJSON_SAREF4health("MobileDeviceId", contextJSON, devicesComposingMobile, lat, lon);
+            JObject mobileDevice = jsonLdSaref4health.GetFieldGatewayMobileDeviceJSON_SAREF4health("MobileDeviceId", contextJSON, devicesComposingMobile, lat, lon, CurrentTrip.Id);
 
             return mobileDevice;
         }
@@ -1008,17 +1048,52 @@ namespace MyDriving.ViewModel
         {
             lock (smartphoneAccelerationManager)
             {
+                string _id = "sarefInst:AccelerometerSensor_Triaxial_Smartphone_MotoG5Plus_MobileDeviceId";
+                string _label = "Accelerometer smartphone: average acceleration within device-cloud frequency";
+
                 if (smartphoneAccelerationManager.Accelerations.Count > 0)
                 {
                     
-                    string _id = "sarefInst:AccelerometerSensor_Triaxial_Smartphone_MotoG5Plus_MobileDeviceId";
-                    string _label = "Accelerometer smartphone: average acceleration within device-cloud frequency";
-
                     List<Measurement> accelAxes = GetAverageAcceleration(this.smartphoneAccelerationManager);
-                    JObject sensor_Accelerometer = jsonLdSaref4health.GetShimmerAccelerometerSensorJSON_SAREF4health(_id, _label, accelAxes[0], accelAxes[1], accelAxes[2]);
+                    JObject sensor_Accelerometer = jsonLdSaref4health.GetAccelerometerSensorJSON_SAREF4health(_id, _label, accelAxes[0], accelAxes[1], accelAxes[2]);
                     devicesComposingMobile.Add(sensor_Accelerometer);
 
+                    // Detect collision from smartphone accelerometer (UC01, ST03)
+                    Dictionary<string, SensorData> accelerationAverages = GetAverageAccelerationAsSensorData(smartphoneAccelerationManager);
+                    double crossAxialEnergy = ComputeCrossAxialFunction(accelerationAverages["X"], accelerationAverages["Y"], accelerationAverages["Z"]);
+                    VehicleCollisionDetectionFromSmartphone.collisionDetected = DetectCollision(crossAxialEnergy, VehicleCollisionDetectionFromSmartphone);
+
+                    if (VehicleCollisionDetectionFromSmartphone.collisionDetected)
+                    {
+                        Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                        VehicleCollisionDetectionFromSmartphone.timestampCollisionDetected = unixTimestamp;
+                        OnPropertyChanged(nameof(VehicleCollisionDetectionFromSmartphone));
+
+                        // Add sensor information (JSON-LD)
+                        AddProcessedAccelerometerFromSmartphone(devicesComposingMobile, accelAxes);
+                    }
+
                     smartphoneAccelerationManager.Accelerations.Clear();
+                }
+                else
+                {
+                    // Add simulated acceleration (0 m/s2)
+                    string measurementLabel = "Simulated acceleration from smartphone";
+                    DateTime timestampAsDateTime = DateTime.UtcNow;
+                    SensorData dataAccelX = new SensorData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_X, 0.0);
+                    Measurement accelerationX = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_X, dataAccelX, double.MinValue, measurementLabel);
+                    accelerationX.HasTimestampAsDateTime = timestampAsDateTime;
+
+                    SensorData dataAccelY = new SensorData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Y, 0.0);
+                    Measurement accelerationY = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Y, dataAccelY, double.MinValue, measurementLabel);
+                    accelerationY.HasTimestampAsDateTime = timestampAsDateTime;
+
+                    SensorData dataAccelZ = new SensorData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Z, Gforce);
+                    Measurement accelerationZ = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Z, dataAccelZ, double.MinValue, measurementLabel);
+                    accelerationZ.HasTimestampAsDateTime = timestampAsDateTime;
+
+                    JObject sensor_Accelerometer = jsonLdSaref4health.GetAccelerometerSensorJSON_SAREF4health(_id, _label, accelerationX, accelerationY, accelerationZ);
+                    devicesComposingMobile.Add(sensor_Accelerometer);
                 }
             }
         }
@@ -1054,7 +1129,7 @@ namespace MyDriving.ViewModel
                     string _id = "sarefInst:AccelerometerSensor_Triaxial_ECGdevice_T9J-RN42";
                     string _label = "Accelerometer ECG device: average acceleration within device-cloud frequency (N x ECG unit sampling rate)";
 
-                    JObject sensor_Accelerometer = jsonLdSaref4health.GetShimmerAccelerometerSensorJSON_SAREF4health(_id, _label, GetAverageAcceleration(accelerationX_ECGdevice_List), GetAverageAcceleration(accelerationY_ECGdevice_List), GetAverageAcceleration(accelerationZ_ECGdevice_List));
+                    JObject sensor_Accelerometer = jsonLdSaref4health.GetAccelerometerSensorJSON_SAREF4health(_id, _label, GetAverageAcceleration(accelerationX_ECGdevice_List), GetAverageAcceleration(accelerationY_ECGdevice_List), GetAverageAcceleration(accelerationZ_ECGdevice_List));
                     listSensorsOfDevice.Add(sensor_Accelerometer);
                     accelerationX_ECGdevice_List.Clear();
                     accelerationY_ECGdevice_List.Clear();
@@ -1084,7 +1159,7 @@ namespace MyDriving.ViewModel
                 }
             }
 
-            JObject eCGDeviceJSON = jsonLdSaref4health.GetECGDeviceJSON_SAREF4health(listSensorsOfDevice);
+            JObject eCGDeviceJSON = jsonLdSaref4health.GetECGDeviceJSON_SAREF4health(listSensorsOfDevice, CurrentTrip.Id);
 
             return eCGDeviceJSON;
         }
@@ -1178,21 +1253,66 @@ namespace MyDriving.ViewModel
 
             string measurementLabel = "Measurement acceleration from smartphone";
 
-            SensorData dataAccelX = new SensorData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X, averages["x"]);
-            Measurement accelerationX = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X, dataAccelX, double.MinValue, measurementLabel);
+            SensorData dataAccelX = new SensorData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_X, averages["x"]);
+            Measurement accelerationX = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_X, dataAccelX, double.MinValue, measurementLabel);
             accelerationX.HasTimestampAsDateTime = timestampAsDateTime;
 
-            SensorData dataAccelY = new SensorData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Y, averages["y"]);
-            Measurement accelerationY = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Y, dataAccelY, double.MinValue, measurementLabel);
+            SensorData dataAccelY = new SensorData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Y, averages["y"]);
+            Measurement accelerationY = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Y, dataAccelY, double.MinValue, measurementLabel);
             accelerationY.HasTimestampAsDateTime = timestampAsDateTime;
 
-            SensorData dataAccelZ = new SensorData(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Z, averages["z"]);
-            Measurement accelerationZ = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Z, dataAccelZ, double.MinValue, measurementLabel);
+            SensorData dataAccelZ = new SensorData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Z, averages["z"]);
+            Measurement accelerationZ = jsonLdSaref4health.TranslateMeasurement(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Z, dataAccelZ, double.MinValue, measurementLabel);
             accelerationZ.HasTimestampAsDateTime = timestampAsDateTime;
 
             result.Add(accelerationX);
             result.Add(accelerationY);
             result.Add(accelerationZ);
+
+            return result;
+        }
+
+        private Dictionary<string, SensorData> GetAverageAccelerationAsSensorData(SmartphoneAccelerationManager accelMgr)
+        {
+            if (accelMgr.Accelerations.Count == 0)
+                return null;
+
+            Dictionary<string, SensorData> result = new Dictionary<string, SensorData>();
+
+            double accelValueTotal = 0;
+            int accelCount = 0;
+            DateTime timestampAsDateTime = DateTime.MinValue;
+            Dictionary<string, double> averages = new Dictionary<string, double>();
+            averages.Add("x", 0);
+            averages.Add("y", 0);
+            averages.Add("z", 0);
+
+            foreach (KeyValuePair<DateTime, SmartphoneAcceleration> acceleration in accelMgr.Accelerations)
+            {
+                if (timestampAsDateTime == DateTime.MinValue)
+                    timestampAsDateTime = acceleration.Key;
+
+                averages["x"] += acceleration.Value.X;
+                averages["y"] += acceleration.Value.Y;
+                averages["z"] += acceleration.Value.Z;
+
+                accelCount++;
+            }
+
+            if (accelCount > 0)
+            {
+                averages["x"] = averages["x"] / accelCount;
+                averages["y"] = averages["y"] / accelCount;
+                averages["z"] = averages["z"] / accelCount;
+            }
+
+            SensorData dataAccelX = new SensorData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_X, averages["x"]);
+            SensorData dataAccelY = new SensorData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Y, averages["y"]);
+            SensorData dataAccelZ = new SensorData(Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Z, averages["z"]);
+
+            result.Add("X", dataAccelX);
+            result.Add("Y", dataAccelY);
+            result.Add("Z", dataAccelZ);
 
             return result;
         }
@@ -1241,11 +1361,64 @@ namespace MyDriving.ViewModel
                     }
 
                     // Create Processed Accelerometer: accelerometer that is processed by the smartphone using acceleration data from ECG device
-                    JObject sensorProcessedAccelerometer = jsonLdSaref4health.GetSensorJSON_SAREF4health(processedMeasurements, "saref:Sensor", "sarefInst:ProcessedAccelerometer", "Accelerometer measurements processed by mobile app with acceleration data from Shimmer3 ECG unit", jsonLdSaref4health.sarefInst_ProcessedAccelerometer);
+                    string id_sensorProcessedAccelerometer = "sarefInst:ProcessedAccelerometerFromECG_ComputedNyMobile_MobileDeviceId";
+                    JObject sensorProcessedAccelerometer = jsonLdSaref4health.GetSensorJSON_SAREF4health(processedMeasurements, "saref:Sensor", id_sensorProcessedAccelerometer, "Accelerometer measurements processed by mobile app with acceleration data from Shimmer3 ECG unit", jsonLdSaref4health.sarefInst_ProcessedAccelerometer);
                     devicesComposingMobile.Add(sensorProcessedAccelerometer);
                     VehicleCollisionDetection.ClearDetectCollisionVariables(accelerationCrossAxialList);
                 }
             }
+        }
+
+        private void AddProcessedAccelerometerFromSmartphone(List<JObject> devicesComposingMobile, List<Measurement> accelerationAverages)
+        {
+            // Add accelerometer sensor with last received data (cross axial energy - tri-axial based) and a measurement indicating a collision was detected during the time interval
+            lock (smartphoneAccelerationManager) lock (VehicleCollisionDetectionFromSmartphone)
+                {
+                    if (smartphoneAccelerationManager.Accelerations.Count > 0)
+                    {
+                        List<JObject> processedMeasurements = new List<JObject>();
+
+                        double avgCrossAxial = Math.Pow(accelerationAverages[0].HasValue, 2) + Math.Pow(accelerationAverages[1].HasValue, 2) + Math.Pow(accelerationAverages[2].HasValue, 2);
+                        Measurement avgCrossAxialComputed = accelerationAverages[0];
+                        avgCrossAxialComputed.HasValue = avgCrossAxial;
+                        avgCrossAxialComputed.Label = "[Smartphone accelerometer] Average cross-axial within the smartphone_to_cloud frequency";
+                        processedMeasurements.Add(avgCrossAxialComputed.JSONLDobject);
+
+                        // Add collisionDetected, mean, stdDeviation and value as measurements if a collision was detected
+                        SensorData collisionDetectedObj = new SensorData("boolean", Convert.ToDouble(VehicleCollisionDetectionFromSmartphone.collisionDetected));
+                        if (VehicleCollisionDetectionFromSmartphone.collisionDetected)
+                        {
+                            // Measurement collision detected (timestamp when it was detected, bool = true)
+                            Measurement collisionDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("collisionDetected", collisionDetectedObj, VehicleCollisionDetectionFromSmartphone.timestampCollisionDetected, "Boolean (0 or 1): collision detected based on threshold");
+                            processedMeasurements.Add(collisionDetectedMeasurement.JSONLDobject);
+
+                            // Measurements of mean, standard deviation and cross axial value when detected
+                            SensorData collisionDetectedObjMean = new SensorData("crossaxialfunction", VehicleCollisionDetectionFromSmartphone.meanCrossAxialValues);
+                            Measurement meanDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("cross-axial-energy_mean", collisionDetectedObjMean, VehicleCollisionDetectionFromSmartphone.timestampCollisionDetected, "Cross-axial function: mean value");
+                            processedMeasurements.Add(meanDetectedMeasurement.JSONLDobject);
+
+                            SensorData collisionDetectedObjStd = new SensorData("crossaxialfunction", VehicleCollisionDetectionFromSmartphone.standardDeviation);
+                            Measurement stddevDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("cross-axial-energy_std-dev", collisionDetectedObjStd, VehicleCollisionDetectionFromSmartphone.timestampCollisionDetected, "Cross-axial function: standard deviation");
+                            processedMeasurements.Add(stddevDetectedMeasurement.JSONLDobject);
+
+                            SensorData collisionDetectedObjCrossAxial = new SensorData("crossaxialfunction", VehicleCollisionDetectionFromSmartphone.crossAxialEnergyWhenCollisionDetected);
+                            Measurement crossaxDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("cross-axial-energy_max", collisionDetectedObjCrossAxial, VehicleCollisionDetectionFromSmartphone.timestampCollisionDetected, "Cross-axial function: maximum");
+                            crossaxDetectedMeasurement.Label = "value processed when collision detected";
+                            processedMeasurements.Add(crossaxDetectedMeasurement.JSONLDobject);
+
+                            SensorData collisionDetectedObjThreshold = new SensorData("m/(sec^2)", VehicleCollisionDetectionFromSmartphone.Threshold);
+                            Measurement thresholdDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("ThresholdGforce", collisionDetectedObjThreshold, VehicleCollisionDetectionFromSmartphone.timestampCollisionDetected, "Value of threshold used to detect collision");
+                            processedMeasurements.Add(thresholdDetectedMeasurement.JSONLDobject);
+
+                        }
+
+                        // Create Processed Accelerometer: accelerometer that is processed by the smartphone using acceleration data from smartphone
+                        string id_sensorProcessedAccelerometer = "sarefInst:ProcessedAccelerometerFromMobile_ComputedNyMobile_MobileDeviceId";
+                        JObject sensorProcessedAccelerometer = jsonLdSaref4health.GetSensorJSON_SAREF4health(processedMeasurements, "saref:Sensor", id_sensorProcessedAccelerometer, "Accelerometer measurements processed by mobile app with acceleration data from smartphone", jsonLdSaref4health.sarefInst_ProcessedAccelerometer);
+                        devicesComposingMobile.Add(sensorProcessedAccelerometer);
+                        //VehicleCollisionDetectionFromSmartphone.ClearDetectCollisionVariables(accelerationCrossAxialList);
+                    }
+                }
         }
 
         private double GetAverage(List<Measurement> measurements)
@@ -1309,14 +1482,14 @@ namespace MyDriving.ViewModel
 
                 lock (smartphoneAccelerationManager)
                 {
-                    smartphoneAccelerationManager.Accelerations.Add(DateTime.Now, acceleration);
+                    smartphoneAccelerationManager.Accelerations.Add(DateTime.UtcNow, acceleration);
                 }
             }
         }
 
         #endregion
 
-            #region Logistics: LogiCO/LogiServ/LogiTran
+        #region Logistics: LogiCO/LogiServ/LogiTran
 
         private JObject FormatMessageLogistics(Trip currentTrip, TripPoint currentPoint)
         {
@@ -1324,7 +1497,7 @@ namespace MyDriving.ViewModel
             
             string transportEventId = transport.Identifier + "_" + Guid.NewGuid();
             JObject location = GetLogicoLocation(currentPoint);
-            JObject time_now = GetTimeInstant(DateTime.Now);
+            JObject time_now = GetTimeInstant(DateTime.UtcNow);
             JObject truck = GetLogicoTruck(transport);
             JObject transport_jo = GetLogicoTransport(transport);
 
@@ -1351,6 +1524,7 @@ namespace MyDriving.ViewModel
             result.Add("@id", "LogiServInst:Transport_" + transport.Identifier);
             result.Add("@type", "LogiServ:Transport");
             result.Add("time:hasBeginning", time_Instant_Begin);
+            result.Add("LogiCO:hasIDValue", transport.Identifier);
             //result.Add("time:hasEnd", time_Instant_End);
 
             return result;
@@ -1387,7 +1561,7 @@ namespace MyDriving.ViewModel
         {
             JObject result = new JObject();
 
-            string cargoId = transport.Identifier + "_CargoId_TransportingGoodsAt_Location_" + DateTime.Now.ToString("o");
+            string cargoId = transport.Identifier + "_CargoId_TransportingGoodsAt_Location_" + DateTime.UtcNow.ToString("o");
             bool isDangerous_GoodsBeingTransported = true;
             JArray goodsItem = GetLogicoGoodsItem(transport);
 
@@ -1545,6 +1719,9 @@ namespace MyDriving.ViewModel
     'long' : {
       '@id' : 'http://www.w3.org/2003/01/geo/wgs84_pos#long',
       '@type' : 'http://www.w3.org/2001/XMLSchema#decimal'
+    },
+    'hasIDValue' : {
+      '@id' : 'http://ontology.tno.nl/logico#hasIDValue'
     },
     'LogiServ' : 'http://ontology.tno.nl/logiserv#',
     'LogiCO' : 'http://ontology.tno.nl/logico#',

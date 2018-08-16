@@ -28,6 +28,9 @@ namespace INTERIoTEWS.Context.DataObjects.SOSA
 
         public Point location { get; private set; }
         public string label { get; private set; }
+        
+        // workaround: a property to store the tripId (check afterwards how to map from SAREF)
+        public string tripId { get; set; }
 
     }
 }

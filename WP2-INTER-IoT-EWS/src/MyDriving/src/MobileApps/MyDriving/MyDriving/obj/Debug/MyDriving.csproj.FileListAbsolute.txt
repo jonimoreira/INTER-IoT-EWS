@@ -78,5 +78,3 @@ D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyD
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\obj\Debug\MyDriving.pdb
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\obj\Debug\MyDriving.dll.mdb
 D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\bin\Debug\MyDriving.dll.mdb
-D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\obj\Debug\MyDriving.dll.mdb
-D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\src\MyDriving\src\MobileApps\MyDriving\MyDriving\bin\Debug\MyDriving.dll.mdb

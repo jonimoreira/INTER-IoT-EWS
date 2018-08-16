@@ -42,13 +42,28 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 
             Console.WriteLine("Statement created: " + name);
             Console.WriteLine(expression);
-
+            
             return statement;
+        }
+
+        public void StopStatement(string statementName)
+        {
+            EPStatement statement = epService.EPAdministrator.GetStatement(statementName);
+
+            if (statement != null)
+                statement.Stop();
+        }
+
+        public void RestartAllStatements()
+        {
+            epService.EPAdministrator.StartAllStatements();
         }
 
         public void CreateStatements()
         {
-            
+
+            string uc01_threshold_query = " (2 * 9.806) ";
+
             {
                 // 7.1.1.1	Detected with ECG device accelerometer, computed by smartphone
                 // Get observation regarding the detected collision processed by the smartphone with high-frequency data from ECG device
@@ -58,10 +73,11 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
                            o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
                            o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
-                           CrossAxialUsedToDetectCollision.hasResult.hasValue AS ComputedCrossAxialValue 
+                           CrossAxialUsedToDetectCollision.hasResult.hasValue AS ComputedCrossAxialValue,
+                           o.madeBySensor.isHostedBy.tripId AS TripId
                     FROM  VehicleCollisionDetectedObservation.win:time(5 second) AS o 
                             INNER JOIN 
-                          Observation.win:time(1 second) AS CrossAxialUsedToDetectCollision ON o.MessageId = CrossAxialUsedToDetectCollision.MessageId
+                          Observation.win:time(5 second) AS CrossAxialUsedToDetectCollision ON o.MessageId = CrossAxialUsedToDetectCollision.MessageId
                     WHERE o.Value = true
                         AND CrossAxialUsedToDetectCollision.observedProperty.Label = 'https://w3id.org/saref/instances#CrossAxialFunction'
                 ";
@@ -81,13 +97,14 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                            , (Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) AS ComputedCrossAxialValue
                            , AccelerationAxisX.observedProperty.Label, AccelerationAxisY.observedProperty.Label, AccelerationAxisZ.observedProperty.Label
                            , AccelerationAxisX.hasResult.hasValue, AccelerationAxisY.hasResult.hasValue, AccelerationAxisZ.hasResult.hasValue
+                           , AccelerationAxisX.madeBySensor.isHostedBy.tripId AS TripId
                     FROM  Observation.win:time(1 second) AS AccelerationAxisX, Observation.win:time(1 second) AS AccelerationAxisY, Observation.win:time(1 second) AS AccelerationAxisZ
                     WHERE AccelerationAxisX.MessageId = AccelerationAxisY.MessageId
                           AND AccelerationAxisY.MessageId = AccelerationAxisZ.MessageId
+                          AND AccelerationAxisX.madeBySensor.label = 'Shimmer3ECG'
                           AND AccelerationAxisX.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisX'
                           AND AccelerationAxisY.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisY'
-                          AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) > 20
-                ";
+                          AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) > " + uc01_threshold_query;
 
                 // TODO: check the bug when using Z axis 
 
@@ -104,7 +121,26 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 
             }
 
+            {
+                // 7.1.1.3	Detected with smartphone accelerometer, computed by smartphone
+                // Get observation regarding the detected collision processed by the smartphone 
+                string statementName = "UC01_VehicleCollisionDetected_ST03";
+                var expr = @"
+                    SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
+                           o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
+                           o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
+                           CrossAxialUsedToDetectCollision.hasResult.hasValue AS ComputedCrossAxialValue,
+                           o.madeBySensor.isHostedBy.tripId AS TripId
+                    FROM  VehicleCollisionDetectedObservation.win:time(1 second) AS o 
+                            INNER JOIN 
+                          Observation.win:time(1 second) AS CrossAxialUsedToDetectCollision ON o.MessageId = CrossAxialUsedToDetectCollision.MessageId
+                    WHERE o.Value = true
+                        AND CrossAxialUsedToDetectCollision.observedProperty.Label = 'https://w3id.org/saref/instances#CrossAxialFunction'
+                ";
 
+                createStatement(statementName, expr);
+
+            }
 
             {
                 // 7.1.1.4	Detected with smartphone accelerometer, computed by EWS (cloud)
@@ -118,26 +154,15 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                            , AccelerationAxisX.observedProperty.Label, AccelerationAxisY.observedProperty.Label, AccelerationAxisZ.observedProperty.Label
                            , AccelerationAxisX.hasResult.hasValue, AccelerationAxisY.hasResult.hasValue, AccelerationAxisZ.hasResult.hasValue
                            , AccelerationAxisX.madeBySensor.isHostedBy.label
+                           , AccelerationAxisX.madeBySensor.isHostedBy.tripId AS TripId
                     FROM  Observation.win:time(5 second) AS AccelerationAxisX, Observation.win:time(5 second) AS AccelerationAxisY, Observation.win:time(5 second) AS AccelerationAxisZ
                     WHERE AccelerationAxisX.MessageId = AccelerationAxisY.MessageId
                           AND AccelerationAxisY.MessageId = AccelerationAxisZ.MessageId
                           AND AccelerationAxisX.madeBySensor.isHostedBy.label = 'Smartphone'
                           AND AccelerationAxisX.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisX'
                           AND AccelerationAxisY.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisY'
-                          AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) > 5
-                ";
+                          AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) > " + uc01_threshold_query;
 
-                // TODO: check the bug when using Z axis 
-
-                /*
-                 * ,
-                           (Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisZ.hasResult.hasValue, 2)) AS ComputedCrossAxialValue
-                 * 
-                 WHERE AccelerationAxisX.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisX'
-                        AND AccelerationAxisY.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisY'
-                        AND AccelerationAxisZ.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisZ'
-                        AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisZ.hasResult.hasValue, 2)) > 0
-                 */
                 createStatement(statementName, expr);
 
             }

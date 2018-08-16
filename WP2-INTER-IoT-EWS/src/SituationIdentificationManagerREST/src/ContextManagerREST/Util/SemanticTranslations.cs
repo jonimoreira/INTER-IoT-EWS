@@ -153,10 +153,37 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     geoPoint = new Point(locationId, lat, lon);
 
                     string deviceId = spqlResult["device"].ToString();
+
                     LiteralNode labelValueNode = (LiteralNode)spqlResult.Value("label");
                     string label = labelValueNode.Value;
                     platform = new Platform(deviceId, geoPoint, label);
 
+                    break;
+                }
+            }
+
+            // Gets tripId (Service from SAREF)
+            sparqlQuery = @"
+                PREFIX saref: <https://w3id.org/saref#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                                
+                SELECT ?device ?service ?tripid
+                WHERE  
+	                {
+				    ?device saref:offers ?service.
+					?service rdfs:label ?tripid
+	                } 
+            ";
+
+            results = tStore.ExecuteQuery(sparqlQuery);
+            string tripId = string.Empty;
+
+            if (results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+                foreach (SparqlResult spqlResult in rset)
+                {
+                    platform.tripId = spqlResult["tripid"].ToString().Trim();
                     break;
                 }
             }
@@ -166,8 +193,9 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             sparqlQuery = @"
                 PREFIX saref: <https://w3id.org/saref#>
                 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                                 
-                SELECT ?sensor ?measurement ?measValue ?measUnit ?measProp ?measTime
+                SELECT ?sensor ?measurement ?measValue ?measUnit ?measProp ?measTime ?sensorLabel
                 WHERE  
 	                {
 					?sensor saref:makesMeasurement ?measurement.
@@ -175,6 +203,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 	                ?measurement saref:hasTimestamp ?measTime. 
 	                ?measurement saref:isMeasuredIn ?measUnit. 
 	                ?measurement saref:relatesToProperty ?measProp.
+                    ?sensor rdfs:label ?sensorLabel.
 	                } 
                 ORDER BY ?measTime
 
@@ -203,7 +232,8 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                         sensor = sensorsDic[sensorId];
                     else
                     {
-                        sensor = new Sensor(sensorId, platform);
+                        string sensorLabel = spqlResult["sensorLabel"].ToString().Trim();                        
+                        sensor = new Sensor(sensorId, platform, sensorLabel);
                         sensorsDic.Add(sensorId, sensor);
                     }
                     
@@ -225,7 +255,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     observation.hasResult = new Result();
                     observation.hasResult.hasValue = measurementValue;
                     observation.hasResult.hasUnit = measurementUnit;
-
+                    
                     // sosa:obesrvedProperty predicate
                     string observablePropertyId = measurementProperty + "_" + platform.Identifier + "_" + Guid.NewGuid();
                     observation.observedProperty = new ObservableProperty(observablePropertyId, measurementProperty);

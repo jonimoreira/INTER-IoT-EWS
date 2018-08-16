@@ -5,7 +5,7 @@
       "type": "project",
       "framework": ".NETFramework,Version=v4.5.2",
       "compile": {
-        "bin/Debug/ContextManager.DataObjects.dll": {}
+        "bin/Release/ContextManager.DataObjects.dll": {}
       },
       "runtime": {
         "../../../Program Files (x86)/EDXLSharp/EDXLSharplib/CoT Library.dll": {},
@@ -33,10 +33,10 @@
         "../packages/Nito.KitchenSink.CRC.1.1.0/lib/net40-Client/Nito.KitchenSink.CRC.dll": {},
         "../packages/Sharpen.1.0.0.3/lib/Sharpen.dll": {},
         "../packages/XLR8.CGLib.1.0.2/lib/net40/XLR8.CGLib.dll": {},
-        "bin/Debug/ContextManager.DataObjects.dll": {}
+        "bin/Release/ContextManager.DataObjects.dll": {}
       },
       "contentFiles": {
-        "bin/Debug/ContextManager.DataObjects.pdb": {
+        "bin/Release/ContextManager.DataObjects.pdb": {
           "buildAction": "None",
           "codeLanguage": "any",
           "copyToOutput": true

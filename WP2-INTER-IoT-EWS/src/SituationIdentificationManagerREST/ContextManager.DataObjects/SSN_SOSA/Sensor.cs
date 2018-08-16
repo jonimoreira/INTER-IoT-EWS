@@ -14,13 +14,15 @@ namespace INTERIoTEWS.Context.DataObjects.SOSA
     {
         public object Identifier { get; private set; }
 
-        public Sensor(object identifier, Platform platformHost)
+        public Sensor(object identifier, Platform platformHost, string _label)
         {
             this.Identifier = identifier;
             this.isHostedBy = platformHost;
+            this.label = _label;
         }
 
         public Platform isHostedBy { get; set; }
+        public string label { get; set; }
         
     }
 }

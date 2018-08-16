@@ -13,15 +13,10 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 {
     public class AzureIoT
     {
-        /* IoT Hub free tier - limitted 
-        private string iotHubUri = "XXXXXXXXXXXXXXXXXXXXXXX";
-        private string deviceKey = "XXXXXXXXXXXXXXXXXXXXXXX";
-        private string deviceId = "XXXXXXXXXXXXXXXXXXXXXXX";
-        */
-
-        private string iotHubUri = "XXXXXXXXXXXXXXXXXXXXXXX";
-        private string deviceKey = "XXXXXXXXXXXXXXXXXXXXXXX";
-        private string deviceId = "XXXXXXXXXXXXXXXXXXXXXXX";
+        
+        private string iotHubUri = "XXXXXXXXXXXXXXX";
+        private string deviceKey = "XXXXXXXXXXXXXXX";
+        private string deviceId = "XXXXXXXXXXXXXXX";
 
         public async void SendToAzureIoTHub(JToken messageJson)
         {
@@ -53,7 +48,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
         }
 
         // To listen directly from Azure IoT Hub and call PUT /api/deviceobservations/{deviceId}
-        static string connectionString = "XXXXXXXXXXXXXXXXXXXXXXX";
+        static string connectionString = "XXXXXXXXXXXXXXX";
         static string iotHubD2cEndpoint = "messages/events";
         static EventHubClient eventHubClient;
 

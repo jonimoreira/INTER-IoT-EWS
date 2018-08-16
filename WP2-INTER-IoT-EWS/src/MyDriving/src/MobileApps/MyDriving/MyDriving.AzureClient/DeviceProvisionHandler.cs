@@ -15,8 +15,7 @@ namespace MyDriving.AzureClient
 {
     public class DeviceProvisionHandler
     {
-        //private const string DefaultHostName = "mydrivingiothubews.azure-devices.net";
-        private const string DefaultHostName = "XXXXXXXXXXXXXXXXX";
+        private const string DefaultHostName = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
         private static DeviceProvisionHandler _handler;
 
         private DeviceProvisionHandler()
@@ -96,6 +95,7 @@ namespace MyDriving.AzureClient
 
         public async Task<string> ProvisionDevice()
         {
+            //return "HostName=INTER-IoT-EWS-hub-b1.azure-devices.net;DeviceId=ZY224DC54P;SharedAccessKey=4JNGbXKLdw8sxdRFUcR5111efeHLNLi2W86AtJtMXls=";
             if (!string.IsNullOrEmpty(Settings.Current.DeviceConnectionString))
             {
                 return Settings.Current.DeviceConnectionString;

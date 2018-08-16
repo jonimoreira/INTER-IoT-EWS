@@ -145,6 +145,13 @@ namespace MyDriving.Droid.Fragments
                             text_heart.Text = "Collision detected!";
                         });
                     }
+                    else
+                    {
+                        Activity?.RunOnUiThread(() =>
+                        {
+                            text_heart.Text = viewModel.currentStatus;
+                        });
+                    }
                     break;
             }
         }
@@ -557,7 +564,8 @@ namespace MyDriving.Droid.Fragments
             byte[] defaultECGReg1 = ShimmerBluetooth.SHIMMER3_DEFAULT_TEST_REG1; //also see ShimmerBluetooth.SHIMMER3_DEFAULT_ECG_REG1
             byte[] defaultECGReg2 = ShimmerBluetooth.SHIMMER3_DEFAULT_TEST_REG2; //also see ShimmerBluetooth.SHIMMER3_DEFAULT_ECG_REG2
 
-            string bluetoothAddress = "00:06:66:88:db:ca".ToUpper();
+            string bluetoothAddress = "00:06:66:88:db:ca".ToUpper(); // 1st Shimmer3 ECG (Shimmer3_DBCA)
+            //string bluetoothAddress = "00:06:66:e7:b3:21".ToUpper(); // 2nd Shimmer3 ECG (Shimmer3_B321)
             shimmer = new ShimmerLogAndStreamXamarin("ShimmerXamarin", bluetoothAddress);
             shimmer.UICallback += this.HandleEvent;
             buttonConnectedClicked = true;
@@ -583,6 +591,7 @@ namespace MyDriving.Droid.Fragments
                     if (state == (int)ShimmerBluetooth.SHIMMER_STATE_CONNECTED)
                     {
                         string status = "Connected";
+                        viewModel.currentStatus = status;
                         System.Diagnostics.Debug.Write(status);
 
                         SetTextHeart(status);
@@ -594,6 +603,7 @@ namespace MyDriving.Droid.Fragments
                     else if (state == (int)ShimmerBluetooth.SHIMMER_STATE_CONNECTING)
                     {
                         string status = "Connecting";
+                        viewModel.currentStatus = status;
                         System.Diagnostics.Debug.Write(status);
 
                         SetTextHeart(status);
@@ -601,6 +611,7 @@ namespace MyDriving.Droid.Fragments
                     else if (state == (int)ShimmerBluetooth.SHIMMER_STATE_NONE)
                     {
                         string status = "Disconnected";
+                        viewModel.currentStatus = status;
                         System.Diagnostics.Debug.Write(status);
 
                         SetTextHeart(status);
@@ -609,6 +620,7 @@ namespace MyDriving.Droid.Fragments
                     else if (state == (int)ShimmerBluetooth.SHIMMER_STATE_STREAMING)
                     {
                         string status = "Streaming";
+                        viewModel.currentStatus = status;
                         System.Diagnostics.Debug.Write(status);
 
                         SetTextHeart(status);

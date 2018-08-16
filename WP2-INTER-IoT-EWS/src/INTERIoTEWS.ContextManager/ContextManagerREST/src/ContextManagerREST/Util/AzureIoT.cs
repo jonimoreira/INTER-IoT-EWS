@@ -16,9 +16,9 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
     public class AzureIoT
     {
 
-        private string iotHubUri = "XXXXXXXXXXXXXXXXX";
-        private string deviceKey = "XXXXXXXXXXXXXXXXX";
-        private string deviceId = "XXXXXXXXXXXXXXXXX";
+        private string iotHubUri = "XXXXXXXXXXXXXX";
+        private string deviceKey = "XXXXXXXXXXXXXX";
+        private string deviceId = "XXXXXXXXXXXXXX";
 
 
         public async void SendToAzureIoTHub(JToken messageJson)
@@ -42,14 +42,15 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
         }
 
         // To listen directly from Azure IoT Hub and call PUT /api/deviceobservations/{deviceId}
-        //free tier: static string connectionString = "HostName=MyDrivingIoTHubEWS.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=tCI9KK86Dpkd2c22WbsRFzTQX0uMjrxnKzu1bpsM1ZI=";
-        static string connectionString = "HostName=INTER-IoT-EWS-hub-b1.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=udH+LztKT05v1gJZXzVMV+52mg3zsTtAB09JCC0YgHM=";
+        
+        static string connectionString = "XXXXXXXXXXXXXX";
         static string iotHubD2cEndpoint = "messages/events";
-        static EventHubClient eventHubClient;
+        public static EventHubClient eventHubClient;
 
 
-        public static void SimulateINTERIoT_MW()
+        public static void SimulateINTERIoT_MW(string hostValue)
         {
+            Host = hostValue;
             eventHubClient = EventHubClient.CreateFromConnectionString(connectionString, iotHubD2cEndpoint);
 
             var d2cPartitions = eventHubClient.GetRuntimeInformation().PartitionIds;
@@ -121,6 +122,9 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
         private static void SaveFile(string deviceId, JToken data)
         {
+            if (!Host.ToLower().Contains("localhost"))
+                return;
+
             Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 
             string filePath = @"D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\data\" + deviceId + "_" + unixTimestamp.ToString() + "_" + Guid.NewGuid() + ".json";
@@ -196,12 +200,17 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
             return null;
         }
 
+        public static string Host = "localhost";
+
         private static void SendFormattedDataToSituationIdentifier(JObject messageFormattedINTER_IoT_GraphSrtucture)
         {
             try
             {
                 string url = "http://localhost:53269/api/deviceobservations/123";
-                //string url = "http://inter-iot-ews-situationidentificationmanagerrest-v0.azurewebsites.net/api/deviceobservations/123";
+
+                if (!Host.ToLower().Contains("localhost"))
+                    url = "http://inter-iot-ews-situationidentificationmanagerrest-v0.azurewebsites.net/api/deviceobservations/123";
+
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "PUT";

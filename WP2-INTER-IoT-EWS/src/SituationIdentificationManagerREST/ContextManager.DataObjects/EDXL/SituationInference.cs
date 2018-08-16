@@ -18,14 +18,16 @@ namespace ContextManager.DataObjects.EDXL.InferenceHandler
             this.AttributesSituationIdentified = attributesSituationIdentified;
         }
 
-        public KeyValuePair<SeverityType, UrgencyType> GetSeverityAndUrgency()
+        public EmergencyInformation GetSeverityAndUrgency()
         {
-            KeyValuePair<SeverityType, UrgencyType> result = new KeyValuePair<SeverityType, UrgencyType>(SeverityType.Unknown, UrgencyType.Unknown);
+            EmergencyInformation result = new InferenceHandler.EmergencyInformation();
 
             switch (SituationTypeIdentified)
             {
                 case "UC01_VehicleCollisionDetected_ST01":
                 case "UC01_VehicleCollisionDetected_ST02":
+                case "UC01_VehicleCollisionDetected_ST03":
+                case "UC01_VehicleCollisionDetected_ST04":
                     result = GetSeverityAndUrgency_UC01_VehicleCollisionDetected();
                     break;
                 default:
@@ -34,37 +36,69 @@ namespace ContextManager.DataObjects.EDXL.InferenceHandler
 
             return result;
         }
-        
-        private KeyValuePair<SeverityType, UrgencyType> GetSeverityAndUrgency_UC01_VehicleCollisionDetected()
-        {
-            KeyValuePair<SeverityType, UrgencyType> result = new KeyValuePair<SeverityType, UrgencyType>(SeverityType.Unknown, UrgencyType.Unknown);
 
+        const double Gforce = 9.806; // m/s2 
+
+        private EmergencyInformation GetSeverityAndUrgency_UC01_VehicleCollisionDetected()
+        {
             // (unit of measure: m/s2.  1 G = 9.806 m/s2 (common threshold = 4G)
-            double threshold = 30; 
+            double threshold = 3 * Gforce;
+
             double computedCrossAxialValue = double.Parse(AttributesSituationIdentified["ComputedCrossAxialValue"].ToString());
 
             double acceleration = Math.Sqrt(computedCrossAxialValue);
 
-            result = ComputeUC01Classification(acceleration, threshold);
+            EmergencyInformation result = ComputeUC01Classification(acceleration, threshold);
 
             return result;
         }
         
-        private KeyValuePair<SeverityType, UrgencyType> ComputeUC01Classification(double acceleration, double threshold)
+        private EmergencyInformation ComputeUC01Classification(double acceleration, double threshold)
         {
-            KeyValuePair<SeverityType, UrgencyType> result = new KeyValuePair<SeverityType, UrgencyType>(SeverityType.Unknown, UrgencyType.Unknown);
+            EmergencyInformation emergencyInfo = new InferenceHandler.EmergencyInformation();
+            emergencyInfo.Description = "acceleration: " + acceleration + ", threshold: " + threshold;
 
             if (acceleration > threshold && acceleration <= threshold * 1.2)
-                result = new KeyValuePair<SeverityType, UrgencyType>(SeverityType.Minor, UrgencyType.Expected);
+            {
+                emergencyInfo.Severity = SeverityType.Minor;
+                emergencyInfo.Urgency = UrgencyType.Expected;
+                emergencyInfo.Description = "Green: Light accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + threshold;
+            }
             else if (acceleration > threshold * 1.2 && acceleration <= threshold * 1.4)
-                result = new KeyValuePair<SeverityType, UrgencyType>(SeverityType.Moderate, UrgencyType.Immediate);
+            {
+                emergencyInfo.Severity = SeverityType.Moderate;
+                emergencyInfo.Urgency = UrgencyType.Immediate;
+                emergencyInfo.Description = "Yellow: Accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + threshold;
+            }
             else if (acceleration > threshold * 1.4 && acceleration <= threshold * 1.6)
-                result = new KeyValuePair<SeverityType, UrgencyType>(SeverityType.Severe, UrgencyType.Immediate);
+            {
+                emergencyInfo.Severity = SeverityType.Severe;
+                emergencyInfo.Urgency = UrgencyType.Immediate;
+                emergencyInfo.Description = "Red: Hard accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + threshold;
+            }
             else if (acceleration > threshold * 1.6)
-                result = new KeyValuePair<SeverityType, UrgencyType>(SeverityType.Extreme, UrgencyType.Immediate);
+            {
+                emergencyInfo.Severity = SeverityType.Extreme;
+                emergencyInfo.Urgency = UrgencyType.Immediate;
+                emergencyInfo.Description = "ATENTION! Black: Extreme accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + threshold;
+            }
 
-            return result;
+            return emergencyInfo;
         }
 
+    }
+
+    public class EmergencyInformation
+    {
+        public SeverityType Severity { get; set; }
+        public UrgencyType Urgency { get; set; }
+        public string Description { get; set; }
+
+        public EmergencyInformation()
+        {
+            this.Severity = SeverityType.Unknown;
+            this.Urgency = UrgencyType.Unknown;
+            this.Description = "Description not set";
+        }
     }
 }

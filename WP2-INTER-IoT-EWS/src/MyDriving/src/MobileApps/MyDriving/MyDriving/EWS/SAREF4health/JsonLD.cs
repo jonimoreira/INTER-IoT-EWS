@@ -115,11 +115,11 @@ namespace MyDriving.EWS.SAREF4health
         {
             string result = "sarefInst:Acceleration_Average_Axis";
 
-            if (signalName == Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_X)
+            if (signalName == Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_X)
                 result += "X";
-            else if (signalName == Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Y)
+            else if (signalName == Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Y)
                 result += "Y";
-            else if (signalName == Shimmer3Configuration.SignalNames.LOW_NOISE_ACCELEROMETER_Z)
+            else if (signalName == Shimmer3Configuration.SignalNames.WIDE_RANGE_ACCELEROMETER_Z)
                 result += "Z";
             else if (signalName == "accelerationCrossAxial")
                 result = "sarefInst:Acceleration_CrossAxialFunction";
@@ -280,6 +280,10 @@ namespace MyDriving.EWS.SAREF4health
       '@id' : 'http://www.w3.org/2003/01/geo/wgs84_pos#long',
       '@type' : 'http://www.w3.org/2001/XMLSchema#decimal'
     },
+    'offers' : {
+      '@id' : 'https://w3id.org/saref#offers',
+      '@type' : '@id'
+    },
     'schema' : 'http://schema.org/',
     'xsd' : 'http://www.w3.org/2001/XMLSchema#',
     'xml' : 'http://www.w3.org/XML/1998/namespace',
@@ -316,7 +320,7 @@ namespace MyDriving.EWS.SAREF4health
             return contextJSON_SAREF4health;
         }
         
-        public JObject GetFieldGatewayMobileDeviceJSON_SAREF4health(string mobileDeviceId, JObject contextJSON, List<JObject> listDevicesOfDevice, double smartphoneLocationLatitude, double smartphoneLocationLongitude)
+        public JObject GetFieldGatewayMobileDeviceJSON_SAREF4health(string mobileDeviceId, JObject contextJSON, List<JObject> listDevicesOfDevice, double smartphoneLocationLatitude, double smartphoneLocationLongitude, string tripId)
         {
             string mobileId = "sarefInst:MobileDeviceAsSemanticFieldGateway_MotoG5Plus_" + mobileDeviceId;
             string label = "Smartphone";
@@ -328,7 +332,9 @@ namespace MyDriving.EWS.SAREF4health
             mobileDeviceJSON.Add("@type", "saref:Device");
             mobileDeviceJSON.Add("rdfs:label", label);
             mobileDeviceJSON.Add("rdfs:comment", comment);
-            mobileDeviceJSON.Add("saref:consistsOf", JToken.FromObject(listDevicesOfDevice));
+            mobileDeviceJSON.Add("saref:measuresProperty", GetFieldGatewayMeasuresProperty());
+            if (listDevicesOfDevice.Count > 0)
+                mobileDeviceJSON.Add("saref:consistsOf", JToken.FromObject(listDevicesOfDevice));
 
             if (smartphoneLocationLatitude != double.MinValue && smartphoneLocationLongitude != double.MinValue)
             {
@@ -336,9 +342,32 @@ namespace MyDriving.EWS.SAREF4health
                 mobileDeviceJSON.Add("geo:location", location);
             }
 
+            mobileDeviceJSON.Add("saref:offers", GetTrackTransportationService(tripId));
+            
             return mobileDeviceJSON;
         }
-        
+
+        private JObject GetFieldGatewayMeasuresProperty()
+        {
+            JObject result = new JObject();
+
+            result.Add("@id", "sarefInst:PersonTransportingGoods");
+            result.Add("@type", "saref:Property");
+
+            return result;
+        }
+
+        private JObject GetTrackTransportationService(string tripId)
+        {
+            JObject result = new JObject();
+
+            result.Add("@id", "sarefInst:ServiceTrackTransportation_" + tripId);
+            result.Add("@type", "saref:Service");
+            result.Add("rdfs:label", tripId);
+
+            return result;
+        }
+
         public JObject GetLocation(string deviceId, double lat, double lon)
         {
             Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
@@ -404,11 +433,12 @@ namespace MyDriving.EWS.SAREF4health
         }
 
 
-        public JObject GetECGDeviceJSON_SAREF4health(List<JObject> listSensorsOfDevice)
+        public JObject GetECGDeviceJSON_SAREF4health(List<JObject> listSensorsOfDevice, string tripId)
         {
             JObject recordingECGSession = new JObject();
-            recordingECGSession.Add("@id", "sarefInst:RecordingECGSession_01");
+            recordingECGSession.Add("@id", "sarefInst:RecordingECGSession_" + tripId);
             recordingECGSession.Add("@type", "saref4health:ECGRecordingSession");
+            //recordingECGSession.Add("rdf:value", tripId);
             /*
               "author" : "#LivingPerson_TruckDriver_01",
               "comment" : "An ECG recording session taken during a trip (truck driver).",
@@ -487,7 +517,7 @@ namespace MyDriving.EWS.SAREF4health
             return eCGLeadJSON;
         }
 
-        public JObject GetShimmerAccelerometerSensorJSON_SAREF4health(string _id, string _label, Measurement measurementX, Measurement measurementY, Measurement measurementZ)
+        public JObject GetAccelerometerSensorJSON_SAREF4health(string _id, string _label, Measurement measurementX, Measurement measurementY, Measurement measurementZ)
         {
             string types = "[ 'saref4health:AccelerometerSensor', 'saref:Sensor' ]";
             JArray arrayTypes = JArray.Parse(types);

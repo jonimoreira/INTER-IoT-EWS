@@ -115,15 +115,17 @@ namespace ContextManager.DataObjects.EDXL
 
             capInfoType.Event = "Activation (trigger) event of " + situationTypeIdentified;
 
-            KeyValuePair<SeverityType, UrgencyType> severityAndUrgency = situationInference.GetSeverityAndUrgency();
-            capInfoType.Severity = severityAndUrgency.Key;
-            capInfoType.Urgency = severityAndUrgency.Value;            
+            EmergencyInformation emergencySituationInfo = situationInference.GetSeverityAndUrgency();
+            capInfoType.Severity = emergencySituationInfo.Severity;
+            capInfoType.Urgency = emergencySituationInfo.Urgency;
+            capInfoType.Headline = emergencySituationInfo.Description;
+            capInfoType.Parameter = GetParameters();
 
             capInfoType.Certainty = GetCertaintyType();
 
             capInfoType.ResponseType = GetResponseTypes();
 
-            capInfoType.Audience = "TargetXX";
+            capInfoType.Audience = "Target XX";
 
             capInfoType.EventCode = GetPortValenciaEventCodes();
 
@@ -136,9 +138,7 @@ namespace ContextManager.DataObjects.EDXL
             capInfoType.Expires = GetDateTimeExpires();
 
             capInfoType.SenderName = "INTER-IoT-EWS (semiotics-iot.eu)";
-
-            capInfoType.Headline = "Hard vehicle collision detected";
-
+            
             capInfoType.Description = "Generated from situation identified: " + situationTypeIdentified;
 
             // The text describing the recommended action to be taken by recipients of the alert message
@@ -151,9 +151,24 @@ namespace ContextManager.DataObjects.EDXL
             capInfoType.Area = GetLocations();
 
             capInfoType.Resource = GetResources();
-
+            
             msgCAP.Info.Add(capInfoType);
 
+        }
+
+        private List<NameValueType> GetParameters()
+        {
+            List<NameValueType> result = new List<NameValueType>();
+
+            foreach (string key in attributesDataFromSituationIdentified.Keys)
+            {
+                NameValueType nameValueType = new NameValueType();
+                nameValueType.Name = key;
+                nameValueType.Value = attributesDataFromSituationIdentified[key].ToString();
+                result.Add(nameValueType);
+            }
+
+            return result;
         }
 
         private List<CategoryType> GetCategoryTypes()
@@ -318,46 +333,14 @@ namespace ContextManager.DataObjects.EDXL
 
                 infoTypeElementJsonLD.Add("@id", "edxl_cap_inst:Info_" + msgCAP.MessageID.Replace("edxl_cap_inst:", string.Empty) + "_" + ++i);
                 infoTypeElementJsonLD.Add("@type", "edxl_cap:Info");
-                
-                /*
-                string categories = string.Empty;
-                foreach (CategoryType categType in infoTypeElement.Category)
-                {
-                    categories += "'" + categType.ToString() + "',";
-                }
-                categories = "[" + categories.Substring(0, categories.Length - 1) + "]";
-                infoTypeElementJsonLD.Add("edxl_cap:hasCategory", JArray.Parse(categories));
-                */
                 infoTypeElementJsonLD.Add("edxl_cap:hasCategory", GetCategoryElementsAsJsonLD(infoTypeElement.Category));
-
                 infoTypeElementJsonLD.Add("edxl_cap:event", infoTypeElement.Event);
                 infoTypeElementJsonLD.Add("edxl_cap:hasUrgency", ConvertToInstanceInJsonLD(infoTypeElement.Urgency.ToString() + "_" + (int)infoTypeElement.Urgency, "['edxl_cap:Urgency','edxl_cap:" + infoTypeElement.Urgency.ToString() + "']"));
                 infoTypeElementJsonLD.Add("edxl_cap:hasSeverity", ConvertToInstanceInJsonLD(infoTypeElement.Severity.ToString() + "_" + (int)infoTypeElement.Severity, "['edxl_cap:Severity','edxl_cap:" + infoTypeElement.Severity.ToString() + "']"));
                 infoTypeElementJsonLD.Add("edxl_cap:hasCertainty", ConvertToInstanceInJsonLD(infoTypeElement.Certainty.ToString() + "_" + (int)infoTypeElement.Certainty, "['edxl_cap:Certainty','edxl_cap:" + infoTypeElement.Certainty.ToString() + "']"));
-
-                /*
-                string responseTypes = string.Empty;
-                foreach (ResponseType respType in infoTypeElement.ResponseType)
-                {
-                    responseTypes += "'" + respType.ToString() + "',";
-                }
-                responseTypes = "[" + responseTypes.Substring(0, responseTypes.Length - 1) + "]";
-                infoTypeElementJsonLD.Add("edxl_cap:hasResponseType", JArray.Parse(responseTypes));
-                */
                 infoTypeElementJsonLD.Add("edxl_cap:hasResponseType", GetResponseElementsAsJsonLD(infoTypeElement.ResponseType));
-
                 infoTypeElementJsonLD.Add("edxl_cap:audience", infoTypeElement.Audience);
-                /*
-                string eventCodes = string.Empty;
-                foreach (NameValueType eventCode in infoTypeElement.EventCode)
-                {
-                    eventCodes += "'" + eventCode.Name + "',";
-                }
-                eventCodes = "[" + eventCodes.Substring(0, eventCodes.Length - 1) + "]";
-                infoTypeElementJsonLD.Add("edxl_cap:eventCode", JArray.Parse(eventCodes));
-                */
                 infoTypeElementJsonLD.Add("edxl_cap:eventCode", GetEventCodeElementsAsJsonLD(infoTypeElement.EventCode));
-
                 infoTypeElementJsonLD.Add("edxl_cap:effective", infoTypeElement.Effective); // TODO: transform to xsd date/time
                 infoTypeElementJsonLD.Add("edxl_cap:onset", infoTypeElement.OnSet); // TODO: transform to xsd date/time
                 infoTypeElementJsonLD.Add("edxl_cap:expires", infoTypeElement.Expires); // TODO: transform to xsd date/time
@@ -367,28 +350,23 @@ namespace ContextManager.DataObjects.EDXL
                 infoTypeElementJsonLD.Add("edxl_cap:instruction", infoTypeElement.Instruction);
                 infoTypeElementJsonLD.Add("edxl_cap:webInfo", infoTypeElement.Web);
                 infoTypeElementJsonLD.Add("edxl_cap:contact", infoTypeElement.Contact);
-
-                /*
-                string areaTypes = string.Empty;
-                foreach (AreaType areaType in infoTypeElement.Area)
-                {
-                    areaTypes += "'" + areaType.AreaDesc + "',";
-                }
-                areaTypes = "[" + areaTypes.Substring(0, areaTypes.Length - 1) + "]";
-                infoTypeElementJsonLD.Add("edxl_cap:hasArea", JArray.Parse(areaTypes));
-                */
                 infoTypeElementJsonLD.Add("edxl_cap:hasArea", GetAreaElementsAsJsonLD(infoTypeElement.Area));
-                /*
-                string resources = string.Empty;
-                foreach (ResourceType resType in infoTypeElement.Resource)
-                {
-                    resources += "'" + resType.ResourceDesc + "',";
-                }
-                resources = "[" + resources.Substring(0, resources.Length - 1) + "]";
-                infoTypeElementJsonLD.Add("edxl_cap:hasResource", JArray.Parse(resources));
-                */
                 infoTypeElementJsonLD.Add("edxl_cap:hasResource", GetResourceElementsAsJsonLD(infoTypeElement.Resource));
-                
+
+                JArray parameters = new JArray();
+                foreach (NameValueType nameValueType in infoTypeElement.Parameter)
+                {
+                    JObject param = new JObject();
+                    param.Add("@type", "owl:Thing");
+                    param.Add("@id", Guid.NewGuid());
+                    param.Add("xsd:Name", nameValueType.Name);
+                    param.Add("rdf:value", nameValueType.Value);
+                    parameters.Add(param);
+
+                }
+                infoTypeElementJsonLD.Add("edxl_cap:parameter", parameters);
+
+
                 arryOfInfoElements.Add(infoTypeElementJsonLD);
             }
 
@@ -401,12 +379,18 @@ namespace ContextManager.DataObjects.EDXL
 
             foreach (AreaType areaType in areas)
             {
-                JObject areaObj = new JObject();
-                areaObj.Add("@id", areaType.ToString()); // TODO: check
-                areaObj.Add("@type", "edxl_cap:Area");
+                string id = "edxl_cap_inst:" + areaType.AreaDesc.Trim().Replace("(", "_").Replace(")", "_").Replace(" ", "_");
 
+                JObject areaObj = new JObject();
+                areaObj.Add("@id", id); 
+                areaObj.Add("@type", "edxl_cap:Area");
                 areaObj.Add("edxl_cap:areaDesc", areaType.AreaDesc);
-                areaObj.Add("edxl_cap:areaGeoCode", areaType.GeoCode.ToString()); // TODO: check
+                string geoCode = string.Empty;
+                foreach (NameValueType nameValueType in areaType.GeoCode)
+                {
+                    geoCode += nameValueType.Name + ":" + nameValueType.Value + ",";
+                }
+                areaObj.Add("edxl_cap:areaGeoCode", geoCode); 
 
                 result.Add(areaObj);
             }

@@ -14,6 +14,7 @@ using com.espertech.esper.client;
 using INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST.Models;
 using INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST.Util;
 using INTERIoTEWS.Context.DataObjects.SOSA;
+using INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST.SituationIdentification.CEP;
 
 namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST.Controllers
 {
@@ -30,16 +31,43 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "ST1", "ST2" };
+            string baseUrl = HttpContext.Request.Host.Value;
+            return new string[] { "ST1", "ST2", baseUrl };
         }
 
         // GET api/deviceobservations/5
         [HttpGet("{deviceId}")]
         public string Get(string deviceId)
         {
-            //new Task(() => { AzureIoT.ReceiveMessagesFromIoTHub(); }).Start();
-            
-            return "DeviceId: " + deviceId;
+            string result = "Id: " + deviceId;
+
+            if (deviceId.StartsWith("UC0"))
+            {
+                EventProcessor eventProcessor = new EventProcessor();
+
+                if (deviceId.Contains(","))
+                {
+                    List<string> statements = deviceId.Split(',').ToList();
+                    foreach (string statement in statements)
+                    {
+                        eventProcessor.StopStatement(statement);
+                    }
+                }
+                else
+                {
+                    eventProcessor.StopStatement(deviceId);
+                }
+                result = "EP statements stopped: " + deviceId;
+                
+            }
+            else if (deviceId == "reset")
+            {
+                EventProcessor eventProcessor = new EventProcessor();
+                eventProcessor.RestartAllStatements();
+                result = "EP statements restarted";
+            }
+
+            return result;
         }
 
         // PUT api/deviceobservations/5
