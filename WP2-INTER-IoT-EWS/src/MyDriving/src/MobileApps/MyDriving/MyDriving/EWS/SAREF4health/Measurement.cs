@@ -172,7 +172,7 @@ namespace MyDriving.EWS.SAREF4health
                     if (this.HasTimestampAsDateTime == DateTime.MinValue)
                         sarefMakesMeasurementItemJSON.Add("saref:hasTimestamp", ConvertTimestampXSDdateTime(this.HasTimestamp));
                     else
-                        sarefMakesMeasurementItemJSON.Add("saref:hasTimestamp", this.HasTimestampAsDateTime.ToString("o"));
+                        sarefMakesMeasurementItemJSON.Add("saref:hasTimestamp", this.HasTimestampAsDateTime.ToUniversalTime().ToString("o"));
 
 
                     jSONLDobject = sarefMakesMeasurementItemJSON;
@@ -238,7 +238,7 @@ namespace MyDriving.EWS.SAREF4health
             string result = string.Empty;
 
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-            dateTime = dateTime.AddMilliseconds(timestamp).ToLocalTime();
+            dateTime = dateTime.AddMilliseconds(timestamp).ToUniversalTime();
             result = dateTime.ToString("o"); // SoapDateTime.ToString(dateTime);            
 
             return result;

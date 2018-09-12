@@ -13,9 +13,8 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
     {
         private MongoClient client;
         private IMongoDatabase database;
-        //private const string mongoDbServerConnstr = "mongodb://localhost:27017";
-        private const string mongoDbServerConnstr = "mongodb://18.184.254.139:27017";
-        private const string mongoDbDatabase = "INTER_IoT_EWS_v0";
+        
+        private const string mongoDbDatabase = "INTER_IoT_EWS_v1";
         private string collection = "DeviceObservations_";
 
         public string Collection
@@ -40,20 +39,49 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
         public void SaveDocument(JToken jsonDoc)
         {
-            var collDeviceObs = database.GetCollection<BsonDocument>(Collection);
-            var docInput = BsonDocument.Parse(jsonDoc.ToString());
-            collDeviceObs.InsertOne(docInput);
-            // collDeviceObs.InsertOneAsync(docInput); // async insert
+            try
+            {
+                var collDeviceObs = database.GetCollection<BsonDocument>(Collection);
+                var docInput = BsonDocument.Parse(jsonDoc.ToString());
+                //collDeviceObs.InsertOne(docInput);
+                collDeviceObs.InsertOneAsync(docInput); // async insert
+            }
+            catch (Exception ex)
+            {
+                string result = ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ((ex.InnerException != null) ? "InnerException.Message=" + ex.InnerException.Message : string.Empty);
+                JObject test = new JObject();
+                test.Add("errorMsg", result);
+                var collDeviceObs = database.GetCollection<BsonDocument>("ErrorContextManagerInsert");
+                var docInput = BsonDocument.Parse(test.ToString());
+                //collDeviceObs.InsertOne(docInput);
+                collDeviceObs.InsertOneAsync(docInput);
+                System.Diagnostics.Trace.TraceError("[ContextManager] Error on[SaveDocument]:" + ex.Message + Environment.NewLine + "InnerException: " + ((ex.InnerException != null) ? ex.InnerException.Message : "NULL"));
+
+            }
         }
 
         public void SaveDocument(JToken jsonDoc, string collectionName)
         {
-            /*
-            var collDeviceObs = database.GetCollection<BsonDocument>(collectionName);
-            var docInput = BsonDocument.Parse(jsonDoc.ToString());
-            collDeviceObs.InsertOne(docInput);
-            // collDeviceObs.InsertOneAsync(docInput); // async insert
-            */
+            try
+            {
+                var collDeviceObs = database.GetCollection<BsonDocument>(collectionName);
+                var docInput = BsonDocument.Parse(jsonDoc.ToString());
+                //collDeviceObs.InsertOne(docInput);
+                collDeviceObs.InsertOneAsync(docInput); // async insert
+            }
+            catch (Exception ex)
+            {
+                string result = ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ((ex.InnerException != null) ? "InnerException.Message=" + ex.InnerException.Message : string.Empty);
+                JObject test = new JObject();
+                test.Add("errorMsg", result);
+                var collDeviceObs = database.GetCollection<BsonDocument>("ErrorContextManagerInsert");
+                var docInput = BsonDocument.Parse(test.ToString());
+                //collDeviceObs.InsertOne(docInput);
+                collDeviceObs.InsertOneAsync(docInput);
+                System.Diagnostics.Trace.TraceError("[ContextManager] Error on[SaveDocument2]:" + ex.Message + Environment.NewLine + "InnerException: " + ((ex.InnerException != null) ? ex.InnerException.Message : "NULL"));
+
+            }
+
         }
 
         public void SaveDocument(string jsonDoc)

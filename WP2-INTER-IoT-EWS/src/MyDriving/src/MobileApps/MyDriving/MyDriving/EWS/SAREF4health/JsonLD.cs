@@ -6,6 +6,8 @@ using System.Text;
 using Newtonsoft.Json;
 using ShimmerAPI;
 using Newtonsoft.Json.Linq;
+using MyDriving.EWS.Logistics.LogiServ;
+using MyDriving.DataObjects;
 //using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace MyDriving.EWS.SAREF4health
@@ -204,7 +206,7 @@ namespace MyDriving.EWS.SAREF4health
             string result = string.Empty;
 
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-            dateTime = dateTime.AddMilliseconds(timestamp).ToLocalTime();
+            dateTime = dateTime.AddMilliseconds(timestamp).ToUniversalTime(); //.ToLocalTime();
             result = dateTime.ToString("o"); // SoapDateTime.ToString(dateTime);            
 
             return result;
@@ -284,6 +286,21 @@ namespace MyDriving.EWS.SAREF4health
       '@id' : 'https://w3id.org/saref#offers',
       '@type' : '@id'
     },
+    'intervalOverlaps' : {
+      '@id' : 'http://www.w3.org/2006/time#intervalOverlaps',
+      '@type' : '@id'
+    },
+    'hasBeginning' : {
+      '@id' : 'http://www.w3.org/2006/time#hasBeginning',
+      '@type' : '@id'
+    },
+    'inXSDDateTime' : {
+      '@id' : 'http://www.w3.org/2006/time#inXSDDateTime',
+      '@type' : 'http://www.w3.org/2001/XMLSchema#dateTime'
+    },
+    'hasIDValue' : {
+      '@id' : 'http://ontology.tno.nl/logico#hasIDValue'
+    },
     'schema' : 'http://schema.org/',
     'xsd' : 'http://www.w3.org/2001/XMLSchema#',
     'xml' : 'http://www.w3.org/XML/1998/namespace',
@@ -310,8 +327,10 @@ namespace MyDriving.EWS.SAREF4health
     'om' : 'http://www.wurvoc.org/vocabularies/om-1.8/',
     'cc' : 'http://creativecommons.org/ns#',
     'time' : 'http://www.w3.org/2006/time#',
-    'dc' : 'http://purl.org/dc/elements/1.1/'
-  
+    'dc' : 'http://purl.org/dc/elements/1.1/',
+    'LogiServ' : 'http://ontology.tno.nl/logiserv#',
+    'LogiCO' : 'http://ontology.tno.nl/logico#'
+
 }
             ";
 
@@ -352,6 +371,16 @@ namespace MyDriving.EWS.SAREF4health
             JObject result = new JObject();
 
             result.Add("@id", "sarefInst:PersonTransportingGoods");
+            result.Add("@type", "saref:Property");
+
+            return result;
+        }
+
+        private JObject GetECGdeviceMeasuresProperty()
+        {
+            JObject result = new JObject();
+
+            result.Add("@id", "sarefInst:CardiacBehavior");
             result.Add("@type", "saref:Property");
 
             return result;
@@ -418,7 +447,7 @@ namespace MyDriving.EWS.SAREF4health
   '@id' : '" + GeneratePID_SAREF4health_ECGSampleSequence("saref4health:ECGSampleSequence_" + lead, timestamp.ToString()) + @"',
   '@type' : 'saref4health:ECGSampleSequence',
   'label' : 'ECG measurements series from lead at " + timestamp + @"',
-  'saref4health:hasValues' : [ " + seriesValuesStr + @" ],
+  'saref4health:hasValues' : { '@list' : [ " + seriesValuesStr + @" ] },
   'saref:hasTimestamp' : '" + ConvertTimestampXSDdateTime(timestamp) + @"'
 }
             ";
@@ -433,11 +462,12 @@ namespace MyDriving.EWS.SAREF4health
         }
 
 
-        public JObject GetECGDeviceJSON_SAREF4health(List<JObject> listSensorsOfDevice, string tripId)
+        public JObject GetECGDeviceJSON_SAREF4health(List<JObject> listSensorsOfDevice, string tripId, DateTime tripBeginTime)
         {
             JObject recordingECGSession = new JObject();
             recordingECGSession.Add("@id", "sarefInst:RecordingECGSession_" + tripId);
-            recordingECGSession.Add("@type", "saref4health:ECGRecordingSession");
+            recordingECGSession.Add("@type", JArray.Parse("[ 'saref4health:ECGRecordingSession', 'time:ProperInterval']"));
+            recordingECGSession.Add("time:intervalOverlaps", GetTripInformation(tripId, tripBeginTime));
             //recordingECGSession.Add("rdf:value", tripId);
             /*
               "author" : "#LivingPerson_TruckDriver_01",
@@ -448,6 +478,14 @@ namespace MyDriving.EWS.SAREF4health
              */
 
             return GetECGDeviceJSON_SAREF4health(listSensorsOfDevice, recordingECGSession);
+        }
+
+        private JObject GetTripInformation(string tripId, DateTime tripBeginTime)
+        {
+            Transport transport = new Logistics.LogiServ.Transport();
+            transport.Identifier = tripId;
+            transport.hasBeginning = tripBeginTime;
+            return GetLogicoTransport(transport);
         }
 
         public JObject GetECGDeviceJSON_SAREF4health(List<JObject> listDevicesOfDevice, JObject recordingECGSession)
@@ -467,6 +505,7 @@ namespace MyDriving.EWS.SAREF4health
             eCGDeviceJSON.Add("saref:hasManufacturer", "Shimmer");
             eCGDeviceJSON.Add("saref:hasTypicalConsumption", hasTypicalConsumption);
             eCGDeviceJSON.Add("saref:consistsOf", JToken.FromObject(listDevicesOfDevice));
+            eCGDeviceJSON.Add("saref:measuresProperty", GetECGdeviceMeasuresProperty());
 
             return eCGDeviceJSON;
         }
@@ -601,10 +640,7 @@ namespace MyDriving.EWS.SAREF4health
             });
             return graph2JSON;
         }
-
         
-
-
         public JObject CreateMessageAndDeleteList_SAREF4health(List<KeyValuePair<double, double>> valuesLead, string lead)
         {
             JObject result;
@@ -623,6 +659,276 @@ namespace MyDriving.EWS.SAREF4health
             int result = (int)(originalValue * 100.0);
             return result;
         }
+        
+
+        #region Logistics: LogiCO/LogiServ/LogiTran
+
+
+        public JObject GetLogicoTransport(Transport transport)
+        {
+            JObject result = new JObject();
+            JObject time_Instant_Begin = GetTimeInstant(transport.hasBeginning);
+            JObject time_Instant_End = GetTimeInstant(transport.hasEnd);
+
+            result.Add("@id", "LogiServInst:Transport_" + transport.Identifier);
+            result.Add("@type", "LogiServ:Transport");
+            result.Add("time:hasBeginning", time_Instant_Begin);
+            result.Add("LogiCO:hasIDValue", transport.Identifier);
+            //result.Add("time:hasEnd", time_Instant_End);
+
+            return result;
+        }
+
+        private JObject GetTimeInstant(DateTime hasBeginning)
+        {
+            JObject result = new JObject();
+
+            result.Add("@id", "timeInst:Instant_" + hasBeginning.ToString("o"));
+            result.Add("@type", "time:Instant");
+            result.Add("time:inXSDDateTime", hasBeginning.ToString("o"));
+
+            return result;
+        }
+
+        public JObject FormatMessageLogistics(Trip currentTrip, TripPoint currentPoint)
+        {
+            Transport transport = TranslateTransport(currentTrip, currentPoint);
+
+            string transportEventId = transport.Identifier + "_" + Guid.NewGuid();
+            JObject location = GetLogicoLocation(currentPoint);
+            JObject time_now = GetTimeInstant(DateTime.UtcNow);
+            JObject truck = GetLogicoTruck(transport);
+            JObject transport_jo = GetLogicoTransport(transport);
+
+            JObject result = new JObject();
+
+            JObject contextJSON = GetContextLogistics();
+            result.Add("@context", contextJSON);
+            result.Add("@id", "LogiTrans:TransportEvent_" + transportEventId);
+            result.Add("@type", "LogiTrans:TransportEvent");
+            result.Add("LogiCO:hasLocation", location);
+            result.Add("LogiServ:hasTime", time_now);
+            result.Add("LogiTrans:hasTransportHandlingUnit", truck);
+            result.Add("dul:isComponentOf", transport_jo);
+
+            return result;
+        }
+
+        private JObject GetLogicoTruck(Transport transport)
+        {
+            JObject result = new JObject();
+
+            string truck_plate = "XPT01298";
+            JObject cargo = GetLogicoCargo(transport);
+            JObject plate = GetLogicoTruckId(truck_plate);
+
+            result.Add("@id", "LogiCO:Truck_" + truck_plate);
+            result.Add("@type", "LogiCO:Truck");
+            result.Add("LogiCO:contains", cargo);
+            result.Add("LogiCO:hasID", plate);
+
+            return result;
+        }
+
+        private JObject GetLogicoTruckId(string truck_plate)
+        {
+            JObject result = new JObject();
+
+            result.Add("@id", "LogiCO:Identifier_Truck_" + truck_plate);
+            result.Add("@type", "LogiCO:Identifier");
+            result.Add("rdfs:label", truck_plate);
+
+            return result;
+        }
+
+        private JObject GetLogicoCargo(Transport transport)
+        {
+            JObject result = new JObject();
+
+            string cargoId = transport.Identifier + "_CargoId_TransportingGoodsAt_Location_" + DateTime.UtcNow.ToString("o");
+            bool isDangerous_GoodsBeingTransported = true;
+            JArray goodsItem = GetLogicoGoodsItem(transport);
+
+            result.Add("@id", "LogiTrans:Cargo_" + cargoId);
+            result.Add("@type", "LogiServ:Cargo");
+            result.Add("rdfs:label", "Cargo being transported by a truck, contains goods");
+            result.Add("LogiCO:isDangerous", isDangerous_GoodsBeingTransported);
+            result.Add("LogiCO:contains", goodsItem);
+
+            return result;
+        }
+
+        private JArray GetLogicoGoodsItem(Transport transport)
+        {
+            JArray array = new JArray();
+            for (int i = 0; i < 5; i++)
+            {
+                JObject result = new JObject();
+
+                string itemId = transport.Identifier + "_GoodsItemId";
+
+                result.Add("@id", "LogiTrans:GoodsItem_" + itemId);
+                result.Add("@type", "LogiTrans:GoodsItem");
+                result.Add("rdfs:label", "Goods item " + i);
+
+                array.Add(result);
+            }
+            return array;
+        }
+
+        private JObject GetLogicoLocation(TripPoint currentPoint)
+        {
+            JObject result = new JObject();
+
+            JObject locationId = GetLogicoLocationId(currentPoint);
+
+            result.Add("@id", "LogiTrans:TransportLocation_" + currentPoint.Latitude + "_" + currentPoint.Longitude);
+            result.Add("@type", "LogiTrans:TransportLocation");
+            result.Add("LogiCO:hasID", locationId);
+
+            return result;
+        }
+
+        private JObject GetLogicoLocationId(TripPoint currentPoint)
+        {
+            JObject result = new JObject();
+
+            JObject lat = new JObject();
+            lat.Add("@type", "http://www.w3.org/2001/XMLSchema#float");
+            lat.Add("@value", currentPoint.Latitude);
+
+            JObject lon = new JObject();
+            lon.Add("@type", "http://www.w3.org/2001/XMLSchema#float");
+            lon.Add("@value", currentPoint.Longitude);
+
+            result.Add("@id", "LogiCO:Identifier_Location_" + currentPoint.Latitude + "_" + currentPoint.Longitude);
+            result.Add("@type", JArray.Parse("['LogiCO:Identifier','geo:Point']"));
+            result.Add("geo:lat", lat);
+            result.Add("geo:long", lon);
+
+            return result;
+        }
+
+
+        public JObject GetContextLogistics()
+        {
+            JObject contextJO = new JObject();
+
+            string context = @"
+{
+    'hasConstituent' : {
+      '@id' : 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasConstituent',
+      '@type' : '@id'
+    },
+    'hasConsumer' : {
+      '@id' : 'http://ontology.tno.nl/logiserv#hasConsumer',
+      '@type' : '@id'
+    },
+    'isConstituentOf' : {
+      '@id' : 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isConstituentOf',
+      '@type' : '@id'
+    },
+    'label' : {
+      '@id' : 'http://www.w3.org/2000/01/rdf-schema#label'
+    },
+    'hasDestination' : {
+      '@id' : 'http://ontology.tno.nl/logiserv#hasDestination',
+      '@type' : '@id'
+    },
+    'hasEnd' : {
+      '@id' : 'http://www.w3.org/2006/time#hasEnd',
+      '@type' : '@id'
+    },
+    'hasBeginning' : {
+      '@id' : 'http://www.w3.org/2006/time#hasBeginning',
+      '@type' : '@id'
+    },
+    'hasProvider' : {
+      '@id' : 'http://ontology.tno.nl/logiserv#hasProvider',
+      '@type' : '@id'
+    },
+    'hasOrigin' : {
+      '@id' : 'http://ontology.tno.nl/logiserv#hasOrigin',
+      '@type' : '@id'
+    },
+    'hasStatus' : {
+      '@id' : 'http://ontology.tno.nl/logiserv#hasStatus'
+    },
+    'inXSDDateTime' : {
+      '@id' : 'http://www.w3.org/2006/time#inXSDDateTime',
+      '@type' : 'http://www.w3.org/2001/XMLSchema#dateTime'
+    },   
+    'hasLocation' : {
+      '@id' : 'http://ontology.tno.nl/logico#hasLocation',
+      '@type' : '@id'
+    },
+    'hasTime' : {
+      '@id' : 'http://ontology.tno.nl/logiserv#hasTime',
+      '@type' : '@id'
+    },
+    'hasTransportHandlingUnit' : {
+      '@id' : 'http://ontology.tno.nl/transport#hasTransportHandlingUnit',
+      '@type' : '@id'
+    },
+    'isComponentOf' : {
+      '@id' : 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isComponentOf',
+      '@type' : '@id'
+    },
+    'contains' : {
+      '@id' : 'http://ontology.tno.nl/logico#contains',
+      '@type' : '@id'
+    },
+    'hasID' : {
+      '@id' : 'http://ontology.tno.nl/logico#hasID',
+      '@type' : '@id'
+    },
+    'isDangerous' : {
+      '@id' : 'http://ontology.tno.nl/logico#isDangerous',
+      '@type' : 'http://www.w3.org/2001/XMLSchema#boolean'
+    },
+    'lat' : {
+      '@id' : 'http://www.w3.org/2003/01/geo/wgs84_pos#lat',
+      '@type' : 'http://www.w3.org/2001/XMLSchema#decimal'
+    },
+    'long' : {
+      '@id' : 'http://www.w3.org/2003/01/geo/wgs84_pos#long',
+      '@type' : 'http://www.w3.org/2001/XMLSchema#decimal'
+    },
+    'hasIDValue' : {
+      '@id' : 'http://ontology.tno.nl/logico#hasIDValue'
+    },
+    'LogiServ' : 'http://ontology.tno.nl/logiserv#',
+    'LogiCO' : 'http://ontology.tno.nl/logico#',
+    'LogiTrans' : 'http://ontology.tno.nl/transport#',
+    'LogisticsInst' : 'http://ontology.tno.nl/transport/instances/#',
+    'owl' : 'http://www.w3.org/2002/07/owl#',
+    'xsd' : 'http://www.w3.org/2001/XMLSchema#',
+    'skos' : 'http://www.w3.org/2004/02/skos/core#',
+    'rdfs' : 'http://www.w3.org/2000/01/rdf-schema#',
+    'geo' : 'http://www.w3.org/2003/01/geo/wgs84_pos#',
+    'dct' : 'http://purl.org/dc/terms/',
+    'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+    'xml' : 'http://www.w3.org/XML/1998/namespace',
+    'dcterms' : 'http://purl.org/dc/terms/',
+    'dul' : 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#',
+    'time' : 'http://www.w3.org/2006/time#',
+    'dc' : 'http://purl.org/dc/elements/1.1/'
+  }
+            ";
+
+            contextJO = JObject.Parse(context);
+
+            return contextJO;
+        }
+
+        private Transport TranslateTransport(Trip currentTrip, TripPoint currentPoint)
+        {
+            Transport result = new EWS.Logistics.LogiServ.Transport(currentTrip);
+
+            return result;
+        }
+
+        #endregion
 
     }
 }

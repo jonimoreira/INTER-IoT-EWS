@@ -1,5 +1,6 @@
 ﻿using com.espertech.esper.client;
 using com.espertech.esper.core.service;
+using ContextManager.DataObjects.EDXL.InferenceHandler;
 using INTERIoTEWS.Context.DataObjects;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,12 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                 statement.Stop();
         }
 
+        public void RecreateAllStatements()
+        {
+            epService.EPAdministrator.DestroyAllStatements();
+            CreateStatements();
+        }
+
         public void RestartAllStatements()
         {
             epService.EPAdministrator.StartAllStatements();
@@ -62,7 +69,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
         public void CreateStatements()
         {
 
-            string uc01_threshold_query = " (2 * 9.806) ";
+            string uc01_threshold_query = SituationInference.thresholdAcceleration.ToString().Replace(",", ".");
 
             {
                 // 7.1.1.1	Detected with ECG device accelerometer, computed by smartphone
@@ -75,9 +82,9 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                            o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
                            CrossAxialUsedToDetectCollision.hasResult.hasValue AS ComputedCrossAxialValue,
                            o.madeBySensor.isHostedBy.tripId AS TripId
-                    FROM  VehicleCollisionDetectedObservation.win:time(5 second) AS o 
+                    FROM  VehicleCollisionDetectedObservation.win:time(1 second) AS o 
                             INNER JOIN 
-                          Observation.win:time(5 second) AS CrossAxialUsedToDetectCollision ON o.MessageId = CrossAxialUsedToDetectCollision.MessageId
+                          Observation.win:time(1 second) AS CrossAxialUsedToDetectCollision ON o.MessageId = CrossAxialUsedToDetectCollision.MessageId
                     WHERE o.Value = true
                         AND CrossAxialUsedToDetectCollision.observedProperty.Label = 'https://w3id.org/saref/instances#CrossAxialFunction'
                 ";
@@ -142,6 +149,8 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 
             }
 
+            string queryForUC01_VehicleCollisionDetected_ST04 = string.Empty;
+
             {
                 // 7.1.1.4	Detected with smartphone accelerometer, computed by EWS (cloud)
                 // Get acceleration data and copmpute the cross axial function (Threshold in the EPL)
@@ -165,100 +174,119 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 
                 createStatement(statementName, expr);
 
-            }
+                queryForUC01_VehicleCollisionDetected_ST04 = expr;
 
+            }
             /*
             {
+
+                queryForUC01_VehicleCollisionDetected_ST04 = " SELECT resultTime FROM Observation ";
+                
+                // 7.1.1.5	Detected with ECG device and smartphone accelerometers, computed by EWS (cloud)
+                // Occurrence of UC01_ST02 and UC01_ST04
+                string statementName = "UC01_VehicleCollisionDetected_ST05";
+                var expr = @"
+                    SELECT (" + queryForUC01_VehicleCollisionDetected_ST04 + @") as test
+                    FROM Observation.win:time(5 second)";
+
+                createStatement(statementName, expr);
+
+            }
+            */
+
+            string uc02_thresholdBradycardia_query = SituationInference.thresholdBradycardia.ToString();
+
+            {
+                // 7.1.2.1	Bradycardia detected with fixed threshold
                 // Get heart rate for bradychardia detection (threshold in EPL) 
                 string statementName = "UC02_HealthEarlyWarningScore_ST01";
                 var expr = @"
                     SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
                            o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
                            o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
-                           CrossAxialUsedToDetectCollision.hasResult.hasValue AS ComputedCrossAxialValue 
-                    FROM  Observation.win:time(1 second) AS o 
-                            INNER JOIN 
-                          Observation.win:time(1 second) AS CrossAxialUsedToDetectCollision ON o.MessageId = CrossAxialUsedToDetectCollision.MessageId
-                    WHERE o.Value = true
-                        AND CrossAxialUsedToDetectCollision.observedProperty.Label = 'https://w3id.org/saref/instances#CrossAxialFunction'
+                           o.madeBySensor.isHostedBy.tripId AS TripId
+                    FROM  Observation.win:time(1 second) AS o
+                    WHERE o.observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate'
+                        AND o.hasResult.hasValue > -0.1
+                        AND o.hasResult.hasValue < " + uc02_thresholdBradycardia_query + @"
                 ";
 
                 createStatement(statementName, expr);
 
             }
 
-            /*
-            {
-                string statementName = "UC01_VehicleCollisionDetected_ST03";
-                var expr = @"
-                    SELECT AccelerationAxisX.madeBySensor.Identifier AS sensorId, AccelerationAxisX.Identifier AS observationId, AccelerationAxisX.observedProperty, 
-                           AccelerationAxisX.resultTime AS TriggerEventBegin, AccelerationAxisX.hasResult.hasValue AS resultValue, AccelerationAxisX.hasResult.hasUnit AS resultUnit,
-                           AccelerationAxisX.madeBySensor.isHostedBy.location.Lat AS latitude, AccelerationAxisX.madeBySensor.isHostedBy.location.Long AS longitude
-                           , AccelerationAxisX.observedProperty.Label, AccelerationAxisY.observedProperty.Label, AccelerationAxisZ.observedProperty.Label
-                           , AccelerationAxisX.hasResult.hasValue, AccelerationAxisY.hasResult.hasValue, AccelerationAxisZ.hasResult.hasValue
-                    FROM  Observation.win:time(2 second) AS AccelerationAxisX 
-                            INNER JOIN 
-                          Observation.win:time(2 second) AS AccelerationAxisY ON AccelerationAxisX.MessageId = AccelerationAxisY.MessageId
-                            INNER JOIN 
-                          Observation.win:time(2 second) AS AccelerationAxisZ ON AccelerationAxisY.MessageId = AccelerationAxisZ.MessageId
-                    WHERE AccelerationAxisX.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisZ'
-                ";
-                
-                createStatement(statementName, expr);
+            string uc02_thresholdTachycardia_query = SituationInference.thresholdTachycardia.ToString();
 
-            }
-
-            
             {
-                string statementName = "UC01_VehicleCollisionDetected_ST02";
+                // 7.1.2.2	Tachycardia detected with fixed threshold
+                string statementName = "UC02_HealthEarlyWarningScore_ST02";
                 var expr = @"
                     SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
                            o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
-                           o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude 
-                    FROM  Observation AS o 
-                    WHERE o.hasResult.hasValue > 1000
+                           o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
+                           o.madeBySensor.isHostedBy.tripId AS TripId
+                    FROM  Observation.win:time(1 second) AS o
+                    WHERE o.observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate'
+                        AND o.hasResult.hasValue > " + uc02_thresholdTachycardia_query + @"
                 ";
 
                 createStatement(statementName, expr);
 
             }
-          
+
+            // http://esper.espertech.com/release-6.0.1/esper-reference/html/event_patterns.html
+            // 7.5.1.4. Sensor Example
+            /*
+            This example looks at temperature sensor events named Sample. 
+            The pattern detects when 3 sensor events indicate a temperature of more then 50 degrees uninterrupted within 90 seconds of the first 
+            event, considering events for the same sensor only.
+
+            every sample=Sample(temp > 50) ->
+            ( (Sample(sensor=sample.sensor, temp > 50) and not Sample(sensor=sample.sensor, temp <= 50))   
+              ->
+              (Sample(sensor=sample.sensor, temp > 50) and not Sample(sensor=sample.sensor, temp <= 50))   
+             ) where timer:within(90 seconds))
+             
+             */
             {
-                string statementName = "OverallAverageAcceleration";
-                var expr =
-                    "SELECT avg(AccelerationX) \n" +
-                    " FROM  AccelerometerSensor.win:time(15 sec) \n" +
-                    " WHERE Identifier  =  \"sarefInst:Shimmer3AccelerometerSensor_T9JRN42\" \n";
-                
+                // 7.1.2.3	Multiple occurrences of bradycardia detected with fixed threshold
+                string statementName = "UC02_HealthEarlyWarningScore_ST03";
+                var expr = @"
+                     SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
+                           o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
+                           o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
+                           o.madeBySensor.isHostedBy.tripId AS TripId
+                    FROM pattern[every o=Observation(hasResult.hasValue < " + uc02_thresholdBradycardia_query + @") -> 
+                                    (
+                                    (Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue < " + uc02_thresholdBradycardia_query + @") and not Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue >= " + uc02_thresholdBradycardia_query + @")) 
+                                    ->
+                                    (Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue < " + uc02_thresholdBradycardia_query + @") and not Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue >= " + uc02_thresholdBradycardia_query + @")) 
+                                    ) where timer:within(20 seconds)
+                                ]
+                ";
+
                 createStatement(statementName, expr);
-                
             }
 
             {
-                string statementName = "VehicleCollisionDetected";
-                var expr =
-                    "SELECT Identifier \n" +
-                    " FROM  AccelerometerSensor \n" +
-                    " WHERE VehicleCollisionDetectedFromMobileDevice  =  true \n";
-
-                createStatement(statementName, expr);
-
-            }
-
-            
-            {
-                string statementName = "IndividualAverageAcceleration";
-                var expr =
-                    "SELECT    Identifier, \n" +
-                    "          avg(Acceleration)  \n" +
-                    " FROM     AccelerometerSensor.win:time(30 sec) \n" +
-                    " GROUP BY Identifier";
+                // 7.1.2.4	Multiple occurrences of tachycardia detected with fixed threshold
+                string statementName = "UC02_HealthEarlyWarningScore_ST04";
+                var expr = @"
+                     SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
+                           o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
+                           o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
+                           o.madeBySensor.isHostedBy.tripId AS TripId
+                    FROM pattern[every o=Observation(hasResult.hasValue > " + uc02_thresholdTachycardia_query + @") -> 
+                                    (
+                                    (Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue > " + uc02_thresholdTachycardia_query + @") and not Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue <= " + uc02_thresholdTachycardia_query + @")) 
+                                    ->
+                                    (Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue > " + uc02_thresholdTachycardia_query + @") and not Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue <= " + uc02_thresholdTachycardia_query + @")) 
+                                    ) where timer:within(20 seconds)
+                                ]
+                ";
 
                 createStatement(statementName, expr);
             }
-            */
-            //EPServiceProvider epService = EPServiceProviderManager.GetDefaultProvider();
-            //epService.EPAdministrator.GetStatement("OverallAverageAcceleration").Events += OnOverallAverageAcceleration;
 
         }
 
@@ -281,7 +309,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error on [defaultUpdateEventHandler]: " + ex.Message);
+                System.Diagnostics.Trace.TraceError("[SituationIdentificationManager] defaultUpdateEventHandler Error on situation reaction: " + ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + "InnerException:" + ((ex.InnerException != null)? ex.InnerException.Message: "NULL"));
             }
 
         }

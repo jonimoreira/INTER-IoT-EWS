@@ -1,0 +1,130 @@
+{
+  "@graph": [
+    {
+      "@graph": [
+        {
+          "@id": "InterIoTMsg:meta/36d6-49a2-82ec-d909d8e6f10b",
+          "@type": [
+            "InterIoTMsg:meta",
+            "InterIoTMsg:Device_Add"
+          ],
+          "InterIoTMsg:SenderPlatformId": {
+            "@id": "http://om2m.org/myPlatform"
+          },
+          "InterIoTMsg:conversationID": "conv614d3621-7399-45b1-bf2f-505b24045ea7",
+          "InterIoTMsg:dateTimeStamp": "2018-01-15T15:49:00.655+01:00",
+          "InterIoTMsg:messageID": "msg7713aa0f-61df-471d-beec-80e8fb71528b"
+        }
+      ],
+      "@id": "InterIoTMsg:metadata"
+    },
+    {
+      "@graph": [
+        {
+          "@id": "http://myplatform:8080/weather/station1",
+          "@type": ["http://inter-iot.eu/GOIoTP#IoTDevice", "ssn:System"],
+          "iiotex:hasLocalID": "WS_1",
+          "iiot:hasName": "Weather Station 1",
+          "iiot:hasDescription": "First Weather Station on the mountain",
+          "iiot:hasLocation": {
+            "@id": "_:b3"
+          },
+          "iiot:hasCoverage": {
+            "@id": "_:b4"
+          },
+          "sosa:hosts": [
+            {
+              "@id": "_:b0"
+            },
+            {
+              "@id": "_:b1"
+            },
+            {
+              "@id": "_:b2"
+            }
+          ]
+        },
+        {
+          "@id": "_:b3",
+          "@type": [
+            "iiot:Location",
+            "geosparql:Geometry"
+          ],
+          "geosparql:asWKT": {
+            "@type": "geosparql:wktLiteral",
+            "@value": "POINT(46.9726 11.7250)"
+          }
+        },
+        {
+          "@id": "_:b4",
+          "@type": [
+            "iiot:Location",
+            "geosparql:Geometry"
+          ],
+          "geosparql:asWKT": {
+            "@type": "geosparql:wktLiteral",
+            "@value": "POLYGON((46.9809 11.9221, 46.9702 11.9299, 46.8717 11.638, 46.9876 11.8250, 46.9916 11.7251))"
+          }
+        },
+        {
+          "@id": "_:b0",
+          "@type": "sosa:Sensor",
+          "sosa:isHostedBy": {
+            "@id": "http://myplatform:8080/weather/station1"
+          },
+          "sosa:observes": {
+            "@id": "_:b5"
+          }
+        },
+        {
+          "@id": "_:b1",
+          "@type": "sosa:Sensor",
+          "sosa:isHostedBy": {
+            "@id": "http://myplatform:8080/weather/station1"
+          }
+        },
+        {
+          "@id": "_:b2",
+          "@type": "sosa:Actuator",
+          "sosa:isHostedBy": {
+            "@id": "http://myplatform:8080/weather/station1"
+          },
+          "ssn:forProperty": {
+            "@id": "_:b6"
+          }
+        },
+        {
+          "@id": "_:b5",
+          "@type": [
+            "iiotex:Temperature",
+            "sosa:ObservableProperty",
+            "ssn:Property"
+          ],
+          "iiot:hasDescription": "air temperature on the mountain top",
+          "sosa:isObservedBy": {
+            "@id": "_:b0"
+          }
+        },
+        {
+          "@id": "_:b6",
+          "@type": [
+            "sosa:ActuatableProperty",
+            "ssn:Property"
+          ],
+          "iiot:hasDescription": "Rain catcher open/close"
+        }
+      ],
+      "@id": "InterIoTMsg:payload"
+    }
+  ],
+  "@context": {
+    "InterIoTMsg": "http://inter-iot.eu/message/",
+    "InterIoT": "http://inter-iot.eu/",
+    "ssn": "http://www.w3.org/ns/ssn/",
+    "sosa": "http://www.w3.org/ns/sosa/",
+    "iiot": "http://inter-iot.eu/GOIoTP#",
+    "iiotex": "http://inter-iot.eu/GOIoTPex#",
+    "geosparql": "http://www.opengis.net/ont/geosparql#",
+    "geosparqlf": "http://www.opengis.net/def/function/geosparql/"
+  }
+}

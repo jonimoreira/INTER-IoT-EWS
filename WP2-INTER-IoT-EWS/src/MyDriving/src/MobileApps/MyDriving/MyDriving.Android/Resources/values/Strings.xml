@@ -3,5 +3,12 @@
 	<string name="login_facebook">Login with Facebook</string>
     <string name="login_twitter">Login with Twitter</string>
     <string name="login_microsoft">Login with Microsoft</string>
-    
+
+  <string name="app_name">HelloSpinner</string>
+  <string name="planet_prompt">Choose device</string>
+  <string-array name="planets_array">
+    <item>Device 1- 00:06:66:88:db:ca</item>
+    <item>Device 2- 00:06:66:e7:b3:21</item>
+  </string-array>
+  
 </resources>

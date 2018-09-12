@@ -118,9 +118,7 @@ namespace MyDriving.Utils
         {
             get
             {
-                // TODO: Check why SharedAccessKey is pointing to the access key of the IoT device of the free tier IoT Hub (I think it was a step during the registration, maybe linked to the MS Account (FB? HockeyApp?))
-                return "HostName=INTER-IoT-EWS-hub-b1.azure-devices.net;DeviceId=ZY224DC54P;SharedAccessKey=4JNGbXKLdw8sxdRFUcR5111efeHLNLi2W86AtJtMXls=";
-                //return AppSettings.GetValueOrDefault(DeviceConnectionStringKey, DeviceConnectionStringDefault);
+                
             }
             set
             {

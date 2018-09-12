@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE RDF
+        [
+                <!ENTITY sripas "http://www.inter-iot.eu/sripas#">
+                <!ENTITY var "http://www.inter-iot.eu/sripas#node_">
+                <!ENTITY sosa "http://www.w3.org/ns/sosa/">
+                <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+                <!ENTITY iiot "http://inter-iot.eu/GOIoTP#">
+                <!ENTITY iiotex "http://inter-iot.eu/GOIoTPex#">
+                <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <!ENTITY var "http://www.inter-iot.eu/sripas#node_">
+                <!ENTITY sarefInstances "https://w3id.org/saref/instances#">
+                <!ENTITY geo-sf "http://www.opengis.net/def/sf/">
+                <!ENTITY saref "https://w3id.org/saref#">
+                <!ENTITY time "http://www.w3.org/2006/time#">
+                <!ENTITY geo "http://www.w3.org/2003/01/geo/wgs84_pos#">
+                <!ENTITY geosparql "http://www.opengis.net/ont/geosparql#">
+                <!ENTITY sweet_units "http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#">
+                <!ENTITY sweet_screla "http://sweet.jpl.nasa.gov/2.3/relaSci.owl#">
+                <!ENTITY sweet_mrela "http://sweet.jpl.nasa.gov/2.3/relaMath.owl#">
+                <!ENTITY sosaInst "http://www.w3.org/ns/sosa/instances/">
+                ]
+        >
+<rdf:RDF  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+          xmlns:sripas="http://www.inter-iot.eu/sripas#"
+          xmlns:var="http://www.inter-iot.eu/sripas#node_"
+          xmlns:align="http://knowledgeweb.semanticweb.org/heterogeneity/alignment#"
+          xmlns:dcelem="http://purl.org/dc/elements/1.1/"
+          xmlns:exmo="http://exmo.inrialpes.fr/align/ext/1.0/#"
+          xmlns:sosa="http://www.w3.org/ns/sosa/"
+          xmlns:iiot="http://inter-iot.eu/GOIoTP#"
+          xmlns:time="http://www.w3.org/2006/time#"
+          xmlns:sarefInstances="https://w3id.org/saref/instances#"
+          xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+          xmlns:geosparql="http://www.opengis.net/ont/geosparql#"
+          xmlns:sweet_units="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#"
+          xmlns:sweet_screla="http://sweet.jpl.nasa.gov/2.3/relaSci.owl#"
+          xmlns:sweet_mrela="http://sweet.jpl.nasa.gov/2.3/relaMath.owl#"
+          xmlns:saref="https://w3id.org/saref#"
+>
+    <align:Alignment>
+
+        <dcelem:title>SAREF_CO</dcelem:title>
+        <exmo:version>0.59</exmo:version>
+        <dcelem:creator>Joao Moreira (U.Twente)</dcelem:creator>
+        <dcelem:description>ETSI SAREF to GOIoTP (W3C SSN/SOSA)</dcelem:description>
+
+        <align:xml>yes</align:xml>
+        <align:level>2IPSM</align:level>
+        <align:type>**</align:type>
+        <align:method>manual</align:method>
+        <align:time>07-09-2018</align:time>
+        <sripas:cellFormat>
+            <iiot:DataFormat rdf:about="http://inter-iot.eu/sripas#turtle" />
+        </sripas:cellFormat>
+
+        <align:onto1>
+            <align:Ontology rdf:about="https://w3id.org/saref#">
+                <align:formalism>
+                    <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#" />
+                </align:formalism>
+            </align:Ontology>
+        </align:onto1>
+        <align:onto2>
+            <align:Ontology rdf:about="http://inter-iot.eu/goiotpex#">
+                <align:formalism>
+                    <align:Formalism align:name="OWL2.0" align:uri="http://www.w3.org/2002/07/owl#" />
+                </align:formalism>
+            </align:Ontology>
+        </align:onto2>
+
+        <sripas:steps rdf:parseType="Collection">
+            <sripas:step sripas:order="1" sripas:cell="http://www.inter-iot.eu/sripas#Cell1"/>
+            <sripas:step sripas:order="2" sripas:cell="http://www.inter-iot.eu/sripas#Cell2"/>
+            <sripas:step sripas:order="3" sripas:cell="http://www.inter-iot.eu/sripas#Cell3"/>
+            <sripas:step sripas:order="4" sripas:cell="http://www.inter-iot.eu/sripas#Cell4"/>
+            <sripas:step sripas:order="5" sripas:cell="http://www.inter-iot.eu/sripas#Cell5"/>
+            <sripas:step sripas:order="6" sripas:cell="http://www.inter-iot.eu/sripas#Cell6"/>
+        </sripas:steps>
+
+        <align:map>
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell1">
+                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTA a saref:Sensor ;
+                        saref:measuresProperty var:CTD ;
+                        saref:makesMeasurement var:CTB .
+                    var:CTB saref:hasValue var:CTV ;
+                        saref:hasTimestamp var:CTT ;
+                        saref:relatesToProperty var:CTC ;
+                        saref:isMeasuredIn var:CTU .
+                </align:entity1>
+                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTB a sosa:Observation ;
+                        sosa:madeBySensor var:CTA ;
+                        sosa:hasResult [
+                            a sosa:Result ;
+                            iiot:hasValue var:CTV ;
+                            iiot:hasUnit var:CTU
+                        ] ;
+                        sosa:observedProperty var:CTC ;
+                        sosa:phenomenonTime [
+                            a time:Instant ;
+                            time:inTimePosition [
+                                a time:TimePosition ;
+                                time:numericPosition var:CTT
+                            ]
+                        ] .
+                    var:CTA a sosa:Sensor ;
+                        saref:measuresProperty var:CTD .
+                </align:entity2>
+                <align:relation>=</align:relation>
+            </align:Cell>
+        </align:map>
+
+        <align:map>
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell2">
+                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTX geo:lat var:x ;
+                        geo:long var:y .
+                </align:entity1>
+                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTX geosparql:asWKT var:z .
+                </align:entity2>
+                <align:relation>=</align:relation>
+                <sripas:transformation rdf:parseType="Literal">
+                    <sripas:function sripas:about="str">
+                        <sripas:param sripas:order="1" sripas:about="&var;x"/>
+                        <sripas:return sripas:about="&var;sx"/>
+                    </sripas:function>
+                    <sripas:function sripas:about="str">
+                        <sripas:param sripas:order="1" sripas:about="&var;y"/>
+                        <sripas:return sripas:about="&var;sy"/>
+                    </sripas:function>
+                    <sripas:function sripas:about="concat">
+                        <sripas:param sripas:order="1" sripas:val="Point("/>
+                        <sripas:param sripas:order="2" sripas:about="&var;sx"/>
+                        <sripas:param sripas:order="3" sripas:val=" "/>
+                        <sripas:param sripas:order="4" sripas:about="&var;sy"/>
+                        <sripas:param sripas:order="5" sripas:val=")"/>
+                        <sripas:return about="&sripas;node_z"/>
+                    </sripas:function>
+                </sripas:transformation>
+                <sripas:filters rdf:parseType="Literal">
+                    <sripas:filter sripas:about="&var;sx" sripas:datatype="&xsd;string"/>
+                    <sripas:filter sripas:about="&var;sy" sripas:datatype="&xsd;string"/>
+                </sripas:filters>
+                <sripas:typings rdf:parseType="Literal">
+                    <sripas:typing sripas:about="&var;z" sripas:datatype="&geo-sf;wktLiteral"/>
+                </sripas:typings>
+            </align:Cell>
+        </align:map>
+
+        <align:map>
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell3">
+                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTA a saref:Device ;
+                        saref:consistsOf var:CTB .
+                    var:CTB saref:measuresProperty var:CTC .
+                </align:entity1>
+                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTA a sosa:Platform ;
+                        sosa:hosts var:CTB .
+                    var:CTB sosa:observes var:CTC .
+                </align:entity2>
+                <align:relation>=</align:relation>
+            </align:Cell>
+        </align:map>
+
+        <align:map>
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell4">
+                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTA sosa:observedProperty sarefInstances:BatteryLevel .
+                </align:entity1>
+                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTS sosa:observedProperty sarefInstances:BatteryLevel .
+                    sarefInstances:BatteryLevel a sosa:ObservableProperty .
+                </align:entity2>
+                <align:relation>=</align:relation>
+            </align:Cell>
+        </align:map>
+
+        <align:map>
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell5">
+                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTA iiot:hasUnit sarefInstances:ElectricPotential_MilliVolts .
+                </align:entity1>
+                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTA iiot:hasUnit sarefInstances:ElectricPotential_MilliVolts .
+                    sarefInstances:ElectricPotential_MilliVolts a sweet_units:Unit, sweet_units:UnitDerivedByScaling ;
+                        sweet_screla:hasBaseUnit sweet_units:volt ;
+                        sweet_screla:hasPrefix sweet_units:milli ;
+                        sweet_mrela:hasScalingNumber 0.001 .
+                </align:entity2>
+                <align:relation>=</align:relation>
+            </align:Cell>
+        </align:map>
+
+        <align:map>
+            <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell6">
+                <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTA geo:location var:CTB .
+                    var:CTB a geo:Point .
+                </align:entity1>
+                <align:entity2 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+                    var:CTA iiot:hasLocation var:CTB .
+                    var:CTB a iiot:Location .
+                </align:entity2>
+                <align:relation>=</align:relation>
+            </align:Cell>
+        </align:map>
+    </align:Alignment>
+</rdf:RDF>

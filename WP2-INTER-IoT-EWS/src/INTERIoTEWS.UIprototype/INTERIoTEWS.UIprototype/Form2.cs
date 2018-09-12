@@ -1,12 +1,16 @@
 ﻿using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using INTERIoTEWS.Context.DataObjects.SOSA;
+using INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST.Util;
 using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -40,6 +44,8 @@ namespace INTERIoTEWS.UIprototype
             comboBox1_SelectedIndexChanged(null, null);
         }
 
+        private const double defaultLatitude = 52.2390134;
+        private const double defaultLongitude = 6.857026;
 
         private void LoadMap()
         {
@@ -48,10 +54,16 @@ namespace INTERIoTEWS.UIprototype
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
             gmap.SetPositionByKeywords("Enschede");
             //gmap.Position = new GMap.NET.PointLatLng(48.8589507, 2.2775175);
-            gmap.Position = new GMap.NET.PointLatLng(52.2390134, 6.857026);
+            gmap.Position = new GMap.NET.PointLatLng(defaultLatitude, defaultLongitude);
             gmap.ShowCenter = false;
             gmap.CanDragMap = true;
             gmap.DragButton = MouseButtons.Left;
+            gmap.OnMarkerClick += new MarkerClick(gmap_OnMarkerClick);
+        }
+
+        private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+        {
+            textBox4.Text = item.Position.Lat + "," + item.Position.Lng + "   " + item.Tag;
         }
 
         private void PlotTripPoint()
@@ -96,6 +108,7 @@ namespace INTERIoTEWS.UIprototype
             
             int i = 0;
             TripPointHelper = null;
+            double lastHeartRate = 80;
 
             foreach (FileInfo file in files)
             {
@@ -182,7 +195,12 @@ namespace INTERIoTEWS.UIprototype
 
                         LiteralNode heartRateLiteral = (LiteralNode)spqlResult.Value("measHRValue");
                         double heartRate = heartRateLiteral.AsValuedNode().AsDouble();
+                        if (heartRate < 0)
+                        {
+                            heartRate = lastHeartRate;
+                        }
                         point.HeartRate = heartRate;
+                        lastHeartRate = heartRate;
 
                         LiteralNode batteryLevelLiteral = (LiteralNode)spqlResult.Value("measBatteryECGValue");
                         double batteryLevel = batteryLevelLiteral.AsValuedNode().AsDouble();
@@ -225,6 +243,7 @@ namespace INTERIoTEWS.UIprototype
 
             //textBox1.Text = string.Empty;
             Point lastPoint = null;
+            Point firstPoint = null;
             var list = tripPointHelper.TripPoint.Keys.ToList();
             list.Sort();
             Dictionary<string, double> repeatedPoints = new Dictionary<string, double>();
@@ -244,10 +263,14 @@ namespace INTERIoTEWS.UIprototype
                 if (!ContainsPoint(pointLatLng, repeatedPoints) && IsInTheRangeOfPosition(point, lastPoint))
                 {
                     points.Add(pointLatLng);
+                    AddMarker(point, GMarkerGoogleType.red_small, "file:" + point.OriginalFileName);
                     //textBox1.Text += "[" + point.DateTimeMessageSent.ToString("o") + "] Lat:" + point.Latitude + " |Lon:" + point.Longitude + Environment.NewLine;
 
                     if (lastPoint == null)
+                    {
                         AddMarker(point, GMarkerGoogleType.green_big_go, "Start");
+                        firstPoint = point;
+                    }
 
                     lastPoint = point;
                 }
@@ -267,6 +290,12 @@ namespace INTERIoTEWS.UIprototype
             route.Stroke = new Pen(Color.Red, 3);
             routes.Routes.Add(route);
             gmap.Overlays.Add(routes);
+            gmap.UpdateRouteLocalPosition(route);
+
+            if (firstPoint != null)
+            {
+                gmap.Position = new GMap.NET.PointLatLng(firstPoint.Latitude, firstPoint.Longitude);
+            }
             //gmap.Update();
             //gmap.Overlays[0].IsVisibile = false;
             //gmap.Overlays[0].IsVisibile = true;
@@ -294,7 +323,7 @@ namespace INTERIoTEWS.UIprototype
             return true;
             if (pointLast != null)
             {
-                double threshold = 0.0004;
+                double threshold = 0.0007;
                 if ((Math.Abs(pointCurrent.Latitude - pointLast.Latitude) > threshold)
                     || (Math.Abs(pointCurrent.Longitude - pointLast.Longitude) > threshold))
                     return false;
@@ -305,10 +334,22 @@ namespace INTERIoTEWS.UIprototype
 
         private void AddMarker(Point point, GMarkerGoogleType markerType, string tooltipText)
         {
+            if (point == null)
+                return;
+
             GMapOverlay markers = new GMapOverlay("markers");
             GMapMarker marker = new GMarkerGoogle(new PointLatLng(point.Latitude, point.Longitude), markerType);
-            marker.ToolTipMode = MarkerTooltipMode.Always;
-            marker.ToolTipText = tooltipText;
+
+            if (tooltipText.StartsWith("file:"))
+            {
+                marker.Tag = tooltipText;
+            }
+            else if (tooltipText != string.Empty)
+            {
+                marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                marker.ToolTipText = tooltipText;
+            }
+            
 
             markers.Markers.Add(marker);
             gmap.Overlays.Add(markers);
@@ -498,9 +539,6 @@ namespace INTERIoTEWS.UIprototype
 
         static Microsoft.Azure.Devices.Client.DeviceClient deviceClient;
 
-        static string iotHubUri = "XXXXXXXXXXXXXXXX";
-        static string deviceKey = "XXXXXXXXXXXXXXXX";
-        static string deviceId = "XXXXXXXXXXXXXXXX";
 
         public void SendDataToAzureIoTHub(int threadSleep)
         {
@@ -527,11 +565,10 @@ namespace INTERIoTEWS.UIprototype
 
         }
 
-        // To listen directly from Azure IoT Hub and call PUT /api/deviceobservations/{deviceId}
-        static string connectionString = "XXXXXXXXXXXXXXXX";
         static string iotHubD2cEndpoint = "messages/events";
         static EventHubClient eventHubClient;
 
+        bool isConnectedToIoTHub = false;
         public void SimulateINTERIoT_MW()
         {
             eventHubClient = EventHubClient.CreateFromConnectionString(connectionString, iotHubD2cEndpoint);
@@ -543,11 +580,17 @@ namespace INTERIoTEWS.UIprototype
             var tasks = new List<Task>();
             foreach (string partition in d2cPartitions)
             {
+                if (!isConnectedToIoTHub)
+                {
+                    SetText("Connected to IoT Hub", true);
+                    isConnectedToIoTHub = true;
+                }
                 tasks.Add(ReceiveMessagesFromIoTHub(partition, cts.Token));
             }
             Task.WaitAll(tasks.ToArray());
         }
 
+        bool firstMessageArrived = false;
         private async Task ReceiveMessagesFromIoTHub(string partition, CancellationToken ct)
         {
             var eventHubReceiver = eventHubClient.GetDefaultConsumerGroup().CreateReceiver(partition, DateTime.UtcNow);
@@ -556,6 +599,15 @@ namespace INTERIoTEWS.UIprototype
                 if (ct.IsCancellationRequested) break;
                 EventData eventData = await eventHubReceiver.ReceiveAsync();
                 if (eventData == null) continue;
+
+                /*
+                if (!firstMessageArrived)
+                {
+                    SetText("First message arrived", true);
+                    firstMessageArrived = true;
+                }
+                */
+                SetText("Message arrived at " + DateTime.Now.ToString("o") + Environment.NewLine, true);
 
                 string data = Encoding.UTF8.GetString(eventData.GetBytes());
                 Console.WriteLine("Message received. Partition: {0} Data: '{1}'", partition, data);
@@ -590,7 +642,8 @@ namespace INTERIoTEWS.UIprototype
                             break;
                     }
 
-                    SaveFile(domain, data);
+                    new Task(() => { SaveFile(domain, data); }).Start();
+
 
                 }
 
@@ -603,11 +656,11 @@ namespace INTERIoTEWS.UIprototype
             GMapRoute route = null;
             List<PointLatLng> points = null;
             PointLatLng lastPoint = new PointLatLng();
-
+            
             if (gmap.Overlays.Count > 0)
             {
                 routes = gmap.Overlays[0];
-                route = routes.Routes[0];
+                route = (routes.Routes.Count > 0)? routes.Routes[0]: new GMapRoute("routes");
                 points = route.Points;
                 if (route.Points.Count > 0)
                     lastPoint = route.Points[route.Points.Count - 1];
@@ -670,12 +723,20 @@ namespace INTERIoTEWS.UIprototype
                         "description: " + description + Environment.NewLine +
                         "instruction: " + instruction;
 
+                    if (lat == 0 || lon == 0)
+                    {
+                        lat = defaultLatitude;
+                        lon = defaultLongitude;
+                    }
+
                     GMapOverlay markers = new GMapOverlay("markers");
                     GMapMarker marker = new GMarkerGoogle(new PointLatLng(lat, lon), GMarkerGoogleType.red_big_stop);
                     marker.ToolTipMode = MarkerTooltipMode.Always;
                     marker.ToolTipText = toolTip;
                     markers.Markers.Add(marker);
                     gmap.Overlays.Add(markers);
+
+                    break;
                 }
             }
         }
@@ -890,21 +951,18 @@ namespace INTERIoTEWS.UIprototype
         {
             GMapOverlay routes = null;
             GMapRoute route = null;
-            List<PointLatLng> points = null;
-            PointLatLng lastPoint = new PointLatLng();
+            PointLatLng lastPoint = new PointLatLng(999,999);
 
             if (gmap.Overlays.Count > 0)
             {
-                routes = gmap.Overlays[0];
-                route = routes.Routes[0];
-                points = route.Points;
+                routes = gmap.Overlays.Where(x => x.Id == "routes").FirstOrDefault();
+                route = (routes != null && routes.Routes != null && routes.Routes.Count > 0)? routes.Routes[0]: new GMapRoute("routes");
                 if (route.Points.Count > 0)
                     lastPoint = route.Points[route.Points.Count - 1];
             }
             else
             {
                 routes = new GMapOverlay("routes");
-                points = new List<PointLatLng>();
             }
 
 
@@ -915,10 +973,16 @@ namespace INTERIoTEWS.UIprototype
             {
                 jsonLdParser.Load(tStore, reader);
             }
-
+            SetText("After loading triplestore: " + DateTime.Now.ToString("o") + Environment.NewLine, true);
+            
             string sparqlQuery = sparqlQuery01;
 
-            Object results = tStore.ExecuteQuery(sparqlQuery);
+            SparqlQueryParser sparqlparser = new SparqlQueryParser();
+            SparqlQuery query = sparqlparser.ParseFromString(sparqlQuery);
+            query.Timeout = 999999;
+            
+            //Object results = tStore.ExecuteQuery(sparqlQuery);
+            Object results = tStore.ExecuteQuery(query);
 
             //SparqlQuery query = sparqlparser.ParseFromString(sparqlQuery);
             //Object results = processor.ProcessQuery(query);
@@ -926,7 +990,7 @@ namespace INTERIoTEWS.UIprototype
             if (results is SparqlResultSet)
             {
                 SparqlResultSet rset = (SparqlResultSet)results;
-                SetText("query count:" + rset.Count + Environment.NewLine, true);
+                SetText("sparqlQuery01 result count:" + rset.Count + " at " + DateTime.Now.ToString("o") + Environment.NewLine, true);
 
                 foreach (SparqlResult spqlResult in rset)
                 {
@@ -946,7 +1010,7 @@ namespace INTERIoTEWS.UIprototype
                     double acceleration_Average_AxisZ = Acceleration_Average_AxisZ.AsValuedNode().AsDouble();
 
                     //textBox1.Text += "device: " + deviceId + ", sensor: " + sesorId + ", measTime: " + measDateTime.ToString("o") + ", lat: " + lat + ", lon: " + lon + Environment.NewLine;
-                    SetText("sensor: " + sesorId + ", measTime: " + measDateTime.ToString("o") + ", lat: " + lat + ", lon: " + lon + ", accelX: " + acceleration_Average_AxisX + ", accelY: " + acceleration_Average_AxisY + ", accelZ: " + acceleration_Average_AxisZ + Environment.NewLine, true);
+                    SetText("[" + DateTime.Now.ToString("o") + "] sensor: " + sesorId + ", measTime: " + measDateTime.ToString("o") + ", lat: " + lat + ", lon: " + lon + ", accelX: " + acceleration_Average_AxisX + ", accelY: " + acceleration_Average_AxisY + ", accelZ: " + acceleration_Average_AxisZ + Environment.NewLine, true);
 
                     string latlon = lat + "_" + lon;
                     if (repeatedPointsFromMessage.ContainsKey(latlon))
@@ -958,23 +1022,33 @@ namespace INTERIoTEWS.UIprototype
 
                     // check if the same lat/lon was already plotted (device not in movment)
                     // check if point is out of range from the prior point
-                    if (!ContainsPoint(pointLatLng, repeatedPointsFromMessage) && IsInTheRangeOfPosition(pointLatLng, lastPoint))
+                    //if (!ContainsPoint(pointLatLng, repeatedPointsFromMessage) && IsInTheRangeOfPosition(pointLatLng, lastPoint))
+                    if (lastPoint.Lat == 999 || IsInTheRangeOfPosition(pointLatLng, lastPoint))
                     {
-                        points.Add(pointLatLng);
+                        //points.Add(pointLatLng);
 
                         if (route == null)
-                            route = new GMapRoute(points, GetComboSelectedItem());
-                        route.Stroke = new Pen(Color.Green, 3);
-                        if (routes.Routes.Count == 0)
+                            route = new GMapRoute("routes");
+                        
+                        route.Points.Add(pointLatLng);
+                        Point point = new Point(pointLatLng.Lat, pointLatLng.Lng, DateTime.Now, 0, 0, 0, "");
+                        AddMarker(point, GMarkerGoogleType.red_small, string.Empty);
+
+                        route.Stroke = new Pen(Color.Red, 3);
+                        if (routes != null && routes.Routes != null && routes.Routes.Count == 0)
                         {
                             routes.Routes.Add(route);
                             gmap.Overlays.Add(routes);
                         }
-                        else
-                        {
+                        else if (routes != null && routes.Routes != null)
+                        {                            
                             routes.Routes[0] = route;
                             gmap.Overlays[0] = routes;
                         }
+                        gmap.UpdateRouteLocalPosition(route);
+                        
+                        //gmap.Position = new GMap.NET.PointLatLng(pointLatLng.Lat, pointLatLng.Lng);
+
                     }
                     // Add acceleration data
                     Chart chart1_otherthread = GetChart1();
@@ -986,9 +1060,28 @@ namespace INTERIoTEWS.UIprototype
 
                     //chart1_otherthread.ChartAreas[0].AxisY.Interval = tripPointHelper.TripPoint.Count / 5;
                     //chart1_otherthread.ChartAreas[0].AxisX.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
-                    
+
+                    SetText("[" + DateTime.Now.ToString("o") + "] After plotting in map" + Environment.NewLine, true);
+
 
                 }
+            }
+
+            sparqlQuery = sparqlQuery03;
+            results = tStore.ExecuteQuery(sparqlQuery);
+            if (results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+                SetText("Heart rate query: " + rset.Count + " at " + DateTime.Now.ToString("o") + Environment.NewLine, true);
+
+                foreach (SparqlResult spqlResult in rset)
+                {
+                    LiteralNode heartRateLiteral = (LiteralNode)spqlResult.Value("measHRValue");
+                    double heartRate = heartRateLiteral.AsValuedNode().AsDouble();
+
+                    SetText("Heart rate computed: " + heartRate + " (bpm) at " + DateTime.Now.ToString("o") + Environment.NewLine, true);
+                }
+
             }
         }
 
@@ -1006,6 +1099,8 @@ namespace INTERIoTEWS.UIprototype
             {
                 outputFile.Write(data.ToString());
             }
+            SetText("File saved at " + DateTime.Now.ToString("o") + " : " + filePath + Environment.NewLine, true);
+
         }
 
         delegate void SetTextCallback(string text, bool concat);
@@ -1022,7 +1117,7 @@ namespace INTERIoTEWS.UIprototype
                 if (concat)
                     this.textBox1.Text += text;
                 else
-                    this.textBox1.Text = text;
+                    this.textBox1.Text = ">> " + text;
 
             }
         }
@@ -1072,13 +1167,21 @@ namespace INTERIoTEWS.UIprototype
             }
         }
 
+        bool RunningLocal = true;
+
         private void DisableOverlapingSituationTypes()
         {
             try
             {
                 // Call ContextManager to start listening (subscribe) IoT Hub 
                 string baseUrlCM = "https://inter-iot-ews-contextmanagerrest-v0.azurewebsites.net/api/deviceobservations/";
-                HttpWebRequest requestCM = (HttpWebRequest)WebRequest.Create(baseUrlCM + "subscribe");
+
+                if (RunningLocal)
+                    baseUrlCM = "http://localhost:53268/api/deviceobservations/";
+
+                string subscribeMsg = "translation-" + ((radioButton1.Checked) ? "1" : (radioButton2.Checked) ? "2" : "3");
+
+                HttpWebRequest requestCM = (HttpWebRequest)WebRequest.Create(baseUrlCM + subscribeMsg);
                 requestCM.AutomaticDecompression = DecompressionMethods.GZip;
                 using (HttpWebResponse response = (HttpWebResponse)requestCM.GetResponse())
                 using (Stream stream = response.GetResponseStream())
@@ -1087,11 +1190,12 @@ namespace INTERIoTEWS.UIprototype
                     string html = reader.ReadToEnd();
                 }
 
-                //string baseUrl = "http://localhost:53269/api/deviceobservations/";
                 string baseUrl = "http://inter-iot-ews-situationidentificationmanagerrest-v0.azurewebsites.net/api/deviceobservations/";
+                if (RunningLocal)
+                    baseUrl = "http://localhost:53269/api/deviceobservations/";
 
                 // First reset all STs
-                string url = baseUrl + "reset";
+                string url = baseUrl + "reset-" + subscribeMsg;
                 HttpWebRequest requestReset = (HttpWebRequest)WebRequest.Create(url);
                 requestReset.AutomaticDecompression = DecompressionMethods.GZip;
                 using (HttpWebResponse response = (HttpWebResponse)requestReset.GetResponse())
@@ -1107,7 +1211,13 @@ namespace INTERIoTEWS.UIprototype
                     situationTypesToDisable = "UC01_VehicleCollisionDetected_ST02,UC01_VehicleCollisionDetected_ST03,UC01_VehicleCollisionDetected_ST04";
                 else if (comboBox1.SelectedItem.ToString().StartsWith("UC01_ST02"))
                     situationTypesToDisable = "UC01_VehicleCollisionDetected_ST01,UC01_VehicleCollisionDetected_ST03,UC01_VehicleCollisionDetected_ST04";
-                
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC01_ST03"))
+                    situationTypesToDisable = "UC01_VehicleCollisionDetected_ST01,UC01_VehicleCollisionDetected_ST02,UC01_VehicleCollisionDetected_ST04";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC01_ST04"))
+                    situationTypesToDisable = "UC01_VehicleCollisionDetected_ST01,UC01_VehicleCollisionDetected_ST02,UC01_VehicleCollisionDetected_ST03";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC01_ST05"))
+                    situationTypesToDisable = "UC01_VehicleCollisionDetected_ST01,UC01_VehicleCollisionDetected_ST02,UC01_VehicleCollisionDetected_ST03,UC01_VehicleCollisionDetected_ST04";
+
                 url = baseUrl + situationTypesToDisable;
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -1126,5 +1236,321 @@ namespace INTERIoTEWS.UIprototype
                 MessageBox.Show("Error on [DisableOverlapingSituationTypes]:" + ex.Message);
             }
         }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SendDataSampleToIPSM();
+        }
+
+        public void SendDataSampleToIPSM()
+        {
+            
+            try
+            {
+                // http://grieg.ibspan.waw.pl:8888/swagger/#!/Translation/post_translation
+                /*
+ {
+  "alignIDs": [
+    {
+      "name": "string",
+      "version": "string"
+    }
+  ],
+  "graphStr": "string"
+}
+                 */
+                //string url = "http://grieg.ibspan.waw.pl:8888/translation";
+                string url = "http://168.63.44.177:8888/translation";
+                
+                JObject payload = new JObject();
+
+                string folderPath = textBox2.Text;
+                DirectoryInfo info = new DirectoryInfo(folderPath);
+                FileInfo[] files = info.GetFiles().OrderBy(p => p.Name).ToArray();
+                textBox1.Text = "files count:" + files.Count() + Environment.NewLine;
+                CreateOutputFolder();
+
+                foreach (FileInfo file in files)
+                {
+                    string contents = File.ReadAllText(file.FullName);
+                    payload = JObject.Parse(contents);
+                    JObject messageFormattedINTER_IoT_GraphSrtucture = AddINTER_IoT_GraphSrtucture(payload);
+
+                    JObject align = new JObject();
+                    align.Add("name", "SAREF_CO");
+                    align.Add("version", "0.59");
+                    JArray aligns = new JArray();
+                    aligns.Add(align);
+
+                    JObject message = new JObject();
+                    message.Add("alignIDs", aligns);
+                    //string graphStr = messageFormattedINTER_IoT_GraphSrtucture.ToString(Newtonsoft.Json.Formatting.None).Replace("\"", "'");
+                    string graphStr = messageFormattedINTER_IoT_GraphSrtucture.ToString(Newtonsoft.Json.Formatting.None);
+                    //string graphStr = payload.ToString(Newtonsoft.Json.Formatting.None);
+                    message.Add("graphStr", graphStr);
+
+                    SaveFile("forIPSM", message);
+                    
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        streamWriter.Write(message);
+                    }
+
+                    SetText("[" + DateTime.Now.ToString("o") + "] Before translation" + Environment.NewLine, true);
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var responseText = streamReader.ReadToEnd();
+
+                        JObject result = JObject.Parse(responseText);
+                        JObject resultTranslation = new JObject();
+                        if (result["message"].ToString() == "Message translation successful")
+                        {
+                            resultTranslation = JObject.Parse(result["graphStr"].ToString());
+                            SetText("[" + DateTime.Now.ToString("o") + "] After translation" + Environment.NewLine, true);
+                        }
+
+                        string filePath = outputFolderPath + "/output_" + file.Name + "_" + Guid.NewGuid() + ".json";
+                        using (StreamWriter outputFile = new StreamWriter(filePath))
+                        {
+                            outputFile.Write(resultTranslation.ToString(Newtonsoft.Json.Formatting.Indented));
+                            SetText("[" + DateTime.Now.ToString("o") + "] file saved: " + filePath + Environment.NewLine, true);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error on [SendDataSampleToIPSM]:" + ex.Message);
+            }
+            
+        }
+
+
+        private JObject AddINTER_IoT_GraphSrtucture(JObject messageJson)
+        {
+            string withGraphs = @"
+{
+	'@graph': [
+		{
+			'@graph': [
+				{
+					'@id': 'InterIoTMsg:meta66b05c61-d687-45a3-b5fb-6864bbec3b69',
+					'@type': [
+						'InterIoTMsg:Platform_register',
+						'InterIoTMsg:meta'
+					],
+					'InterIoTMsg:conversationID': 'conv99528eba-eb2d-47e8-9ee6-9dd40d19f89a',
+					'InterIoTMsg:dateTimeStamp': '2017-05-22T22:19:30.281+02:00',
+					'InterIoTMsg:messageID': 'msg7e484a2c-f959-486e-8da0-31143f457234'
+				}
+			],
+			'@id': 'InterIoTMsg:metadata'
+		},
+		{
+			'@graph': [
+                " + messageJson.ToString() + @"
+            ],
+			'@id': 'InterIoTMsg:payload'
+		}
+	],
+	'@context': {
+		'InterIoTMsg': 'http://inter-iot.eu/message/',
+		'InterIoT': 'http://inter-iot.eu/',
+		'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+		'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
+		'xsd': 'http://www.w3.org/2001/XMLSchema#'
+	}
+}
+            ";
+
+
+            JObject result = JObject.Parse(withGraphs);
+
+            return result;
+        }
+
+
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string result = ConvertTimestampXSDdateTime(double.Parse(textBox5.Text));
+            MessageBox.Show(result);
+        }
+
+        public string ConvertTimestampXSDdateTime(double timestamp)
+        {
+            string result = string.Empty;
+
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dateTime = dateTime.AddMilliseconds(timestamp).ToLocalTime();
+            result = dateTime.ToString("o"); // SoapDateTime.ToString(dateTime);            
+
+            return result;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            CreateOutputFolder();
+            new Task(() => { SimulateINTERIoT_MW(); }).Start();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Form2 fr = new Form2();
+            fr.Show();
+            this.Close();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Form3 fr = new Form3();
+            fr.ShowDialog();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Form4 fr = new UIprototype.Form4();
+            fr.ShowDialog();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            ExecuteSemanticTranslationsValidation();
+        }
+
+        private void ExecuteSemanticTranslationsValidation()
+        {
+            string folderPath = textBox2.Text;
+            DirectoryInfo info = new DirectoryInfo(folderPath);
+            FileInfo[] files = info.GetFiles().OrderBy(p => p.Name).ToArray();
+            textBox1.Text = "files count:" + files.Count() + Environment.NewLine;
+            CreateOutputFolder();
+
+            foreach (FileInfo file in files)
+            {
+                string executionId = Guid.NewGuid().ToString();
+
+                string contents = File.ReadAllText(file.FullName);
+                JObject payload = JObject.Parse(contents);
+
+                //JObject messageFormattedINTER_IoT_GraphSrtucture = AddINTER_IoT_GraphSrtucture(payload);
+
+
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                List<Observation> list1 = ComputeSemanticTranslationsOpt1SPARQL(payload);
+
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+
+                stopWatch.Start();
+
+                List<Observation> list2 = ComputeSemanticTranslationsOpt2IPSM(payload);
+
+                stopWatch.Stop();
+                ts = stopWatch.Elapsed;
+                elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+                
+                ComputeSemanticTranslationAccuracy(list1, list2);
+
+                // Save metrics (delta T and accuracy) in file
+
+
+            }
+        }
+
+        private void ComputeSemanticTranslationAccuracy(List<Observation> list1, List<Observation> list2)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<Observation> ComputeSemanticTranslationsOpt1SPARQL(JToken value)
+        {
+            SemanticTranslations translations = new SemanticTranslations(value);
+            List<Observation> observations = translations.ExecuteMappings();
+            return observations;
+        }
+
+        private List<Observation> ComputeSemanticTranslationsOpt2IPSM(JToken value)
+        {
+            List<Observation> result = new List<Observation>();
+
+            JObject messageFormattedINTER_IoT_GraphSrtucture = AddINTER_IoT_GraphSrtucture((JObject)value);
+
+            string url = "http://168.63.44.177:8888/translation";
+
+            // Prepare IPSM input message
+            JObject align = new JObject();
+            align.Add("name", "SAREF_CO");
+            align.Add("version", "0.57");
+
+            JArray aligns = new JArray();
+            aligns.Add(align);
+
+            JObject message = new JObject();
+            message.Add("alignIDs", aligns);
+            message.Add("graphStr", messageFormattedINTER_IoT_GraphSrtucture.ToString(Formatting.None));
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(message);
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var responseText = streamReader.ReadToEnd();
+
+                // Data formatted according to iiot ontology (INTER-IoT): map to POCO Observations
+                AddObservationOfDataTranslatedWithIPSM(responseText, result);
+
+            }
+            
+            return result;
+        }
+
+        private void AddObservationOfDataTranslatedWithIPSM(string responseText, List<Observation> result)
+        {
+            JObject response = JObject.Parse(responseText);
+            JObject resultTranslation = new JObject();
+            if (response["message"].ToString() == "Message translation successful")
+            {
+                resultTranslation = JObject.Parse(response["graphStr"].ToString());
+
+                SaveFile("GOIoTP", resultTranslation);
+
+                // TODO: test with UC01
+                SemanticTranslations translations = new SemanticTranslations(resultTranslation);
+                List<Observation> observations = translations.ExecuteMappings();
+                result.AddRange(observations);
+            }
+            else
+            {
+                SaveFile("IPSM_error", response);
+            }
+        }
+
+
     }
 }

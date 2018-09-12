@@ -30,6 +30,12 @@ namespace ContextManager.DataObjects.EDXL.InferenceHandler
                 case "UC01_VehicleCollisionDetected_ST04":
                     result = GetSeverityAndUrgency_UC01_VehicleCollisionDetected();
                     break;
+                case "UC02_HealthEarlyWarningScore_ST01":
+                case "UC02_HealthEarlyWarningScore_ST02":
+                case "UC02_HealthEarlyWarningScore_ST03":
+                case "UC02_HealthEarlyWarningScore_ST04":
+                    result = GetSeverityAndUrgency_UC02_HealthEarlyWarningScore();
+                    break;
                 default:
                     break;
             }
@@ -37,50 +43,124 @@ namespace ContextManager.DataObjects.EDXL.InferenceHandler
             return result;
         }
 
-        const double Gforce = 9.806; // m/s2 
 
+        public const double Gforce = 9.806; // m/s2 
+
+        public static double thresholdAcceleration = 3 * Gforce;
+
+        public static double thresholdBradycardia = 49;
+        public static double thresholdTachycardia = 100;
+
+        private EmergencyInformation GetSeverityAndUrgency_UC02_HealthEarlyWarningScore()
+        {   
+            double heartRate = double.Parse(AttributesSituationIdentified["resultValue"].ToString());
+            
+            EmergencyInformation result = ComputeUC02Classification(heartRate);
+
+            return result;
+        }
+
+        private EmergencyInformation ComputeUC02Classification(double heartRate)
+        {
+            EmergencyInformation emergencyInfo = new InferenceHandler.EmergencyInformation();
+            emergencyInfo.Description = "heartRate: " + heartRate + ", thresholdBradycardia: " + thresholdBradycardia + ", thresholdTachycardia: " + thresholdTachycardia;
+
+            // Bradycardia
+            if (heartRate <= thresholdBradycardia && heartRate > thresholdBradycardia * 0.9)
+            {
+                emergencyInfo.Severity = SeverityType.Minor;
+                emergencyInfo.Urgency = UrgencyType.Expected;
+                emergencyInfo.Description = "Green: light bradycardia. Heart rate: " + heartRate + ", while thresholdBradycardia = " + thresholdBradycardia;
+            }
+            else if (heartRate <= thresholdBradycardia * 0.9 && heartRate > thresholdBradycardia * 0.8)
+            {
+                emergencyInfo.Severity = SeverityType.Moderate;
+                emergencyInfo.Urgency = UrgencyType.Immediate;
+                emergencyInfo.Description = "Yellow: moderate bradycardia. Heart rate: " + heartRate + ", while thresholdBradycardia = " + thresholdBradycardia;
+            }
+            else if (heartRate <= thresholdBradycardia * 0.8 && heartRate > thresholdBradycardia * 0.7)
+            {
+                emergencyInfo.Severity = SeverityType.Severe;
+                emergencyInfo.Urgency = UrgencyType.Immediate;
+                emergencyInfo.Description = "Red: severe bradycardia. Heart rate: " + heartRate + ", while thresholdBradycardia = " + thresholdBradycardia;
+            }
+            else if (heartRate <= thresholdBradycardia * 0.7)
+            {
+                emergencyInfo.Severity = SeverityType.Extreme;
+                emergencyInfo.Urgency = UrgencyType.Immediate;
+                emergencyInfo.Description = "ATENTION! Extreme bradycardia. Heart rate: " + heartRate + ", while thresholdBradycardia = " + thresholdBradycardia;
+            }
+
+            // Tachycardia
+            if (heartRate > thresholdTachycardia && heartRate <= thresholdTachycardia * 1.1)
+            {
+                emergencyInfo.Severity = SeverityType.Minor;
+                emergencyInfo.Urgency = UrgencyType.Expected;
+                emergencyInfo.Description = "Green: light tachycardia. Heart rate: " + heartRate + ", while thresholdTachycardia = " + thresholdTachycardia;
+            }
+            else if (heartRate > thresholdTachycardia * 1.1 && heartRate <= thresholdTachycardia * 1.2)
+            {
+                emergencyInfo.Severity = SeverityType.Moderate;
+                emergencyInfo.Urgency = UrgencyType.Immediate;
+                emergencyInfo.Description = "Yellow: moderate tachycardia. Heart rate: " + heartRate + ", while thresholdTachycardia = " + thresholdTachycardia;
+            }
+            else if (heartRate > thresholdTachycardia * 1.2 && heartRate <= thresholdTachycardia * 1.3)
+            {
+                emergencyInfo.Severity = SeverityType.Severe;
+                emergencyInfo.Urgency = UrgencyType.Immediate;
+                emergencyInfo.Description = "Red: severe tachycardia. Heart rate: " + heartRate + ", while thresholdTachycardia = " + thresholdTachycardia;
+            }
+            else if (heartRate > thresholdTachycardia * 1.3)
+            {
+                emergencyInfo.Severity = SeverityType.Extreme;
+                emergencyInfo.Urgency = UrgencyType.Immediate;
+                emergencyInfo.Description = "ATENTION! Extreme tachycardia. Heart rate: " + heartRate + ", while thresholdTachycardia = " + thresholdTachycardia;
+            }
+
+            return emergencyInfo;
+        }
+        
         private EmergencyInformation GetSeverityAndUrgency_UC01_VehicleCollisionDetected()
         {
             // (unit of measure: m/s2.  1 G = 9.806 m/s2 (common threshold = 4G)
-            double threshold = 3 * Gforce;
 
             double computedCrossAxialValue = double.Parse(AttributesSituationIdentified["ComputedCrossAxialValue"].ToString());
 
             double acceleration = Math.Sqrt(computedCrossAxialValue);
 
-            EmergencyInformation result = ComputeUC01Classification(acceleration, threshold);
+            EmergencyInformation result = ComputeUC01Classification(acceleration);
 
             return result;
         }
         
-        private EmergencyInformation ComputeUC01Classification(double acceleration, double threshold)
+        private EmergencyInformation ComputeUC01Classification(double acceleration)
         {
             EmergencyInformation emergencyInfo = new InferenceHandler.EmergencyInformation();
-            emergencyInfo.Description = "acceleration: " + acceleration + ", threshold: " + threshold;
+            emergencyInfo.Description = "acceleration: " + acceleration + ", threshold: " + thresholdAcceleration;
 
-            if (acceleration > threshold && acceleration <= threshold * 1.2)
+            if (acceleration > thresholdAcceleration && acceleration <= thresholdAcceleration * 1.2)
             {
                 emergencyInfo.Severity = SeverityType.Minor;
                 emergencyInfo.Urgency = UrgencyType.Expected;
-                emergencyInfo.Description = "Green: Light accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + threshold;
+                emergencyInfo.Description = "Green: Light incident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + thresholdAcceleration;
             }
-            else if (acceleration > threshold * 1.2 && acceleration <= threshold * 1.4)
+            else if (acceleration > thresholdAcceleration * 1.2 && acceleration <= thresholdAcceleration * 1.4)
             {
                 emergencyInfo.Severity = SeverityType.Moderate;
                 emergencyInfo.Urgency = UrgencyType.Immediate;
-                emergencyInfo.Description = "Yellow: Accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + threshold;
+                emergencyInfo.Description = "Yellow: Accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + thresholdAcceleration;
             }
-            else if (acceleration > threshold * 1.4 && acceleration <= threshold * 1.6)
+            else if (acceleration > thresholdAcceleration * 1.4 && acceleration <= thresholdAcceleration * 1.6)
             {
                 emergencyInfo.Severity = SeverityType.Severe;
                 emergencyInfo.Urgency = UrgencyType.Immediate;
-                emergencyInfo.Description = "Red: Hard accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + threshold;
+                emergencyInfo.Description = "Red: Hard accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + thresholdAcceleration;
             }
-            else if (acceleration > threshold * 1.6)
+            else if (acceleration > thresholdAcceleration * 1.6)
             {
                 emergencyInfo.Severity = SeverityType.Extreme;
                 emergencyInfo.Urgency = UrgencyType.Immediate;
-                emergencyInfo.Description = "ATENTION! Black: Extreme accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + threshold;
+                emergencyInfo.Description = "ATENTION! Extreme accident. Acceleration (cross-axial): " + acceleration + ", while threshold = " + thresholdAcceleration;
             }
 
             return emergencyInfo;

@@ -55,6 +55,67 @@ namespace ContextManager.DataObjects.EDXL
             }
         }
 
+        public string Headline
+        {
+            get
+            {
+                return ((msgCAP != null && msgCAP.Info != null && msgCAP.Info.Count > 0 && msgCAP.Info[0].Headline != null) ? msgCAP.Info[0].Headline : "Headline not informed");
+            }
+        }
+
+        public string Severity
+        {
+            get
+            {
+                return ((msgCAP != null && msgCAP.Info != null && msgCAP.Info.Count > 0) ? msgCAP.Info[0].Severity.Value.ToString("g") : "Severity not informed");
+            }
+        }
+
+        public string Urgency
+        {
+            get
+            {
+                return ((msgCAP != null && msgCAP.Info != null && msgCAP.Info.Count > 0) ? msgCAP.Info[0].Urgency.Value.ToString("g") : "Urgency not informed");
+            }
+        }
+
+        public string Instruction
+        {
+            get
+            {
+                return ((msgCAP != null && msgCAP.Info != null && msgCAP.Info.Count > 0 && msgCAP.Info[0].Instruction != null) ? msgCAP.Info[0].Instruction : "Instruction not informed");
+            }
+        }
+
+        public string Location
+        {
+            get
+            {
+                return ((msgCAP != null && msgCAP.Info != null && msgCAP.Info.Count > 0 && msgCAP.Info[0].Area != null && msgCAP.Info[0].Area.Count > 0) ? msgCAP.Info[0].Area[0].AreaDesc : "Location not informed");
+            }
+        }
+
+        public string TripId
+        {
+            get
+            {
+                string result = "TripId not informed";
+                if (msgCAP != null && msgCAP.Info != null && msgCAP.Info.Count > 0 && msgCAP.Info[0].Parameter != null && msgCAP.Info[0].Parameter.Count > 0)
+                {
+                    foreach (NameValueType param in msgCAP.Info[0].Parameter)
+                    {
+                        if (param.Name == "TripId")
+                        {
+                            result = param.Value;
+                            break;
+                        }
+                    }
+                }
+
+                return result;
+            }
+        }
+
         private Dictionary<String, object> attributesDataFromSituationIdentified;
         private string situationTypeIdentified;
         private SituationInference situationInference;
@@ -67,8 +128,10 @@ namespace ContextManager.DataObjects.EDXL
             this.situationTypeIdentified = situationType;
             this.situationInference = situationInference;
 
-            string messageID = "edxl_cap_inst:AlertMessage_" + situationTypeIdentified + "_" + attributesDataFromSituationIdentified["TriggerEventBegin"] + "_" + Guid.NewGuid().ToString();
-            string senderID = "INTER-IoT-EWS (semiotics-iot.eu): Port of Valencia";
+            string dateTimeTriggerEventBegin = GetDateTimeTriggerEventBegin().ToString("yyyyMMdd-HHMMss");
+
+            string messageID = situationTypeIdentified + "_" + dateTimeTriggerEventBegin + "_" + Guid.NewGuid().ToString();
+            string senderID = "INTER-IoT-EWS-01-ValenciaPort";
                         
             SetMandatoryFields(messageID, senderID);
         }
@@ -141,9 +204,6 @@ namespace ContextManager.DataObjects.EDXL
             
             capInfoType.Description = "Generated from situation identified: " + situationTypeIdentified;
 
-            // The text describing the recommended action to be taken by recipients of the alert message
-            capInfoType.Instruction = "Reaction processes";
-
             capInfoType.Web = new Uri("http://semiotics-iot.eu/"); // TODO: add to web.config
 
             capInfoType.Contact = "Joao Moreira (j.luizrebelomoreira@utwente.nl)"; // TODO: add to web.config (is it the contact about the accident?)
@@ -154,6 +214,84 @@ namespace ContextManager.DataObjects.EDXL
             
             msgCAP.Info.Add(capInfoType);
 
+            // The text describing the recommended action to be taken by recipients of the alert message
+            capInfoType.Instruction = GetReactionProcessForSituationType(situationTypeIdentified); // "Reaction processes";
+
+
+        }
+
+        private string GetReactionProcessForSituationType(string situationTypeIdentified)
+        {
+            string result = string.Empty;
+
+            switch (situationTypeIdentified)
+            {
+                case "UC01_VehicleCollisionDetected_ST01":
+                case "UC01_VehicleCollisionDetected_ST02":
+                case "UC01_VehicleCollisionDetected_ST03":
+                case "UC01_VehicleCollisionDetected_ST04":
+                    result = GetReactionToUC01_VehicleCollisionDetected();
+                    break;
+                case "UC02_HealthEarlyWarningScore_ST01":
+                case "UC02_HealthEarlyWarningScore_ST02":
+                case "UC02_HealthEarlyWarningScore_ST03":
+                case "UC02_HealthEarlyWarningScore_ST04":
+                    result = GetReactionToUC02_HealthEarlyWarningScore();
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
+        }
+
+        private string GetReactionToUC02_HealthEarlyWarningScore()
+        {
+            string result = @"
+                0- Get incident location and the trip information, including the heart rate observations computed during the trip";
+
+            if (msgCAP.Info[0].Severity == SeverityType.Extreme || msgCAP.Info[0].Severity == SeverityType.Severe)
+                result += @"
+                1- Contact Emergency Response
+                    1.a- Check the closest ambulance
+                    1.b- Contact the ambulance, provide information about the location and driver health (heart rate, ECG data)
+                    1.c- Contact the emergency personal, provide information about the location and vehicle
+                    1.d- Monitor the emergency personal
+                2- Contact closest clinic or hospital
+                    2.a- Send driver's health information (heart rate, ECG data)";
+            else
+                result += @"
+                1- Try to contact the driver
+                    1.a- If the driver could not be contacted or asked help: Contact Emergency Response (step.2)
+                    1.b- Else: Register in the emergency incident system (step.3)
+                2- Contact Emergency Response
+                    2.a- Check the closest ambulance
+                    2.b- Contact the emergency personal, provide information about the location and vehicle
+                    2.c- Monitor the emergency personal";
+
+            result += @"
+                3 - Register in the emergency incident system: enter all incident information in the system
+            ";
+
+            return result;
+        }
+
+        private string GetReactionToUC01_VehicleCollisionDetected()
+        {
+            string result = @"
+                0- Get incident location and trip information
+                1- Try to contact the driver
+                    1.a- If the driver could not be contacted or asked help: Contact Emergency Response (step.2)
+                    1.b- Else: Register in the emergency incident system (step.3)
+                2- Contact Emergency Response
+                    2.a- Check the closest emergency personal
+                    2.b- Contact the emergency personal, provide information about location, vehicle, severity and urgency
+                    2.c- Monitor the emergency personal
+                    2.d- (Try to) contact the driver to give support by phone and gather information about other vehicles
+                3- Register in the emergency incident system: enter all incident information in the system
+            ";
+
+            return result;
         }
 
         private List<NameValueType> GetParameters()
@@ -298,7 +436,7 @@ namespace ContextManager.DataObjects.EDXL
 
             JObject edxlMessage = new JObject();            
             edxlMessage.Add("@context", context);
-            edxlMessage.Add("@id", msgCAP.MessageID);
+            edxlMessage.Add("@id", "edxl_cap_inst:" + msgCAP.MessageID);
             edxlMessage.Add("@type", "edxl_cap:AlertMessage");
             edxlMessage.Add("rdfs:label", "[INTER-IoT-EWS] Early Warning: " + situationTypeIdentified);
 
@@ -358,7 +496,7 @@ namespace ContextManager.DataObjects.EDXL
                 {
                     JObject param = new JObject();
                     param.Add("@type", "owl:Thing");
-                    param.Add("@id", Guid.NewGuid());
+                    param.Add("@id", "edxl_cap_inst:" + Guid.NewGuid());
                     param.Add("xsd:Name", nameValueType.Name);
                     param.Add("rdf:value", nameValueType.Value);
                     parameters.Add(param);

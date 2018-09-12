@@ -46,6 +46,8 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Controllers
         [HttpGet("{deviceId}")]
         public string Get(string deviceId)
         {
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] api/deviceobservations/" + ((deviceId == null) ? "deviceId is NULL" : deviceId));
+
             string result = "start";
             if (AzureIoT.eventHubClient == null || AzureIoT.eventHubClient.IsClosed)
             {
@@ -53,14 +55,50 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Controllers
                 result = "called SimulateINTERIoT_MW";
             }
 
-            if (deviceId == "savelocal")
+            if (deviceId.StartsWith("savelocal"))
             {
-                mongoDB.Collection = "DeviceObservations_SAREF";
+
+                string[] collectionNameArr = deviceId.Split(',').ToArray();
+                string collectionName = (collectionNameArr.Length > 1) ? collectionNameArr[1].Trim() : string.Empty;
+
+                mongoDB.Collection = collectionName;
                 List<JObject> allDocs = mongoDB.GetAllDocuments();
-                JObject jo = SaveJsonFilesFromMongoDb(allDocs);
+                JObject jo = SaveJsonFilesFromMongoDb(allDocs, collectionName);
                 result = deviceId;
             }
-            
+            else if (deviceId.StartsWith("testmongodb"))
+            {
+                JObject test = new JObject();
+                test.Add("@id", "testId");
+                test.Add("label", "hello world!");
+                try
+                {
+                    mongoDB.SaveDocument(test, "TestCollName_" + deviceId);
+                    result = "saved in MongoDB!";
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + ((ex.InnerException != null) ? "InnerException.Message=" + ex.InnerException.Message : string.Empty);
+                    System.Diagnostics.Trace.TraceError("[ContextManager] Saving in MongoDB:" + result);
+                }
+            }
+            else if (deviceId.StartsWith("translation"))
+            {
+                string translationMechanism = deviceId.Split('-').ToArray()[1].Trim();
+
+                switch (translationMechanism)
+                {
+                    case "1":
+                        // default behaviour with semantic translations executed at the Situation Manager with SPARQL queries
+                        break;
+                    case "2":
+                        // call IPSM for semantic translations
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             return "Result: " + result;
         }
         
@@ -73,16 +111,17 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Controllers
             return new HttpResponseMessage(HttpStatusCode.Created);
         }
         
-        private JObject SaveJsonFilesFromMongoDb(List<JObject> result)
+        private JObject SaveJsonFilesFromMongoDb(List<JObject> result, string collectionName)
         {
             JObject resultJo = new JObject();
-            string basePath = @"D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\data\MongoDB";
+            string basePath = @"D:\Projects\InterIOT\Workplan\WP2-INTER-IoT-EWS\data\MongoDB\" + collectionName;
+            System.IO.Directory.CreateDirectory(basePath);
 
             foreach (JObject jo in result)
             {
                 Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 
-                string filePath = basePath + @"\SAREF4health_" + unixTimestamp.ToString() + "_" + Guid.NewGuid() + ".json";
+                string filePath = basePath + @"\" + unixTimestamp.ToString() + "_" + Guid.NewGuid() + ".json";
 
                 jo.Remove("_id");
 

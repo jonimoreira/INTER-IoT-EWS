@@ -583,7 +583,7 @@ namespace MyDriving.ViewModel
                 {
                     if (obdDataProcessor != null)
                     {
-                        JObject logisticsData = FormatMessageLogistics(CurrentTrip, point);
+                        JObject logisticsData = jsonLdSaref4health.FormatMessageLogistics(CurrentTrip, point);
                         obdDataProcessor.SendLogisticsDataToIOTHub(logisticsData);
                     }
                 }
@@ -842,6 +842,11 @@ namespace MyDriving.ViewModel
 
             SensorData dataTimestamp = objectCluster.GetData(dataNames.IndexOf("System Timestamp"));
 
+            // TODO: check why the date is wrong (2019) after streaming for some time
+            DateTime yourDateTime = DateTime.Now;
+            double unixTimestamp = yourDateTime.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+            dataTimestamp.Data = unixTimestamp;
+
             SensorData dataECG_LL_RA = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_LL_RA, "CAL");
             SensorData dataECG_LA_RA = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_LA_RA, "CAL");
             SensorData dataECG_VX_RL = objectCluster.GetData(Shimmer3Configuration.SignalNames.ECG_VX_RL, "CAL");
@@ -1098,6 +1103,33 @@ namespace MyDriving.ViewModel
             }
         }
 
+        private double lastHeartRateComputed = -99;
+
+        public double HeartRate
+        {
+            get
+            {
+                double result = -10;
+                if (heartRate_ECGdevice_List != null)
+                {
+                    lock (heartRate_ECGdevice_List)
+                    {
+                        if (heartRate_ECGdevice_List.Count > 0)
+                        {
+                            result = heartRate_ECGdevice_List[heartRate_ECGdevice_List.Count - 1].HasValue;
+                        }
+                        else
+                            result = lastHeartRateComputed;
+                    }
+                }
+                else
+                {
+                    result = lastHeartRateComputed;
+                }
+                return result;
+            }
+        }
+
         private JObject FormatMessageSAREF4health_ECGDevice()
         {
             
@@ -1153,16 +1185,19 @@ namespace MyDriving.ViewModel
             { 
                 if (heartRate_ECGdevice_List.Count > 0)
                 {
+                    lastHeartRateComputed = heartRate_ECGdevice_List[heartRate_ECGdevice_List.Count - 1].HasValue;
                     JObject sensor_HeartRate = jsonLdSaref4health.GetSensorJSON_SAREF4health(heartRate_ECGdevice_List[heartRate_ECGdevice_List.Count-1].JSONLDobject, "saref:Sensor", "sarefInst:Shimmer3HeartRate_T9JRN42", "Heart rate computed by Shimmer API", jsonLdSaref4health.sarefInst_ProcessedHeartRate);
                     listSensorsOfDevice.Add(sensor_HeartRate);
                     heartRate_ECGdevice_List.Clear();
                 }
             }
 
-            JObject eCGDeviceJSON = jsonLdSaref4health.GetECGDeviceJSON_SAREF4health(listSensorsOfDevice, CurrentTrip.Id);
+            JObject eCGDeviceJSON = jsonLdSaref4health.GetECGDeviceJSON_SAREF4health(listSensorsOfDevice, CurrentTrip.Id, CurrentTrip.RecordedTimeStamp);
 
             return eCGDeviceJSON;
         }
+
+
 
         private JObject CreateMessageAndDeleteList_SAREF4health(string lead)
         {
@@ -1341,15 +1376,15 @@ namespace MyDriving.ViewModel
                         processedMeasurements.Add(collisionDetectedMeasurement.JSONLDobject);
 
                         // Measurements of mean, standard deviation and cross axial value when detected
-                        SensorData collisionDetectedObjMean = new SensorData("crossaxialfunction", VehicleCollisionDetection.meanCrossAxialValues);
+                        SensorData collisionDetectedObjMean = new SensorData("cross-axial-energy", VehicleCollisionDetection.meanCrossAxialValues);
                         Measurement meanDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("cross-axial-energy_mean", collisionDetectedObjMean, VehicleCollisionDetection.timestampCollisionDetected, "Cross-axial function: mean value");
                         processedMeasurements.Add(meanDetectedMeasurement.JSONLDobject);
 
-                        SensorData collisionDetectedObjStd = new SensorData("crossaxialfunction", VehicleCollisionDetection.standardDeviation);
+                        SensorData collisionDetectedObjStd = new SensorData("cross-axial-energy", VehicleCollisionDetection.standardDeviation);
                         Measurement stddevDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("cross-axial-energy_std-dev", collisionDetectedObjStd, VehicleCollisionDetection.timestampCollisionDetected, "Cross-axial function: standard deviation");
                         processedMeasurements.Add(stddevDetectedMeasurement.JSONLDobject);
 
-                        SensorData collisionDetectedObjCrossAxial = new SensorData("crossaxialfunction", VehicleCollisionDetection.crossAxialEnergyWhenCollisionDetected);
+                        SensorData collisionDetectedObjCrossAxial = new SensorData("cross-axial-energy", VehicleCollisionDetection.crossAxialEnergyWhenCollisionDetected);
                         Measurement crossaxDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("cross-axial-energy_max", collisionDetectedObjCrossAxial, VehicleCollisionDetection.timestampCollisionDetected, "Cross-axial function: maximum");
                         crossaxDetectedMeasurement.Label = "value processed when collision detected";
                         processedMeasurements.Add(crossaxDetectedMeasurement.JSONLDobject);
@@ -1393,15 +1428,15 @@ namespace MyDriving.ViewModel
                             processedMeasurements.Add(collisionDetectedMeasurement.JSONLDobject);
 
                             // Measurements of mean, standard deviation and cross axial value when detected
-                            SensorData collisionDetectedObjMean = new SensorData("crossaxialfunction", VehicleCollisionDetectionFromSmartphone.meanCrossAxialValues);
+                            SensorData collisionDetectedObjMean = new SensorData("cross-axial-energy", VehicleCollisionDetectionFromSmartphone.meanCrossAxialValues);
                             Measurement meanDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("cross-axial-energy_mean", collisionDetectedObjMean, VehicleCollisionDetectionFromSmartphone.timestampCollisionDetected, "Cross-axial function: mean value");
                             processedMeasurements.Add(meanDetectedMeasurement.JSONLDobject);
 
-                            SensorData collisionDetectedObjStd = new SensorData("crossaxialfunction", VehicleCollisionDetectionFromSmartphone.standardDeviation);
+                            SensorData collisionDetectedObjStd = new SensorData("cross-axial-energy", VehicleCollisionDetectionFromSmartphone.standardDeviation);
                             Measurement stddevDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("cross-axial-energy_std-dev", collisionDetectedObjStd, VehicleCollisionDetectionFromSmartphone.timestampCollisionDetected, "Cross-axial function: standard deviation");
                             processedMeasurements.Add(stddevDetectedMeasurement.JSONLDobject);
 
-                            SensorData collisionDetectedObjCrossAxial = new SensorData("crossaxialfunction", VehicleCollisionDetectionFromSmartphone.crossAxialEnergyWhenCollisionDetected);
+                            SensorData collisionDetectedObjCrossAxial = new SensorData("cross-axial-energy", VehicleCollisionDetectionFromSmartphone.crossAxialEnergyWhenCollisionDetected);
                             Measurement crossaxDetectedMeasurement = jsonLdSaref4health.TranslateMeasurement("cross-axial-energy_max", collisionDetectedObjCrossAxial, VehicleCollisionDetectionFromSmartphone.timestampCollisionDetected, "Cross-axial function: maximum");
                             crossaxDetectedMeasurement.Label = "value processed when collision detected";
                             processedMeasurements.Add(crossaxDetectedMeasurement.JSONLDobject);
@@ -1488,273 +1523,6 @@ namespace MyDriving.ViewModel
         }
 
         #endregion
-
-        #region Logistics: LogiCO/LogiServ/LogiTran
-
-        private JObject FormatMessageLogistics(Trip currentTrip, TripPoint currentPoint)
-        {
-            Transport transport = TranslateTransport(currentTrip, currentPoint);
-            
-            string transportEventId = transport.Identifier + "_" + Guid.NewGuid();
-            JObject location = GetLogicoLocation(currentPoint);
-            JObject time_now = GetTimeInstant(DateTime.UtcNow);
-            JObject truck = GetLogicoTruck(transport);
-            JObject transport_jo = GetLogicoTransport(transport);
-
-            JObject result = new JObject();
-
-            JObject contextJSON = GetContextLogistics();
-            result.Add("@context", contextJSON);
-            result.Add("@id", "LogiTrans:TransportEvent_" + transportEventId);
-            result.Add("@type", "LogiTrans:TransportEvent");
-            result.Add("LogiCO:hasLocation", location);
-            result.Add("LogiServ:hasTime", time_now);
-            result.Add("LogiTrans:hasTransportHandlingUnit", truck);
-            result.Add("dul:isComponentOf", transport_jo);
-
-            return result;
-        }
-
-        private JObject GetLogicoTransport(Transport transport)
-        {
-            JObject result = new JObject();
-            JObject time_Instant_Begin = GetTimeInstant(transport.hasBeginning);
-            JObject time_Instant_End = GetTimeInstant(transport.hasEnd);
-            
-            result.Add("@id", "LogiServInst:Transport_" + transport.Identifier);
-            result.Add("@type", "LogiServ:Transport");
-            result.Add("time:hasBeginning", time_Instant_Begin);
-            result.Add("LogiCO:hasIDValue", transport.Identifier);
-            //result.Add("time:hasEnd", time_Instant_End);
-
-            return result;
-        }
-
-        private JObject GetLogicoTruck(Transport transport)
-        {
-            JObject result = new JObject();
-
-            string truck_plate = "XPT01298";
-            JObject cargo = GetLogicoCargo(transport);
-            JObject plate = GetLogicoTruckId(truck_plate);
-
-            result.Add("@id", "LogiCO:Truck_" + truck_plate);
-            result.Add("@type", "LogiCO:Truck");
-            result.Add("LogiCO:contains", cargo);
-            result.Add("LogiCO:hasID", plate);
-
-            return result;
-        }
-
-        private JObject GetLogicoTruckId(string truck_plate)
-        {
-            JObject result = new JObject();
-            
-            result.Add("@id", "LogiCO:Identifier_Truck_" + truck_plate);
-            result.Add("@type", "LogiCO:Identifier");
-            result.Add("rdfs:label", truck_plate);
-
-            return result;
-        }
-
-        private JObject GetLogicoCargo(Transport transport)
-        {
-            JObject result = new JObject();
-
-            string cargoId = transport.Identifier + "_CargoId_TransportingGoodsAt_Location_" + DateTime.UtcNow.ToString("o");
-            bool isDangerous_GoodsBeingTransported = true;
-            JArray goodsItem = GetLogicoGoodsItem(transport);
-
-            result.Add("@id", "LogiTrans:Cargo_" + cargoId);
-            result.Add("@type", "LogiServ:Cargo");
-            result.Add("rdfs:label", "Cargo being transported by a truck, contains goods");
-            result.Add("LogiCO:isDangerous", isDangerous_GoodsBeingTransported);
-            result.Add("LogiCO:contains", goodsItem);
-
-            return result;
-        }
-
-        private JArray GetLogicoGoodsItem(Transport transport)
-        {
-            JArray array = new JArray();
-            for (int i = 0; i < 5; i++)
-            {
-                JObject result = new JObject();
-
-                string itemId = transport.Identifier + "_GoodsItemId";
-
-                result.Add("@id", "LogiTrans:GoodsItem_" + itemId);
-                result.Add("@type", "LogiTrans:GoodsItem");
-                result.Add("rdfs:label", "Goods item " + i);
-
-                array.Add(result);
-            }
-            return array;
-        }
-
-        private JObject GetLogicoLocation(TripPoint currentPoint)
-        {
-            JObject result = new JObject();
-
-            JObject locationId = GetLogicoLocationId(currentPoint);
-
-            result.Add("@id", "LogiTrans:TransportLocation_" + currentPoint.Latitude + "_" + currentPoint.Longitude);
-            result.Add("@type", "LogiTrans:TransportLocation");
-            result.Add("LogiCO:hasID", locationId);
-            
-            return result;
-        }
-
-        private JObject GetLogicoLocationId(TripPoint currentPoint)
-        {
-            JObject result = new JObject();
-
-            JObject lat = new JObject();
-            lat.Add("@type", "http://www.w3.org/2001/XMLSchema#float");
-            lat.Add("@value", currentPoint.Latitude);
-
-            JObject lon = new JObject();
-            lon.Add("@type", "http://www.w3.org/2001/XMLSchema#float");
-            lon.Add("@value", currentPoint.Longitude);
-
-            result.Add("@id", "LogiCO:Identifier_Location_" + currentPoint.Latitude + "_" + currentPoint.Longitude);
-            result.Add("@type", JArray.Parse("['LogiCO:Identifier','geo:Point']"));
-            result.Add("geo:lat", lat);
-            result.Add("geo:long", lon);
-
-            return result;
-        }
-
-        private JObject GetTimeInstant(DateTime hasBeginning)
-        {
-            JObject result = new JObject();
-
-            result.Add("@id", "timeInst:Instant_" + hasBeginning.ToString("o"));
-            result.Add("@type", "time:Instant");
-            result.Add("xsd:inXSDDateTime", hasBeginning.ToString("o"));
-
-            return result;
-        }
-
-        public JObject GetContextLogistics()
-        {
-            JObject contextJO = new JObject();
-
-            string context = @"
-{
-    'hasConstituent' : {
-      '@id' : 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasConstituent',
-      '@type' : '@id'
-    },
-    'hasConsumer' : {
-      '@id' : 'http://ontology.tno.nl/logiserv#hasConsumer',
-      '@type' : '@id'
-    },
-    'isConstituentOf' : {
-      '@id' : 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isConstituentOf',
-      '@type' : '@id'
-    },
-    'label' : {
-      '@id' : 'http://www.w3.org/2000/01/rdf-schema#label'
-    },
-    'hasDestination' : {
-      '@id' : 'http://ontology.tno.nl/logiserv#hasDestination',
-      '@type' : '@id'
-    },
-    'hasEnd' : {
-      '@id' : 'http://www.w3.org/2006/time#hasEnd',
-      '@type' : '@id'
-    },
-    'hasBeginning' : {
-      '@id' : 'http://www.w3.org/2006/time#hasBeginning',
-      '@type' : '@id'
-    },
-    'hasProvider' : {
-      '@id' : 'http://ontology.tno.nl/logiserv#hasProvider',
-      '@type' : '@id'
-    },
-    'hasOrigin' : {
-      '@id' : 'http://ontology.tno.nl/logiserv#hasOrigin',
-      '@type' : '@id'
-    },
-    'hasStatus' : {
-      '@id' : 'http://ontology.tno.nl/logiserv#hasStatus'
-    },
-    'inXSDDateTime' : {
-      '@id' : 'http://www.w3.org/2006/time#inXSDDateTime',
-      '@type' : 'http://www.w3.org/2001/XMLSchema#dateTime'
-    },    
-    'hasLocation' : {
-      '@id' : 'http://ontology.tno.nl/logico#hasLocation',
-      '@type' : '@id'
-    },
-    'hasTime' : {
-      '@id' : 'http://ontology.tno.nl/logiserv#hasTime',
-      '@type' : '@id'
-    },
-    'hasTransportHandlingUnit' : {
-      '@id' : 'http://ontology.tno.nl/transport#hasTransportHandlingUnit',
-      '@type' : '@id'
-    },
-    'isComponentOf' : {
-      '@id' : 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isComponentOf',
-      '@type' : '@id'
-    },
-    'contains' : {
-      '@id' : 'http://ontology.tno.nl/logico#contains',
-      '@type' : '@id'
-    },
-    'hasID' : {
-      '@id' : 'http://ontology.tno.nl/logico#hasID',
-      '@type' : '@id'
-    },
-    'isDangerous' : {
-      '@id' : 'http://ontology.tno.nl/logico#isDangerous',
-      '@type' : 'http://www.w3.org/2001/XMLSchema#boolean'
-    },
-    'lat' : {
-      '@id' : 'http://www.w3.org/2003/01/geo/wgs84_pos#lat',
-      '@type' : 'http://www.w3.org/2001/XMLSchema#decimal'
-    },
-    'long' : {
-      '@id' : 'http://www.w3.org/2003/01/geo/wgs84_pos#long',
-      '@type' : 'http://www.w3.org/2001/XMLSchema#decimal'
-    },
-    'hasIDValue' : {
-      '@id' : 'http://ontology.tno.nl/logico#hasIDValue'
-    },
-    'LogiServ' : 'http://ontology.tno.nl/logiserv#',
-    'LogiCO' : 'http://ontology.tno.nl/logico#',
-    'LogiTrans' : 'http://ontology.tno.nl/transport#',
-    'LogisticsInst' : 'http://ontology.tno.nl/transport/instances/#',
-    'owl' : 'http://www.w3.org/2002/07/owl#',
-    'xsd' : 'http://www.w3.org/2001/XMLSchema#',
-    'skos' : 'http://www.w3.org/2004/02/skos/core#',
-    'rdfs' : 'http://www.w3.org/2000/01/rdf-schema#',
-    'geo' : 'http://www.w3.org/2003/01/geo/wgs84_pos#',
-    'dct' : 'http://purl.org/dc/terms/',
-    'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-    'xml' : 'http://www.w3.org/XML/1998/namespace',
-    'dcterms' : 'http://purl.org/dc/terms/',
-    'dul' : 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#',
-    'time' : 'http://www.w3.org/2006/time#',
-    'dc' : 'http://purl.org/dc/elements/1.1/'
-  }
-            ";
-
-            contextJO = JObject.Parse(context);
-
-            return contextJO;
-        }
-
-        private Transport TranslateTransport(Trip currentTrip, TripPoint currentPoint)
-        {
-            Transport result = new EWS.Logistics.LogiServ.Transport(currentTrip);
-
-            return result;
-        }
-
-        #endregion
-
+        
     }
 }

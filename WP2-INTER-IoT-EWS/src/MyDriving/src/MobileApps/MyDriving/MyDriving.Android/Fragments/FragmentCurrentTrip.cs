@@ -72,7 +72,15 @@ namespace MyDriving.Droid.Fragments
             fabHeart = view.FindViewById<FloatingActionButton>(Resource.Id.fabHeart);
             //sendHeartData = view.FindViewById<FloatingActionButton>(Resource.Id.sendHeartData);
             text_heart = view.FindViewById<TextView>(Resource.Id.text_heart);
+            //text_hr = view.FindViewById<TextView>(Resource.Id.text_hr);            
 
+            comboDevices = view.FindViewById<Spinner>(Resource.Id.spinner);
+            comboDevices.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(comboDevices_ItemSelected);
+            var adapter = ArrayAdapter.CreateFromResource(this.Context, Resource.Array.planets_array, Android.Resource.Layout.SimpleSpinnerItem);
+
+            adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            comboDevices.Adapter = adapter;
+            
             time = view.FindViewById<TextView>(Resource.Id.text_time);
             distance = view.FindViewById<TextView>(Resource.Id.text_distance);
             distanceUnits = view.FindViewById<TextView>(Resource.Id.text_distance_units);
@@ -82,6 +90,15 @@ namespace MyDriving.Droid.Fragments
             stats = view.FindViewById<LinearLayout>(Resource.Id.stats);
             stats.Visibility = ViewStates.Invisible;
             return view;
+        }
+
+        private void comboDevices_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            Spinner spinner = (Spinner)sender;
+            string[] arr = spinner.GetItemAtPosition(e.Position).ToString().Split('-');
+            bluetoothAddress = arr[1].Trim();
+            string toast = string.Format("Selected: {0}", spinner.GetItemAtPosition(e.Position));
+            Toast.MakeText(this.Context, toast, ToastLength.Long).Show();
         }
 
         public override void OnActivityCreated(Bundle savedInstanceState)
@@ -155,7 +172,7 @@ namespace MyDriving.Droid.Fragments
                     break;
             }
         }
-
+        
         void UpdateStats()
         {
             Activity?.RunOnUiThread(() =>
@@ -163,10 +180,16 @@ namespace MyDriving.Droid.Fragments
                 time.Text = viewModel.ElapsedTime;
                 consumption.Text = viewModel.FuelConsumption;
                 consumptionUnits.Text = viewModel.FuelConsumptionUnits;
-                load.Text = viewModel.EngineLoad;
+                load.Text = FormatHeartRate(viewModel.HeartRate) ; //viewModel.EngineLoad;
                 distanceUnits.Text = viewModel.DistanceUnits;
                 distance.Text = viewModel.CurrentTrip.TotalDistanceNoUnits;
+                //text_hr.Text = viewModel.HeartRate.ToString();
             });
+        }
+
+        private string FormatHeartRate(double hr)
+        {
+            return hr.ToString("0.00") + " bpm";
         }
 
         void ResetTrip()
@@ -538,6 +561,9 @@ namespace MyDriving.Droid.Fragments
         FloatingActionButton fabHeart;
         FloatingActionButton sendHeartData;
         TextView text_heart;
+        //TextView text_hr;
+        
+        Spinner comboDevices;
 
         private bool isStreaming = false;
         private double samplingRate = 256.0;
@@ -559,14 +585,16 @@ namespace MyDriving.Droid.Fragments
                 ConnectShimmer3ECG();
         }
 
+        private string bluetoothAddress = "00:06:66:88:db:ca".ToUpper();
+
         public void ConnectShimmer3ECG()
         {
             byte[] defaultECGReg1 = ShimmerBluetooth.SHIMMER3_DEFAULT_TEST_REG1; //also see ShimmerBluetooth.SHIMMER3_DEFAULT_ECG_REG1
             byte[] defaultECGReg2 = ShimmerBluetooth.SHIMMER3_DEFAULT_TEST_REG2; //also see ShimmerBluetooth.SHIMMER3_DEFAULT_ECG_REG2
 
-            string bluetoothAddress = "00:06:66:88:db:ca".ToUpper(); // 1st Shimmer3 ECG (Shimmer3_DBCA)
+            //string bluetoothAddress = "00:06:66:88:db:ca".ToUpper(); // 1st Shimmer3 ECG (Shimmer3_DBCA)
             //string bluetoothAddress = "00:06:66:e7:b3:21".ToUpper(); // 2nd Shimmer3 ECG (Shimmer3_B321)
-            shimmer = new ShimmerLogAndStreamXamarin("ShimmerXamarin", bluetoothAddress);
+            shimmer = new ShimmerLogAndStreamXamarin("ShimmerXamarin", bluetoothAddress.ToUpper());
             shimmer.UICallback += this.HandleEvent;
             buttonConnectedClicked = true;
             shimmer.StartConnectThread();
@@ -638,7 +666,7 @@ namespace MyDriving.Droid.Fragments
                         {
                             bool saved = viewModel.SaveMeasurements(objectCluster);
 
-                            // if aggregated all ECG data in a message according to the frequencies, send to cloud
+                            // if aggregated all ECG data in a message according to the frequency, send to cloud
                             if (viewModel.ioTFrequencyControl.CounterSamplesInMessage >= viewModel.ioTFrequencyControl.FrequencyIoTDeviceToGatewayInHertz * viewModel.ioTFrequencyControl.PeriodGatewayToCloudInSeconds)
                             {
                                 viewModel.SendECGdataToCloud();

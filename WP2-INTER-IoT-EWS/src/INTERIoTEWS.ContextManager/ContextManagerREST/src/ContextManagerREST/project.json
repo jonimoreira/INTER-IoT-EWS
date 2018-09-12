@@ -1,11 +1,12 @@
 {
   "dependencies": {
+    "dotNetRDF": "2.1.0",
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
     "Microsoft.AspNetCore.Routing": "1.0.1",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
-    "Microsoft.Azure.Devices.Client.PCL": "1.0.16",
+    "Microsoft.Azure.Devices.Client.PCL": "1.0.13",
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
     "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0",
     "Microsoft.Extensions.Configuration.Json": "1.0.0",
@@ -14,7 +15,7 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "MongoDB.Driver": "2.6.1",
-    "WindowsAzure.ServiceBus": "4.1.10"
+    "WindowsAzure.ServiceBus": "4.1.11"
   },
 
   "tools": {

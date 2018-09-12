@@ -35,7 +35,7 @@
 		xmlns:sweet_screla="http://sweet.jpl.nasa.gov/2.3/relaSci.owl#"
 		xmlns:sweet_mrela="http://sweet.jpl.nasa.gov/2.3/relaMath.owl#"
 		xmlns:sosaInst="http://www.w3.org/ns/sosa/instances/"
-        name="SAREF_CO" version="0.49" creator="Joao Moreira (U.Twente)" description="ETSI SAREF to GOIoTP (W3C SSN/SOSA)">
+        name="SAREF_CO" version="0.56" creator="Joao Moreira (U.Twente)" description="ETSI SAREF to GOIoTP (W3C SSN/SOSA)">
     <onto1>
         <Ontology about="https://w3id.org/saref#">
             <formalism>
@@ -239,20 +239,17 @@
 				<entity2>
 					<sripas:node_CTA>
 						<iiot:hasUnit>
-							<!--
-							<rdf:Description rdf:about="http://sweet.jpl.nasa.gov/2.3/reprSciUnits.owl#volt">
-								<rdf:type rdf:resource="&iiotex;ElectricPotentialDifference"/>								
-							</rdf:Description>
-							-->
-							
 							<rdf:Description rdf:about="https://w3id.org/saref/instances#ElectricPotential_MilliVolts">
 								<rdf:type rdf:resource="&sweet_units;Unit"/>
 								<rdf:type rdf:resource="&sweet_units;UnitDerivedByScaling"/>
-								<sweet_screla:hasBaseUnit>sweet_units:volt</sweet_screla:hasBaseUnit>
-								<sweet_screla:hasPrefix>sweet_units:milli</sweet_screla:hasPrefix>
+								<sweet_screla:hasBaseUnit>
+									<rdf:Description rdf:about="&sweet_units;volt"/>
+								</sweet_screla:hasBaseUnit>
+								<sweet_screla:hasPrefix>
+									<rdf:Description rdf:about="&sweet_units;milli"/>
+								</sweet_screla:hasPrefix>
 								<sweet_mrela:hasScalingNumber>0.001</sweet_mrela:hasScalingNumber>
 							</rdf:Description>
-							
 						</iiot:hasUnit>
 					</sripas:node_CTA>
 				</entity2>
@@ -260,22 +257,27 @@
         </Cell>
 		
 		<Cell id="cell6">
-				<entity1>
-					<sripas:node_CTA>
-						<sosa:observedProperty>
-							<rdf:Description rdf:about="http://www.w3.org/2003/01/geo/wgs84_pos#location"/>
-						</sosa:observedProperty>
-					</sripas:node_CTA>
-				</entity1>
-				<entity2>
-					<sripas:node_CTA>
-						<sosa:observedProperty>
-							<rdf:Description rdf:about="http://inter-iot.eu/goiotp#hasLocation"/>
-						</sosa:observedProperty>
-					</sripas:node_CTA>
-				</entity2>
-				<relation>=</relation>
+		   <entity1>
+			  <sripas:node_CTA>
+				 <geo:location>
+					<sripas:node_CTB>
+					   <rdf:type rdf:resource="&geo;Point"/>
+					</sripas:node_CTB>
+				 </geo:location>
+			  </sripas:node_CTA>
+		   </entity1>
+		   <entity2>
+			  <sripas:node_CTA>
+				 <iiot:hasLocation>
+					<sripas:node_CTB>
+					   <rdf:type rdf:resource="&iiot;Location"/>
+					</sripas:node_CTB>
+				 </iiot:hasLocation>
+			  </sripas:node_CTA>
+		   </entity2>
+		   <relation>=</relation>
 		</Cell>
+
 		
 		<!--
         <Cell id="cell4">

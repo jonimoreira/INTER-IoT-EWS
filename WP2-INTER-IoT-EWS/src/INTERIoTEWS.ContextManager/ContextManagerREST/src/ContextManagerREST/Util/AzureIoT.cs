@@ -10,15 +10,18 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using VDS.RDF;
+using VDS.RDF.Parsing;
+using VDS.RDF.Query;
 
 namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 {
     public class AzureIoT
     {
 
-        private string iotHubUri = "XXXXXXXXXXXXXX";
-        private string deviceKey = "XXXXXXXXXXXXXX";
-        private string deviceId = "XXXXXXXXXXXXXX";
+        private string iotHubUri = "XXXXXXXXXXXXXXXXX";
+        private string deviceKey = "XXXXXXXXXXXXXXXXX";
+        private string deviceId = "XXXXXXXXXXXXXXXXX";
 
 
         public async void SendToAzureIoTHub(JToken messageJson)
@@ -42,82 +45,304 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
         }
 
         // To listen directly from Azure IoT Hub and call PUT /api/deviceobservations/{deviceId}
-        
-        static string connectionString = "XXXXXXXXXXXXXX";
+        //free tier: static string connectionString = 
+		
         static string iotHubD2cEndpoint = "messages/events";
         public static EventHubClient eventHubClient;
 
 
         public static void SimulateINTERIoT_MW(string hostValue)
         {
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] SimulateINTERIoT_MW: Start: " + ((hostValue == null) ? "hostValue is NULL" : hostValue));
+
             Host = hostValue;
             eventHubClient = EventHubClient.CreateFromConnectionString(connectionString, iotHubD2cEndpoint);
+            //eventHubClient = EventHubClient.CreateFromConnectionString(connectionString, monitoringEndpointName);
 
             var d2cPartitions = eventHubClient.GetRuntimeInformation().PartitionIds;
 
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] SimulateINTERIoT_MW partitions: " + ((d2cPartitions == null) ? "d2cPartitions is NULL" : d2cPartitions.Length.ToString()));
+            
+            //CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
             CancellationTokenSource cts = new CancellationTokenSource();
 
             var tasks = new List<Task>();
             foreach (string partition in d2cPartitions)
             {
-                tasks.Add(ReceiveMessagesFromIoTHub(partition, cts.Token));
+                tasks.Add(ReceiveMessagesFromDeviceAsync(partition, cts.Token));
+                //ReceiveMessagesFromDeviceAsync(partition, cts.Token);
             }
+
             Task.WaitAll(tasks.ToArray());
+
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] SimulateINTERIoT_MW created all threads");
+
         }
 
-        private static async Task ReceiveMessagesFromIoTHub(string partition, CancellationToken ct)
+        /// <summary>
+        /// https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-operations-monitoring
+        /// </summary>
+        /// <param name="partition"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        private static async Task ReceiveMessagesFromDeviceAsync(string partition, CancellationToken ct)
         {
-            MongoDBContext mongoDB = new MongoDBContext();
             var eventHubReceiver = eventHubClient.GetDefaultConsumerGroup().CreateReceiver(partition, DateTime.UtcNow);
             while (true)
             {
-                if (ct.IsCancellationRequested) break;
+
+                if (ct.IsCancellationRequested)
+                {
+                    await eventHubReceiver.CloseAsync();
+                    break;
+                }
+
                 EventData eventData = await eventHubReceiver.ReceiveAsync();
+                //EventData eventData = eventHubReceiver.Receive(); //.Receive(TimeSpan.FromSeconds(5));
                 if (eventData == null) continue;
 
                 string data = Encoding.UTF8.GetString(eventData.GetBytes());
-                Console.WriteLine("Message received. Partition: {0} Data: '{1}'", partition, data);
-
-                // Save in MongoDB
-                //mongoDB.SaveDocument(data);
+                //Console.WriteLine("Message received. Partition: {0} Data: '{1}'", partition, data);
+                System.Diagnostics.Trace.TraceInformation("[ContextManager] ReceiveMessagesFromDeviceAsync data received from " + partition);
 
                 JObject messageJson = JObject.Parse(data);
-                if (messageJson["@type"] != null)
-                {
-                    string domain = "other";
-                    switch (messageJson["@type"].ToString())
-                    {
-                        case "saref:Device":
-                            new Task(() => { mongoDB.SaveDocument(data, "DeviceObservations_SAREF"); }).Start();
-                            domain = "health";
-                            break;
-                        case "edxl_cap:AlertMessage":
-                        case "edxl_de:EDXLDistribution":
-                            new Task(() => { mongoDB.SaveDocument(data, "DeviceObservations_EDXL"); }).Start();
-                            domain = "emergency";
-                            break;
-                        case "LogiTrans:TransportEvent":
-                            new Task(() => { mongoDB.SaveDocument(data, "DeviceObservations_Logistics"); }).Start();
-                            domain = "logistics";
-                            break;
-                        default:
-                            new Task(() => { mongoDB.SaveDocument(data, "OtherMessages_JSONLD"); }).Start();
-                            break;
-                    }
-                    SaveFile(domain, data);
 
-                }
-                else
-                    new Task(() => { mongoDB.SaveDocument(data, "OtherMessages"); }).Start();
+                string domain = GetDomainFromMessage(messageJson);
 
+                ExecuteSemanticTranslationsAndSendToSituationIdentificationManager(domain, data);
 
-                // Verify message: add INTER-IoT graphs (to be used by Sit.Identifier)
-                //VerifyMessageTypeAndTakeAction(data, mongoDB);
-                new Task(() => { VerifyMessageTypeAndTakeAction(data, mongoDB); }).Start();
-
-                //SaveFile("1234", data);
+                ManageContextData(domain, data, messageJson);
 
             }
+            
+        }
+
+        private static string GetDomainFromMessage(JObject messageJson)
+        {
+            string domain = "unknown";
+
+            if (messageJson["@type"] != null)
+            {
+                switch (messageJson["@type"].ToString())
+                {
+                    case "saref:Device":
+                        domain = "health";
+                        break;
+                    case "edxl_cap:AlertMessage":
+                    case "edxl_de:EDXLDistribution":
+                        domain = "emergency";
+                        break;
+                    case "LogiTrans:TransportEvent":
+                        domain = "logistics";
+                        break;
+                    default:
+                        domain = "jsonld";
+                        break;
+                }
+            }
+
+            return domain;
+        }
+
+        private static async Task ManageContextData(string domain, string data, JObject messageJson)
+        {
+            // Save in MongoDB
+            MongoDBContext mongoDB = new MongoDBContext();
+            
+            string tripId = string.Empty;
+            string dataCollection = "tripId_";
+            if (messageJson["@type"] != null)
+            {
+                switch (messageJson["@type"].ToString())
+                {
+                    case "saref:Device":
+                        tripId = GetTripIdFromHealthMessage(data);
+                        dataCollection += tripId + "_" + domain + "_DeviceObservations_SAREF4health";
+                        break;
+                    case "edxl_cap:AlertMessage":
+                    case "edxl_de:EDXLDistribution":
+                        tripId = GetTripIdFromEmergencyMessage(data);
+                        dataCollection += tripId + "_" + domain + "_DeviceObservations_EDXLCAP";
+                        break;
+                    case "LogiTrans:TransportEvent":
+                        tripId = GetTripIdFromLogisticsMessage(data);
+                        dataCollection += tripId + "_" + domain + "_DeviceObservations_LogiCO";
+                        break;
+                    default:
+                        dataCollection += tripId + "_" + domain + "_OtherMessages_JSONLD";
+                        break;
+                }
+                
+                mongoDB.SaveDocument(data, dataCollection);
+            }
+            else
+            {
+                mongoDB.SaveDocument(data, "OtherMessages");
+            }
+            
+        }
+
+        private static async Task ExecuteSemanticTranslationsAndSendToSituationIdentificationManager(string domain, string data)
+        {
+            if (domain != "unknown")
+            {
+                JObject messageJson = JObject.Parse(data);
+                JObject messageFormattedINTER_IoT_GraphSrtucture = AddINTER_IoT_GraphSrtucture(messageJson);
+                SendFormattedDataToSituationIdentifier(messageFormattedINTER_IoT_GraphSrtucture);
+            }
+        }
+
+        private static string GetTripIdFromLogisticsMessage(string data)
+        {
+            string result = string.Empty;
+
+            var jsonLdParser = new JsonLdParser();
+            TripleStore tStore = new TripleStore();
+            using (var reader = new System.IO.StringReader(data))
+            {
+                jsonLdParser.Load(tStore, reader);
+            }
+
+            string sparqlQuery = @"
+                PREFIX LogiCO: <http://ontology.tno.nl/logico#>
+                PREFIX LogiTrans: <http://ontology.tno.nl/transport#>
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+                
+                SELECT ?tripId
+                WHERE  
+	                {
+					?transportEvent a LogiTrans:TransportEvent.
+	                ?transportEvent dul:isComponentOf ?transport.
+                    ?transport LogiCO:hasIDValue ?tripId
+	                } 
+
+            ";
+
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] GetTripIdFromLogisticsMessage: Before SPARQL");
+
+            Object results = tStore.ExecuteQuery(sparqlQuery);
+
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] GetTripIdFromLogisticsMessage: After SPARQL");
+
+            if (results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+
+                foreach (SparqlResult spqlResult in rset)
+                {
+                    LiteralNode labelValueNode = (LiteralNode)spqlResult.Value("tripId");
+                    result = labelValueNode.Value;
+                    break;
+                }
+            }
+
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] GetTripIdFromLogisticsMessage: After getting TripId: " + result);
+
+            return result;
+        }
+
+        private static string GetTripIdFromEmergencyMessage(string data)
+        {
+            string result = string.Empty;
+
+            var jsonLdParser = new JsonLdParser();
+            TripleStore tStore = new TripleStore();
+            using (var reader = new System.IO.StringReader(data))
+            {
+                jsonLdParser.Load(tStore, reader);
+            }
+
+            string sparqlQuery = @"
+                
+                PREFIX edxl_cap: <http://fpc.ufba.br/ontologies/edxl_cap#>
+                PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                                
+                SELECT ?tripId
+                WHERE  
+	                {
+                    ?Info edxl_cap:parameter ?param.
+                    ?param xsd:Name ?paramName.
+                    ?param rdf:value ?tripId.
+                    FILTER (?paramName='TripId'^^xsd:string)
+                }
+
+            ";
+
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] GetTripIdFromEmergencyMessage: Before SPARQL");
+
+            Object results = tStore.ExecuteQuery(sparqlQuery);
+
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] GetTripIdFromEmergencyMessage: After SPARQL");
+            
+            if (results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+
+                foreach (SparqlResult spqlResult in rset)
+                {
+                    LiteralNode labelValueNode = (LiteralNode)spqlResult.Value("tripId");
+                    result = labelValueNode.Value;
+                    break;
+                }
+            }
+
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] GetTripIdFromEmergencyMessage: After getting TripId: " + result);
+
+            return result;
+        }
+
+        private static string GetTripIdFromHealthMessage(string data)
+        {
+            string result = string.Empty;
+
+            var jsonLdParser = new JsonLdParser();
+            TripleStore tStore = new TripleStore();
+            using (var reader = new System.IO.StringReader(data))
+            {
+                jsonLdParser.Load(tStore, reader);
+            }
+
+            string sparqlQuery = @"
+                PREFIX saref: <https://w3id.org/saref#>
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                
+                SELECT ?device ?service ?label 
+                WHERE  
+	                {
+					?device saref:offers ?service.
+	                ?service a saref:Service.
+                    ?service rdfs:label ?label
+	                } 
+
+            ";
+
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] GetTripIdFromHealthMessage: Before SPARQL");
+            
+            Object results = tStore.ExecuteQuery(sparqlQuery);
+
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] GetTripIdFromHealthMessage: After SPARQL");
+
+
+            if (results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+
+                foreach (SparqlResult spqlResult in rset)
+                {
+                    LiteralNode labelValueNode = (LiteralNode)spqlResult.Value("label");
+                    result = labelValueNode.Value;
+                    break;
+                }
+            }
+
+            System.Diagnostics.Trace.TraceInformation("[ContextManager] GetTripIdFromHealthMessage: After getting TripId: " + result);
+            
+            return result;
         }
 
         private static void SaveFile(string deviceId, JToken data)
@@ -134,7 +359,7 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
             }
         }
 
-        private static void VerifyMessageTypeAndTakeAction(string data, MongoDBContext mongoDB)
+        private static void VerifyMessageTypeAndTakeAction(string data, MongoDBContext mongoDB, string tripId)
         {
             JObject messageJson = JObject.Parse(data);
 
@@ -148,13 +373,13 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
 
                         // Save in MongoDB
                         //mongoDB.SaveDocument(messageFormattedINTER_IoT_GraphSrtucture);
-                        new Task(() => { mongoDB.SaveDocument(messageFormattedINTER_IoT_GraphSrtucture, "DeviceObservations_INTERIoT_input"); }).Start();
+                        //string dataCollection = "tripId_" + tripId + "_INTERIoT_DeviceObservations_INTERMW_IPSM";
+                        //new Task(() => { mongoDB.SaveDocument(messageFormattedINTER_IoT_GraphSrtucture, dataCollection); }).Start();
 
                         // Send to Situation Identifier Manager REST
                         //SendFormattedDataToSituationIdentifier(messageFormattedINTER_IoT_GraphSrtucture);
                         new Task(() => { PreProcessFormattedData(messageFormattedINTER_IoT_GraphSrtucture); }).Start();
-
-
+                        
                         break;
                     case "edxl_cap:AlertMessage":
 
@@ -196,7 +421,9 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
                 }
             }
             catch (Exception ex)
-            { }
+            {
+                System.Diagnostics.Trace.TraceError("[ContextManager] Error on[GetTranslatedMessageFromIPSM]:" + ex.Message + Environment.NewLine + "InnerException: " + ((ex.InnerException != null) ? ex.InnerException.Message : "NULL"));
+            }
             return null;
         }
 
@@ -206,6 +433,8 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
         {
             try
             {
+                System.Diagnostics.Trace.TraceInformation("[ContextManager] SendFormattedDataToSituationIdentifier: Before sending");
+
                 string url = "http://localhost:53269/api/deviceobservations/123";
 
                 if (!Host.ToLower().Contains("localhost"))
@@ -224,10 +453,11 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
                 {
                     var responseText = streamReader.ReadToEnd();
                 }
+                System.Diagnostics.Trace.TraceInformation("[ContextManager] SendFormattedDataToSituationIdentifier: After sending");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error on [SendFormattedDataToSituationIdentifier]:" + ex.Message);
+                System.Diagnostics.Trace.TraceError("[ContextManager] Error on[SendFormattedDataToSituationIdentifier]:" + ex.Message + Environment.NewLine + "InnerException: " + ((ex.InnerException != null) ? ex.InnerException.Message : "NULL"));
             }
         }
 
