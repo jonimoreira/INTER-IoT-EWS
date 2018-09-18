@@ -188,7 +188,7 @@ namespace ContextManager.DataObjects.EDXL
 
             capInfoType.ResponseType = GetResponseTypes();
 
-            capInfoType.Audience = "Target XX";
+            capInfoType.Audience = "Valencia Port Authority";
 
             capInfoType.EventCode = GetPortValenciaEventCodes();
 
@@ -414,18 +414,22 @@ namespace ContextManager.DataObjects.EDXL
         private List<NameValueType> GetPortValenciaEventCodes()
         {
             // SAME classification: https://en.wikipedia.org/wiki/Specific_Area_Message_Encoding
+            // situationTypeIdentified
 
             List<NameValueType> result = new List<NameValueType>();
 
             NameValueType code01 = new NameValueType();
             code01.Name = "LAE";
-            code01.Value = "Local Area Emergency";
+            code01.Value = situationTypeIdentified;
             result.Add(code01);
 
-            NameValueType code02 = new NameValueType();
-            code02.Name = "HMW";
-            code02.Value = "Hazardous Materials Warning";
-            result.Add(code02);
+            if (situationTypeIdentified.StartsWith("UC04"))
+            {
+                NameValueType code02 = new NameValueType();
+                code02.Name = "HMW";
+                code02.Value = situationTypeIdentified;
+                result.Add(code02);
+            }
 
             return result;
         }

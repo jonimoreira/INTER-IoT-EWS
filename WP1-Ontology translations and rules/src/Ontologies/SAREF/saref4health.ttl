@@ -354,6 +354,7 @@ saref4envi:FrequencyMeasurement
   rdf:type owl:Class ;
   rdfs:comment "ecgOnto:086 (complex event): Medical service in which the Patient is subject of ECG recording by some Recording device. The Recording session (event) can be said to temporally coincide, albeit in a different level of abstraction, with the Observation series (event). In other words, these two events have the same time boundaries" ;
   rdfs:label "ECG recording session" ;
+  rdfs:subClassOf time:ProperInterval ;
   rdfs:subClassOf saref:Task ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
@@ -1057,6 +1058,7 @@ sarefInst:MobileDeviceAsSemanticFieldGateway_MotoG5Plus_9Y8780328P
   saref:consistsOf sarefInst:AcceleroemeterY_Smartphone ;
   saref:consistsOf sarefInst:AcceleroemeterZ_Smartphone ;
   saref:consistsOf sarefInst:Shimmer3ECG_unit_T9JRN42 ;
+  saref:offers sarefInst:TrackTransportation ;
 .
 sarefInst:Percentage
   rdf:type saref:UnitOfMeasure ;
@@ -1068,6 +1070,7 @@ sarefInst:RecordingECGSession_01
   dc:author :LivingPerson_TruckDriver_01 ;
   rdfs:comment "An ECG recording session taken during a trip (truck driver)." ;
   rdfs:label "Recording ECG session" ;
+  time:intervalOverlaps sarefInst:RecordingECGSession_01 ;
   :hasEnd "2018-04-22T22:15:30"^^xsd:dateTime ;
   :hasStart "2018-04-22T18:00:00"^^xsd:dateTime ;
 .
@@ -1128,6 +1131,10 @@ sarefInst:SpeedUnit_MeterPerSecond
 .
 sarefInst:Speed_Vehicle
   rdf:type m3:Speed ;
+.
+sarefInst:TrackTransportation
+  rdf:type saref:Service ;
+  rdfs:label "Object that represents MyDriving.Trip. Label = TripID" ;
 .
 sarefInst:TriAxialAccelerationEnergy_MetrePerSecondSquare
   rdf:type saref:UnitOfMeasure ;

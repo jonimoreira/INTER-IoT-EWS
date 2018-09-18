@@ -109,8 +109,8 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     WHERE AccelerationAxisX.MessageId = AccelerationAxisY.MessageId
                           AND AccelerationAxisY.MessageId = AccelerationAxisZ.MessageId
                           AND AccelerationAxisX.madeBySensor.label = 'Shimmer3ECG'
-                          AND AccelerationAxisX.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisX'
-                          AND AccelerationAxisY.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisY'
+                          AND AccelerationAxisX.observedProperty.Identifier.ToString() = 'https://w3id.org/saref/instances#Acceleration_Average_AxisX'
+                          AND AccelerationAxisY.observedProperty.Identifier.ToString() = 'https://w3id.org/saref/instances#Acceleration_Average_AxisY'
                           AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) > " + uc01_threshold_query;
 
                 // TODO: check the bug when using Z axis 
@@ -142,7 +142,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                             INNER JOIN 
                           Observation.win:time(1 second) AS CrossAxialUsedToDetectCollision ON o.MessageId = CrossAxialUsedToDetectCollision.MessageId
                     WHERE o.Value = true
-                        AND CrossAxialUsedToDetectCollision.observedProperty.Label = 'https://w3id.org/saref/instances#CrossAxialFunction'
+                        AND CrossAxialUsedToDetectCollision.observedProperty.Identifier.ToString() = 'https://w3id.org/saref/instances#CrossAxialFunction'
                 ";
 
                 createStatement(statementName, expr);
@@ -168,8 +168,8 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     WHERE AccelerationAxisX.MessageId = AccelerationAxisY.MessageId
                           AND AccelerationAxisY.MessageId = AccelerationAxisZ.MessageId
                           AND AccelerationAxisX.madeBySensor.isHostedBy.label = 'Smartphone'
-                          AND AccelerationAxisX.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisX'
-                          AND AccelerationAxisY.observedProperty.Label = 'https://w3id.org/saref/instances#Acceleration_Average_AxisY'
+                          AND AccelerationAxisX.observedProperty.Identifier.ToString() = 'https://w3id.org/saref/instances#Acceleration_Average_AxisX'
+                          AND AccelerationAxisY.observedProperty.Identifier.ToString() = 'https://w3id.org/saref/instances#Acceleration_Average_AxisY'
                           AND Math.Sqrt(Math.Pow(AccelerationAxisX.hasResult.hasValue, 2) + Math.Pow(AccelerationAxisY.hasResult.hasValue, 2)) > " + uc01_threshold_query;
 
                 createStatement(statementName, expr);
@@ -206,7 +206,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                            o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
                            o.madeBySensor.isHostedBy.tripId AS TripId
                     FROM  Observation.win:time(1 second) AS o
-                    WHERE o.observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate'
+                    WHERE o.observedProperty.Identifier.ToString() = 'https://w3id.org/saref/instances#HeartRate'
                         AND o.hasResult.hasValue > -0.1
                         AND o.hasResult.hasValue < " + uc02_thresholdBradycardia_query + @"
                 ";
@@ -226,7 +226,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                            o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
                            o.madeBySensor.isHostedBy.tripId AS TripId
                     FROM  Observation.win:time(1 second) AS o
-                    WHERE o.observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate'
+                    WHERE o.observedProperty.Identifier = 'https://w3id.org/saref/instances#HeartRate'
                         AND o.hasResult.hasValue > " + uc02_thresholdTachycardia_query + @"
                 ";
 
@@ -256,14 +256,15 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                            o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
                            o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
                            o.madeBySensor.isHostedBy.tripId AS TripId
-                    FROM pattern[every o=Observation(hasResult.hasValue < " + uc02_thresholdBradycardia_query + @") -> 
+                    FROM pattern[every o=Observation(hasResult.hasValue < " + uc02_thresholdBradycardia_query + @", observedProperty.Identifier.ToString() = 'https://w3id.org/saref/instances#HeartRate') -> 
                                     (
-                                    (Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue < " + uc02_thresholdBradycardia_query + @") and not Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue >= " + uc02_thresholdBradycardia_query + @")) 
+                                    (Observation(madeBySensor.Identifier.ToString()=o.madeBySensor.Identifier.ToString(), madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue < " + uc02_thresholdBradycardia_query + @") and not Observation(madeBySensor.Identifier.ToString()=o.madeBySensor.Identifier.ToString(), madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue >= " + uc02_thresholdBradycardia_query + @")) 
                                     ->
-                                    (Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue < " + uc02_thresholdBradycardia_query + @") and not Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue >= " + uc02_thresholdBradycardia_query + @")) 
+                                    (Observation(madeBySensor.Identifier.ToString()=o.madeBySensor.Identifier.ToString(), madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue < " + uc02_thresholdBradycardia_query + @") and not Observation(madeBySensor.Identifier.ToString()=o.madeBySensor.Identifier.ToString(), madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue >= " + uc02_thresholdBradycardia_query + @")) 
                                     ) where timer:within(20 seconds)
                                 ]
                 ";
+                // add same sensor... if more than 1 sensor of heart rate (>1 devices...)
 
                 createStatement(statementName, expr);
             }
@@ -276,11 +277,11 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                            o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
                            o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
                            o.madeBySensor.isHostedBy.tripId AS TripId
-                    FROM pattern[every o=Observation(hasResult.hasValue > " + uc02_thresholdTachycardia_query + @") -> 
+                    FROM pattern[every o=Observation(hasResult.hasValue > " + uc02_thresholdTachycardia_query + @", observedProperty.Identifier = 'https://w3id.org/saref/instances#HeartRate') -> 
                                     (
-                                    (Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue > " + uc02_thresholdTachycardia_query + @") and not Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue <= " + uc02_thresholdTachycardia_query + @")) 
+                                    (Observation(madeBySensor.Identifier=o.madeBySensor.Identifier, madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue > " + uc02_thresholdTachycardia_query + @") and not Observation(madeBySensor.Identifier=o.madeBySensor.Identifier, madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue <= " + uc02_thresholdTachycardia_query + @")) 
                                     ->
-                                    (Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue > " + uc02_thresholdTachycardia_query + @") and not Observation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue <= " + uc02_thresholdTachycardia_query + @")) 
+                                    (Observation(madeBySensor.Identifier=o.madeBySensor.Identifier, madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue > " + uc02_thresholdTachycardia_query + @") and not Observation(madeBySensor.Identifier=o.madeBySensor.Identifier, madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue <= " + uc02_thresholdTachycardia_query + @")) 
                                     ) where timer:within(20 seconds)
                                 ]
                 ";
