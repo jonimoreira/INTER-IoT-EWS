@@ -74,7 +74,58 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     List<string> statements = deviceId.Split(',').ToList();
                     foreach (string statement in statements)
                     {
-                        eventProcessor.StopStatement(statement);
+                        string stopStatement = string.Empty;
+
+                        switch (statement)
+                        {
+                            case "UC01_ST01":
+                                stopStatement = "UC01_VehicleCollisionDetected_ST01";
+                                break;
+                            case "UC01_ST02":
+                                stopStatement = "UC01_VehicleCollisionDetected_ST02";
+                                break;
+                            case "UC01_ST03":
+                                stopStatement = "UC01_VehicleCollisionDetected_ST03";
+                                break;
+                            case "UC01_ST04":
+                                stopStatement = "UC01_VehicleCollisionDetected_ST04";
+                                break;
+                            case "UC01_ST05":
+                                stopStatement = "UC01_VehicleCollisionDetected_ST05";
+                                break;
+                            case "UC02_ST01":
+                                stopStatement = "UC02_HealthEarlyWarningScore_ST01";
+                                break;
+                            case "UC02_ST02":
+                                stopStatement = "UC02_HealthEarlyWarningScore_ST02";
+                                break;
+                            case "UC02_ST03":
+                                stopStatement = "UC02_HealthEarlyWarningScore_ST03";
+                                break;
+                            case "UC02_ST04":
+                                stopStatement = "UC02_HealthEarlyWarningScore_ST04";
+                                break;
+                            case "UC03_ST01":
+                                stopStatement = "UC03_TemporalRelations_ST01";
+                                break;
+                            case "UC03_ST02":
+                                stopStatement = "UC03_TemporalRelations_ST02";
+                                break;
+                            case "UC04_ST01":
+                                stopStatement = "UC04_DangerousGoods_ST01";
+                                break;
+                            case "UC04_ST02":
+                                stopStatement = "UC04_DangerousGoods_ST02";
+                                break;
+                            case "UC04_ST03":
+                                stopStatement = "UC04_DangerousGoods_ST03";
+                                break;
+                            default:
+                                break;
+                        }
+
+
+                        eventProcessor.StopStatement(stopStatement);
                     }
                 }
                 else
@@ -126,11 +177,13 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 
             // When working with INTER-MW + IPSM, change for parsing the message and not execute the semantic translations here
             List<Observation> observations = new List<Observation>();
-            
+
             if (SemanticTranslationsApproach == SemanticTranslationsMechanism.RawSPARQL)
                 observations = SimulateInputHandler(value);
             else if (SemanticTranslationsApproach == SemanticTranslationsMechanism.IPSM)
                 observations = PostTranslationToIPSM(value);
+            else if (SemanticTranslationsApproach == SemanticTranslationsMechanism.INTER_MW_and_IPSM)
+                AddObservationOfDataTranslatedWithIPSM(string.Empty, observations);
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;

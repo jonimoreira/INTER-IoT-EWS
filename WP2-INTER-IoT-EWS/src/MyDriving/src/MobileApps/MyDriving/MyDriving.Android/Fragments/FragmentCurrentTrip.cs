@@ -77,10 +77,22 @@ namespace MyDriving.Droid.Fragments
             comboDevices = view.FindViewById<Spinner>(Resource.Id.spinner);
             comboDevices.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(comboDevices_ItemSelected);
             var adapter = ArrayAdapter.CreateFromResource(this.Context, Resource.Array.planets_array, Android.Resource.Layout.SimpleSpinnerItem);
-
             adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             comboDevices.Adapter = adapter;
+
+            comboThresholds = view.FindViewById<Spinner>(Resource.Id.spinnerThreshold);
+            comboThresholds.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(comboThresholds_ItemSelected);
+            var adapter2 = ArrayAdapter.CreateFromResource(this.Context, Resource.Array.threshold_accel_array, Android.Resource.Layout.SimpleSpinnerItem);
+            adapter2.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            comboThresholds.Adapter = adapter2;
+
+            comboDangerousGoods = view.FindViewById<Spinner>(Resource.Id.spinner_dangerous_goods);
+            comboDangerousGoods.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(comboDangerousGoods_ItemSelected);
+            var adapter3 = ArrayAdapter.CreateFromResource(this.Context, Resource.Array.dangerous_goods_array, Android.Resource.Layout.SimpleSpinnerItem);
+            adapter3.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            comboDangerousGoods.Adapter = adapter3;
             
+
             time = view.FindViewById<TextView>(Resource.Id.text_time);
             distance = view.FindViewById<TextView>(Resource.Id.text_distance);
             distanceUnits = view.FindViewById<TextView>(Resource.Id.text_distance_units);
@@ -92,13 +104,42 @@ namespace MyDriving.Droid.Fragments
             return view;
         }
 
+        private void comboDangerousGoods_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            Spinner spinner = (Spinner)sender;
+            if (spinner != null && viewModel != null && spinner.GetItemAtPosition(e.Position) != null && this.Context != null)
+            {
+                string dangerous_goods_class = spinner.GetItemAtPosition(e.Position).ToString();
+                viewModel.DangerousGoodsClass = dangerous_goods_class;
+                Toast.MakeText(this.Context, "Dangerous goods: " + dangerous_goods_class, ToastLength.Long).Show();
+            }
+        }
+
+        private void comboThresholds_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            Spinner spinner = (Spinner)sender;
+            if (spinner != null && viewModel != null && spinner.GetItemAtPosition(e.Position) != null && this.Context != null)
+            {
+                double threshold = double.Parse(spinner.GetItemAtPosition(e.Position).ToString());
+                viewModel.UpdateThresholdCollision(threshold);
+                Toast.MakeText(this.Context, "Threshold accelerometer selected: " + threshold, ToastLength.Long).Show();
+            }
+        }
+
         private void comboDevices_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
             Spinner spinner = (Spinner)sender;
-            string[] arr = spinner.GetItemAtPosition(e.Position).ToString().Split('-');
-            bluetoothAddress = arr[1].Trim();
-            string toast = string.Format("Selected: {0}", spinner.GetItemAtPosition(e.Position));
-            Toast.MakeText(this.Context, toast, ToastLength.Long).Show();
+            if (spinner != null && viewModel != null && spinner.GetItemAtPosition(e.Position) != null && this.Context != null)
+            {
+                string[] arr = spinner.GetItemAtPosition(e.Position).ToString().Split('-');
+                bluetoothAddress = arr[1].Trim();
+                string toast = string.Format("Selected: {0}", spinner.GetItemAtPosition(e.Position));
+                Toast.MakeText(this.Context, toast, ToastLength.Long).Show();
+                //Services.OBDDataProcessor.GetProcessor().Initialize(ViewModel.ViewModelBase.StoreManager);
+                //string deviceOption = (bluetoothAddress.StartsWith("") ? "1" : "2");
+                //viewModel.ReInitializeOBDDataProcessor(deviceOption);
+                //Toast.MakeText(this.Context, "Smartphone selected: " + deviceOption, ToastLength.Long).Show();
+            }
         }
 
         public override void OnActivityCreated(Bundle savedInstanceState)
@@ -160,6 +201,22 @@ namespace MyDriving.Droid.Fragments
                         Activity?.RunOnUiThread(() =>
                         {
                             text_heart.Text = "Collision detected!";
+                        });
+                    }
+                    else
+                    {
+                        Activity?.RunOnUiThread(() =>
+                        {
+                            text_heart.Text = viewModel.currentStatus;
+                        });
+                    }
+                    break;
+                case nameof(viewModel.VehicleCollisionDetectionFromSmartphone):
+                    if (viewModel.VehicleCollisionDetectionFromSmartphone.collisionDetected)
+                    {
+                        Activity?.RunOnUiThread(() =>
+                        {
+                            text_heart.Text = "Collision detected from smartphone!";
                         });
                     }
                     else
@@ -564,6 +621,32 @@ namespace MyDriving.Droid.Fragments
         //TextView text_hr;
         
         Spinner comboDevices;
+        Spinner comboThresholds;
+
+        Spinner comboDangerousGoods;
+        // Dangerous goods: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=LEGISSUM%3Atr0006
+        // https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:32008L0068
+        /*
+         The transport of dangerous goods by road, rail or inland waterway presents a considerable risk of accidents. 
+         Measures should therefore be taken to ensure that such transport is carried out under the best possible conditions of safety.
+
+        List: https://eur-lex.europa.eu/legal-content/EN/TXT/?qid=1537952727342&uri=CELEX:31994L0055
+         (i) explosive substances and article in Class 1,
+         (ii) gas
+         (iii) the following packages of Class 7 (radioactive materials): packages of fissile materials, packages of type B (U), packages of type B (M).
+
+        Summary: https://www.chemsafetypro.com/Topics/TDG/Dangerous_Goods_Classification_Symbols.html
+        Class 1 Explosives
+        Class 2 Gases
+        Class 3 Flammable Liquids
+        Class 4 Flammable solids; substances liable to spontaneous combustion; substances which, in contact with water, emit flammable gases
+        Class 5 Oxidizing substances and organic peroxides
+        Class 6 Toxic and Infectious substances
+        Class 7 Radioactive material
+        Class 8 Corrosive substances
+        Class 9 Miscellaneous dangerous substances and articles, including environmentally hazardous substances
+             
+         */
 
         private bool isStreaming = false;
         private double samplingRate = 256.0;

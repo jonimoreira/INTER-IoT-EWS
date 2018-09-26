@@ -3,6 +3,7 @@ using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using INTERIoTEWS.Context.DataObjects.SOSA;
 using INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST.Util;
+using INTERIoTEWS.UIprototype.SemanticTranslationsValidation;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -116,6 +117,7 @@ namespace INTERIoTEWS.UIprototype
                 JObject jObject = JObject.Parse(file.OpenText().ToString());
                 textBox1.Text += jObject["label"] + Environment.NewLine;
                 */
+                bool fileIsHealthData = false;
                 textBox1.Text += "file: " + file.Name + Environment.NewLine;
 
                 var jsonLdParser = new JsonLdParser();
@@ -142,6 +144,7 @@ namespace INTERIoTEWS.UIprototype
 
                     foreach (SparqlResult spqlResult in rset)
                     {
+                        fileIsHealthData = true;
                         LiteralNode latValueNode = (LiteralNode)spqlResult.Value("lat");
                         double lat = latValueNode.AsValuedNode().AsDouble();
                         LiteralNode lonValueNode = (LiteralNode)spqlResult.Value("long");
@@ -164,7 +167,7 @@ namespace INTERIoTEWS.UIprototype
                         point.OriginalFileName = file.Name;
                         TripPointHelper.TripPoint.Add(i, point);
                         i++;
-
+                        break;
                     }
                 }
 
@@ -178,6 +181,7 @@ namespace INTERIoTEWS.UIprototype
 
                     foreach (SparqlResult spqlResult in rset)
                     {
+                        fileIsHealthData = true;
                         string deviceECG = spqlResult["deviceECG"].ToString();
                         LiteralNode Acceleration_Average_AxisX = (LiteralNode)spqlResult.Value("measXValue");
                         double acceleration_Average_AxisX = Acceleration_Average_AxisX.AsValuedNode().AsDouble();
@@ -205,7 +209,7 @@ namespace INTERIoTEWS.UIprototype
                         LiteralNode batteryLevelLiteral = (LiteralNode)spqlResult.Value("measBatteryECGValue");
                         double batteryLevel = batteryLevelLiteral.AsValuedNode().AsDouble();
                         point.BatteryLevelECG = batteryLevel;
-
+                        break;
                     }
                 }
 
@@ -219,6 +223,7 @@ namespace INTERIoTEWS.UIprototype
 
                     foreach (SparqlResult spqlResult in rset)
                     {
+                        fileIsHealthData = true;
                         LiteralNode measurementTimeNode = (LiteralNode)spqlResult.Value("measTime");
                         DateTime measDateTime = DateTime.Parse(measurementTimeNode.Value);
                         LiteralNode measCrossAxialFunctionValueLiteral = (LiteralNode)spqlResult.Value("measCrossAxialFunctionValue");
@@ -229,6 +234,14 @@ namespace INTERIoTEWS.UIprototype
                         point.VehicleCollisionCrossAxial = measCrossAxialFunctionValue;
                         break;
                     }
+                }
+
+                if (!fileIsHealthData)
+                {
+                    point = new UIprototype.Point(0, 0, DateTime.UtcNow, 0, 0, 0, contents);
+                    point.OriginalFileName = file.Name;
+                    TripPointHelper.TripPoint.Add(i, point);
+                    i++;
                 }
             }
             
@@ -353,6 +366,7 @@ namespace INTERIoTEWS.UIprototype
 
             markers.Markers.Add(marker);
             gmap.Overlays.Add(markers);
+            gmap.UpdateMarkerLocalPosition(marker);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -539,7 +553,7 @@ namespace INTERIoTEWS.UIprototype
 
         static Microsoft.Azure.Devices.Client.DeviceClient deviceClient;
 
-
+        
         public void SendDataToAzureIoTHub(int threadSleep)
         {
             new Task(() => { SimulateINTERIoT_MW(); }).Start();
@@ -565,6 +579,7 @@ namespace INTERIoTEWS.UIprototype
 
         }
 
+        
         static string iotHubD2cEndpoint = "messages/events";
         static EventHubClient eventHubClient;
 
@@ -582,7 +597,7 @@ namespace INTERIoTEWS.UIprototype
             {
                 if (!isConnectedToIoTHub)
                 {
-                    SetText("Connected to IoT Hub", true);
+                    SetText("Connected to IoT Hub" + Environment.NewLine, true);
                     isConnectedToIoTHub = true;
                 }
                 tasks.Add(ReceiveMessagesFromIoTHub(partition, cts.Token));
@@ -607,7 +622,7 @@ namespace INTERIoTEWS.UIprototype
                     firstMessageArrived = true;
                 }
                 */
-                SetText("Message arrived at " + DateTime.Now.ToString("o") + Environment.NewLine, true);
+                SetText("Message received" + Environment.NewLine, true);
 
                 string data = Encoding.UTF8.GetString(eventData.GetBytes());
                 Console.WriteLine("Message received. Partition: {0} Data: '{1}'", partition, data);
@@ -651,6 +666,87 @@ namespace INTERIoTEWS.UIprototype
         }
 
         private void PlotMarkerFromEmergencyMessage(string data)
+        {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            int countLog = 0;
+            //SetText("[" + countLog++ + "] Message arrived: " + comboBox1.SelectedItem.ToString() + Environment.NewLine, true);
+            SetText("[" + countLog++ + "] Message arrived: " + Environment.NewLine, true);
+            
+            var jsonLdParser = new JsonLdParser();
+            TripleStore tStore = new TripleStore();
+            string contents = data;
+            using (var reader = new System.IO.StringReader(contents))
+            {
+                jsonLdParser.Load(tStore, reader);
+            }
+            SetText("[" + countLog++ + "] After loading triplestore (deltaT): " + StopStartWatch(stopWatch) + Environment.NewLine, true);
+            
+            string sparqlQuery = sparqlQuery05;
+
+            Object results = tStore.ExecuteQuery(sparqlQuery);
+
+            if (results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+                
+                SetText("[" + countLog++ + "] sparqlQuery05 (EDXL) count:" + rset.Count + " || DeltaT: " + StopStartWatch(stopWatch) + Environment.NewLine, true);
+
+                foreach (SparqlResult spqlResult in rset)
+                {
+                    string urgency = spqlResult["urgency"].ToString();
+                    string urgencyType = spqlResult["urgencyType"].ToString();
+                    string severity = spqlResult["severity"].ToString();
+                    string severityType = spqlResult["severityType"].ToString();
+                    string area = spqlResult["area"].ToString();
+
+                    LiteralNode pointLatLonLiteral = (LiteralNode)spqlResult.Value("pointLatLon");
+                    string pointLatLon = pointLatLonLiteral.AsValuedNode().AsString();
+
+                    pointLatLon = pointLatLon.Trim().Replace("Point(", string.Empty).Replace(")", string.Empty);
+                    double lat = double.Parse(pointLatLon.Split(' ')[0].Trim().Replace(".", ",")); // TODO: can cause error... 
+                    double lon = double.Parse(pointLatLon.Split(' ')[1].Trim().Replace(".", ","));
+
+                    LiteralNode headlineL = (LiteralNode)spqlResult.Value("headline");
+                    string headline = headlineL.AsValuedNode().AsString();
+                    LiteralNode senderNameL = (LiteralNode)spqlResult.Value("senderName");
+                    string senderName = senderNameL.AsValuedNode().AsString();
+                    LiteralNode descriptionL = (LiteralNode)spqlResult.Value("description");
+                    string description = descriptionL.AsValuedNode().AsString();
+                    LiteralNode instructionL = (LiteralNode)spqlResult.Value("instruction");
+                    string instruction = instructionL.AsValuedNode().AsString();
+                    
+                    SetText("[" + countLog++ + "] EDXL message.lat:" + lat + ", lon: " + lon + ", urgencyType: " + urgencyType + ", severityType: " + severityType + " || DeltaT: " + StopStartWatch(stopWatch) + Environment.NewLine, true);
+                    
+                    string toolTip = @"Detected from Situation Identifier!" + Environment.NewLine +
+                        "Urgency: " + urgencyType + Environment.NewLine +
+                        "Severity: " + severityType + Environment.NewLine +
+                        "headline: " + headline + Environment.NewLine +
+                        "senderName: " + senderName + Environment.NewLine +
+                        "description: " + description + Environment.NewLine +
+                        "instruction: " + instruction;
+
+                    if (lat == 0 && lon == 0)
+                    {
+                        lat = defaultLatitude;
+                        lon = defaultLongitude;
+                    }
+
+                    GMapOverlay markers = new GMapOverlay("markers");
+                    GMapMarker marker = new GMarkerGoogle(new PointLatLng(lat, lon), GMarkerGoogleType.red_big_stop);
+                    marker.ToolTipMode = MarkerTooltipMode.Always;
+                    marker.ToolTipText = toolTip;
+                    markers.Markers.Add(marker);
+                    gmap.Overlays.Add(markers);
+
+                    SetText("[" + countLog++ + "] After plotting || DeltaT: " + StopStartWatch(stopWatch) + Environment.NewLine, true);
+                    
+                    break;
+                }
+            }
+        }
+
+        private void PlotMarkerFromEmergencyMessage2(string data)
         {
             GMapOverlay routes = null;
             GMapRoute route = null;
@@ -947,7 +1043,126 @@ namespace INTERIoTEWS.UIprototype
 
         Dictionary<string, double> repeatedPointsFromMessage = new Dictionary<string, double>();
 
+        private string StopStartWatch(Stopwatch stopWatch)
+        {
+            lock (stopWatch)
+            {
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+                stopWatch.Start();
+                return elapsedTime;
+            }
+        }
+
         private void PlotRoutePointFromMessage(string data)
+        {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            int countLog = 0;
+            //SetText("[" + countLog++ + "] Message arrived: " + comboBox1.SelectedItem.ToString() + Environment.NewLine, true);
+            SetText("[" + countLog++ + "] Message arrived: " + Environment.NewLine, true);
+
+            PointLatLng lastPoint = new PointLatLng(999, 999);
+            var jsonLdParser = new JsonLdParser();
+            TripleStore tStore = new TripleStore();
+            string contents = data;
+            using (var reader = new System.IO.StringReader(contents))
+            {
+                jsonLdParser.Load(tStore, reader);
+            }
+            SetText("[" + countLog++ + "] After loading triplestore (deltaT): " + StopStartWatch(stopWatch) + Environment.NewLine, true);
+
+            string sparqlQuery = sparqlQuery01;
+
+            SparqlQueryParser sparqlparser = new SparqlQueryParser();
+            SparqlQuery query = sparqlparser.ParseFromString(sparqlQuery);
+            query.Timeout = 999999;
+
+            //Object results = tStore.ExecuteQuery(sparqlQuery);
+            Object results = null;
+
+            try
+            {
+                results = tStore.ExecuteQuery(query);
+            }
+            catch (Exception ex)
+            { }
+
+            //SparqlQuery query = sparqlparser.ParseFromString(sparqlQuery);
+            //Object results = processor.ProcessQuery(query);
+
+            if (results != null && results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+                SetText("[" + countLog++ + "] sparqlQuery01 result count: " + rset.Count + " || DeltaT: " + StopStartWatch(stopWatch) + Environment.NewLine, true);
+
+                foreach (SparqlResult spqlResult in rset)
+                {
+                    LiteralNode latValueNode = (LiteralNode)spqlResult.Value("lat");
+                    double lat = latValueNode.AsValuedNode().AsDouble();
+                    LiteralNode lonValueNode = (LiteralNode)spqlResult.Value("long");
+                    double lon = lonValueNode.AsValuedNode().AsDouble();
+                    LiteralNode measurementTimeNode = (LiteralNode)spqlResult.Value("measTime");
+                    DateTime measDateTime = DateTime.Parse(measurementTimeNode.Value);
+                    string deviceId = spqlResult["device"].ToString();
+                    string sesorId = spqlResult["sensor"].ToString();
+                    LiteralNode Acceleration_Average_AxisX = (LiteralNode)spqlResult.Value("Acceleration_Average_AxisX");
+                    double acceleration_Average_AxisX = Acceleration_Average_AxisX.AsValuedNode().AsDouble();
+                    LiteralNode Acceleration_Average_AxisY = (LiteralNode)spqlResult.Value("Acceleration_Average_AxisY");
+                    double acceleration_Average_AxisY = Acceleration_Average_AxisY.AsValuedNode().AsDouble();
+                    LiteralNode Acceleration_Average_AxisZ = (LiteralNode)spqlResult.Value("Acceleration_Average_AxisZ");
+                    double acceleration_Average_AxisZ = Acceleration_Average_AxisZ.AsValuedNode().AsDouble();
+
+                    SetText("[" + countLog++ + "] sensor: " + sesorId + ", measTime: " + measDateTime.ToString("o") + ", lat: " + lat + ", lon: " + lon + ", accelX: " + acceleration_Average_AxisX + ", accelY: " + acceleration_Average_AxisY + ", accelZ: " + acceleration_Average_AxisZ + " || DeltaT: " + StopStartWatch(stopWatch) + Environment.NewLine, true);
+
+                    string latlon = lat + "_" + lon;
+                    if (repeatedPointsFromMessage.ContainsKey(latlon))
+                        repeatedPointsFromMessage[latlon]++;
+                    else
+                        repeatedPointsFromMessage.Add(latlon, 1);
+
+                    PointLatLng pointLatLng = new PointLatLng(lat, lon);
+
+                    if (lastPoint.Lat == 999 || IsInTheRangeOfPosition(pointLatLng, lastPoint))
+                    {
+                        Point point = new Point(pointLatLng.Lat, pointLatLng.Lng, DateTime.Now, 0, 0, 0, "");
+                        AddMarker(point, GMarkerGoogleType.red_small, string.Empty);
+                        
+                    }
+                    
+                    SetText("[" + countLog++ + "] After plotting || DeltaT: " + StopStartWatch(stopWatch) + Environment.NewLine, true);
+                    break;
+                }
+            }
+
+            sparqlQuery = sparqlQuery03;
+            results = null;
+            try
+            {
+                results = tStore.ExecuteQuery(sparqlQuery);
+            }
+            catch (Exception ex)
+            { }
+
+            if (results != null && results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+                SetText("[" + countLog++ + "] Heart rate query: " + rset.Count + " || DeltaT: " + StopStartWatch(stopWatch) + Environment.NewLine, true);
+                
+                foreach (SparqlResult spqlResult in rset)
+                {
+                    LiteralNode heartRateLiteral = (LiteralNode)spqlResult.Value("measHRValue");
+                    double heartRate = heartRateLiteral.AsValuedNode().AsDouble();
+
+                    SetText("Heart rate computed: " + heartRate + " (bpm) at " + DateTime.Now.ToString("o") + Environment.NewLine, true);
+                    break;
+                }
+
+            }
+        }
+
+        private void PlotRoutePointFromMessage2(string data)
         {
             GMapOverlay routes = null;
             GMapRoute route = null;
@@ -1114,10 +1329,11 @@ namespace INTERIoTEWS.UIprototype
             }
             else
             {
+                string textWithTime = "[" + DateTime.Now.ToString("o") + "] " + text;
                 if (concat)
-                    this.textBox1.Text += text;
+                    this.textBox1.Text += textWithTime;
                 else
-                    this.textBox1.Text = ">> " + text;
+                    this.textBox1.Text = ">> " + textWithTime;
 
             }
         }
@@ -1171,6 +1387,7 @@ namespace INTERIoTEWS.UIprototype
 
         private void DisableOverlapingSituationTypes()
         {
+            
             try
             {
                 // Call ContextManager to start listening (subscribe) IoT Hub 
@@ -1204,19 +1421,37 @@ namespace INTERIoTEWS.UIprototype
                 {
                     string html = reader.ReadToEnd();
                 }
-
-                string situationTypesToDisable = "UC01_VehicleCollisionDetected_ST02,UC01_VehicleCollisionDetected_ST03,UC01_VehicleCollisionDetected_ST04";
+                
+                string situationTypesToDisable = "UC01_ST02,UC01_ST03,UC01_ST04";
 
                 if (comboBox1.SelectedItem.ToString().StartsWith("UC01_ST01"))
-                    situationTypesToDisable = "UC01_VehicleCollisionDetected_ST02,UC01_VehicleCollisionDetected_ST03,UC01_VehicleCollisionDetected_ST04";
+                    situationTypesToDisable = "UC01_ST02,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST02,UC04_ST03";
                 else if (comboBox1.SelectedItem.ToString().StartsWith("UC01_ST02"))
-                    situationTypesToDisable = "UC01_VehicleCollisionDetected_ST01,UC01_VehicleCollisionDetected_ST03,UC01_VehicleCollisionDetected_ST04";
+                    situationTypesToDisable = "UC01_ST01,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST02,UC04_ST03";
                 else if (comboBox1.SelectedItem.ToString().StartsWith("UC01_ST03"))
-                    situationTypesToDisable = "UC01_VehicleCollisionDetected_ST01,UC01_VehicleCollisionDetected_ST02,UC01_VehicleCollisionDetected_ST04";
+                    situationTypesToDisable = "UC01_ST02,UC01_ST01,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST02,UC04_ST03";
                 else if (comboBox1.SelectedItem.ToString().StartsWith("UC01_ST04"))
-                    situationTypesToDisable = "UC01_VehicleCollisionDetected_ST01,UC01_VehicleCollisionDetected_ST02,UC01_VehicleCollisionDetected_ST03";
+                    situationTypesToDisable = "UC01_ST01,UC01_ST03,UC01_ST02,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST02,UC04_ST03";
                 else if (comboBox1.SelectedItem.ToString().StartsWith("UC01_ST05"))
-                    situationTypesToDisable = "UC01_VehicleCollisionDetected_ST01,UC01_VehicleCollisionDetected_ST02,UC01_VehicleCollisionDetected_ST03,UC01_VehicleCollisionDetected_ST04";
+                    situationTypesToDisable = "UC01_ST01,UC01_ST02,UC01_ST03,UC01_ST04,UC02_ST01,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST02,UC04_ST03";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC02_ST01"))
+                    situationTypesToDisable = "UC01_ST01,UC01_ST02,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST02,UC04_ST03";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC02_ST02"))
+                    return; // situationTypesToDisable = "UC01_ST01,UC01_ST02,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST03,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST02,UC04_ST03";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC02_ST03"))
+                    situationTypesToDisable = "UC01_ST01,UC01_ST02,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST02,UC04_ST03";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC02_ST04"))
+                    situationTypesToDisable = "UC01_ST01,UC01_ST02,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST03,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST02,UC04_ST03";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC03_ST01"))
+                    situationTypesToDisable = "UC01_ST01,UC01_ST02,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST02,UC04_ST01,UC04_ST02,UC04_ST03";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC03_ST02"))
+                    situationTypesToDisable = "UC01_ST01,UC01_ST02,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST01,UC04_ST01,UC04_ST02,UC04_ST03";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC04_ST01"))
+                    situationTypesToDisable = "UC01_ST01,UC01_ST02,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST02,UC04_ST03";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC04_ST02"))
+                    situationTypesToDisable = "UC01_ST01,UC01_ST02,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST03";
+                else if (comboBox1.SelectedItem.ToString().StartsWith("UC04_ST03"))
+                    situationTypesToDisable = "UC01_ST01,UC01_ST02,UC01_ST03,UC01_ST04,UC01_ST05,UC02_ST01,UC02_ST02,UC02_ST03,UC02_ST04,UC03_ST01,UC03_ST02,UC04_ST01,UC04_ST02";
 
                 url = baseUrl + situationTypesToDisable;
 
@@ -1265,8 +1500,9 @@ namespace INTERIoTEWS.UIprototype
 }
                  */
                 //string url = "http://grieg.ibspan.waw.pl:8888/translation";
-                string url = "http://168.63.44.177:8888/translation";
-                
+                //string url = "http://168.63.44.177:8888/translation";
+                string url = "http://168.61.102.226:8888/translation";
+
                 JObject payload = new JObject();
 
                 string folderPath = textBox2.Text;
@@ -1331,6 +1567,7 @@ namespace INTERIoTEWS.UIprototype
             catch (Exception ex)
             {
                 Console.WriteLine("Error on [SendDataSampleToIPSM]:" + ex.Message);
+                SetText("Error on [SendDataSampleToIPSM]:" + ex.Message, true);
             }
             
         }
@@ -1430,10 +1667,64 @@ namespace INTERIoTEWS.UIprototype
 
         private void button10_Click(object sender, EventArgs e)
         {
-            ExecuteSemanticTranslationsValidation();
+            SemanticTranslationsValidator validator = new SemanticTranslationsValidator();
+            ExecuteSemanticTranslationsValidationAccuracy(validator);
+            //ExecuteSemanticTranslationsValidationEfficiency(validator);
         }
 
-        private void ExecuteSemanticTranslationsValidation()
+        private void ExecuteSemanticTranslationsValidationAccuracy(SemanticTranslationsValidator validator)
+        {
+            string folderPath = textBox2.Text;
+            DirectoryInfo info = new DirectoryInfo(folderPath);
+            FileInfo[] files = info.GetFiles().OrderBy(p => p.Name).ToArray();
+            textBox1.Text = "files count:" + files.Count() + Environment.NewLine;
+            CreateOutputFolder();
+
+
+            foreach (FileInfo file in files)
+            {
+                string executionId = Guid.NewGuid().ToString();
+
+                string contents = File.ReadAllText(file.FullName);
+                JObject payload = JObject.Parse(contents);
+
+                // In Opt1.SPARQL case we compare the RDF (SAREF) with List<Observations> 
+                List<Observation> resultOpt1SPARQL = ComputeSemanticTranslationsOpt1SPARQL(payload);
+                AccuracyResult resultAccuracyOpt1SPARQL = validator.ComputeAccuracyOutputTypeOpt1SPARQL(payload, resultOpt1SPARQL);
+                validator.AddResultOpt1SPARQL(file.FullName, payload, resultOpt1SPARQL, resultAccuracyOpt1SPARQL);
+
+                textBox1.Text += Environment.NewLine + "Result for [" + file.FullName + "]: " + resultAccuracyOpt1SPARQL.OutputType + Environment.NewLine;
+                if (resultAccuracyOpt1SPARQL.MissingInformation.Inconsistencies.Count > 0)
+                {
+                    foreach (Inconsistency inconsistency in resultAccuracyOpt1SPARQL.MissingInformation.Inconsistencies)
+                    {
+                        switch (inconsistency.Type)
+                        {
+                            case InconsistencyType.Syntax:
+                                textBox1.Text += "Syntax inconsistency found: " + inconsistency.TranslationPart + " || CountSAREF: " + inconsistency.CountSAREF + " || CountSSN_SOSA: " + inconsistency.CountSSN_SOSA + Environment.NewLine;
+                                break;
+                            case InconsistencyType.Semantic:
+                                textBox1.Text += "Semantic inconsistency found: " + inconsistency.TranslationPart + " || CountSAREF: " + inconsistency.MissingAsSAREF + Environment.NewLine;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
+                /*
+                // In Opt2.IPSM case we compare the RDF (SAREF) with the RDF (produced by IPSM) 
+                JObject resultOpt2IPSM = ComputeSemanticTranslationsOpt2IPSM(payload);
+                OutputType resultAccuracyOpt2IPSM = validator.ComputeAccuracyOutputTypeOpt2IPSM(payload, resultOpt2IPSM);
+                validator.AddResultOpt2IPSM(file.FullName, payload, resultOpt2IPSM, resultAccuracyOpt2IPSM);
+                */
+            }
+
+            validator.CompareAccuracy();
+
+        }
+
+        private void ExecuteSemanticTranslationsValidationEfficiency(SemanticTranslationsValidator validator)
         {
             string folderPath = textBox2.Text;
             DirectoryInfo info = new DirectoryInfo(folderPath);
@@ -1449,8 +1740,7 @@ namespace INTERIoTEWS.UIprototype
                 JObject payload = JObject.Parse(contents);
 
                 //JObject messageFormattedINTER_IoT_GraphSrtucture = AddINTER_IoT_GraphSrtucture(payload);
-
-
+                
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
 
@@ -1462,35 +1752,35 @@ namespace INTERIoTEWS.UIprototype
 
                 stopWatch.Start();
 
-                List<Observation> list2 = ComputeSemanticTranslationsOpt2IPSM(payload);
+                JObject IPSMoutput = ComputeSemanticTranslationsOpt2IPSM(payload);
+                List<Observation> list2 = ExecuteSyntaxTranslationFromIPSMoutputToPOCO(IPSMoutput);
 
                 stopWatch.Stop();
                 ts = stopWatch.Elapsed;
                 elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
                 
-                ComputeSemanticTranslationAccuracy(list1, list2);
-
+                
                 // Save metrics (delta T and accuracy) in file
 
 
             }
         }
-
-        private void ComputeSemanticTranslationAccuracy(List<Observation> list1, List<Observation> list2)
-        {
-            throw new NotImplementedException();
-        }
-
-        private List<Observation> ComputeSemanticTranslationsOpt1SPARQL(JToken value)
+        
+        private List<Observation> ComputeSemanticTranslationsFromRDFtoPOCO(JToken value)
         {
             SemanticTranslations translations = new SemanticTranslations(value);
             List<Observation> observations = translations.ExecuteMappings();
             return observations;
         }
 
-        private List<Observation> ComputeSemanticTranslationsOpt2IPSM(JToken value)
+        private List<Observation> ComputeSemanticTranslationsOpt1SPARQL(JToken value)
         {
-            List<Observation> result = new List<Observation>();
+            return ComputeSemanticTranslationsFromRDFtoPOCO(value);
+        }
+
+        private JObject ComputeSemanticTranslationsOpt2IPSM(JToken value)
+        {
+            //List<Observation> result = new List<Observation>();
 
             JObject messageFormattedINTER_IoT_GraphSrtucture = AddINTER_IoT_GraphSrtucture((JObject)value);
 
@@ -1521,18 +1811,18 @@ namespace INTERIoTEWS.UIprototype
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 var responseText = streamReader.ReadToEnd();
-
+                return JObject.Parse(responseText);
                 // Data formatted according to iiot ontology (INTER-IoT): map to POCO Observations
-                AddObservationOfDataTranslatedWithIPSM(responseText, result);
+                //AddObservationOfDataTranslatedWithIPSM(responseText, result);
 
             }
             
-            return result;
+            return null;
         }
 
-        private void AddObservationOfDataTranslatedWithIPSM(string responseText, List<Observation> result)
+        private List<Observation> ExecuteSyntaxTranslationFromIPSMoutputToPOCO(JObject response)
         {
-            JObject response = JObject.Parse(responseText);
+            List<Observation> observations = new List<Observation>();
             JObject resultTranslation = new JObject();
             if (response["message"].ToString() == "Message translation successful")
             {
@@ -1542,15 +1832,68 @@ namespace INTERIoTEWS.UIprototype
 
                 // TODO: test with UC01
                 SemanticTranslations translations = new SemanticTranslations(resultTranslation);
-                List<Observation> observations = translations.ExecuteMappings();
-                result.AddRange(observations);
+                observations = translations.ExecuteMappings();
+                
             }
             else
             {
                 SaveFile("IPSM_error", response);
             }
+            return observations;
         }
 
+        private void button11_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            TestINTERMWPostToContextManager();
+        }
+
+        private void TestINTERMWPostToContextManager()
+        {
+            // Call ContextManager to start listening (subscribe) IoT Hub 
+            string baseUrlCM = "https://inter-iot-ews-contextmanagerrest-v0.azurewebsites.net/api/trip/";
+
+            if (RunningLocal)
+                baseUrlCM = "http://localhost:53268/api/trip/";
+
+
+            JObject payload = new JObject();
+
+            string folderPath = textBox2.Text;
+            DirectoryInfo info = new DirectoryInfo(folderPath);
+            FileInfo[] files = info.GetFiles().OrderBy(p => p.Name).ToArray();
+            textBox1.Text = "files count:" + files.Count() + Environment.NewLine;
+            CreateOutputFolder();
+
+            foreach (FileInfo file in files)
+            {
+                string contents = File.ReadAllText(file.FullName);
+                payload = JObject.Parse(contents);
+                JObject messageFormattedINTER_IoT_GraphSrtucture = AddINTER_IoT_GraphSrtucture(payload);
+                
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(baseUrlCM);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    streamWriter.Write(messageFormattedINTER_IoT_GraphSrtucture);
+                }
+
+                SetText("[" + DateTime.Now.ToString("o") + "] Called " + baseUrlCM + Environment.NewLine, true);
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var responseText = streamReader.ReadToEnd();
+
+                    SetText("[" + DateTime.Now.ToString("o") + "] Received " + responseText + Environment.NewLine, true);
+
+                }
+            }
+        }
     }
 }

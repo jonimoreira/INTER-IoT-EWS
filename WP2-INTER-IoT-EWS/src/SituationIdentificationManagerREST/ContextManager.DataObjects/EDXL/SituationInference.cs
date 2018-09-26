@@ -28,13 +28,21 @@ namespace ContextManager.DataObjects.EDXL.InferenceHandler
                 case "UC01_VehicleCollisionDetected_ST02":
                 case "UC01_VehicleCollisionDetected_ST03":
                 case "UC01_VehicleCollisionDetected_ST04":
+                case "UC01_VehicleCollisionDetected_ST05":
                     result = GetSeverityAndUrgency_UC01_VehicleCollisionDetected();
                     break;
                 case "UC02_HealthEarlyWarningScore_ST01":
                 case "UC02_HealthEarlyWarningScore_ST02":
                 case "UC02_HealthEarlyWarningScore_ST03":
                 case "UC02_HealthEarlyWarningScore_ST04":
+                case "UC03_TemporalRelations_ST01":
+                case "UC03_TemporalRelations_ST02":
                     result = GetSeverityAndUrgency_UC02_HealthEarlyWarningScore();
+                    break;
+                case "UC04_DangerousGoods_ST01":
+                case "UC04_DangerousGoods_ST02":
+                case "UC04_DangerousGoods_ST03":
+                    result = GetSeverityAndUrgency_UC04_DangerousGoods();
                     break;
                 default:
                     break;
@@ -43,13 +51,36 @@ namespace ContextManager.DataObjects.EDXL.InferenceHandler
             return result;
         }
 
+        private EmergencyInformation GetSeverityAndUrgency_UC04_DangerousGoods()
+        {
+            EmergencyInformation result = null; 
+
+            switch (SituationTypeIdentified)
+            {
+                case "UC04_DangerousGoods_ST01":
+                    result = GetSeverityAndUrgency_UC01_VehicleCollisionDetected();
+                    break;
+                case "UC04_DangerousGoods_ST02":
+                    result = GetSeverityAndUrgency_UC02_HealthEarlyWarningScore();
+                    break;
+                case "UC04_DangerousGoods_ST03":
+                    result = GetSeverityAndUrgency_UC02_HealthEarlyWarningScore();
+                    break;
+                default:
+                    break;
+            }
+
+            result.Description = AttributesSituationIdentified["DangerousGoods"].ToString() + Environment.NewLine + result.Description;
+
+            return result;
+        }
 
         public const double Gforce = 9.806; // m/s2 
 
         public static double thresholdAcceleration = 3 * Gforce;
 
         public static double thresholdBradycardia = 49;
-        public static double thresholdTachycardia = 100;
+        public static double thresholdTachycardia = 101;
 
         private EmergencyInformation GetSeverityAndUrgency_UC02_HealthEarlyWarningScore()
         {   
@@ -92,25 +123,25 @@ namespace ContextManager.DataObjects.EDXL.InferenceHandler
             }
 
             // Tachycardia
-            if (heartRate > thresholdTachycardia && heartRate <= thresholdTachycardia * 1.1)
+            if (heartRate > thresholdTachycardia && heartRate <= thresholdTachycardia * 1.4)
             {
                 emergencyInfo.Severity = SeverityType.Minor;
                 emergencyInfo.Urgency = UrgencyType.Expected;
                 emergencyInfo.Description = "Green: light tachycardia. Heart rate: " + heartRate + ", while thresholdTachycardia = " + thresholdTachycardia;
             }
-            else if (heartRate > thresholdTachycardia * 1.1 && heartRate <= thresholdTachycardia * 1.2)
+            else if (heartRate > thresholdTachycardia * 1.4 && heartRate <= thresholdTachycardia * 1.8)
             {
                 emergencyInfo.Severity = SeverityType.Moderate;
                 emergencyInfo.Urgency = UrgencyType.Immediate;
                 emergencyInfo.Description = "Yellow: moderate tachycardia. Heart rate: " + heartRate + ", while thresholdTachycardia = " + thresholdTachycardia;
             }
-            else if (heartRate > thresholdTachycardia * 1.2 && heartRate <= thresholdTachycardia * 1.3)
+            else if (heartRate > thresholdTachycardia * 1.8 && heartRate <= thresholdTachycardia * 2.0)
             {
                 emergencyInfo.Severity = SeverityType.Severe;
                 emergencyInfo.Urgency = UrgencyType.Immediate;
                 emergencyInfo.Description = "Red: severe tachycardia. Heart rate: " + heartRate + ", while thresholdTachycardia = " + thresholdTachycardia;
             }
-            else if (heartRate > thresholdTachycardia * 1.3)
+            else if (heartRate > thresholdTachycardia * 2.0)
             {
                 emergencyInfo.Severity = SeverityType.Extreme;
                 emergencyInfo.Urgency = UrgencyType.Immediate;

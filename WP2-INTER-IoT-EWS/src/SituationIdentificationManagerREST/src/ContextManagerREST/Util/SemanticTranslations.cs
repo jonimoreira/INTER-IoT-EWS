@@ -20,7 +20,8 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
     enum SemanticTranslationsMechanism
     {
         RawSPARQL = 1,
-        IPSM = 2
+        IPSM = 2,
+        INTER_MW_and_IPSM = 3,
     }
 
     public class SemanticTranslations
@@ -29,6 +30,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
         private JToken inputData;
         private JToken inputDataWithINTERIoTGraphsStructure;
         private const string vehicleCollisionProperty = "https://w3id.org/saref/instances#VehicleCollisionDetectedFromECGDeviceAccelerometerComputedByMobile";
+        private const string vehicleCollisionPropertySmartphone = "https://w3id.org/saref/instances#VehicleCollisionDetectedFromSmartphoneAccelerometerComputedByMobile";
 
         public SemanticTranslations(JToken input)
         {
@@ -303,6 +305,9 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                         case vehicleCollisionProperty:
                             AddVehicleCollisionDetected(observation, result);
                             break;
+                        case vehicleCollisionPropertySmartphone:
+                            AddVehicleCollisionDetected(observation, result, true);
+                            break;
                         default:
                             AddObservation(observation, result);
                             break;
@@ -457,7 +462,9 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                         sensor = sensorsDic[sensorId];
                     else
                     {
-                        string sensorLabel = spqlResult["sensorLabel"].ToString().Trim();                        
+                        LiteralNode sensorLabelValueNode = (LiteralNode)spqlResult.Value("sensorLabel");
+                        string sensorLabel = sensorLabelValueNode.AsValuedNode().AsString().Trim();
+
                         sensor = new Sensor(sensorId, platform, sensorLabel);
                         sensorsDic.Add(sensorId, sensor);
                     }
@@ -494,6 +501,9 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                         case vehicleCollisionProperty:
                             AddVehicleCollisionDetected(observation, result);
                             break;
+                        case vehicleCollisionPropertySmartphone:
+                            AddVehicleCollisionDetected(observation, result, true);
+                            break;
                         default:
                             AddObservation(observation, result);
                             break;
@@ -514,6 +524,14 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
         private void AddVehicleCollisionDetected(Observation observation, List<Observation> result)
         {
             VehicleCollisionDetectedObservation vehicleCollision = new VehicleCollisionDetectedObservation(observation);
+            result.Add(vehicleCollision);
+        }
+
+        private void AddVehicleCollisionDetected(Observation observation, List<Observation> result, bool accelerationFromSmartphone)
+        {
+            VehicleCollisionDetectedObservation vehicleCollision = new VehicleCollisionDetectedObservation(observation);
+            vehicleCollision.Value = false;
+            vehicleCollision.AccelerationFromSmartphone = true;
             result.Add(vehicleCollision);
         }
 
@@ -680,6 +698,81 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
         private List<Observation> ExecuteMappingsLogistics()
         {
             List<Observation> result = new List<Observation>();
+
+            var jsonLdParser = new JsonLdParser();
+            TripleStore tStore = new TripleStore();
+            using (var reader = new System.IO.StringReader(inputData.ToString(formattingForJSON)))
+            {
+                jsonLdParser.Load(tStore, reader);
+            }
+
+            // Query dangerous goods
+            string sparqlQuery = @"
+                PREFIX LogiCO: <http://ontology.tno.nl/logico#>
+                PREFIX LogiServ: <http://ontology.tno.nl/logiserv#>
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                
+                SELECT ?tripId ?transport ?goodLabel 
+                WHERE  
+	                {
+					?truck a LogiCO:Truck.
+                    ?truck LogiCO:contains ?cargo.
+                    ?cargo a LogiServ:Cargo.
+                    ?cargo LogiCO:isDangerous true.
+                    ?cargo LogiCO:contains ?good.
+                    ?good rdfs:label ?goodLabel.
+                    ?transport a LogiServ:Transport.
+                    ?transport LogiCO:hasIDValue ?tripId.
+	                } 
+
+            ";
+            Object results = tStore.ExecuteQuery(sparqlQuery);
+            
+            if (results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+                
+                foreach (SparqlResult spqlResult in rset)
+                {
+                    LiteralNode goodLabelValueNode = (LiteralNode)spqlResult.Value("goodLabel");
+                    string goodLabel = goodLabelValueNode.AsValuedNode().AsString();
+
+                    if (goodLabel.StartsWith("Class "))
+                    {
+                        string locationId = "test_locationId";
+                        double lat = 0, lon = 0;
+                        Point geoPoint = new Point(locationId, lat, lon);
+
+                        string deviceId = spqlResult.Value("transport").ToString();
+
+                        string label = "test_label";
+                        Platform platform = new Platform(deviceId + "_Platform", geoPoint, label);
+
+                        LiteralNode tripidNode = (LiteralNode)spqlResult.Value("tripId");
+                        string tripid = tripidNode.AsValuedNode().AsString();
+                        platform.tripId = tripid;
+
+                        Sensor sensor = new Sensor(deviceId + "_Sensor", platform, label);
+
+                        string messageId = platform.Identifier + "_" + DateTime.Now.ToUniversalTime() + "_" + Guid.NewGuid();
+                        Observation observation = new Observation(deviceId + "_Measurement_" + Guid.NewGuid(), sensor, messageId);
+
+                        observation.hasResult = new Result();
+                        observation.hasResult.hasValue = 0;
+                        observation.hasResult.hasUnit = "LogiCO:isDangerous";
+
+                        string observablePropertyId = goodLabel + "_" + Guid.NewGuid();
+                        observation.observedProperty = new ObservableProperty(observablePropertyId, goodLabel);
+                        observation.resultTime = DateTime.UtcNow;
+                        
+                        DangerousGoodsObservation dangerousGoodsObservation = new DangerousGoodsObservation(observation);
+                        result.Add(dangerousGoodsObservation);
+
+                        break;
+                    }
+                }
+            }
 
             return result;
         }

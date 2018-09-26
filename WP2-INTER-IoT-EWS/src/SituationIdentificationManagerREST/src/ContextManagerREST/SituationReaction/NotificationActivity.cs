@@ -75,7 +75,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             client.Timeout = 10000;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("inter.iot.ews@gmail.com", "xxxxxxxxxxxx");
+            client.Credentials = new System.Net.NetworkCredential("inter.iot.ews@gmail.com", "sdddddddsdsdsdsdsd");
 
             string emailBody = @"
                 ATTENTION: INTER-IoT-EWS just issued an warning about an accident risk or accident detected!

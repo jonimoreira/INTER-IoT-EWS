@@ -33,7 +33,7 @@ namespace MyDriving.Droid
             if (!canShowFeedback)
                 return;
             canShowFeedback = false;
-            HockeyApp.FeedbackManager.ShowFeedbackActivity(this);
+            //HockeyApp.FeedbackManager.ShowFeedbackActivity(this);
         }
 
         protected override void OnCreate(Bundle bundle)

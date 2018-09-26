@@ -141,6 +141,7 @@
     <Compile Include="SAREF\Device.cs" />
     <Compile Include="SAREF\Sensor.cs" />
     <Compile Include="SEMIoTICS\AccelerometerSensorObservation.cs" />
+    <Compile Include="SEMIoTICS\DangerousGoodsObservation.cs" />
     <Compile Include="SSN_SOSA\ObservableProperty.cs" />
     <Compile Include="SSN_SOSA\Observation.cs" />
     <Compile Include="SEMIoTICS\VehicleCollisionDetectedObservation.cs" />

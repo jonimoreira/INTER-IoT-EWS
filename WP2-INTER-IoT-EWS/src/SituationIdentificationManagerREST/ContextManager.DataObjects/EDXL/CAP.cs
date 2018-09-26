@@ -59,7 +59,7 @@ namespace ContextManager.DataObjects.EDXL
         {
             get
             {
-                return ((msgCAP != null && msgCAP.Info != null && msgCAP.Info.Count > 0 && msgCAP.Info[0].Headline != null) ? msgCAP.Info[0].Headline : "Headline not informed");
+                return ((msgCAP != null && msgCAP.Info != null && msgCAP.Info.Count > 0 && msgCAP.Info[0].Headline != null) ? msgCAP.Info[0].Headline : "Headline not informed").Replace(Environment.NewLine, string.Empty);
             }
         }
 
@@ -230,17 +230,60 @@ namespace ContextManager.DataObjects.EDXL
                 case "UC01_VehicleCollisionDetected_ST02":
                 case "UC01_VehicleCollisionDetected_ST03":
                 case "UC01_VehicleCollisionDetected_ST04":
+                case "UC01_VehicleCollisionDetected_ST05":
                     result = GetReactionToUC01_VehicleCollisionDetected();
                     break;
                 case "UC02_HealthEarlyWarningScore_ST01":
                 case "UC02_HealthEarlyWarningScore_ST02":
                 case "UC02_HealthEarlyWarningScore_ST03":
                 case "UC02_HealthEarlyWarningScore_ST04":
+                case "UC03_TemporalRelations_ST01":
+                case "UC03_TemporalRelations_ST02":
                     result = GetReactionToUC02_HealthEarlyWarningScore();
+                    break;
+                case "UC04_DangerousGoods_ST01":
+                case "UC04_DangerousGoods_ST02":
+                case "UC04_DangerousGoods_ST03":
+                    result = GetReactionToUC04_DangerousGoods();
                     break;
                 default:
                     break;
             }
+
+            return result;
+        }
+
+        private string GetReactionToUC04_DangerousGoods()
+        {
+            string result = @"
+                ***** ATENTION: INCIDENT INVOLVING DANGEROUS GOODS ***** 
+                Use appropriate equipment to deal with: [" + attributesDataFromSituationIdentified["DangerousGoods"].ToString() + @"]
+                ********************************************************
+
+                0- Get incident location and the trip information, including the heart rate observations computed during the trip";
+
+            if (msgCAP.Info[0].Severity == SeverityType.Extreme || msgCAP.Info[0].Severity == SeverityType.Severe)
+                result += @"
+                1- Contact Emergency Response
+                    1.a- Check the closest ambulance
+                    1.b- Contact the ambulance, provide information about the location and driver health (heart rate, ECG data)
+                    1.c- Contact the emergency personal, provide information about the location and vehicle
+                    1.d- Monitor the emergency personal
+                2- Contact closest clinic or hospital
+                    2.a- Send driver's health information (heart rate, ECG data)";
+            else
+                result += @"
+                1- Try to contact the driver
+                    1.a- If the driver could not be contacted or asked help: Contact Emergency Response (step.2)
+                    1.b- Else: Register in the emergency incident system (step.3)
+                2- Contact Emergency Response
+                    2.a- Check the closest ambulance
+                    2.b- Contact the emergency personal, provide information about the location and vehicle
+                    2.c- Monitor the emergency personal";
+
+            result += @"
+                3 - Register in the emergency incident system: enter all incident information in the system
+            ";
 
             return result;
         }

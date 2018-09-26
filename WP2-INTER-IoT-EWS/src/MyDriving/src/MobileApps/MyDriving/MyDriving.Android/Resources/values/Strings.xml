@@ -10,5 +10,29 @@
     <item>Device 1- 00:06:66:88:db:ca</item>
     <item>Device 2- 00:06:66:e7:b3:21</item>
   </string-array>
-  
+
+  <string name="threshold_accel">Choose threshold</string>
+  <string-array name="threshold_accel_array">
+    <item>29.418</item>
+    <item>5</item>
+    <item>10</item>
+    <item>15</item>
+    <item>20</item>
+  </string-array>
+
+
+  <string name="dangerous_goods">Choose dangerous goods</string>
+  <string-array name="dangerous_goods_array">
+    <item>No dangerous goods</item>
+    <item>Class 1: Explosives</item>
+    <item>Class 2: Gases</item>
+    <item>Class 3: Flammable Liquids</item>
+    <item>Class 4: Flammable solids; etc.</item>
+    <item>Class 5: Oxidizing substances and organic peroxides</item>
+    <item>Class 6: Toxic and Infectious substances</item>
+    <item>Class 7: Radioactive material</item>
+    <item>Class 8: Corrosive substances</item>
+    <item>Class 9: Miscellaneous dangerous substances and articles, etc</item>
+  </string-array>
+
 </resources>

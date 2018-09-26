@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using INTERIoTEWS.ContextManager.ContextManagerREST.Util;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using System.Net;
 
 namespace INTERIoTEWS.ContextManager.ContextManagerREST.Controllers
 {
@@ -32,5 +34,27 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Controllers
 
             return Json(result);
         }
+
+        // POST api/trip
+        [HttpPost()]
+        public HttpResponseMessage Post([FromBody]JToken value)
+        {
+            mongoDB.Collection = "Test_SERVER_PUSH_fromINTERMW";
+
+            JObject test = new JObject();
+            test.Add("@id", "testId");
+            test.Add("label", "hello world: " + DateTime.UtcNow.ToString("o"));
+
+            mongoDB.SaveDocument(test);
+
+            return new HttpResponseMessage(HttpStatusCode.Created);
+        }
+
+        private void ExecuteContextManager(string tripId, JToken value)
+        {
+            mongoDB.SaveDocument(value);
+            mongoDB.TestQueries();
+        }
+
     }
 }

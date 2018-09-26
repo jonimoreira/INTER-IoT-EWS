@@ -1658,8 +1658,14 @@ namespace MyDriving.Droid
 		public partial class Array
 		{
 			
+			// aapt resource value: 0x7f0d0002
+			public const int dangerous_goods_array = 2131558402;
+			
 			// aapt resource value: 0x7f0d0000
 			public const int planets_array = 2131558400;
+			
+			// aapt resource value: 0x7f0d0001
+			public const int threshold_accel_array = 2131558401;
 			
 			static Array()
 			{
@@ -4052,8 +4058,8 @@ namespace MyDriving.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0a00c9
-			public const int action0 = 2131361993;
+			// aapt resource value: 0x7f0a00cb
+			public const int action0 = 2131361995;
 			
 			// aapt resource value: 0x7f0a0065
 			public const int action_bar = 2131361893;
@@ -4079,8 +4085,8 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a0066
 			public const int action_context_bar = 2131361894;
 			
-			// aapt resource value: 0x7f0a00cd
-			public const int action_divider = 2131361997;
+			// aapt resource value: 0x7f0a00cf
+			public const int action_divider = 2131361999;
 			
 			// aapt resource value: 0x7f0a0003
 			public const int action_menu_divider = 2131361795;
@@ -4124,29 +4130,29 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a004f
 			public const int buttonPanel = 2131361871;
 			
-			// aapt resource value: 0x7f0a00b4
-			public const int button_add_response = 2131361972;
+			// aapt resource value: 0x7f0a00b6
+			public const int button_add_response = 2131361974;
 			
-			// aapt resource value: 0x7f0a00af
-			public const int button_attachment = 2131361967;
+			// aapt resource value: 0x7f0a00b1
+			public const int button_attachment = 2131361969;
 			
-			// aapt resource value: 0x7f0a00a6
-			public const int button_close = 2131361958;
+			// aapt resource value: 0x7f0a00a8
+			public const int button_close = 2131361960;
 			
 			// aapt resource value: 0x7f0a0078
 			public const int button_facebook = 2131361912;
 			
-			// aapt resource value: 0x7f0a00b9
-			public const int button_login = 2131361977;
+			// aapt resource value: 0x7f0a00bb
+			public const int button_login = 2131361979;
 			
 			// aapt resource value: 0x7f0a007a
 			public const int button_microsoft = 2131361914;
 			
-			// aapt resource value: 0x7f0a00b5
-			public const int button_refresh = 2131361973;
+			// aapt resource value: 0x7f0a00b7
+			public const int button_refresh = 2131361975;
 			
-			// aapt resource value: 0x7f0a00b0
-			public const int button_send = 2131361968;
+			// aapt resource value: 0x7f0a00b2
+			public const int button_send = 2131361970;
 			
 			// aapt resource value: 0x7f0a007b
 			public const int button_skip = 2131361915;
@@ -4154,11 +4160,11 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a0079
 			public const int button_twitter = 2131361913;
 			
-			// aapt resource value: 0x7f0a00bd
-			public const int button_update = 2131361981;
+			// aapt resource value: 0x7f0a00bf
+			public const int button_update = 2131361983;
 			
-			// aapt resource value: 0x7f0a00ca
-			public const int cancel_action = 2131361994;
+			// aapt resource value: 0x7f0a00cc
+			public const int cancel_action = 2131361996;
 			
 			// aapt resource value: 0x7f0a0036
 			public const int center = 2131361846;
@@ -4172,8 +4178,8 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a005d
 			public const int checkbox = 2131361885;
 			
-			// aapt resource value: 0x7f0a00d0
-			public const int chronometer = 2131362000;
+			// aapt resource value: 0x7f0a00d2
+			public const int chronometer = 2131362002;
 			
 			// aapt resource value: 0x7f0a003e
 			public const int clip_horizontal = 2131361854;
@@ -4229,8 +4235,8 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a0026
 			public const int end = 2131361830;
 			
-			// aapt resource value: 0x7f0a00d5
-			public const int end_padder = 2131362005;
+			// aapt resource value: 0x7f0a00d7
+			public const int end_padder = 2131362007;
 			
 			// aapt resource value: 0x7f0a002e
 			public const int enterAlways = 2131361838;
@@ -4265,8 +4271,8 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a0043
 			public const int @fixed = 2131361859;
 			
-			// aapt resource value: 0x7f0a009f
-			public const int full_rating = 2131361951;
+			// aapt resource value: 0x7f0a00a1
+			public const int full_rating = 2131361953;
 			
 			// aapt resource value: 0x7f0a0005
 			public const int home = 2131361797;
@@ -4280,8 +4286,8 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a004d
 			public const int icon = 2131361869;
 			
-			// aapt resource value: 0x7f0a00d6
-			public const int icon_frame = 2131362006;
+			// aapt resource value: 0x7f0a00d8
+			public const int icon_frame = 2131362008;
 			
 			// aapt resource value: 0x7f0a0012
 			public const int icon_only = 2131361810;
@@ -4292,47 +4298,47 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a004a
 			public const int image = 2131361866;
 			
-			// aapt resource value: 0x7f0a00d4
-			public const int info = 2131362004;
-			
-			// aapt resource value: 0x7f0a00ab
-			public const int input_email = 2131361963;
+			// aapt resource value: 0x7f0a00d6
+			public const int info = 2131362006;
 			
 			// aapt resource value: 0x7f0a00ad
-			public const int input_message = 2131361965;
+			public const int input_email = 2131361965;
 			
-			// aapt resource value: 0x7f0a00aa
-			public const int input_name = 2131361962;
-			
-			// aapt resource value: 0x7f0a00b8
-			public const int input_password = 2131361976;
+			// aapt resource value: 0x7f0a00af
+			public const int input_message = 2131361967;
 			
 			// aapt resource value: 0x7f0a00ac
-			public const int input_subject = 2131361964;
+			public const int input_name = 2131361964;
+			
+			// aapt resource value: 0x7f0a00ba
+			public const int input_password = 2131361978;
+			
+			// aapt resource value: 0x7f0a00ae
+			public const int input_subject = 2131361966;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int item_touch_helper_previous_elevation = 2131361792;
 			
-			// aapt resource value: 0x7f0a00bf
-			public const int label_author = 2131361983;
-			
-			// aapt resource value: 0x7f0a00c0
-			public const int label_date = 2131361984;
-			
-			// aapt resource value: 0x7f0a00b2
-			public const int label_last_updated = 2131361970;
-			
-			// aapt resource value: 0x7f0a00a7
-			public const int label_message = 2131361959;
-			
 			// aapt resource value: 0x7f0a00c1
-			public const int label_text = 2131361985;
+			public const int label_author = 2131361985;
 			
-			// aapt resource value: 0x7f0a00bb
-			public const int label_title = 2131361979;
+			// aapt resource value: 0x7f0a00c2
+			public const int label_date = 2131361986;
 			
-			// aapt resource value: 0x7f0a00bc
-			public const int label_version = 2131361980;
+			// aapt resource value: 0x7f0a00b4
+			public const int label_last_updated = 2131361972;
+			
+			// aapt resource value: 0x7f0a00a9
+			public const int label_message = 2131361961;
+			
+			// aapt resource value: 0x7f0a00c3
+			public const int label_text = 2131361987;
+			
+			// aapt resource value: 0x7f0a00bd
+			public const int label_title = 2131361981;
+			
+			// aapt resource value: 0x7f0a00be
+			public const int label_version = 2131361982;
 			
 			// aapt resource value: 0x7f0a003a
 			public const int left = 2131361850;
@@ -4340,38 +4346,38 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a0017
 			public const int light = 2131361815;
 			
-			// aapt resource value: 0x7f0a00ce
-			public const int line1 = 2131361998;
+			// aapt resource value: 0x7f0a00d0
+			public const int line1 = 2131362000;
 			
-			// aapt resource value: 0x7f0a00d2
-			public const int line3 = 2131362002;
+			// aapt resource value: 0x7f0a00d4
+			public const int line3 = 2131362004;
 			
-			// aapt resource value: 0x7f0a00d8
-			public const int list = 2131362008;
+			// aapt resource value: 0x7f0a00da
+			public const int list = 2131362010;
 			
 			// aapt resource value: 0x7f0a0018
 			public const int listMode = 2131361816;
 			
-			// aapt resource value: 0x7f0a00c2
-			public const int list_attachments = 2131361986;
+			// aapt resource value: 0x7f0a00c4
+			public const int list_attachments = 2131361988;
 			
-			// aapt resource value: 0x7f0a00d7
-			public const int list_container = 2131362007;
+			// aapt resource value: 0x7f0a00d9
+			public const int list_container = 2131362009;
 			
-			// aapt resource value: 0x7f0a00b6
-			public const int list_feedback_messages = 2131361974;
+			// aapt resource value: 0x7f0a00b8
+			public const int list_feedback_messages = 2131361976;
 			
 			// aapt resource value: 0x7f0a004c
 			public const int list_item = 2131361868;
 			
+			// aapt resource value: 0x7f0a00c9
+			public const int loadingImage = 2131361993;
+			
 			// aapt resource value: 0x7f0a00c7
-			public const int loadingImage = 2131361991;
+			public const int loadingProgressBar = 2131361991;
 			
-			// aapt resource value: 0x7f0a00c5
-			public const int loadingProgressBar = 2131361989;
-			
-			// aapt resource value: 0x7f0a00c8
-			public const int loadingProgressWheel = 2131361992;
+			// aapt resource value: 0x7f0a00ca
+			public const int loadingProgressWheel = 2131361994;
 			
 			// aapt resource value: 0x7f0a0074
 			public const int main_content = 2131361908;
@@ -4379,26 +4385,26 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a0080
 			public const int map = 2131361920;
 			
-			// aapt resource value: 0x7f0a00cc
-			public const int media_actions = 2131361996;
-			
-			// aapt resource value: 0x7f0a00db
-			public const int menu_close = 2131362011;
+			// aapt resource value: 0x7f0a00ce
+			public const int media_actions = 2131361998;
 			
 			// aapt resource value: 0x7f0a00dd
-			public const int menu_current_trip = 2131362013;
-			
-			// aapt resource value: 0x7f0a00dc
-			public const int menu_past_trips = 2131362012;
-			
-			// aapt resource value: 0x7f0a00de
-			public const int menu_profile = 2131362014;
+			public const int menu_close = 2131362013;
 			
 			// aapt resource value: 0x7f0a00df
-			public const int menu_settings = 2131362015;
+			public const int menu_current_trip = 2131362015;
 			
-			// aapt resource value: 0x7f0a00da
-			public const int menu_take_photo = 2131362010;
+			// aapt resource value: 0x7f0a00de
+			public const int menu_past_trips = 2131362014;
+			
+			// aapt resource value: 0x7f0a00e0
+			public const int menu_profile = 2131362016;
+			
+			// aapt resource value: 0x7f0a00e1
+			public const int menu_settings = 2131362017;
+			
+			// aapt resource value: 0x7f0a00dc
+			public const int menu_take_photo = 2131362012;
 			
 			// aapt resource value: 0x7f0a0027
 			public const int middle = 2131361831;
@@ -4433,14 +4439,14 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a0051
 			public const int parentPanel = 2131361873;
 			
-			// aapt resource value: 0x7f0a00c3
-			public const int photo = 2131361987;
+			// aapt resource value: 0x7f0a00c5
+			public const int photo = 2131361989;
 			
 			// aapt resource value: 0x7f0a0034
 			public const int pin = 2131361844;
 			
-			// aapt resource value: 0x7f0a00a0
-			public const int profile_image = 2131361952;
+			// aapt resource value: 0x7f0a00a2
+			public const int profile_image = 2131361954;
 			
 			// aapt resource value: 0x7f0a0006
 			public const int progress_circular = 2131361798;
@@ -4451,14 +4457,14 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a005f
 			public const int radio = 2131361887;
 			
-			// aapt resource value: 0x7f0a00a1
-			public const int rating_circle = 2131361953;
+			// aapt resource value: 0x7f0a00a3
+			public const int rating_circle = 2131361955;
 			
-			// aapt resource value: 0x7f0a009e
-			public const int recyclerView = 2131361950;
+			// aapt resource value: 0x7f0a00a0
+			public const int recyclerView = 2131361952;
 			
-			// aapt resource value: 0x7f0a009d
-			public const int refresher = 2131361949;
+			// aapt resource value: 0x7f0a009f
+			public const int refresher = 2131361951;
 			
 			// aapt resource value: 0x7f0a003b
 			public const int right = 2131361851;
@@ -4544,6 +4550,12 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a009c
 			public const int spinner = 2131361948;
 			
+			// aapt resource value: 0x7f0a009d
+			public const int spinnerThreshold = 2131361949;
+			
+			// aapt resource value: 0x7f0a009e
+			public const int spinner_dangerous_goods = 2131361950;
+			
 			// aapt resource value: 0x7f0a0008
 			public const int split_action_bar = 2131361800;
 			
@@ -4565,14 +4577,14 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a0081
 			public const int stats = 2131361921;
 			
-			// aapt resource value: 0x7f0a00cb
-			public const int status_bar_latest_event_content = 2131361995;
+			// aapt resource value: 0x7f0a00cd
+			public const int status_bar_latest_event_content = 2131361997;
 			
 			// aapt resource value: 0x7f0a0070
 			public const int submit_area = 2131361904;
 			
-			// aapt resource value: 0x7f0a00d9
-			public const int switchWidget = 2131362009;
+			// aapt resource value: 0x7f0a00db
+			public const int switchWidget = 2131362011;
 			
 			// aapt resource value: 0x7f0a0019
 			public const int tabMode = 2131361817;
@@ -4580,17 +4592,17 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a000f
 			public const int terrain = 2131361807;
 			
-			// aapt resource value: 0x7f0a00d3
-			public const int text = 2131362003;
+			// aapt resource value: 0x7f0a00d5
+			public const int text = 2131362005;
 			
-			// aapt resource value: 0x7f0a00d1
-			public const int text2 = 2131362001;
+			// aapt resource value: 0x7f0a00d3
+			public const int text2 = 2131362003;
 			
 			// aapt resource value: 0x7f0a0058
 			public const int textSpacerNoButtons = 2131361880;
 			
-			// aapt resource value: 0x7f0a00c6
-			public const int textViewStatus = 2131361990;
+			// aapt resource value: 0x7f0a00c8
+			public const int textViewStatus = 2131361992;
 			
 			// aapt resource value: 0x7f0a0077
 			public const int text_app_name = 2131361911;
@@ -4622,8 +4634,8 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a008f
 			public const int text_hard_breaks = 2131361935;
 			
-			// aapt resource value: 0x7f0a00b7
-			public const int text_headline = 2131361975;
+			// aapt resource value: 0x7f0a00b9
+			public const int text_headline = 2131361977;
 			
 			// aapt resource value: 0x7f0a009b
 			public const int text_heart = 2131361947;
@@ -4634,14 +4646,14 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a008d
 			public const int text_max_speed = 2131361933;
 			
-			// aapt resource value: 0x7f0a00a2
-			public const int text_profile_all = 2131361954;
-			
 			// aapt resource value: 0x7f0a00a4
-			public const int text_profile_great = 2131361956;
+			public const int text_profile_all = 2131361956;
 			
-			// aapt resource value: 0x7f0a00a3
-			public const int text_profile_rating = 2131361955;
+			// aapt resource value: 0x7f0a00a6
+			public const int text_profile_great = 2131361958;
+			
+			// aapt resource value: 0x7f0a00a5
+			public const int text_profile_rating = 2131361957;
 			
 			// aapt resource value: 0x7f0a0087
 			public const int text_speed = 2131361927;
@@ -4655,14 +4667,14 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a0086
 			public const int text_time = 2131361926;
 			
-			// aapt resource value: 0x7f0a00c4
-			public const int text_title = 2131361988;
+			// aapt resource value: 0x7f0a00c6
+			public const int text_title = 2131361990;
 			
-			// aapt resource value: 0x7f0a00a5
-			public const int text_trips = 2131361957;
+			// aapt resource value: 0x7f0a00a7
+			public const int text_trips = 2131361959;
 			
-			// aapt resource value: 0x7f0a00cf
-			public const int time = 2131361999;
+			// aapt resource value: 0x7f0a00d1
+			public const int time = 2131362001;
 			
 			// aapt resource value: 0x7f0a004e
 			public const int title = 2131361870;
@@ -4691,14 +4703,14 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a001f
 			public const int useLogo = 2131361823;
 			
-			// aapt resource value: 0x7f0a00ba
-			public const int view_header = 2131361978;
+			// aapt resource value: 0x7f0a00bc
+			public const int view_header = 2131361980;
 			
 			// aapt resource value: 0x7f0a000a
 			public const int view_offset_helper = 2131361802;
 			
-			// aapt resource value: 0x7f0a00be
-			public const int web_update_details = 2131361982;
+			// aapt resource value: 0x7f0a00c0
+			public const int web_update_details = 2131361984;
 			
 			// aapt resource value: 0x7f0a0014
 			public const int wide = 2131361812;
@@ -4709,20 +4721,20 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f0a002d
 			public const int wrap_content = 2131361837;
 			
-			// aapt resource value: 0x7f0a00ae
-			public const int wrapper_attachments = 2131361966;
+			// aapt resource value: 0x7f0a00b0
+			public const int wrapper_attachments = 2131361968;
 			
-			// aapt resource value: 0x7f0a00a9
-			public const int wrapper_feedback = 2131361961;
+			// aapt resource value: 0x7f0a00ab
+			public const int wrapper_feedback = 2131361963;
 			
-			// aapt resource value: 0x7f0a00a8
-			public const int wrapper_feedback_scroll = 2131361960;
-			
-			// aapt resource value: 0x7f0a00b1
-			public const int wrapper_messages = 2131361969;
+			// aapt resource value: 0x7f0a00aa
+			public const int wrapper_feedback_scroll = 2131361962;
 			
 			// aapt resource value: 0x7f0a00b3
-			public const int wrapper_messages_buttons = 2131361971;
+			public const int wrapper_messages = 2131361971;
+			
+			// aapt resource value: 0x7f0a00b5
+			public const int wrapper_messages_buttons = 2131361973;
 			
 			static Id()
 			{
@@ -5226,6 +5238,9 @@ namespace MyDriving.Droid
 			// aapt resource value: 0x7f06001e
 			public const int common_signin_button_text_long = 2131099678;
 			
+			// aapt resource value: 0x7f060087
+			public const int dangerous_goods = 2131099783;
+			
 			// aapt resource value: 0x7f06003a
 			public const int hockeyapp_crash_dialog_app_name_fallback = 2131099706;
 			
@@ -5456,6 +5471,9 @@ namespace MyDriving.Droid
 			
 			// aapt resource value: 0x7f060034
 			public const int status_bar_notification_info_overflow = 2131099700;
+			
+			// aapt resource value: 0x7f060086
+			public const int threshold_accel = 2131099782;
 			
 			// aapt resource value: 0x7f06001f
 			public const int v7_preference_off = 2131099679;
