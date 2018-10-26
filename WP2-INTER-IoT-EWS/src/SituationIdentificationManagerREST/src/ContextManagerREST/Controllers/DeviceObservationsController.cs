@@ -17,6 +17,8 @@ using INTERIoTEWS.Context.DataObjects.SOSA;
 using INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST.SituationIdentification.CEP;
 using ContextManager.DataObjects.EDXL.InferenceHandler;
 using System.Diagnostics;
+using System.Net.Mail;
+using INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST.SituationReaction;
 
 namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST.Controllers
 {
@@ -150,10 +152,14 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                     {
                         case "1":
                             // default behaviour with semantic translations executed at the Situation Manager with SPARQL queries
+                            SemanticTranslationsApproach = SemanticTranslationsMechanism.RawSPARQL;
                             break;
                         case "2":
                             // call IPSM for semantic translations
                             SemanticTranslationsApproach = SemanticTranslationsMechanism.IPSM;
+                            break;
+                        case "3":                            
+                            SemanticTranslationsApproach = SemanticTranslationsMechanism.INTER_MW_and_IPSM;
                             break;
                         default:
                             break;
@@ -162,15 +168,48 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
 
             }
 
+            if (deviceId.StartsWith("EnableSendEmailDebug"))
+                SendEmailDebug = true;
+            else if (deviceId.StartsWith("DisableSendEmailDebug"))
+                SendEmailDebug = false;
+
+            if (deviceId.StartsWith("EmailsNotification="))
+                NotificationActivity.EmailsNotification = deviceId.Replace("EmailsNotification=", string.Empty);
+
+            if (deviceId.StartsWith("ResetDebugTime"))
+            {
+                countTranslationsExecuted = 0;
+                totaltimeTranslationsExecuted = 0;
+            }
+
+            if (deviceId.StartsWith("ShowDebugTime"))
+            {
+                result += "id= " + Guid.NewGuid().ToString() + Environment.NewLine;
+                result += "time= " + DateTime.UtcNow.AddMonths(-1).ToString("o") + Environment.NewLine;
+                result += "Setup= " + SemanticTranslationsApproach.ToString() + Environment.NewLine;
+                result += "countTranslationsExecuted= " + countTranslationsExecuted + Environment.NewLine;
+                result += "totaltimeTranslationsExecuted(ms)= " + totaltimeTranslationsExecuted + Environment.NewLine;
+            }
+
             System.Diagnostics.Trace.TraceInformation("[SituationIdentificationManager] End: " + result);
             
             return result;
         }
 
+        private static int countTranslationsExecuted = 0;
+        private static double totaltimeTranslationsExecuted = 0;
+
         // PUT api/deviceobservations/5
         [HttpPut("{deviceId}")]
         public HttpResponseMessage Put(string deviceId, [FromBody]JToken value)
         {
+            try
+            {
+                SendMessageByEmail("Start");
+            }
+            catch (Exception ex)
+            { }
+
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             System.Diagnostics.Trace.TraceInformation("[SituationIdentificationManager] Recived message: " + deviceId + ". Translations approach: " + SemanticTranslationsApproach.ToString());
@@ -190,10 +229,57 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
             System.Diagnostics.Trace.TraceInformation("[SituationIdentificationManager] After semantic translations executed. observations.Count: " + observations.Count + ". Elapsed time =" + elapsedTime);
 
+            countTranslationsExecuted++;
+            totaltimeTranslationsExecuted += ts.TotalMilliseconds;
+
             //new Task(() => { ExecuteSituationIdentificationManager(value); }).Start();
             ExecuteSituationIdentificationManager(observations);
 
+            try
+            {
+                SendMessageByEmail("End");
+            }
+            catch (Exception ex)
+            { }
+
             return new HttpResponseMessage(HttpStatusCode.Created);
+        }
+
+        private async Task SendMessageByEmail(string headline)
+        {
+            if (!SendEmailDebug)
+                return;
+
+            SmtpClient client = new SmtpClient();
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("inter.iot.ews@gmail.com", "1nter1otews");
+
+            string emailBody = @"
+            Situation Identification: Testing email submission! e-mail testing that the ContextManager received the posted data: " + HttpContext.Request.Host.Value + @"
+
+Be kind whenever possible. It is always possible.
+Remember that sometimes not getting what you want is a wonderful stroke of luck.
+My religion is very simple. My religion is kindness.
+Sleep is the best meditation.
+Happiness is not something ready made. It comes from your own actions.
+If you want others to be happy, practice compassion. If you want to be happy, practice compassion.
+Love and compassion are necessities, not luxuries. Without them, humanity cannot survive.
+This is my simple religion. There is no need for temples; no need for complicated philosophy. Our own brain, our own heart is our temple; the philosophy is kindness.
+Our prime purpose in this life is to help others. And if you can't help them, at least don't hurt them.
+The purpose of our lives is to be happy.
+
+                ";
+
+            MailMessage mm = new MailMessage("inter.iot.ews@gmail.com", "jonimoreira@gmail.com,inter.iot.ews@gmail.com", "[INTER-IoT-EWS] Situation Identification - Dalai Lama says: " + headline, emailBody);
+            mm.BodyEncoding = UTF8Encoding.UTF8;
+            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+            client.Send(mm);
         }
 
         private List<Observation> PostTranslationToIPSM(JToken value)
@@ -203,12 +289,14 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             JObject messageFormattedINTER_IoT_GraphSrtucture = AddINTER_IoT_GraphSrtucture((JObject)value);
 
             //string url = "http://grieg.ibspan.waw.pl:8888/translation";
-            string url = "http://168.63.44.177:8888/translation";
+            //string url = "http://168.63.44.177:8888/translation";
+            string url = "http://168.61.102.226:8888/translation";
+
 
             // Prepare IPSM input message
             JObject align = new JObject();
             align.Add("name", "SAREF_CO");
-            align.Add("version", "0.57");
+            align.Add("version", "0.59");
 
             JArray aligns = new JArray();
             aligns.Add(align);
@@ -292,7 +380,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             {
                 resultTranslation = JObject.Parse(response["graphStr"].ToString());
                 
-                SaveFile("GOIoTP", resultTranslation);
+                //SaveFile("GOIoTP", resultTranslation);
                 
                 // TODO: test with UC01
                 SemanticTranslations translations = new SemanticTranslations(resultTranslation);
@@ -301,7 +389,9 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             }
             else
             {
-                SaveFile("IPSM_error", response);
+                //SaveFile("IPSM_error", response);
+                System.Diagnostics.Trace.TraceInformation("[AddObservationOfDataTranslatedWithIPSM] Error on translation: " + response.ToString(Formatting.Indented));
+
             }
         }
 
@@ -311,9 +401,18 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             List<Observation> observations = translations.ExecuteMappings();
             return observations;
         }
+
+        private static bool SendEmailDebug = false;
         
         private async Task ExecuteSituationIdentificationManager(List<Observation> observations)
         {
+            try
+            {
+                SendMessageByEmail("After translations");
+            }
+            catch (Exception ex)
+            { }
+
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             System.Diagnostics.Trace.TraceInformation("[SituationIdentificationManager] ExecuteSituationIdentificationManager Before syntax translations");
@@ -323,6 +422,13 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             {
                 SendEventToCEP(observation);
             }
+
+            try
+            {
+                SendMessageByEmail("After sending to CEP");
+            }
+            catch (Exception ex)
+            { }
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;

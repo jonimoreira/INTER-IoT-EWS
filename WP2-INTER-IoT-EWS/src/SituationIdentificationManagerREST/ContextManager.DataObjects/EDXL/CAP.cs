@@ -4,7 +4,9 @@ using EDXLSharp.CAPLib;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -381,8 +383,32 @@ namespace ContextManager.DataObjects.EDXL
             List<AreaType> result = new List<AreaType>();
 
             AreaType areaType = new AreaType();
-            string lat = attributesDataFromSituationIdentified["latitude"].ToString();
-            string lon = attributesDataFromSituationIdentified["longitude"].ToString();
+
+            double lat = Convert.ToDouble(attributesDataFromSituationIdentified["latitude"].ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+            double lon = Convert.ToDouble(attributesDataFromSituationIdentified["longitude"].ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+            
+            try
+            {
+                // Hardcode decimal point issue
+                if (!lat.ToString().Contains(".") && !lat.ToString().Contains(","))
+                {
+                    if (attributesDataFromSituationIdentified["latitude"].ToString().Contains(","))
+                    {
+                        lat = Convert.ToDouble(attributesDataFromSituationIdentified["latitude"].ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+                        lon = Convert.ToDouble(attributesDataFromSituationIdentified["longitude"].ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+                    }
+                    else
+                    {
+                        lat = Convert.ToDouble(attributesDataFromSituationIdentified["latitude"].ToString());
+                        lon = Convert.ToDouble(attributesDataFromSituationIdentified["longitude"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SendMessageByEmail("Error in GetLocations EDXL, long/lat parser: " + attributesDataFromSituationIdentified["latitude"].ToString() + " - " + lat + "/" + lon, ex.Message);
+            }
+            
 
             areaType.AreaDesc = "Point(" + lat + " " + lon + ")";
 
@@ -396,6 +422,41 @@ namespace ContextManager.DataObjects.EDXL
             result.Add(areaType);
 
             return result;
+        }
+
+
+        private async Task SendMessageByEmail(string headline, string body)
+        {
+            SmtpClient client = new SmtpClient();
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("inter.iot.ews@gmail.com", "1nter1otews");
+
+            string emailBody = @"
+            Situation Identification: Testing email submission! e-mail testing that the ContextManager received the posted data: 
+
+Be kind whenever possible. It is always possible.
+Remember that sometimes not getting what you want is a wonderful stroke of luck.
+My religion is very simple. My religion is kindness.
+Sleep is the best meditation.
+Happiness is not something ready made. It comes from your own actions.
+If you want others to be happy, practice compassion. If you want to be happy, practice compassion.
+Love and compassion are necessities, not luxuries. Without them, humanity cannot survive.
+This is my simple religion. There is no need for temples; no need for complicated philosophy. Our own brain, our own heart is our temple; the philosophy is kindness.
+Our prime purpose in this life is to help others. And if you can't help them, at least don't hurt them.
+The purpose of our lives is to be happy.
+
+                " + body;
+
+            MailMessage mm = new MailMessage("inter.iot.ews@gmail.com", "jonimoreira@gmail.com,inter.iot.ews@gmail.com", "[INTER-IoT-EWS] Situation Identification - Dalai Lama says: " + headline, emailBody);
+            mm.BodyEncoding = UTF8Encoding.UTF8;
+            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+            client.Send(mm);
         }
 
         private CertaintyType? GetCertaintyType()

@@ -15,6 +15,7 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
+    "Microsoft.WindowsAzure.SDK": "2.9.0",
     "NEsper": "6.0.1.1005",
     "Newtonsoft.Json": "11.0.2",
     "WindowsAzure.ServiceBus": "4.1.10"

@@ -310,14 +310,19 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                            o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
                            o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
                            o.madeBySensor.isHostedBy.tripId AS TripId
-                    FROM pattern[every o=Observation(hasResult.hasValue > " + uc02_thresholdTachycardia_query + @", observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate')
-                                    -> 
-                                    (
-                                    (Observation(observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate', madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue > " + uc02_thresholdTachycardia_query + @")) 
-                                    ->
-                                    (Observation(observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate', madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue > " + uc02_thresholdTachycardia_query + @")) 
-                                    ) 
-                                    where timer:within(20 seconds)
+                    FROM pattern[every o=Observation(hasResult.hasValue > " + uc02_thresholdTachycardia_query + @", 
+                                                        observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate')
+                            -> 
+                            (
+                            (Observation(observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate', 
+                                madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, 
+                                hasResult.hasValue > " + uc02_thresholdTachycardia_query + @")) 
+                            ->
+                            (Observation(observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate', 
+                                madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, 
+                                hasResult.hasValue > " + uc02_thresholdTachycardia_query + @")) 
+                            ) 
+                            where timer:within(20 seconds)
                                 ]
                 ";
 
@@ -364,7 +369,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                                     (
                                     (Observation(observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate', madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue < " + uc02_thresholdBradycardia_query + @")) 
                                     ->
-                                    (VehicleCollisionDetectedObservation(Value = true, madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId)) 
+                                    (VehicleCollisionDetectedObservation(madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId)) 
                                     ) 
                                     where timer:within(20 seconds)
                                 ]
@@ -388,9 +393,58 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                             INNER JOIN 
                           Observation.win:time(1 second) AS CrossAxialUsedToDetectCollision ON o.MessageId = CrossAxialUsedToDetectCollision.MessageId
                             INNER JOIN 
-                          DangerousGoodsObservation.win:time(20 second) AS DangerousGoodsTransport ON o.madeBySensor.isHostedBy.tripId = DangerousGoodsTransport.madeBySensor.isHostedBy.tripId
+                          DangerousGoodsObservation.win:time(60 second) AS DangerousGoodsTransport ON o.madeBySensor.isHostedBy.tripId = DangerousGoodsTransport.madeBySensor.isHostedBy.tripId
                     WHERE o.Value = true
                         AND CrossAxialUsedToDetectCollision.observedProperty.Label = 'https://w3id.org/saref/instances#CrossAxialFunction'
+
+                ";
+
+
+                createStatement(statementName, expr);
+            }
+
+            {
+                // 7.1.4.2	UC02 with dangerous goods
+                string statementName = "UC04_DangerousGoods_ST02";
+                var expr = @"
+                    SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
+                           o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
+                           o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
+                           o.madeBySensor.isHostedBy.tripId AS TripId,
+                           DangerousGoodsTransport.observedProperty.Label AS DangerousGoods
+                    FROM  Observation.win:time(1 second) AS o 
+                            INNER JOIN 
+                          DangerousGoodsObservation.win:time(60 second) AS DangerousGoodsTransport ON o.madeBySensor.isHostedBy.tripId = DangerousGoodsTransport.madeBySensor.isHostedBy.tripId
+                    WHERE o.observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate'
+                        AND o.hasResult.hasValue > -0.1
+                        AND o.hasResult.hasValue < " + uc02_thresholdBradycardia_query + @"
+
+                ";
+
+
+                createStatement(statementName, expr);
+            }
+
+            {
+                // 7.1.4.3	UC03 with dangerous goods
+                string statementName = "UC04_DangerousGoods_ST03";
+                var expr = @"
+                    SELECT o.madeBySensor.Identifier AS sensorId, o.Identifier AS observationId, o.observedProperty, 
+                           o.resultTime AS TriggerEventBegin, o.hasResult.hasValue AS resultValue, o.hasResult.hasUnit AS resultUnit,
+                           o.madeBySensor.isHostedBy.location.Lat AS latitude, o.madeBySensor.isHostedBy.location.Long AS longitude,
+                           o.madeBySensor.isHostedBy.tripId AS TripId,
+                           DangerousGoodsTransport.observedProperty.Label AS DangerousGoods
+                    FROM pattern[every o=VehicleCollisionDetectedObservation(Value = true) 
+                                    -> 
+                                    (
+                                    (Observation(observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate', madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue < " + uc02_thresholdBradycardia_query + @")) 
+                                    ->
+                                    (Observation(observedProperty.Label = 'https://w3id.org/saref/instances#HeartRate', madeBySensor.isHostedBy.tripId=o.madeBySensor.isHostedBy.tripId, hasResult.hasValue < " + uc02_thresholdBradycardia_query + @")) 
+                                    ) 
+                                    where timer:within(20 seconds)
+                                ].win:time(20 second) AS pattern1
+                            INNER JOIN 
+                          DangerousGoodsObservation.win:time(60 second) AS DangerousGoodsTransport ON o.madeBySensor.isHostedBy.tripId = DangerousGoodsTransport.madeBySensor.isHostedBy.tripId
 
                 ";
 
@@ -409,17 +463,16 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
                 if (sender is StatementResultServiceImpl)
                 {
                     StatementResultServiceImpl result = (StatementResultServiceImpl)sender;
-                    // TODO: multi-thread calls
                     SituationType situationTypeIdentified = new SituationType(result.StatementName);
                     Situation situationIdentified = new SituationIdentification.Situation(situationTypeIdentified, true, attributes);
                     situationIdentified.Type.SituationReactionProcess.Execute(situationIdentified);
-
-
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Trace.TraceError("[SituationIdentificationManager] defaultUpdateEventHandler Error on situation reaction: " + ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + "InnerException:" + ((ex.InnerException != null)? ex.InnerException.Message: "NULL"));
+                System.Diagnostics.Trace.TraceError("[SituationIdentificationManager] defaultUpdateEventHandler Error on situation reaction: " + 
+                    ex.Message + Environment.NewLine + ex.StackTrace + Environment.NewLine + "InnerException:" + 
+                    ((ex.InnerException != null)? ex.InnerException.Message: "NULL"));
             }
 
         }

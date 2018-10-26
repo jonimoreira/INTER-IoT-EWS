@@ -75,7 +75,7 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
             client.Timeout = 10000;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("inter.iot.ews@gmail.com", "sdddddddsdsdsdsdsd");
+            client.Credentials = new System.Net.NetworkCredential("inter.iot.ews@gmail.com", "1nter1otews");
 
             string emailBody = @"
                 ATTENTION: INTER-IoT-EWS just issued an warning about an accident risk or accident detected!
@@ -99,8 +99,11 @@ namespace INTERIoTEWS.SituationIdentificationManager.SituationIdentificationREST
         private string GetEmailsToNotify()
         {
             // Here we can specify email addresses for each notification activity with channel 'email': ideally this would be implemented with a relational DB
-            return "jonimoreira@gmail.com,inter.iot.ews@gmail.com";
+            return EmailsNotification; // "jonimoreira@gmail.com,inter.iot.ews@gmail.com";
         }
+
+        //public static string EmailsNotification = "jonimoreira@gmail.com,inter.iot.ews@gmail.com,pgimenez@fundacion.valenciaport.com";
+        public static string EmailsNotification = "jonimoreira@gmail.com,inter.iot.ews@gmail.com";
 
         public void ExecuteOld()
         {

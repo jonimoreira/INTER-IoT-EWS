@@ -13,7 +13,6 @@ namespace INTERIoTEWS.Context.DataObjects.SOSA
     public class Observation: IEsperEvent
     {
         public delegate void SensorUpdatedHandler(Observation sensor);
-        public event SensorUpdatedHandler SensorUpdated;
         
         [DataMember]
         public object Identifier { get; private set; }
@@ -42,6 +41,7 @@ namespace INTERIoTEWS.Context.DataObjects.SOSA
 
         public string MessageId { get; private set; }
 
+
         /*
         protected virtual void update()
         {
@@ -51,5 +51,7 @@ namespace INTERIoTEWS.Context.DataObjects.SOSA
             }
         }
         */
+        public event SensorUpdatedHandler SensorUpdated;
+
     }
 }

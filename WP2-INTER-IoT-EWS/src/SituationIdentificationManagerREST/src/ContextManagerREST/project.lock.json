@@ -1277,6 +1277,21 @@
           "lib/netstandard1.0/_._": {}
         }
       },
+      "Microsoft.WindowsAzure.SDK/2.9.0": {
+        "type": "package",
+        "compile": {
+          "lib/Microsoft.WindowsAzure.Diagnostics.dll": {},
+          "lib/Microsoft.WindowsAzure.ServiceRuntime.dll": {},
+          "lib/WindowsAzureEventSource.dll": {},
+          "lib/WindowsAzureTelemetryEvents.dll": {}
+        },
+        "runtime": {
+          "lib/Microsoft.WindowsAzure.Diagnostics.dll": {},
+          "lib/Microsoft.WindowsAzure.ServiceRuntime.dll": {},
+          "lib/WindowsAzureEventSource.dll": {},
+          "lib/WindowsAzureTelemetryEvents.dll": {}
+        }
+      },
       "Mono.Security/3.2.3": {
         "type": "package",
         "compile": {
@@ -2975,6 +2990,19 @@
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
         "runtime.json"
+      ]
+    },
+    "Microsoft.WindowsAzure.SDK/2.9.0": {
+      "sha512": "DddpLvVtIfg/1xjHvuRNOGkwUrxB5/w37OzNLMZ6o0svaT7BE0uw6XWjjvY0V68I6JoojcrV+QXo5AgIhu9SMA==",
+      "type": "package",
+      "path": "Microsoft.WindowsAzure.SDK/2.9.0",
+      "files": [
+        "Microsoft.WindowsAzure.SDK.2.9.0.nupkg.sha512",
+        "Microsoft.WindowsAzure.SDK.nuspec",
+        "lib/Microsoft.WindowsAzure.Diagnostics.dll",
+        "lib/Microsoft.WindowsAzure.ServiceRuntime.dll",
+        "lib/WindowsAzureEventSource.dll",
+        "lib/WindowsAzureTelemetryEvents.dll"
       ]
     },
     "Mono.Security/3.2.3": {
@@ -4863,6 +4891,7 @@
       "Microsoft.Extensions.Logging.Console >= 1.0.0",
       "Microsoft.Extensions.Logging.Debug >= 1.0.0",
       "Microsoft.Extensions.Options.ConfigurationExtensions >= 1.0.0",
+      "Microsoft.WindowsAzure.SDK >= 2.9.0",
       "NEsper >= 6.0.1.1005",
       "Newtonsoft.Json >= 11.0.2",
       "WindowsAzure.ServiceBus >= 4.1.10",

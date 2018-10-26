@@ -17,7 +17,6 @@ namespace INTERIoTEWS.Context.DataObjects.SEMIoTICS
 
         public double TriAxialAccelerationEnergy { get; private set; }
         
-
         public AccelerometerSensorObservation(object identifier, Sensor sensor, double accelX, double accelY, double accelZ, double triAxial, bool collision, string messageId) : base (identifier, sensor, messageId)
         {
             this.AccelerationX = accelX;
@@ -26,20 +25,6 @@ namespace INTERIoTEWS.Context.DataObjects.SEMIoTICS
             this.TriAxialAccelerationEnergy = triAxial;
         }
 
-        /*
-        protected override void update()
-        {
-            
-            double change = 4;
-            this.Acceleration -= change;
-
-            if (this.Acceleration < 0)
-            {
-                this.Acceleration = 0;
-            }
-            
-            base.update();
-        }
-        */
+        
     }
 }

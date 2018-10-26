@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RoleModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WorkerRole1" version="2.9.8699.20" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <Runtime>
+    <EntryPoint>
+      <NetFxEntryPoint assemblyName="WorkerRole1.dll" targetFrameworkVersion="v4.0" />
+    </EntryPoint>
+  </Runtime>
+  <Properties>
+    <Property name="TargetFrameworkVersion" value="v4.5.1" />
+    <Property name="RoleType" value="Worker" />
+    <Property name="RoleName" value="WorkerRole1" />
+    <Property name="ProjectName" value="WorkerRole1" />
+    <Property name="Configuration" value="Release" />
+    <Property name="Platform" value="AnyCPU" />
+    <Property name="RoleTargetFramework" value="v4.5.1" />
+    <Property name="OutputDir" value="D:\INTERIoTEWS\SituationIdentificationManagerREST\AzureCloudServiceLog\obj\Release\WorkerRole1\" />
+    <Property name="EntryPoint" value="WorkerRole1.dll" />
+    <Property name="SourceDir" value="" />
+    <Property name="SitePhysicalPath" value="" />
+    <Property name="TargetRuntimeVersion" value="v4.0" />
+  </Properties>
+</RoleModel>
