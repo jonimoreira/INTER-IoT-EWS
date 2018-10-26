@@ -52,7 +52,7 @@ namespace INTERIoTEWS.UIprototype
         {
             //gmap.MapProvider = GMap.NET.MapProviders.BingMapProvider.Instance;
             gmap.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
             gmap.SetPositionByKeywords("Enschede");
             //gmap.Position = new GMap.NET.PointLatLng(48.8589507, 2.2775175);
             gmap.Position = new GMap.NET.PointLatLng(defaultLatitude, defaultLongitude);
@@ -174,7 +174,7 @@ namespace INTERIoTEWS.UIprototype
                 sparqlQuery = sparqlQuery03;
                 results = tStore.ExecuteQuery(sparqlQuery);
 
-                if (results is SparqlResultSet)
+                if (results is SparqlResultSet && point != null)
                 {
                     SparqlResultSet rset = (SparqlResultSet)results;
                     textBox1.Text += "query3 count:" + rset.Count + Environment.NewLine;
@@ -216,7 +216,7 @@ namespace INTERIoTEWS.UIprototype
                 sparqlQuery = sparqlQuery04;
                 results = tStore.ExecuteQuery(sparqlQuery);
 
-                if (results is SparqlResultSet)
+                if (results is SparqlResultSet && point != null)
                 {
                     SparqlResultSet rset = (SparqlResultSet)results;
                     textBox1.Text += "query4 count:" + rset.Count + Environment.NewLine;
@@ -240,6 +240,7 @@ namespace INTERIoTEWS.UIprototype
                 {
                     point = new UIprototype.Point(0, 0, DateTime.UtcNow, 0, 0, 0, contents);
                     point.OriginalFileName = file.Name;
+                    point.HeartRate = double.MaxValue;
                     TripPointHelper.TripPoint.Add(i, point);
                     i++;
                 }
@@ -400,6 +401,9 @@ namespace INTERIoTEWS.UIprototype
             {
                 Point point = tripPointHelper.TripPoint[i];
 
+                if (point.HeartRate == double.MaxValue)
+                    continue;
+
                 // Acceleration
                 chart1.Series[0].Points.AddXY(i + 1, Math.Abs(point.AccelerationX));
                 chart1.Series[1].Points.AddXY(i + 1, Math.Abs(point.AccelerationY));
@@ -412,11 +416,11 @@ namespace INTERIoTEWS.UIprototype
                     chart1.Series[5].Points.AddXY(i + 1, Math.Abs(point.AccelerationZ_ECG) - Gforce);
                 }
 
-                chart1.Series[0].Points[i].AxisLabel = point.DateTimeMessageSent.ToLongTimeString();
+                chart1.Series[0].Points[chart1.Series[0].Points.Count-1].AxisLabel = point.DateTimeMessageSent.ToLongTimeString();
 
                 // Heart rate
                 chart2.Series[0].Points.AddXY(i + 1, Math.Abs(point.HeartRate));
-                chart2.Series[0].Points[i].AxisLabel = point.DateTimeMessageSent.ToLongTimeString();
+                chart2.Series[0].Points[chart2.Series[0].Points.Count-1].AxisLabel = point.DateTimeMessageSent.ToLongTimeString();
 
                 // Cross-Axial Function
                 double crossAxialComputedHere_Mobile = ComputeCrossAxialFunction(point.AccelerationX, point.AccelerationY, point.AccelerationZ);
@@ -500,14 +504,68 @@ namespace INTERIoTEWS.UIprototype
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DisableOverlapingSituationTypes();
+            if (countTestCasesExecuted == 0)
+                DisableOverlapingSituationTypes();
 
             Form2 f = new Form2();
             f.comboBox1.SelectedItem = comboBox1.SelectedItem;
             f.button1.Enabled = false;
             f.button2.Enabled = false;
-            f.ExecuteTestCase(this.TripPointHelper, int.Parse(textBox3.Text));
+
+            if (radioButton3.Checked)
+            {
+                f.ExecuteTestCaseWithINTER_MW(this.TripPointHelper, int.Parse(textBox3.Text));
+            }
+            else
+                f.ExecuteTestCase(this.TripPointHelper, int.Parse(textBox3.Text));
+
+
             f.ShowDialog();
+        }
+
+        public void ExecuteTestCaseWithINTER_MW(TripPointHelper tripPointHelper_in, int threadSleep)
+        {
+            CreateOutputFolder();
+
+            this.TripPointHelper = tripPointHelper_in;
+
+            //new Task(() => { SendDataToAzureIoTHub(threadSleep); }).Start();
+
+            // Test 01) send data directly to ContextManager acting as IoT Hub
+
+            string folderPath = textBox2.Text;
+            DirectoryInfo info = new DirectoryInfo(folderPath);
+            FileInfo[] files = info.GetFiles().OrderBy(p => p.Name).ToArray();
+
+            SetText("[ExecuteTestCaseWithINTER_MW] files count:" + files.Count() + Environment.NewLine, false);
+            foreach (FileInfo file in files)
+            {
+                string contents = File.ReadAllText(file.FullName);
+                JObject jObject = JObject.Parse(contents);
+                
+                string url = "https://inter-iot-ews-contextmanagerrest-v0.azurewebsites.net/api/trip/";
+
+                if (RunningLocal)
+                    url = "http://localhost:53268/api/trip/";
+
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    streamWriter.Write(jObject.ToString());
+                }
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var responseText = streamReader.ReadToEnd();
+                }
+
+                //break;
+                SetText("Data sent: " + file.Name, true);
+
+            }
         }
 
         private TripPointHelper tripPointHelper;
@@ -553,9 +611,15 @@ namespace INTERIoTEWS.UIprototype
 
         static Microsoft.Azure.Devices.Client.DeviceClient deviceClient;
 
+        //static string iotHubUri = "INTER-IoT-EWS-hub-b1.azure-devices.net";
+        static string iotHubUri = "NTER-IoT-EWS-hub-02.azure-devices.net";
         
+        static string deviceKey = "XXXXXXXXXXXX";
+        static string deviceId = "XXXXXXXXXXX";
+
         public void SendDataToAzureIoTHub(int threadSleep)
         {
+            MessageBox.Show("SendDataToAzureIoTHub: start");
             new Task(() => { SimulateINTERIoT_MW(); }).Start();
             // Wait a bit until the app is ready to read from IoT Hub
             Thread.Sleep(5000);
@@ -576,10 +640,13 @@ namespace INTERIoTEWS.UIprototype
                 deviceClient.SendEventAsync(message);
 
             }
-
+            MessageBox.Show("SendDataToAzureIoTHub: end");
+            countTestCasesExecuted++;
         }
 
-        
+        // To listen directly from Azure IoT Hub and call PUT /api/deviceobservations/{deviceId}
+        static string connectionString = "XXXXXX";
+
         static string iotHubD2cEndpoint = "messages/events";
         static EventHubClient eventHubClient;
 
@@ -604,6 +671,60 @@ namespace INTERIoTEWS.UIprototype
             }
             Task.WaitAll(tasks.ToArray());
         }
+
+        private async Task ReceiveMessagesFromIoTHub2(string partition, CancellationToken ct)
+        {
+            var eventHubReceiver = eventHubClient.GetDefaultConsumerGroup().CreateReceiver(partition, DateTime.UtcNow);
+            while (true)
+            {
+                if (ct.IsCancellationRequested) break;
+                EventData eventData = await eventHubReceiver.ReceiveAsync();
+                if (eventData == null) continue;
+
+                //SetText("Message received" + Environment.NewLine, true);
+
+                string data = Encoding.UTF8.GetString(eventData.GetBytes());
+                //Console.WriteLine("Message received. Partition: {0} Data: '{1}'", partition, data);
+
+                JObject messageJson = JObject.Parse(data);
+                if (messageJson["@type"] != null)
+                {
+                    string domain = "other";
+                    switch (messageJson["@type"].ToString())
+                    {
+                        case "saref:Device":
+                            domain = "health";
+
+                            //new Task(() => { PlotRoutePointFromMessage(data); }).Start();
+
+                            break;
+                        case "edxl_cap:AlertMessage":
+                        case "edxl_de:EDXLDistribution":
+                            domain = "emergency";
+
+                            //new Task(() => { PlotMarkerFromEmergencyMessage(data); }).Start();
+
+                            break;
+                        case "LogiTrans:TransportEvent":
+                            domain = "logistics";
+                            break;
+                        default:
+
+                            break;
+                    }
+
+                    SetText("Message received, type: " + domain + Environment.NewLine, true);
+
+
+                    new Task(() => { SaveFile(domain, data); }).Start();
+
+
+                }
+
+            }
+        }
+
+
 
         bool firstMessageArrived = false;
         private async Task ReceiveMessagesFromIoTHub(string partition, CancellationToken ct)
@@ -853,7 +974,7 @@ namespace INTERIoTEWS.UIprototype
 					?device geo:location ?location.
 	                ?location geo:lat ?lat.
 	                ?location geo:long ?long.
-                    ?device saref:consistsOf ?sensor. 
+                    
                     ?sensor saref:makesMeasurement ?measurementX.
 	                ?measurementX saref:hasTimestamp ?measTime. 
 	                ?measurementX saref:relatesToProperty sarefInst:Acceleration_Average_AxisX.
@@ -868,6 +989,7 @@ namespace INTERIoTEWS.UIprototype
                 ORDER BY ?measTime 
 
             ";
+        // removed: ?device saref:consistsOf ?sensor. 
 
         private string sparqlQuery02 = @"
                 PREFIX saref: <https://w3id.org/saref#>
@@ -1100,9 +1222,11 @@ namespace INTERIoTEWS.UIprototype
                 foreach (SparqlResult spqlResult in rset)
                 {
                     LiteralNode latValueNode = (LiteralNode)spqlResult.Value("lat");
-                    double lat = latValueNode.AsValuedNode().AsDouble();
+                    double lat = double.Parse(latValueNode.Value.Replace(".", ",")); // latValueNode.AsValuedNode().AsDouble();
                     LiteralNode lonValueNode = (LiteralNode)spqlResult.Value("long");
-                    double lon = lonValueNode.AsValuedNode().AsDouble();
+                    double lon = double.Parse(lonValueNode.Value.Replace(".", ",")); // lonValueNode.AsValuedNode().AsDouble();
+                    
+
                     LiteralNode measurementTimeNode = (LiteralNode)spqlResult.Value("measTime");
                     DateTime measDateTime = DateTime.Parse(measurementTimeNode.Value);
                     string deviceId = spqlResult["device"].ToString();
@@ -1130,7 +1254,10 @@ namespace INTERIoTEWS.UIprototype
                         AddMarker(point, GMarkerGoogleType.red_small, string.Empty);
                         
                     }
-                    
+
+                    double ca_val = ComputeCrossAxialFunction(acceleration_Average_AxisX, acceleration_Average_AxisY, acceleration_Average_AxisZ);
+                    SetCrossAxialText(ca_val);
+
                     SetText("[" + countLog++ + "] After plotting || DeltaT: " + StopStartWatch(stopWatch) + Environment.NewLine, true);
                     break;
                 }
@@ -1155,6 +1282,8 @@ namespace INTERIoTEWS.UIprototype
                     LiteralNode heartRateLiteral = (LiteralNode)spqlResult.Value("measHRValue");
                     double heartRate = heartRateLiteral.AsValuedNode().AsDouble();
 
+                    SetHeartRateText(heartRate);
+                    
                     SetText("Heart rate computed: " + heartRate + " (bpm) at " + DateTime.Now.ToString("o") + Environment.NewLine, true);
                     break;
                 }
@@ -1318,6 +1447,21 @@ namespace INTERIoTEWS.UIprototype
 
         }
 
+        private void SaveFile(string prefix, string data, string filetype)
+        {
+            Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+
+            string filePathBasics = outputFolderPath;
+
+            string filePath = filePathBasics + prefix + "_" + unixTimestamp.ToString() + "_" + Guid.NewGuid() + filetype;
+            using (StreamWriter outputFile = new StreamWriter(filePath))
+            {
+                outputFile.Write(data.ToString());
+            }
+            SetText("File saved at " + DateTime.Now.ToString("o") + " : " + filePath + Environment.NewLine, true);
+
+        }
+
         delegate void SetTextCallback(string text, bool concat);
 
         private void SetText(string text, bool concat)
@@ -1335,6 +1479,34 @@ namespace INTERIoTEWS.UIprototype
                 else
                     this.textBox1.Text = ">> " + textWithTime;
 
+            }
+        }
+
+        delegate void SetHeartRateTextCallback(double hr_val);
+        private void SetHeartRateText(double hr_val)
+        {
+            if (this.label3.InvokeRequired)
+            {
+                SetHeartRateTextCallback d = new SetHeartRateTextCallback(SetHeartRateText);
+                this.Invoke(d, new object[] { hr_val });
+            }
+            else
+            {
+                this.label3.Text = hr_val.ToString();               
+            }
+        }
+
+        delegate void SetCrossAxialTextCallback(double ca_val);
+        private void SetCrossAxialText(double ca_val)
+        {
+            if (this.label4.InvokeRequired)
+            {
+                SetCrossAxialTextCallback d = new SetCrossAxialTextCallback(SetCrossAxialText);
+                this.Invoke(d, new object[] { ca_val });
+            }
+            else
+            {
+                this.label4.Text = ca_val.ToString();
             }
         }
 
@@ -1383,7 +1555,9 @@ namespace INTERIoTEWS.UIprototype
             }
         }
 
-        bool RunningLocal = true;
+        bool RunningLocal = false;
+
+        private static int countTestCasesExecuted = 0;
 
         private void DisableOverlapingSituationTypes()
         {
@@ -1398,7 +1572,10 @@ namespace INTERIoTEWS.UIprototype
 
                 string subscribeMsg = "translation-" + ((radioButton1.Checked) ? "1" : (radioButton2.Checked) ? "2" : "3");
 
-                HttpWebRequest requestCM = (HttpWebRequest)WebRequest.Create(baseUrlCM + subscribeMsg);
+                string url1 = baseUrlCM + subscribeMsg;
+                MessageBox.Show("Setup url1=" + url1);
+
+                HttpWebRequest requestCM = (HttpWebRequest)WebRequest.Create(url1);
                 requestCM.AutomaticDecompression = DecompressionMethods.GZip;
                 using (HttpWebResponse response = (HttpWebResponse)requestCM.GetResponse())
                 using (Stream stream = response.GetResponseStream())
@@ -1413,6 +1590,8 @@ namespace INTERIoTEWS.UIprototype
 
                 // First reset all STs
                 string url = baseUrl + "reset-" + subscribeMsg;
+                MessageBox.Show("DisableOverlapingSituationTypes url=" + url);
+
                 HttpWebRequest requestReset = (HttpWebRequest)WebRequest.Create(url);
                 requestReset.AutomaticDecompression = DecompressionMethods.GZip;
                 using (HttpWebResponse response = (HttpWebResponse)requestReset.GetResponse())
@@ -1894,6 +2073,12 @@ namespace INTERIoTEWS.UIprototype
 
                 }
             }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            SaveFile("logfile", textBox1.Text, ".log");
+            MessageBox.Show("Log file saved!");
         }
     }
 }

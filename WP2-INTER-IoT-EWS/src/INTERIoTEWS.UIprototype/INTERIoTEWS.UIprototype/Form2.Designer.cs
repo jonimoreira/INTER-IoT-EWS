@@ -79,11 +79,18 @@
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
+            this.button13 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart4)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // gmap
@@ -94,7 +101,7 @@
             this.gmap.GrayScaleMode = false;
             this.gmap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.gmap.LevelsKeepInMemmory = 5;
-            this.gmap.Location = new System.Drawing.Point(12, 41);
+            this.gmap.Location = new System.Drawing.Point(-146, 41);
             this.gmap.MarkersEnabled = true;
             this.gmap.MaxZoom = 18;
             this.gmap.MinZoom = 2;
@@ -115,7 +122,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1050, 3);
+            this.button1.Location = new System.Drawing.Point(892, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(118, 23);
             this.button1.TabIndex = 1;
@@ -125,7 +132,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(29, 728);
+            this.textBox1.Location = new System.Drawing.Point(-129, 728);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -173,39 +180,13 @@
             "UC02_ST02_05: heart rate (level 4 severity/urgency)",
             "UC02_ST03_01: normal cardiac behavior",
             "UC02_ST03_02: heart rate (level 1 severity/urgency)",
-            "UC02_ST03_03: heart rate (level 2 severity/urgency)",
-            "UC02_ST03_04: heart rate (level 3 severity/urgency)",
-            "UC02_ST03_05: heart rate (level 4 severity/urgency)",
             "UC02_ST04_01: normal cardiac behavior",
             "UC02_ST04_02: heart rate (level 1 severity/urgency)",
-            "UC02_ST04_03: heart rate (level 2 severity/urgency)",
-            "UC02_ST04_04: heart rate (level 3 severity/urgency)",
-            "UC02_ST04_05: heart rate (level 4 severity/urgency)",
-            "UC03_ST01_01: no temporal relation",
-            "UC03_ST01_02: collision + heart rate (level 1 severity/urgency)",
-            "UC03_ST01_03: collision + heart rate (level 2 severity/urgency)",
-            "UC03_ST01_04: collision + heart rate (level 3 severity/urgency)",
-            "UC03_ST01_05: collision + heart rate (level 4 severity/urgency)",
-            "UC03_ST02_01: no temporal relation",
-            "UC03_ST02_02: collision + heart rate (level 1 severity/urgency)",
-            "UC03_ST02_03: collision + heart rate (level 2 severity/urgency)",
-            "UC03_ST02_04: collision + heart rate (level 3 severity/urgency)",
-            "UC03_ST02_05: collision + heart rate (level 4 severity/urgency)",
-            "UC04_ST01_01: no dangerous goods risk",
-            "UC04_ST01_02: UC01 + dangerous goods (level 1 severity/urgency)",
-            "UC04_ST01_03: UC01 + dangerous goods (level 2 severity/urgency)",
-            "UC04_ST01_04: UC01 + dangerous goods (level 3 severity/urgency)",
-            "UC04_ST01_05: UC01 + dangerous goods (level 4 severity/urgency)",
-            "UC04_ST02_01: no dangerous goods risk",
-            "UC04_ST02_02: UC02 + dangerous goods (level 1 severity/urgency)",
-            "UC04_ST02_03: UC02 + dangerous goods (level 2 severity/urgency)",
-            "UC04_ST02_04: UC02 + dangerous goods (level 3 severity/urgency)",
-            "UC04_ST02_05: UC02 + dangerous goods (level 4 severity/urgency)",
-            "UC04_ST03_01: no dangerous goods risk",
-            "UC04_ST03_02: UC03 + dangerous goods (level 1 severity/urgency)",
-            "UC04_ST03_03: UC03 + dangerous goods (level 2 severity/urgency)",
-            "UC04_ST03_04: UC03 + dangerous goods (level 3 severity/urgency)",
-            "UC04_ST03_05: UC03 + dangerous goods (level 4 severity/urgency)"});
+            "UC03_ST01_01: temporal relation of UC01_ST01_02 w/ UC02_ST01_02",
+            "UC03_ST02_01: temporal relation of UC02_ST01_02 w/ UC01_ST01_02",
+            "UC04_ST01_01: UC01_ST01_02 + dangerous goods",
+            "UC04_ST02_01: UC02_ST01_02 + dangerous goods",
+            "UC04_ST03_01: UC03_ST01_02 + dangerous goods"});
             this.comboBox1.Location = new System.Drawing.Point(81, 6);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(375, 21);
@@ -231,7 +212,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1677, 12);
+            this.button2.Location = new System.Drawing.Point(1519, 12);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(120, 23);
             this.button2.TabIndex = 6;
@@ -249,7 +230,7 @@
             legend1.DockedToChartArea = "ChartArea1";
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(1050, 41);
+            this.chart1.Location = new System.Drawing.Point(892, 41);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -295,7 +276,7 @@
             chartArea2.AxisY.MajorGrid.Enabled = false;
             chartArea2.Name = "ChartArea1";
             this.chart2.ChartAreas.Add(chartArea2);
-            this.chart2.Location = new System.Drawing.Point(1050, 451);
+            this.chart2.Location = new System.Drawing.Point(892, 451);
             this.chart2.Name = "chart2";
             series7.ChartArea = "ChartArea1";
             series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -319,7 +300,7 @@
             legend2.DockedToChartArea = "ChartArea1";
             legend2.Name = "Legend1";
             this.chart3.Legends.Add(legend2);
-            this.chart3.Location = new System.Drawing.Point(1456, 41);
+            this.chart3.Location = new System.Drawing.Point(1298, 41);
             this.chart3.Name = "chart3";
             series8.ChartArea = "ChartArea1";
             series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -348,7 +329,7 @@
             legend3.DockedToChartArea = "ChartArea1";
             legend3.Name = "Legend1";
             this.chart4.Legends.Add(legend3);
-            this.chart4.Location = new System.Drawing.Point(1456, 451);
+            this.chart4.Location = new System.Drawing.Point(1298, 451);
             this.chart4.Name = "chart4";
             series10.ChartArea = "ChartArea1";
             series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -369,16 +350,16 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(1274, 5);
+            this.textBox3.Location = new System.Drawing.Point(1116, 5);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(47, 20);
             this.textBox3.TabIndex = 11;
-            this.textBox3.Text = "1000";
+            this.textBox3.Text = "3000";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1187, 9);
+            this.label2.Location = new System.Drawing.Point(1029, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(81, 13);
             this.label2.TabIndex = 12;
@@ -386,7 +367,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(914, 53);
+            this.textBox4.Location = new System.Drawing.Point(756, 53);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(219, 20);
             this.textBox4.TabIndex = 13;
@@ -413,7 +394,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(961, 694);
+            this.button4.Location = new System.Drawing.Point(803, 694);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(66, 23);
             this.button4.TabIndex = 16;
@@ -423,7 +404,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(1050, 32);
+            this.button5.Location = new System.Drawing.Point(892, 32);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(120, 23);
             this.button5.TabIndex = 17;
@@ -433,7 +414,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(1027, 694);
+            this.button6.Location = new System.Drawing.Point(869, 694);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 18;
@@ -446,7 +427,7 @@
             this.groupBox1.Controls.Add(this.radioButton3);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(1327, 3);
+            this.groupBox1.Location = new System.Drawing.Point(1169, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(344, 41);
             this.groupBox1.TabIndex = 21;
@@ -456,7 +437,6 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Enabled = false;
             this.radioButton3.Location = new System.Drawing.Point(196, 15);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(131, 17);
@@ -489,7 +469,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(1108, 694);
+            this.button7.Location = new System.Drawing.Point(950, 694);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 22;
@@ -519,7 +499,7 @@
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(1333, 41);
+            this.button10.Location = new System.Drawing.Point(1175, 41);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(184, 23);
             this.button10.TabIndex = 3;
@@ -539,7 +519,7 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(1189, 694);
+            this.button12.Location = new System.Drawing.Point(1031, 694);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(166, 23);
             this.button12.TabIndex = 25;
@@ -547,11 +527,71 @@
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(1053, 764);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(75, 23);
+            this.button13.TabIndex = 26;
+            this.button13.Text = "Save log";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label3.Location = new System.Drawing.Point(969, 451);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 35);
+            this.label3.TabIndex = 27;
+            this.label3.Text = "HR";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(1627, 41);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(71, 35);
+            this.label4.TabIndex = 29;
+            this.label4.Text = "ACC";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::INTERIoTEWS.UIprototype.Properties.Resources.download;
+            this.pictureBox2.Location = new System.Drawing.Point(1584, 41);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(46, 43);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 30;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::INTERIoTEWS.UIprototype.Properties.Resources.heart_rate_2_512;
+            this.pictureBox1.Location = new System.Drawing.Point(924, 451);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(41, 35);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 28;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1596, 874);
+            this.ClientSize = new System.Drawing.Size(1817, 874);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.button12);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button13);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button5);
@@ -563,12 +603,9 @@
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.button12);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.button3);
@@ -587,6 +624,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart4)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -623,5 +662,10 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
