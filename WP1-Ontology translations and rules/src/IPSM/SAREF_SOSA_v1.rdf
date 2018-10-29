@@ -79,6 +79,16 @@
         </sripas:steps>
 
         <align:map>
+			<!-- 			
+			M04. Observations (Measurements) that a Sensor makes. 
+			There is an ontological equivalence between these two patterns:					
+			(1) sosa:Observation sosa:madeBySensor sosa:Sensor
+											sosa:hasResult sosa:Result
+											sosa:observedProperty ssn:Property
+											sosa:phenomenonTime time:Instant
+			(2) saref:Sensor saref:makesMeasurement saref:Measurement
+											saref:measuresProperty saref:Property			
+			-->
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell1">
                 <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
                     var:CTA a saref:Sensor ;
@@ -113,6 +123,12 @@
         </align:map>
 
         <align:map>
+			<!--
+			M05. Device Geo-Location
+
+			While in SSN/SOSA the GeoSPARQL approach is recommended to represent geospatial objects, in SAREF the conventional (and simple) approach based on the WGS84 ontology is suggested. In particular, GeoSPARQL provides a sophisticated way to represent latitude and longitude through the geosparql:asWKT property, which links to a geosparql:wktLiteral with value as the string “Point(#latitude, #longitude)”, where #latitude and #longitude are float values. The WGS84 approach simply introduces a class geo:Point which represents latitude and longitude through the geo:lat and geo:lon properties, respectively. 
+
+			-->
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell2">
                 <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
                     var:CTX geo:lat var:x ;
@@ -151,6 +167,13 @@
         </align:map>
 
         <align:map>
+			<!--
+			
+			M02. Device Composition
+
+			ssn:hasSubSystem and saref:consistsOf are ontologically equivalent.
+			
+			-->
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell3">
                 <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
                     var:CTA a saref:Device ;
@@ -167,6 +190,13 @@
         </align:map>
 
         <align:map>
+			<!-- 
+			M03. Property Measured by a Sensor
+
+			sosa:observes and saref:measuresProperty are ontologically equivalent.
+			>> sosa:observedProperty
+
+			-->
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell4">
                 <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
                     var:CTA sosa:observedProperty sarefInstances:BatteryLevel .
@@ -180,6 +210,9 @@
         </align:map>
 
         <align:map>
+			<!--
+			INTER-IoT specific mapping for units of measurement
+			-->
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell5">
                 <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
                     var:CTA iiot:hasUnit sarefInstances:ElectricPotential_MilliVolts .
@@ -196,6 +229,9 @@
         </align:map>
 
         <align:map>
+			<!--
+			M05. Device Geo-Location
+			-->
             <align:Cell rdf:about="http://www.inter-iot.eu/sripas#Cell6">
                 <align:entity1 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
                     var:CTA geo:location var:CTB .
