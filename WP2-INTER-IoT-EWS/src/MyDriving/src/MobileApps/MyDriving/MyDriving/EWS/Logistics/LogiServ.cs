@@ -53,8 +53,8 @@ namespace MyDriving.EWS.Logistics.LogiServ
             hasEnd = myDrivingTrip.EndTimeStamp;
 
             MyDrivingTrip = myDrivingTrip;
-            // Idea: map from Trip.Points to origin (first) and destination (last)
 
+            // TODO: map from Trip.Points to origin (first) and destination (last)
         }
 
     }

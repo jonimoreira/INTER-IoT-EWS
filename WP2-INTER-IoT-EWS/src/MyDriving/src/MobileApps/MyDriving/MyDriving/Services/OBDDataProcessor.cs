@@ -48,14 +48,28 @@ namespace MyDriving.Services
         {
             return _obdDataProcessor ?? (_obdDataProcessor = new OBDDataProcessor());
         }
+        
+
+        public bool IsInitialized
+        {
+            get
+            {
+                return isInitialized;
+            }
+
+            set
+            {
+                isInitialized = value;
+            }
+        }
 
         //Init must be called each time to connect and reconnect to the OBD device
         public async Task Initialize(IStoreManager storeManager)
         {
             //Ensure that initialization is only performed once
-            if (!isInitialized)
+            if (!IsInitialized)
             {
-                isInitialized = true;
+                IsInitialized = true;
                 this.storeManager = storeManager;
 
                 //Get platform specific implementation IOBDDevice
@@ -69,7 +83,7 @@ namespace MyDriving.Services
                 iotHub.Initialize(connectionStr);
 
                 //Check right away if there is any trip data left in the buffer that needs to be sent to the IOT Hub - run this thread in the background
-                SendBufferedDataToIOTHub();
+                //SendBufferedDataToIOTHub();
             }
         }
 

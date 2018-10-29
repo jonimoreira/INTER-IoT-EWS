@@ -15,6 +15,9 @@ namespace MyDriving.AzureClient
 {
     public class DeviceProvisionHandler
     {
+        //private const string DefaultHostName = "mydrivingiothubews.azure-devices.net";
+        //private const string DefaultHostName = "INTER-IoT-EWS-hub-b1.azure-devices.net";
+        private const string DefaultHostName = "NTER-IoT-EWS-hub-02.azure-devices.net";
         private static DeviceProvisionHandler _handler;
 
         private DeviceProvisionHandler()

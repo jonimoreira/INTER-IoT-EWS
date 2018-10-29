@@ -1,3 +1,4 @@
+using MyDriving.EWS.SAREF4health;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,13 @@ namespace MyDriving.Helpers
 {
     public class SmartphoneAccelerationManager
     {
-        private Dictionary<DateTime, SmartphoneAcceleration> accelerations;
+        
         public SmartphoneAccelerationManager()
         {
             Accelerations = new Dictionary<DateTime, SmartphoneAcceleration>();
         }
 
+        private Dictionary<DateTime, SmartphoneAcceleration> accelerations;
         public Dictionary<DateTime, SmartphoneAcceleration> Accelerations
         {
             get
@@ -25,7 +27,29 @@ namespace MyDriving.Helpers
                 accelerations = value;
             }
         }
-        
+
+        public VehicleCollisionDetection VehicleCollisionDetectionFromSmartphone
+        {
+            get
+            {
+                return vehicleCollisionDetectionFromSmartphone;
+            }
+
+            set
+            {
+                vehicleCollisionDetectionFromSmartphone = value;
+            }
+        }
+
+        private VehicleCollisionDetection vehicleCollisionDetectionFromSmartphone;
+
+        public bool collisionDetected = false;
+        public double valueDetectedX = 0.0;
+        public double valueDetectedY = 0.0;
+        public double valueDetectedZ = 0.0;
+        public DateTime timestampAsDateTime;
+        public double timestampCollisionDetected;
+
     }
 
     public class SmartphoneAcceleration

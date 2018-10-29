@@ -143,6 +143,8 @@ namespace MyDriving.EWS.SAREF4health
                 result = "sarefInst:BatteryLevel";
             else if (signalName == "heartrate")
                 result = "sarefInst:HeartRate";
+            else if (signalName == "collisionDetectedFromSmartphone")
+                result = "sarefInst:VehicleCollisionDetectedFromSmartphoneAccelerometerComputedByMobile";
 
             return result;
         }
@@ -445,7 +447,7 @@ namespace MyDriving.EWS.SAREF4health
             string sarefMakesMeasurementItemJSONstr = @"
 {
   '@id' : '" + GeneratePID_SAREF4health_ECGSampleSequence("saref4health:ECGSampleSequence_" + lead, timestamp.ToString()) + @"',
-  '@type' : 'saref4health:ECGSampleSequence',
+  '@type' : ['saref4health:ECGSampleSequence', 'saref4health:TimeSeriesMeasurements', 'saref:Measurement'],
   'label' : 'ECG measurements series from lead at " + timestamp + @"',
   'saref4health:hasValues' : { '@list' : [ " + seriesValuesStr + @" ] },
   'saref:hasTimestamp' : '" + ConvertTimestampXSDdateTime(timestamp) + @"'
@@ -488,13 +490,15 @@ namespace MyDriving.EWS.SAREF4health
             return GetLogicoTransport(transport);
         }
 
+        public static string DeviceId = "IoTHubDevice02";
+
         public JObject GetECGDeviceJSON_SAREF4health(List<JObject> listDevicesOfDevice, JObject recordingECGSession)
         {
             // TODO: automatically get the Shimmer3 ECG device Id
             string deviceId = "sarefInst:Shimmer3ECG_unit_T9JRN42_DeviceId";
             JObject eCGDeviceJSON = JObject.FromObject(new
             {   
-                comment = "Shimmer3 ECG unit (T9J-RN42): INTER-IoT-EWS project",
+                comment = "Shimmer3 ECG unit (" + DeviceId + "): INTER-IoT-EWS project",
                 label = "Shimmer3ECG",
                 seeAlso = "http://www.shimmersensing.com/products/ecg-development-kit#specifications-tab"
             });
@@ -690,14 +694,16 @@ namespace MyDriving.EWS.SAREF4health
             return result;
         }
 
-        public JObject FormatMessageLogistics(Trip currentTrip, TripPoint currentPoint)
+        public JObject FormatMessageLogistics(Trip currentTrip, TripPoint currentPoint, string dangerousGoodsClass)
         {
             Transport transport = TranslateTransport(currentTrip, currentPoint);
 
             string transportEventId = transport.Identifier + "_" + Guid.NewGuid();
             JObject location = GetLogicoLocation(currentPoint);
             JObject time_now = GetTimeInstant(DateTime.UtcNow);
-            JObject truck = GetLogicoTruck(transport);
+
+            JObject truck = GetLogicoTruck(transport, dangerousGoodsClass);
+            
             JObject transport_jo = GetLogicoTransport(transport);
 
             JObject result = new JObject();
@@ -714,12 +720,13 @@ namespace MyDriving.EWS.SAREF4health
             return result;
         }
 
-        private JObject GetLogicoTruck(Transport transport)
+
+        private JObject GetLogicoTruck(Transport transport, string dangerousGoodsClass)
         {
             JObject result = new JObject();
 
             string truck_plate = "XPT01298";
-            JObject cargo = GetLogicoCargo(transport);
+            JObject cargo = GetLogicoCargo(transport, dangerousGoodsClass);
             JObject plate = GetLogicoTruckId(truck_plate);
 
             result.Add("@id", "LogiCO:Truck_" + truck_plate);
@@ -741,13 +748,28 @@ namespace MyDriving.EWS.SAREF4health
             return result;
         }
 
-        private JObject GetLogicoCargo(Transport transport)
+
+        /*         
+  <string-array name="dangerous_goods_array">
+    <item>No dangerous goods</item>
+    <item>Class 1: Explosives</item>
+    <item>Class 2: Gases</item>
+    <item>Class 3: Flammable Liquids</item>
+    <item>Class 4: Flammable solids; etc.</item>
+    <item>Class 5: Oxidizing substances and organic peroxides</item>
+    <item>Class 6: Toxic and Infectious substances</item>
+    <item>Class 7: Radioactive material</item>
+    <item>Class 8: Corrosive substances</item>
+    <item>Class 9: Miscellaneous dangerous substances and articles, etc</item>
+  </string-array>
+             */
+        private JObject GetLogicoCargo(Transport transport, string dangerousGoodsClass)
         {
             JObject result = new JObject();
 
             string cargoId = transport.Identifier + "_CargoId_TransportingGoodsAt_Location_" + DateTime.UtcNow.ToString("o");
-            bool isDangerous_GoodsBeingTransported = true;
-            JArray goodsItem = GetLogicoGoodsItem(transport);
+            bool isDangerous_GoodsBeingTransported = (dangerousGoodsClass != null && dangerousGoodsClass != string.Empty && dangerousGoodsClass != "No dangerous goods");
+            JArray goodsItem = GetLogicoGoodsItem(transport, dangerousGoodsClass);
 
             result.Add("@id", "LogiTrans:Cargo_" + cargoId);
             result.Add("@type", "LogiServ:Cargo");
@@ -758,21 +780,35 @@ namespace MyDriving.EWS.SAREF4health
             return result;
         }
 
-        private JArray GetLogicoGoodsItem(Transport transport)
+        private JArray GetLogicoGoodsItem(Transport transport, string dangerousGoodsClass)
         {
             JArray array = new JArray();
             for (int i = 0; i < 5; i++)
             {
                 JObject result = new JObject();
 
-                string itemId = transport.Identifier + "_GoodsItemId";
+                string itemId = transport.Identifier + "_GoodsItemId_" + i;
 
-                result.Add("@id", "LogiTrans:GoodsItem_" + itemId);
+                result.Add("@id", "LogisticsInst:GoodsItem_" + itemId);
                 result.Add("@type", "LogiTrans:GoodsItem");
                 result.Add("rdfs:label", "Goods item " + i);
 
                 array.Add(result);
             }
+
+            if (dangerousGoodsClass != null && dangerousGoodsClass != string.Empty && dangerousGoodsClass != "No dangerous goods")
+            {
+                JObject result = new JObject();
+
+                string itemId = transport.Identifier + "_GoodsItemId_DangerousOne";
+
+                result.Add("@id", "LogisticsInst:GoodsItem_" + itemId);
+                result.Add("@type", "LogiTrans:GoodsItem");
+                result.Add("rdfs:label", dangerousGoodsClass);
+
+                array.Add(result);
+            }
+
             return array;
         }
 
