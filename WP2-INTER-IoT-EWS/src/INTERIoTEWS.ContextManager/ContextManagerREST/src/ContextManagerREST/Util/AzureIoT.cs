@@ -19,9 +19,9 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
     public class AzureIoT
     {
 
-        private string iotHubUri = "XXXXXXXXXXXXXXXXX";
-        private string deviceKey = "XXXXXXXXXXXXXXXXX";
-        private string deviceId = "XXXXXXXXXXXXXXXXX";
+        private string iotHubUri = "MyDrivingIoTHubEWS.azure-devices.net";
+        private string deviceKey = "XXXXXXXXXXXXXXXX";
+        private string deviceId = "XXXXXXXXXXXXXXXX";
 
 
         public async void SendToAzureIoTHub(JToken messageJson)
@@ -45,8 +45,11 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
         }
 
         // To listen directly from Azure IoT Hub and call PUT /api/deviceobservations/{deviceId}
-        //free tier: static string connectionString = 
-		
+        
+        static string connectionString = "XXXXXXXXXXXXXXXX";
+        
+        static string monitoringEndpointName = "nter-iot-ews-hub-02";
+
         static string iotHubD2cEndpoint = "messages/events";
         public static EventHubClient eventHubClient;
 
@@ -98,7 +101,7 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
                 }
 
                 EventData eventData = await eventHubReceiver.ReceiveAsync();
-                //EventData eventData = eventHubReceiver.Receive(); //.Receive(TimeSpan.FromSeconds(5));
+
                 if (eventData == null) continue;
 
                 string data = Encoding.UTF8.GetString(eventData.GetBytes());
@@ -116,6 +119,9 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
             }
             
         }
+
+
+
 
         private static string GetDomainFromMessage(JObject messageJson)
         {

@@ -13,7 +13,9 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Util
     {
         private MongoClient client;
         private IMongoDatabase database;
-        
+        //private const string mongoDbServerConnstr = "mongodb://localhost:27017";
+        //private const string mongoDbServerConnstr = "mongodb://18.184.254.139:27017";
+        private const string mongoDbServerConnstr = "mongodb://admin:1nter1otews@40.85.72.192:27017"; // Azure
         private const string mongoDbDatabase = "INTER_IoT_EWS_v1";
         private string collection = "DeviceObservations_";
 

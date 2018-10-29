@@ -39,14 +39,9 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Controllers
         [HttpPost()]
         public HttpResponseMessage Post([FromBody]JToken value)
         {
-            mongoDB.Collection = "Test_SERVER_PUSH_fromINTERMW";
-
-            JObject test = new JObject();
-            test.Add("@id", "testId");
-            test.Add("label", "hello world: " + DateTime.UtcNow.ToString("o"));
-
-            mongoDB.SaveDocument(test);
-
+            InputHandler inputHandler = new Util.InputHandler(HttpContext.Request.Host.Value);
+            inputHandler.ReceiveMessagesFromDeviceAsync(value.ToString(Newtonsoft.Json.Formatting.None));
+            
             return new HttpResponseMessage(HttpStatusCode.Created);
         }
 

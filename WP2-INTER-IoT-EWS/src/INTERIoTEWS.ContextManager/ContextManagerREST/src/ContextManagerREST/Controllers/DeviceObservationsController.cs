@@ -55,6 +55,26 @@ namespace INTERIoTEWS.ContextManager.ContextManagerREST.Controllers
                 result = "called SimulateINTERIoT_MW";
             }
 
+            if (deviceId.StartsWith("DisableIoTHubSubscription"))
+            {
+                if (AzureIoT.eventHubClient != null)
+                {
+                    lock (AzureIoT.eventHubClient)
+                    {
+                        if (!AzureIoT.eventHubClient.IsClosed)
+                            AzureIoT.eventHubClient.Close();
+                        try
+                        {
+                            AzureIoT.eventHubClient = null;
+                            result += "Success: DisableIoTHubSubscription";
+                        }
+                        catch (Exception ex) { result += "Exception on DisableIoTHubSubscription: " + ex.Message; }
+                    }
+                }
+                else
+                    result += "AzureIoT.eventHubClient == null";
+            }
+            
             if (deviceId.StartsWith("savelocal"))
             {
 
